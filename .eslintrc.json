@@ -11,7 +11,14 @@
     "project": ["tsconfig.json"],
     "createDefaultProgram": true
   },
-  "plugins": ["unused-imports", "simple-import-sort"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "react-refresh",
+    "prettier",
+    "unused-imports",
+    "simple-import-sort"
+  ],
   "extends": ["plugin:prettier/recommended"],
   "settings": {
     "react": {
