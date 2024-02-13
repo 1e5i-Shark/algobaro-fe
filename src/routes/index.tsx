@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: PATH.PROFILE,
+        path: `${PATH.PROFILE}/:userId`,
         element: <Profile />,
       },
       {
@@ -39,15 +39,15 @@ export const router = createBrowserRouter([
         element: <CreateLobby />,
       },
       {
-        path: PATH.LOBBY,
+        path: `${PATH.LOBBY}/:lobbyId"`,
         element: <Lobby />,
       },
       {
-        path: PATH.PROBLEMSOLVE,
+        path: `${PATH.PROBLEMSOLVE}/:lobbyId"`,
         element: <ProblemSolve />,
       },
       {
-        path: PATH.PROBLEMSHARE,
+        path: `${PATH.PROBLEMSHARE}/:lobbyId"`,
         element: <ProblemShare />,
       },
     ],
