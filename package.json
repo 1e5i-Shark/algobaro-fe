@@ -45,7 +45,11 @@
     "eslint-plugin-unused-imports": "^3.0.0",
     "husky": "^9.0.10",
     "lint-staged": "^15.2.2",
+    "postcss": "^8.4.35",
+    "postcss-styled-syntax": "^0.6.4",
     "prettier": "^3.2.5",
+    "stylelint": "^16.2.1",
+    "stylelint-config-recess-order": "^4.6.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   }
