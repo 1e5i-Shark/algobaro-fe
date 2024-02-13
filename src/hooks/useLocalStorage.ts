@@ -2,7 +2,7 @@ import { useSyncExternalStore } from 'react';
 
 let listeners: Function[] = [];
 
-const useLocalStorage = (key: string): [string | null, Function] => {
+export const useLocalStorage = (key: string): [string | null, Function] => {
   const value = useSyncExternalStore(subscribe, () => getSnapshot(key));
 
   const setValue = (newValue: string) => {
@@ -29,5 +29,3 @@ const emitChange = () => {
     listener();
   }
 };
-
-export default useLocalStorage;

@@ -1,7 +1,7 @@
 import { ReactNode, useMemo } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import useLocalStorage from '@/hooks/useLocalStorage';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { darkTheme, lightTheme } from '@/styles/theme';
 
 interface ThemeProps {
