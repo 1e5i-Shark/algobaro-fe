@@ -25,7 +25,7 @@ const subscribe = (listener: Function) => {
 };
 
 const emitChange = () => {
-  for (let listener of listeners) {
+  listeners.forEach(listener => {
     listener();
-  }
+  });
 };
