@@ -1,10 +1,10 @@
 export const PATH = {
   ROOT: '/',
   SIGNUP: '/signup',
-  Home: '/home',
+  HOME: '/home',
   PROFILE: '/profile',
-  CREATELOBBY: '/createlobby',
-  LOBBY: '/lobby',
+  CREATEROOM: '/createroom',
+  ROOM: '/room',
   PROBLEMSOLVE: '/problemsolve',
   PROBLEMSHARE: '/problemshare',
 };
