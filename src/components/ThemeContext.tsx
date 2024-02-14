@@ -15,7 +15,7 @@ export default function ThemeContext({ children }: ThemeProps) {
     if (localTheme) return localTheme;
 
     const systemTheme = window.matchMedia(
-      '(prefers-color-scheme: dark)'
+      '(prefers-color-scheme: light)'
     ).matches;
     return systemTheme ? 'light' : 'dark';
   }, [localTheme]);
