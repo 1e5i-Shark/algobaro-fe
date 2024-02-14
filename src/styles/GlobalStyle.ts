@@ -4,6 +4,9 @@ export const GlobalStyle = createGlobalStyle`
   * {
     color: ${props => props.theme.text_primary_color};
   }
+  html {
+    font-size: 62.5%;
+  }
   body {
     background-color: ${props => props.theme.background_color};
   }
