@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 
-import { GlobalState } from './type';
+import { GlobalStateProps } from './type';
 
-const useGlobalStore = create<GlobalState>()(
+const useGlobalStore = create<GlobalStateProps>()(
   // devtools 설정
   devtools(
     persist(

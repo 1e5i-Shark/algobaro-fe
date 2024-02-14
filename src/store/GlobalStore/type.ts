@@ -1,4 +1,4 @@
-export interface GlobalState {
+export interface GlobalStateProps {
   exampleNum: number;
   increaseNum: () => void;
   decreaseNum: () => void;
