@@ -43,3 +43,5 @@ export const ModalCloseButton = styled.button<{ $cooridinate: string }>`
   top: ${props => props.$cooridinate};
   right: ${props => props.$cooridinate};
 `;
+
+export const ModalContent = styled.div``;
