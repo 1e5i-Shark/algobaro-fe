@@ -1,11 +1,14 @@
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, useRef } from 'react';
 import { createPortal } from 'react-dom';
+
+import useEscModalClose from '@/hooks/useEscModalClose';
 
 import {
   ModalBackground,
   ModalCloseButton,
   ModalContainer,
+  ModalContent,
   ModalWrapper,
 } from './Modal.style';
 
@@ -34,14 +37,18 @@ export default function Modal({
   onClose,
   ...props
 }: ModalProps) {
-  // 모달을 닫는 함수
+  const modalRef = useRef<HTMLDivElement>(null);
+  // 모달을 닫는 handler 함수
   const handleClose = () => {
     onClose(false);
   };
 
+  // esc로 모달을 닫는 커스텀 훅
+  useEscModalClose(handleClose, isOpen, modalRef);
+
   return createPortal(
     isOpen ? (
-      <ModalWrapper>
+      <ModalWrapper ref={modalRef}>
         <ModalBackground onClick={handleClose} />
         <ModalContainer
           width={width}
@@ -50,12 +57,12 @@ export default function Modal({
           {...props}
         >
           <ModalCloseButton
-            cooridinate={borderRadius}
+            $cooridinate={borderRadius}
             onClick={handleClose}
           >
             <CloseRoundedIcon />
           </ModalCloseButton>
-          {children}
+          <ModalContent>{children}</ModalContent>
         </ModalContainer>
       </ModalWrapper>
     ) : null,
