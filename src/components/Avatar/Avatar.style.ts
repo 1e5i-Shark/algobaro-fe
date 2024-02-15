@@ -45,7 +45,7 @@ export const AvatarWrapper = styled.div<{
     width: 100%;
     height: 100%;
     content: '';
-    background-color: ${({ theme }) => theme.background_color};
+    background-color: ${({ theme }) => theme.background_primary};
     background-image: ${({ src, theme }) =>
       src
         ? `url(${src})`
