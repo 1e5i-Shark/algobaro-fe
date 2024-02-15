@@ -3,8 +3,10 @@ import styled, { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
+    padding: 0;
     margin: 0;
     color: ${props => props.theme.text_primary_color};
+    border: 0;
   }
 
   html {
@@ -17,7 +19,6 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   ul, ol, li {
-    padding: 0;
     list-style: none;
   }
 
