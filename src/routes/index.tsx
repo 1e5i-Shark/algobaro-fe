@@ -1,15 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import CreateRoomPage from '@/pages/CreateRoomPage';
-import HomePage from '@/pages/HomePage';
-import MainPage from '@/pages/MainPage';
-import NotFoundPage from '@/pages/NotFoundPage';
-import ProblemSharePage from '@/pages/ProblemSharePage';
-import ProblemSolvePage from '@/pages/ProblemSolvePage';
-import ProfilePage from '@/pages/ProfilePage';
-import RoomPage from '@/pages/RoomPage';
-import SignUpPage from '@/pages/SignUpPage';
-import WelcomePage from '@/pages/WelcomePage';
+import {
+  CreateRoomPage,
+  HomePage,
+  MainPage,
+  NotFoundPage,
+  ProblemSharePage,
+  ProblemSolvePage,
+  ProfilePage,
+  RoomPage,
+  SignUpPage,
+  WelcomePage,
+} from '@/pages';
 
 import { PATH } from './path';
 
