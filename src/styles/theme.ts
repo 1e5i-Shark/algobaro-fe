@@ -2,6 +2,7 @@ export const lightTheme = {
   mode: 'light',
   background_primary: '#FFFFFF',
   background_second: '#E9E9E9',
+  background_modal: '#ffffff',
   primary_color: '#A5F1F6',
   secondary_color: '#CFBEFF',
   black_primary: '#262626',
@@ -21,8 +22,9 @@ export const lightTheme = {
 
 export const darkTheme = {
   mode: 'dark',
-  background_color: '#1E1B1A',
+  background_primary: '#1E1B1A',
   background_second: '#131010',
+  background_modal: '#1e1e1e',
   primary_color: '#A5F1F6',
   secondary_color: '#CFBEFF',
   black_primary: '#262626',
