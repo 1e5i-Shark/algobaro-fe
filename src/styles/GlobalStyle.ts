@@ -2,13 +2,46 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
     color: ${props => props.theme.text_primary_color};
+    border: 0;
   }
+
   html {
     font-size: 62.5%;
   }
+  
   body {
-    background-color: ${props => props.theme.background_color};
+    font-size: 1.6rem;
+    background-color: ${props => props.theme.background_primary};
+  }
+  
+  ul, ol, li {
+    list-style: none;
+  }
+
+  input {
+    border: none;
+    outline: none;
+  }
+
+  textarea {
+    resize: none;
+    border: none;
+    outline: none;
+  }
+
+  button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 `;
 

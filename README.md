@@ -1,4 +1,4 @@
-# Team-1e5i-AlgoBaro-FE
+# AlgoBaro-FE
 
 ## 🚀 Getting Started
 
