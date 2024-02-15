@@ -19,11 +19,11 @@ export default function EditButton() {
   return (
     <IconWrapper>
       <EditRounded
-        color={theme?.primary_black}
         sx={{
-          fontSize: 20,
+          color: theme?.black_primary,
+          fontSize: 18,
         }}
-      ></EditRounded>
+      />
     </IconWrapper>
   );
 }
