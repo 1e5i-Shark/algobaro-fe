@@ -14,7 +14,8 @@ import EditButton from './EditButton';
  * @param src - 이미지 소스
  * @param [isBorder=true] - true는 보더(solid) 적용
  * @param [isShadow=true] - true는 그림자 적용
- * @param [isEdit=false] - true는 그림자 적용
+ * @param [isEdit=false] - true는 편집 아이콘 적용
+ * @param onClick - 마우스 클릭 핸들러 함수
  */
 export default function Avatar({
   size = 'S',
