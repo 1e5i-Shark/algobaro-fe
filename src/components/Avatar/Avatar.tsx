@@ -2,22 +2,11 @@ import { useMemo } from 'react';
 
 import {
   AvatarContainer,
+  AvatarProps,
   AvatarWrapper,
   EditButtonWrapper,
-  Shape,
-  Size,
 } from './Avatar.style';
 import EditButton from './EditButton';
-
-interface AvatarProps {
-  size?: Size;
-  shape?: Shape;
-  src?: string;
-  isBorder?: boolean;
-  isShadow?: boolean;
-  isEdit?: boolean;
-  onClick?: React.MouseEventHandler<HTMLElement>;
-}
 
 /**
  * @param [size='S'] - XS, S, M, L, XL
@@ -42,14 +31,16 @@ export default function Avatar({
   }, []);
 
   return (
-    <AvatarContainer $isPointer={isPointer}>
+    <AvatarContainer
+      $isPointer={isPointer}
+      onClick={onClick}
+    >
       <AvatarWrapper
         size={size}
         shape={shape}
         src={src}
         $isBorder={isBorder}
         $isShadow={isShadow}
-        onClick={onClick}
         {...props}
       ></AvatarWrapper>
       {isEdit && (

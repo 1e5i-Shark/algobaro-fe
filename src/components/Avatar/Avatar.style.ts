@@ -3,6 +3,16 @@ import { styled } from 'styled-components';
 export type Shape = 'circle' | 'round' | 'square';
 export type Size = 'XS' | 'S' | 'M' | 'L' | 'XL';
 
+export interface AvatarProps {
+  size?: Size;
+  shape?: Shape;
+  src?: string;
+  isBorder?: boolean;
+  isShadow?: boolean;
+  isEdit?: boolean;
+  onClick?: (event: React.MouseEventHandler<HTMLElement>) => void;
+}
+
 const ShapeToStyle: { [key: string]: string } = {
   circle: '50%',
   round: '5px',
@@ -58,7 +68,10 @@ export const AvatarWrapper = styled.div<{
   }
 `;
 
-export const AvatarContainer = styled.div<{ $isPointer: boolean }>`
+export const AvatarContainer = styled.div<{
+  $isPointer: boolean;
+  onClick?: AvatarProps['onClick'];
+}>`
   position: relative;
   display: inline-block;
   cursor: ${({ $isPointer }) => $isPointer && 'pointer'};
