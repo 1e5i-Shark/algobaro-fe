@@ -38,8 +38,8 @@ export const ModalContainer = styled.div<ModalContainerProps>`
   box-shadow: 0 0.4rem 1.6rem 0 rgba(0, 0, 0, 0.04);
 `;
 
-export const ModalCloseButton = styled.button<{ cooridinate: string }>`
+export const ModalCloseButton = styled.button<{ $cooridinate: string }>`
   position: absolute;
-  top: ${props => props.cooridinate};
-  right: ${props => props.cooridinate};
+  top: ${props => props.$cooridinate};
+  right: ${props => props.$cooridinate};
 `;
