@@ -63,3 +63,9 @@ export const AvatarContainer = styled.div<{ $isPointer: boolean }>`
   display: inline-block;
   cursor: ${({ $isPointer }) => $isPointer && 'pointer'};
 `;
+
+export const EditButtonWrapper = styled.div`
+  position: absolute;
+  right: -5px;
+  bottom: 0px;
+`;

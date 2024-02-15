@@ -1,6 +1,13 @@
 import { useMemo } from 'react';
 
-import { AvatarContainer, AvatarWrapper, Shape, Size } from './Avatar.style';
+import {
+  AvatarContainer,
+  AvatarWrapper,
+  EditButtonWrapper,
+  Shape,
+  Size,
+} from './Avatar.style';
+import EditButton from './EditButton';
 
 interface AvatarProps {
   size?: Size;
@@ -8,6 +15,7 @@ interface AvatarProps {
   src?: string;
   isBorder?: boolean;
   isShadow?: boolean;
+  isEdit?: boolean;
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
@@ -25,6 +33,7 @@ export default function Avatar({
   src,
   isBorder = true,
   isShadow = true,
+  isEdit = false,
   onClick,
   ...props
 }: AvatarProps) {
@@ -43,6 +52,11 @@ export default function Avatar({
         onClick={onClick}
         {...props}
       ></AvatarWrapper>
+      {isEdit && (
+        <EditButtonWrapper>
+          <EditButton />
+        </EditButtonWrapper>
+      )}
     </AvatarContainer>
   );
 }
