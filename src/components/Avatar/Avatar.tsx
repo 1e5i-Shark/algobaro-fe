@@ -1,12 +1,23 @@
 import { useMemo } from 'react';
 
+import { Shape, Size } from '@/types';
+
 import {
   AvatarContainer,
-  AvatarProps,
   AvatarWrapper,
   EditButtonWrapper,
 } from './Avatar.style';
 import EditButton from './EditButton';
+
+export interface AvatarProps {
+  size?: Size;
+  shape?: Shape;
+  src?: string;
+  isBorder?: boolean;
+  isShadow?: boolean;
+  isEdit?: boolean;
+  onClick?: (event: React.MouseEventHandler<HTMLElement>) => void;
+}
 
 /**
  * @param [size='S'] - XS, S, M, L, XL
@@ -43,7 +54,7 @@ export default function Avatar({
         $isBorder={isBorder}
         $isShadow={isShadow}
         {...props}
-      ></AvatarWrapper>
+      />
       {isEdit && (
         <EditButtonWrapper>
           <EditButton />
