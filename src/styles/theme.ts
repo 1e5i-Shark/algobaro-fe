@@ -17,6 +17,8 @@ export const lightTheme = {
   transparent_50: '#B3B3B350',
   transparent_90: '#B3B3B390',
   red: '#FF7C60',
+  gradation:
+    'linear-gradient(90deg, rgba(165,241,246,1) 0%, rgba(203,185,255,1) 100%)',
 };
 
 export const darkTheme = {
@@ -38,6 +40,8 @@ export const darkTheme = {
   transparent_50: '#FEFEFE50',
   transparent_90: '#FEFEFE90',
   red: '#FF7C60',
+  gradation:
+    'linear-gradient(90deg, rgba(165,241,246,1) 0%, rgba(203,185,255,1) 100%)',
 };
 
 const theme = {
