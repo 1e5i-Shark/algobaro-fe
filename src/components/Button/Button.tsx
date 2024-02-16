@@ -1,3 +1,4 @@
+import CircularProgress from '@mui/material/CircularProgress';
 import { ComponentProps, ReactNode } from 'react';
 
 import { useTheme } from '@/hooks/useTheme';
@@ -14,6 +15,7 @@ interface ButtonProps extends ComponentProps<'button'> {
   fontWeight?: number;
   type?: 'submit' | 'reset' | 'button';
   disabled?: boolean;
+  isLoading?: boolean;
   children: ReactNode;
 }
 
@@ -41,6 +43,7 @@ export default function Button({
   fontWeight = 700,
   type = 'button',
   disabled = false,
+  isLoading = false,
   children,
   ...props
 }: ButtonProps) {
@@ -59,7 +62,8 @@ export default function Button({
       $fontWeight={fontWeight}
       {...props}
     >
-      {children}
+      {isLoading && <CircularProgress size={20} />}
+      {!isLoading && children}
     </BaseButton>
   );
 }
