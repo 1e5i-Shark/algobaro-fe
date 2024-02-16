@@ -42,6 +42,7 @@ export const ModalCloseButton = styled.button<{ $coordinate: string }>`
   position: absolute;
   top: ${props => props.$coordinate};
   right: ${props => props.$coordinate};
+  color: inherit;
 `;
 
 export const ModalContent = styled.div``;
