@@ -39,10 +39,8 @@ export const AvatarWrapper = styled.div<
     background-color: ${({ theme }) => theme.color.background_primary};
     background-image: ${({ src, theme }) =>
       src
-        ? `url(${src})`
-        : theme.mode === 'light'
-          ? 'url(src/assets/avatar-light.png)'
-          : 'url(src/assets/avatar-dark.png)'};
+        ? `url(${src}), url('src/assets/avatar-${theme.mode}.png')`
+        : `url('src/assets/avatar-${theme.mode}.png')`};
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
