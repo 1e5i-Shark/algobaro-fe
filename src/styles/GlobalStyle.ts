@@ -5,7 +5,6 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    color: ${props => props.theme.text_primary_color};
     border: 0;
   }
 
@@ -15,6 +14,7 @@ export const GlobalStyle = createGlobalStyle`
   
   body {
     font-size: 1.6rem;
+    color: ${props => props.theme.text_primary_color};
     background-color: ${props => props.theme.background_primary};
   }
   
