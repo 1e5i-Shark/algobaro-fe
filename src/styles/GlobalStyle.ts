@@ -5,17 +5,17 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    color: ${props => props.theme.text_primary_color};
     border: 0;
   }
-
+  
   html {
     font-size: 62.5%;
   }
   
   body {
     font-size: 1.6rem;
-    background-color: ${props => props.theme.background_primary};
+    color: ${({ theme }) => theme.color.text_primary_color};
+    background-color: ${({ theme }) => theme.color.background_primary};
   }
   
   ul, ol, li {
