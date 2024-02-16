@@ -24,7 +24,7 @@ interface ImageProps {
  * @param width - 가로 너비, 100%의 경우 fill을 사용해주세요.
  * @param height - 세로 너비, 100%의 경우 fill을 사용해주세요.
  * @param shape - circle, square, round
- * @param [fill=false] - 부모 요소를 채웁니다. width, height 속성이 없을 때 fill을 사용합니다. 상위 요소는 relative 속성을 가집니다.
+ * @param [fill=false] - 부모 요소를 채웁니다. width, height 속성이 없을 때 fill을 사용합니다.
  * @param sizes - 미디어 조건을 달 수 있습니다. 예 "(max-width: 500px) 444px"
  * @param priority - 우선순위 true인 경우 lazy loading과 비동기 디코딩이 적용됩니다.
  * @param onClick - 마우스 클릭 이벤트
