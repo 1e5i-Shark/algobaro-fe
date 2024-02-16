@@ -20,9 +20,7 @@ export default function ThemeContext({ children }: ThemeProps) {
     return systemTheme ? 'light' : 'dark';
   }, [localTheme]);
 
-  return (
-    <ThemeProvider theme={themeMode === 'light' ? lightTheme : darkTheme}>
-      {children}
-    </ThemeProvider>
-  );
+  const currentTheme = themeMode === 'light' ? lightTheme : darkTheme;
+
+  return <ThemeProvider theme={currentTheme}>{children}</ThemeProvider>;
 }
