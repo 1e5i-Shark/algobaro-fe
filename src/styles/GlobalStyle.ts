@@ -14,8 +14,8 @@ export const GlobalStyle = createGlobalStyle`
   
   body {
     font-size: 1.6rem;
-    color: ${props => props.theme.text_primary_color};
-    background-color: ${props => props.theme.background_primary};
+    color: ${({ theme }) => theme.color.text_primary_color};
+    background-color: ${({ theme }) => theme.color.background_primary};
   }
   
   ul, ol, li {
