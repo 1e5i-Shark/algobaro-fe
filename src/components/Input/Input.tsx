@@ -15,6 +15,16 @@ import {
   ToggleVisibilityButton,
 } from './Input.style';
 
+/**
+ * react-hook-form을 사용하는 공용 Input 컴포넌트
+ * @param name - useForm에서 사용되는 value의 key (API 필드와 통일하기) 예) email, password
+ * @param register - useForm의 register 함수
+ * @param label - optional) input 상단의 text label. 예) 이메일, 비밀번호
+ * @param required - optional) 필수 입력 여부
+ * @param type - optional) text | email | password. default = text
+ * @param formState - optional) validate 필요 시 사용. useForm의 formState
+ * @param validation - optional) validate 필요 시 사용. validate 패턴과 errorMessage를 지정
+ */
 export default function Input<T extends FieldValues>({
   name,
   register,
