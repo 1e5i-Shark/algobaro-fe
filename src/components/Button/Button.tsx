@@ -17,6 +17,19 @@ interface ButtonProps extends ComponentProps<'button'> {
   children: ReactNode;
 }
 
+/**
+ * Button 컴포넌트
+ * @param [width='13.3rem']
+ * @param [height='4.3rem']
+ * @param [shape='round'] - circle은 원형, square는 사각형, round는 둥근 사각형
+ * @param [textColor=theme.text_primary_color]
+ * @param [backgroundColor=theme.gradient]
+ * @param [fontSize='1.8rem']
+ * @param [fontWeight=700]
+ * @param [type='button'] - submit | reset | button
+ * @param [disabled=false]
+ */
+
 export default function Button({
   width = '13.3rem',
   height = '4.3rem',
