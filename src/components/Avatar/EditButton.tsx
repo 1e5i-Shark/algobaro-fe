@@ -9,7 +9,7 @@ const IconWrapper = styled(Row)`
   justify-content: center;
   width: 25px;
   height: 25px;
-  background-color: ${({ theme }) => theme.primary_color};
+  background-color: ${({ theme }) => theme.color.primary_color};
   border-radius: 50%;
 `;
 

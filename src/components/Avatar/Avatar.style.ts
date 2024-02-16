@@ -1,52 +1,33 @@
 import { styled } from 'styled-components';
 
-export type Shape = 'circle' | 'round' | 'square';
-export type Size = 'XS' | 'S' | 'M' | 'L' | 'XL';
+import { Shape, Size } from '@/types';
 
-export interface AvatarProps {
-  size?: Size;
-  shape?: Shape;
+interface AvatarStyledProps {
+  size: Size;
+  shape: Shape;
   src?: string;
-  isBorder?: boolean;
-  isShadow?: boolean;
-  isEdit?: boolean;
+  $isBorder: boolean;
+  $isShadow: boolean;
+  $isPointer?: boolean;
   onClick?: (event: React.MouseEventHandler<HTMLElement>) => void;
 }
 
-const ShapeToStyle: { [key: string]: string } = {
-  circle: '50%',
-  round: '5px',
-  square: '0px',
-};
-
-const SizeToStyle: { [key: string]: string } = {
-  XS: '26px',
-  S: '36px',
-  M: '46px',
-  L: '56px',
-  XL: '66px',
-};
-
-export const AvatarWrapper = styled.div<{
-  size?: Size;
-  shape?: Shape;
-  src?: string;
-  $isBorder?: boolean;
-  $isShadow?: boolean;
-}>`
+export const AvatarWrapper = styled.div<
+  Omit<AvatarStyledProps, '$isPointer' | 'onClick'>
+>`
   position: relative;
   box-sizing: border-box;
   display: inline-block;
-  width: ${({ size }) => size && SizeToStyle[size]};
-  height: ${({ size }) => size && SizeToStyle[size]};
+  width: ${({ theme, size }) => theme.size.icon[size]};
+  height: ${({ theme, size }) => theme.size.icon[size]};
   overflow: hidden;
   border: ${({ $isBorder, theme }) =>
-    $isBorder ? `1px solid ${theme.transparent_30}` : 'none'};
-  border-radius: ${({ shape }) => shape && ShapeToStyle[shape]};
+    $isBorder ? `1px solid ${theme.color.transparent_30}` : 'none'};
+  border-radius: ${({ theme, shape }) => theme.shape[shape]};
   box-shadow: ${({ $isShadow, theme }) =>
     $isShadow &&
     (theme.mode === 'light'
-      ? `0px 4px 8px ${theme.black_primary}20`
+      ? `0px 4px 8px ${theme.color.black_primary}20`
       : `0px 4px 8px #00000050`)};
   &::before {
     position: absolute;
@@ -55,7 +36,7 @@ export const AvatarWrapper = styled.div<{
     width: 100%;
     height: 100%;
     content: '';
-    background-color: ${({ theme }) => theme.background_primary};
+    background-color: ${({ theme }) => theme.color.background_primary};
     background-image: ${({ src, theme }) =>
       src
         ? `url(${src})`
@@ -68,10 +49,9 @@ export const AvatarWrapper = styled.div<{
   }
 `;
 
-export const AvatarContainer = styled.div<{
-  $isPointer: boolean;
-  onClick?: AvatarProps['onClick'];
-}>`
+export const AvatarContainer = styled.div<
+  Pick<AvatarStyledProps, '$isPointer' | 'onClick'>
+>`
   position: relative;
   display: inline-block;
   cursor: ${({ $isPointer }) => $isPointer && 'pointer'};
