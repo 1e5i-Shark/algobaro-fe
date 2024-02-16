@@ -33,15 +33,15 @@ export const ModalContainer = styled.div<ModalContainerProps>`
   justify-content: center;
   width: ${props => props.width};
   height: ${props => props.height};
-  background-color: ${({ theme }) => theme.background_modal};
+  background-color: ${({ theme }) => theme.color.background_modal};
   border-radius: ${props => props.$borderRadius};
   box-shadow: 0 0.4rem 1.6rem 0 rgba(0, 0, 0, 0.04);
 `;
 
-export const ModalCloseButton = styled.button<{ $cooridinate: string }>`
+export const ModalCloseButton = styled.button<{ $coordinate: string }>`
   position: absolute;
-  top: ${props => props.$cooridinate};
-  right: ${props => props.$cooridinate};
+  top: ${props => props.$coordinate};
+  right: ${props => props.$coordinate};
 `;
 
 export const ModalContent = styled.div``;
