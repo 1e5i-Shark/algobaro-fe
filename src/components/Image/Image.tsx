@@ -16,7 +16,6 @@ interface ImageProps {
   sizes?: string;
   priority?: boolean;
   onClick?: (event: React.MouseEvent<HTMLImageElement>) => void;
-  [key: string]: any;
 }
 
 /**
