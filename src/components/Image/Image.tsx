@@ -1,5 +1,7 @@
-import { useMemo } from 'react';
+import { ImageNotSupportedRounded } from '@mui/icons-material';
+import { useMemo, useState } from 'react';
 
+import { useTheme } from '@/hooks/useTheme';
 import { Shape } from '@/types';
 
 import { ImageWrapper } from './Image.style';
@@ -40,28 +42,48 @@ export default function Image({
   onClick,
   ...props
 }: ImageProps) {
+  const [isError, setIsError] = useState(false);
+
+  const theme = useTheme();
+
+  const iconColor = useMemo(() => {
+    return theme?.mode === 'light'
+      ? theme?.color.gray_50
+      : theme?.color.white_primary;
+  }, []);
+
   const $isPointer = useMemo(() => {
     return onClick ? true : false;
   }, []);
+
+  const handleImageError = () => {
+    setIsError(true);
+  };
 
   return (
     <ImageWrapper
       width={width}
       height={height}
       shape={shape}
+      $isImageError={isError}
       $isPointer={$isPointer}
       $fill={fill}
     >
-      <img
-        src={src}
-        alt={alt}
-        sizes={sizes}
-        loading={!priority ? 'lazy' : undefined}
-        decoding={!priority ? 'async' : undefined}
-        object-fit={fill ? 'cover' : undefined}
-        onClick={onClick}
-        {...props}
-      />
+      {!isError ? (
+        <img
+          src={src}
+          alt={alt}
+          sizes={sizes}
+          loading={!priority ? 'lazy' : undefined}
+          decoding={!priority ? 'async' : undefined}
+          object-fit={fill ? 'cover' : undefined}
+          onError={handleImageError}
+          onClick={onClick}
+          {...props}
+        />
+      ) : (
+        <ImageNotSupportedRounded sx={{ fontSize: 30, color: iconColor }} />
+      )}
     </ImageWrapper>
   );
 }
