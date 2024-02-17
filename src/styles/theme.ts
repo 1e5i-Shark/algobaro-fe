@@ -54,6 +54,7 @@ export const lightTheme = {
   color: {
     background_primary: '#FFFFFF',
     background_second: '#E9E9E9',
+    background_modal: '#ffffff',
     text_primary_color: '#2C2C2C',
     text_secondary_color: '#F0F0F0',
     transparent_10: '#B3B3B310',
@@ -73,6 +74,7 @@ export const darkTheme = {
   color: {
     background_primary: '#1E1B1A',
     background_second: '#131010',
+    background_modal: '#1e1e1e',
     text_primary_color: '#F0F0F0',
     text_secondary_color: '#2C2C2C',
     transparent_10: '#FEFEFE10',
