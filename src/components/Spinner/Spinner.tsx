@@ -5,6 +5,7 @@ import { Size } from '@/types';
 interface SpinnerProps {
   size?: Size;
   color?: string;
+  weight?: string;
 }
 
 const spin = keyframes`
@@ -27,7 +28,7 @@ const SpinnerContainer = styled.div`
 const SpinnerWrapper = styled.div<SpinnerProps>`
   width: ${({ size, theme }) => size && theme.size.icon[size]};
   height: ${({ size, theme }) => size && theme.size.icon[size]};
-  border: ${({ color }) => `0.3rem solid ${color}`};
+  border: ${({ color, weight }) => `${weight} solid ${color}`};
   border-top-color: transparent;
   border-radius: 50%;
   animation: ${spin} 0.7s linear infinite;
@@ -36,6 +37,7 @@ const SpinnerWrapper = styled.div<SpinnerProps>`
 export default function Spinner({
   size = 'XS',
   color,
+  weight = '0.3rem',
   ...props
 }: SpinnerProps) {
   const theme = useTheme();
@@ -45,6 +47,7 @@ export default function Spinner({
       <SpinnerWrapper
         size={size}
         color={color || theme.color.secondary_color}
+        weight={weight}
         title="spinner"
         {...props}
       />
