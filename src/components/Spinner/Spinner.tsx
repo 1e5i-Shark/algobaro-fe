@@ -17,7 +17,8 @@ const spin = keyframes`
   }
 `;
 
-const SpinnerContainer = styled.div`
+const SpinnerContainer = styled.div<{ zIndex: number }>`
+  z-index: ${({ zIndex }) => zIndex};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,8 +43,10 @@ export default function Spinner({
 }: SpinnerProps) {
   const theme = useTheme();
 
+  const ZINDEX_SPINNER = 999;
+
   return (
-    <SpinnerContainer>
+    <SpinnerContainer zIndex={ZINDEX_SPINNER}>
       <SpinnerWrapper
         size={size}
         color={color || theme.color.secondary_color}
