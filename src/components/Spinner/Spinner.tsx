@@ -1,32 +1,53 @@
 import styled, { keyframes, useTheme } from 'styled-components';
 
+import { Size } from '@/types';
+
 interface SpinnerProps {
-  size?: string;
+  size?: Size;
   color?: string;
 }
 
 const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
   to {
     transform: rotate(360deg);
   }
 `;
 
-const SpinnerWrapper = styled.div<SpinnerProps>`
-  display: inline-block;
-  width: ${({ size, theme }) => size && theme.size[size]};
-  height: ${({ size, theme }) => size && theme.size[size]};
-  border: 2px solid ${({ color }) => color};
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: ${spin} 0.7s ease-out infinite;
+const SpinnerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 
-export default function Spinner({ size = 'L', color }: SpinnerProps) {
+const SpinnerWrapper = styled.div<SpinnerProps>`
+  width: ${({ size, theme }) => size && theme.size.icon[size]};
+  height: ${({ size, theme }) => size && theme.size.icon[size]};
+  border: ${({ color }) => `0.3rem solid ${color}`};
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: ${spin} 0.7s linear infinite;
+`;
+
+export default function Spinner({
+  size = 'XS',
+  color,
+  ...props
+}: SpinnerProps) {
   const theme = useTheme();
+
   return (
-    <SpinnerWrapper
-      size={size}
-      color={color || theme.color.gradation}
-    />
+    <SpinnerContainer>
+      <SpinnerWrapper
+        size={size}
+        color={color || theme.color.secondary_color}
+        title="spinner"
+        {...props}
+      />
+    </SpinnerContainer>
   );
 }
