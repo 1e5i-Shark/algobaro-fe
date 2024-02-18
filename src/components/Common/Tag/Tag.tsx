@@ -11,6 +11,7 @@ interface TagProps extends HTMLAttributes<HTMLDivElement> {
   fontSize?: string;
   backgroundColor?: string;
   borderColor?: string;
+  isSelected?: boolean;
 }
 
 export default function Tag({
@@ -21,6 +22,7 @@ export default function Tag({
   backgroundColor = '',
   borderColor = '',
   children,
+  isSelected = false,
   ...props
 }: TagProps) {
   return (
@@ -31,6 +33,7 @@ export default function Tag({
       $fontSize={fontSize}
       $backgroundColor={backgroundColor}
       $borderColor={borderColor}
+      $isSelected={isSelected}
       {...props}
     >
       {children}

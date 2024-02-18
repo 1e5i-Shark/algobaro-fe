@@ -9,6 +9,7 @@ interface TagWrapperProps {
   $fontSize: string;
   $backgroundColor: string;
   $borderColor: string;
+  $isSelected: boolean;
 }
 
 export const TagWrapper = styled.div<TagWrapperProps>`
@@ -19,11 +20,17 @@ export const TagWrapper = styled.div<TagWrapperProps>`
   height: ${({ $height }) => $height};
   padding: ${({ theme }) => theme.size.XS + ' ' + theme.size.L};
   font-size: ${({ $fontSize }) => $fontSize};
+  color: ${({ $isSelected, theme }) =>
+    $isSelected && theme.color.black_primary};
   cursor: ${({ mode }) => (mode !== 'normal' ? 'pointer' : '')};
 
   user-select: none;
-  background-color: ${({ theme, $backgroundColor, mode }) =>
-    mode === 'select' ? $backgroundColor : theme.color.gray_50};
+  background-color: ${({ theme, $backgroundColor, $isSelected, mode }) =>
+    mode === 'select'
+      ? $isSelected
+        ? theme.color.secondary_color
+        : $backgroundColor
+      : theme.color.gray_50};
   border: 1px solid transparent;
   border-color: ${({ $borderColor, mode, theme, $backgroundColor }) =>
     mode === 'select' && !$borderColor
