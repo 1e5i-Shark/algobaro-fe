@@ -32,9 +32,17 @@ export const TagWrapper = styled.div<TagWrapperProps>`
         : $backgroundColor
       : theme.color.gray_50};
   border: 1px solid transparent;
-  border-color: ${({ $borderColor, mode, theme, $backgroundColor }) =>
+  border-color: ${({
+    $borderColor,
+    $isSelected,
+    mode,
+    theme,
+    $backgroundColor,
+  }) =>
     mode === 'select' && !$borderColor
-      ? theme.color.gray_50
+      ? $isSelected
+        ? theme.color.secondary_color
+        : theme.color.gray_50
       : $backgroundColor};
   border-radius: ${({ $height }) =>
     (Number($height.replace('rem', '')) / 2).toString() + 'rem'};
