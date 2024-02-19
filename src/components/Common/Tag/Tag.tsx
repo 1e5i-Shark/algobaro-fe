@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, useState } from 'react';
 
 import { TagWrapper } from './Tag.style';
 
@@ -25,6 +25,12 @@ export default function Tag({
   isSelected = false,
   ...props
 }: TagProps) {
+  const [isTagSelect, setIsTagSelect] = useState(isSelected);
+
+  const handleSelectTag = () => {
+    setIsTagSelect(!isTagSelect);
+  };
+
   return (
     <TagWrapper
       mode={mode}
@@ -33,7 +39,8 @@ export default function Tag({
       $fontSize={fontSize}
       $backgroundColor={backgroundColor}
       $borderColor={borderColor}
-      $isSelected={isSelected}
+      $isSelected={mode === 'select' ? isTagSelect : isSelected}
+      onClick={handleSelectTag}
       {...props}
     >
       {children}
