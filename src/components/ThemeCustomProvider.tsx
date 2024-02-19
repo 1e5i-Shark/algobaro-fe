@@ -39,11 +39,15 @@ export function ThemeCustomProvider({ children }: ThemeProps) {
   };
 
   useEffect(() => {
-    setThemeMode(getSystemTheme());
+    const systemTheme = getSystemTheme();
+
+    if (!localTheme) setThemeMode(systemTheme);
+
+    localTheme === 'light' ? setThemeMode('light') : setThemeMode('dark');
   }, []);
 
   useEffect(() => {
-    if (!localTheme) {
+    if (localTheme !== 'light' && localTheme !== 'dark') {
       const theme = getSystemTheme();
 
       setThemeMode(theme);
