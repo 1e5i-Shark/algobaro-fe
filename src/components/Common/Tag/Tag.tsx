@@ -15,7 +15,7 @@ interface TagProps extends HTMLAttributes<HTMLDivElement> {
   backgroundColor?: string;
   borderColor?: string;
   isSelected?: boolean;
-  onSelected?: (tagName: string) => void;
+  onSelected?: (tagName: string, newState: boolean) => void;
   onDeleted?: (tagName: string) => void;
 }
 
@@ -28,7 +28,7 @@ interface TagProps extends HTMLAttributes<HTMLDivElement> {
  * @param [fontSize = '1.6rem'] - 태그 폰트 사이즈
  * @param [backgroundColor = 'gray_50'] - 태그 배경, 선택 태그의 경우 전역 기본 배경색
  * @param [borderColor = {기본 배경색}] - border 색
- * @param [onSelected] - 선택 시 태그 이름 외부로 전달
+ * @param [onSelected] - 선택 시 태그 이름과 선택 여부를 외부로 전달
  * @param [onDeleted] - 삭제 시 태그 이름 외부로 전달
  * @returns
  */
@@ -55,7 +55,7 @@ export default function Tag({
   // 태그 선택 handler 함수
   const handleSelectTag = () => {
     setIsTagSelect(!isTagSelect);
-    tagName && onSelected && onSelected(tagName);
+    tagName && onSelected && onSelected(tagName, !isTagSelect);
   };
 
   // 태그 삭제 handler 함수
