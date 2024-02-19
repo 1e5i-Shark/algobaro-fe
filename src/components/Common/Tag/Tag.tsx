@@ -14,6 +14,7 @@ interface TagProps extends HTMLAttributes<HTMLDivElement> {
   borderColor?: string;
   isSelected?: boolean;
   onSelected?: (tagName: string) => void;
+  onDeleted?: (tagName: string) => void;
 }
 
 export default function Tag({
@@ -26,13 +27,20 @@ export default function Tag({
   children,
   isSelected = false,
   onSelected,
+  onDeleted,
   ...props
 }: TagProps) {
   const [isTagSelect, setIsTagSelect] = useState(isSelected);
 
+  const tagName = children?.toString();
+
   const handleSelectTag = () => {
     setIsTagSelect(!isTagSelect);
-    children && onSelected && onSelected(children.toString());
+    tagName && onSelected && onSelected(tagName);
+  };
+
+  const handleDeleteTag = () => {
+    tagName && onDeleted && onDeleted(tagName);
   };
 
   return (
@@ -49,7 +57,10 @@ export default function Tag({
     >
       {children}
       {mode === 'delete' && (
-        <DeleteButton className="tag-delete-button">
+        <DeleteButton
+          className="tag-delete-button"
+          onClick={handleDeleteTag}
+        >
           <CloseRoundedIcon />
         </DeleteButton>
       )}
