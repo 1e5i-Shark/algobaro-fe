@@ -1,6 +1,7 @@
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { HTMLAttributes, useState } from 'react';
 
-import { TagWrapper } from './Tag.style';
+import { DeleteButton, TagWrapper } from './Tag.style';
 
 export type TagModeType = 'normal' | 'select' | 'delete';
 
@@ -12,6 +13,7 @@ interface TagProps extends HTMLAttributes<HTMLDivElement> {
   backgroundColor?: string;
   borderColor?: string;
   isSelected?: boolean;
+  // onSelected?: (tagName: string) => void;
 }
 
 export default function Tag({
@@ -23,12 +25,14 @@ export default function Tag({
   borderColor = '',
   children,
   isSelected = false,
+  // onSelected,
   ...props
 }: TagProps) {
   const [isTagSelect, setIsTagSelect] = useState(isSelected);
 
   const handleSelectTag = () => {
     setIsTagSelect(!isTagSelect);
+    // children && onSelected && onSelected(children.toString());
   };
 
   return (
@@ -44,6 +48,11 @@ export default function Tag({
       {...props}
     >
       {children}
+      {mode === 'delete' && (
+        <DeleteButton className="tag-delete-button">
+          <CloseRoundedIcon />
+        </DeleteButton>
+      )}
     </TagWrapper>
   );
 }
