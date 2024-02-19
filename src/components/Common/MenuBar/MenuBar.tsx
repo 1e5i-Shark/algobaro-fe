@@ -1,6 +1,7 @@
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { MouseEvent, ReactElement, useState } from 'react';
+import { useTheme } from 'styled-components';
 
 interface BasicMenuProps {
   children: ReactElement;
@@ -18,7 +19,9 @@ export default function MenuBar({
   menuList,
   fontSize = '1rem',
   color = 'black',
+  shadow = '',
 }: BasicMenuProps) {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -34,6 +37,14 @@ export default function MenuBar({
 
       <Menu
         id="basic-menu"
+        slotProps={{
+          paper: {
+            sx: {
+              bgcolor: theme.color.gray_30,
+              boxShadow: shadow || 'none',
+            },
+          },
+        }}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
