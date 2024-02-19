@@ -47,8 +47,8 @@ const commonTheme = {
   gray_10: '#EFEFEF',
   red: '#FF7C60',
   green: '#72EC5E',
-  gradation:
-    'linear-gradient(90deg, rgba(165,241,246,1) 0%, rgba(203,185,255,1) 100%)',
+  gradation: 'linear-gradient(90deg, #A5F1F6, #CFBEFF)',
+  circle_gradation: 'linear-gradient(135deg, #A5F1F6, #CFBEFF)',
 };
 
 export const lightTheme = {
