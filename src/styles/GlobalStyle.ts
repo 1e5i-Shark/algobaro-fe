@@ -7,15 +7,15 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     border: 0;
   }
-
+  
   html {
     font-size: 62.5%;
   }
   
   body {
     font-size: 1.6rem;
-    color: ${props => props.theme.text_primary_color};
-    background-color: ${props => props.theme.background_primary};
+    color: ${({ theme }) => theme.color.text_primary_color};
+    background-color: ${({ theme }) => theme.color.background_primary};
   }
   
   ul, ol, li {
