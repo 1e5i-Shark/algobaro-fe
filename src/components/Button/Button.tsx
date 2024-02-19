@@ -1,7 +1,6 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import { ComponentProps, ReactNode } from 'react';
-
-import { useTheme } from '@/hooks/useTheme';
+import { useTheme } from 'styled-components';
 
 import { BaseButton } from './Button.style';
 
@@ -35,8 +34,7 @@ interface ButtonProps extends ComponentProps<'button'> {
 export default function Button({
   width = '13.3rem',
   height = '4.3rem',
-  // 테마 리팩토링 적용되면 'round'로 변경 예정입니다.
-  shape = '0.5rem',
+  shape,
   textColor,
   backgroundColor,
   fontSize = '1.8rem',
@@ -55,9 +53,9 @@ export default function Button({
       disabled={disabled}
       $width={width}
       $height={height}
-      $shape={shape}
-      $textColor={textColor || theme?.text_primary_color}
-      $backgroundColor={backgroundColor || theme?.gradation}
+      $shape={shape || theme.shape.round}
+      $textColor={textColor || theme.color.black_primary}
+      $backgroundColor={backgroundColor || theme.color.gradation}
       $fontSize={fontSize}
       $fontWeight={fontWeight}
       {...props}
