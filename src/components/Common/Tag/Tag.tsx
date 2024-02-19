@@ -13,7 +13,7 @@ interface TagProps extends HTMLAttributes<HTMLDivElement> {
   backgroundColor?: string;
   borderColor?: string;
   isSelected?: boolean;
-  // onSelected?: (tagName: string) => void;
+  onSelected?: (tagName: string) => void;
 }
 
 export default function Tag({
@@ -25,14 +25,14 @@ export default function Tag({
   borderColor = '',
   children,
   isSelected = false,
-  // onSelected,
+  onSelected,
   ...props
 }: TagProps) {
   const [isTagSelect, setIsTagSelect] = useState(isSelected);
 
   const handleSelectTag = () => {
     setIsTagSelect(!isTagSelect);
-    // children && onSelected && onSelected(children.toString());
+    children && onSelected && onSelected(children.toString());
   };
 
   return (
