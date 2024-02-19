@@ -1,5 +1,6 @@
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { HTMLAttributes, useState } from 'react';
+import { useTheme } from 'styled-components';
 
 import { DeleteButton, TagWrapper } from './Tag.style';
 
@@ -10,6 +11,7 @@ interface TagProps extends HTMLAttributes<HTMLDivElement> {
   width?: string;
   height?: string;
   fontSize?: string;
+  textColor?: string;
   backgroundColor?: string;
   borderColor?: string;
   isSelected?: boolean;
@@ -35,6 +37,7 @@ export default function Tag({
   width = 'fit-content',
   height = '3rem',
   fontSize = '',
+  textColor,
   backgroundColor = '',
   borderColor = '',
   children,
@@ -43,6 +46,8 @@ export default function Tag({
   onDeleted,
   ...props
 }: TagProps) {
+  const theme = useTheme();
+
   const [isTagSelect, setIsTagSelect] = useState(isSelected);
 
   const tagName = children?.toString();
@@ -64,9 +69,26 @@ export default function Tag({
       $width={width}
       $height={height}
       $fontSize={fontSize}
-      $backgroundColor={backgroundColor}
-      $borderColor={borderColor}
-      $isSelected={mode === 'select' ? isTagSelect : isSelected}
+      $textColor={
+        textColor ||
+        (mode === 'select' && isTagSelect
+          ? theme.color.black_primary
+          : theme.color.text_primary_color)
+      }
+      $backgroundColor={
+        mode === 'select'
+          ? isTagSelect
+            ? theme.color.secondary_color
+            : backgroundColor
+          : theme.color.gray_50
+      }
+      $borderColor={
+        mode === 'select' && !borderColor
+          ? isTagSelect
+            ? theme.color.secondary_color
+            : theme.color.gray_50
+          : backgroundColor
+      }
       onClick={handleSelectTag}
       {...props}
     >
