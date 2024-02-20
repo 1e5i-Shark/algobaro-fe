@@ -5,6 +5,18 @@ import { Size } from '@/types';
 
 import { MessageContainer, MessageSender } from './Message.style';
 
+/**
+ * Message 컴포넌트
+ * @param [ padding = '8px' ] - Message 컴포넌트 padding
+ * @param [ avatarSize = 'XS' ] - avatar의 크기
+ * @param [ avatarSrc = '' ] - avatar의 이미지 주소
+ * @param [ avatarShadow = true ] - avatar의 그림자 표시 여부
+ * @param [ userName = 'User1' ] - 작성자
+ * @param [ fontSize = '1.6rem' ] - 작성자 및 메시지 내용의 폰트 크기
+ * @param [ iconSize = 'XS' ] - icon의 크기
+ * @param [ comment ] - required, 메시지 내용
+ */
+
 interface MessageProps {
   padding?: string;
   avatarSize?: Size;
