@@ -5,6 +5,7 @@ import { HTMLAttributes, useState } from 'react';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
+import { ITEM_HEIGHT, ITEM_PADDING_TOP } from './constant';
 import { DropDownWrapper } from './DropDown.style';
 
 interface DropDownData {
@@ -45,9 +46,6 @@ export default function MultiDropDown({
   labelFontSize,
   ...props
 }: DropDownProps) {
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-
   const { theme } = useCustomTheme();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
