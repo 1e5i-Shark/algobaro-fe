@@ -10,6 +10,14 @@ interface EllipsisTextProps extends ComponentProps<'span'> {
   children: ReactNode;
 }
 
+/**
+ * EllipsisText 컴포넌트
+ * @param [width='100%']
+ * @param [fontSize='1.6rem']
+ * @param [fontWeight=400]
+ * @param [lineClamp=1]
+ */
+
 export default function EllipsisText({
   width = '100%',
   fontSize = '1.6rem',
