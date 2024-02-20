@@ -5,7 +5,6 @@ import { useTheme } from 'styled-components';
 import { CheckBoxWrapper, LabelText } from './CheckBox.style';
 
 interface CheckBoxProps {
-  name?: string;
   label?: string;
   checked?: boolean;
   disabled?: boolean;
@@ -19,7 +18,6 @@ interface CheckBoxProps {
 
 /**
  * CheckBox 컴포넌트
- * @param [name='checkbox']
  * @param [label (optional)]
  * @param [checked=false]
  * @param [disabled=false]
@@ -31,7 +29,6 @@ interface CheckBoxProps {
  */
 
 export default function CheckBox({
-  name = 'checkbox',
   label,
   checked = false,
   disabled = false,
@@ -51,8 +48,8 @@ export default function CheckBox({
   return (
     <CheckBoxWrapper>
       <Checkbox
-        id={name}
-        name={name}
+        id={label}
+        name={label}
         checked={checked}
         disabled={disabled}
         onChange={onChange}
@@ -69,7 +66,7 @@ export default function CheckBox({
       />
       {label && (
         <LabelText
-          htmlFor={name}
+          htmlFor={label}
           $textColor={defaultTextColor}
           $fontSize={fontSize}
           $fontWeight={fontWeight}
