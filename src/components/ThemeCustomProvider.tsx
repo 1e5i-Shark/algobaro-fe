@@ -31,14 +31,17 @@ export function ThemeCustomProvider({ children }: ThemeProps) {
 
   const toggleTheme = () => {
     const toggledTheme = themeMode === 'dark' ? 'light' : 'dark';
+
     setThemeMode(toggledTheme);
     setLocalTheme(toggledTheme);
   };
 
   useEffect(() => {
-    if (!localTheme) setThemeMode(getSystemTheme());
-
-    localTheme === 'dark' ? setThemeMode('dark') : setThemeMode('light');
+    if (localTheme) {
+      localTheme === 'dark' ? setThemeMode('dark') : setThemeMode('light');
+    } else {
+      setThemeMode(getSystemTheme());
+    }
   }, [localTheme]);
 
   const currentTheme = themeMode === 'dark' ? darkTheme : lightTheme;
