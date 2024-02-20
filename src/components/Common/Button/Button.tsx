@@ -1,6 +1,7 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import { ComponentProps, ReactNode } from 'react';
-import { useTheme } from 'styled-components';
+
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 import { BaseButton } from './Button.style';
 
@@ -45,7 +46,7 @@ export default function Button({
   children,
   ...props
 }: ButtonProps) {
-  const theme = useTheme();
+  const { theme } = useCustomTheme();
 
   return (
     <BaseButton
