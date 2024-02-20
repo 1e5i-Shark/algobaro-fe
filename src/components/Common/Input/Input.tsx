@@ -3,7 +3,7 @@ import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import { useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 
-import { useTheme } from '@/hooks/useTheme';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { InputProps } from '@/types/input';
 
 import {
@@ -35,7 +35,7 @@ export default function Input<T extends FieldValues>({
   validation,
   ...props
 }: InputProps<T>) {
-  const theme = useTheme();
+  const { theme } = useCustomTheme();
 
   const [inputType, setInputType] = useState(type);
   const isPasswordType = inputType === 'password';
@@ -70,11 +70,11 @@ export default function Input<T extends FieldValues>({
         >
           {isPasswordType ? (
             <VisibilityRoundedIcon
-              sx={{ width: 20, height: 20, color: theme?.gray_50 }}
+              sx={{ width: 20, height: 20, color: theme.color.gray_50 }}
             />
           ) : (
             <VisibilityOffRoundedIcon
-              sx={{ width: 20, height: 20, color: theme?.gray_50 }}
+              sx={{ width: 20, height: 20, color: theme.color.gray_50 }}
             />
           )}
         </ToggleVisibilityButton>
