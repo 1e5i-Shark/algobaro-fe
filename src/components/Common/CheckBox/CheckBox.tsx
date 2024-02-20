@@ -17,6 +17,19 @@ interface CheckBoxProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
+/**
+ * CheckBox 컴포넌트
+ * @param [name='checkbox']
+ * @param [label (optional)]
+ * @param [checked=false]
+ * @param [disabled=false]
+ * @param [textColor=theme.color.text_primary_color]
+ * @param [backgroundColor=theme.color.gray_50]
+ * @param [fontSize='1.6rem']
+ * @param [fontWeight=400]
+ * @param [onChange (optional)] - (e: ChangeEvent<HTMLInputElement>) => void
+ */
+
 export default function CheckBox({
   name = 'checkbox',
   label,
