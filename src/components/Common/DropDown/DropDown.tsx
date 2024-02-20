@@ -99,6 +99,12 @@ export default function DropDown({
                 color: theme.color.text_primary_color,
                 backgroundColor:
                   backgroundColor || theme.color.background_second,
+                '& li:not(:first-child)': {
+                  borderTop: `1px solid ${theme.color.text_secondary_color}`,
+                },
+                '& li:hover': {
+                  backgroundColor: theme.color.transparent_50,
+                },
               },
               '& .MuiMenuItem-root': {
                 fontSize,
