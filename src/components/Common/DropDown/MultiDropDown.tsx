@@ -51,8 +51,9 @@ export default function MultiDropDown({
   const { theme } = useCustomTheme();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
-  const isEmpty = selectedValues.length === 0;
+  const isEmpty = selectedValues.length === 0; // 미선택 여부
 
+  // [키, 배열] 형태의 배열 데이터 생성
   const multiDataSet = Object.keys(dataSet).map(key => {
     return [key, dataSet[key]];
   });
@@ -78,6 +79,7 @@ export default function MultiDropDown({
           },
         }}
       >
+        {/* 조건부 라벨 렌더링 */}
         {!isEmpty ? null : (
           <InputLabel
             sx={{
@@ -90,7 +92,7 @@ export default function MultiDropDown({
             {labelName}
           </InputLabel>
         )}
-
+        {/* select 영역 */}
         <Select
           label={!isEmpty ? '' : labelName}
           labelId={isEmpty ? labelId : ''}
@@ -136,6 +138,7 @@ export default function MultiDropDown({
             },
           }}
         >
+          {/* 선택 메뉴 영역 */}
           {multiDataSet.map(([key, value]) => {
             return (
               <MenuItem

@@ -48,6 +48,7 @@ export default function DropDown({
   const { theme } = useCustomTheme();
   const [selectedValue, setSelectedValue] = useState('');
 
+  // 데이터 키 배열
   const dataKeys = Object.keys(dataSet);
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -69,6 +70,7 @@ export default function DropDown({
           },
         }}
       >
+        {/* 조건부 라벨 렌더링 */}
         {selectedValue ? null : (
           <InputLabel
             sx={{
@@ -83,7 +85,7 @@ export default function DropDown({
             {labelName}
           </InputLabel>
         )}
-
+        {/* select 영역 */}
         <Select
           label={selectedValue ? '' : labelName}
           labelId={!selectedValue ? labelId : ''}
@@ -121,6 +123,7 @@ export default function DropDown({
             },
           }}
         >
+          {/* 선택 메뉴 영역 */}
           <MenuItem value="">선택 없음</MenuItem>
           {dataKeys.map(dataKey => {
             return (
