@@ -1,6 +1,7 @@
 import { Checkbox } from '@mui/material';
 import { ChangeEvent } from 'react';
-import { useTheme } from 'styled-components';
+
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 import { CheckBoxWrapper, LabelText } from './CheckBox.style';
 
@@ -40,7 +41,7 @@ export default function CheckBox({
   fontWeight = 400,
   onChange,
 }: CheckBoxProps) {
-  const theme = useTheme();
+  const { theme } = useCustomTheme();
 
   const defaultSize = size || theme.size.L;
   const defaultBackgroundColor = backgroundColor || theme.color.gray_50;
