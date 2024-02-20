@@ -21,6 +21,7 @@ interface CheckBoxProps {
  * @param [label (optional)]
  * @param [checked=false]
  * @param [disabled=false]
+ * @param [size=theme.size.L]
  * @param [textColor=theme.color.text_primary_color]
  * @param [backgroundColor=theme.color.gray_50]
  * @param [fontSize='1.6rem']
