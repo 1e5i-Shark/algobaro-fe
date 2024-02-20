@@ -22,6 +22,18 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
   labelFontSize?: string;
 }
 
+/**
+ * DropDown 컴포넌트
+ * @param {string} dataId - 데이터 id `필수`, Select 컴포넌트 식별용
+ * @param {DropDownData} dataSet - 데이터셋 `필수`, `{[dataKey: string | number]: string}`
+ * @param {string} labelId - 라벨 id `필수`
+ * @param {string} labelName - 라벨명 `필수`
+ * @param {string} width - 너비`옵션`
+ * @param {string} backgroundColor - 배경색 `옵션`
+ * @param {string} fontSize - 폰트사이즈 `옵션`, 기본값 `"2rem"`
+ * @param {string} labelFontSize - 라벨폰트사이즈 `옵션`
+ * @returns
+ */
 export default function DropDown({
   dataId,
   dataSet,
