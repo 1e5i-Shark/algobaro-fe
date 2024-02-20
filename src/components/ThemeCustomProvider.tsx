@@ -30,20 +30,18 @@ export function ThemeCustomProvider({ children }: ThemeProps) {
   const [localTheme, setLocalTheme] = useLocalStorage('theme');
 
   const toggleTheme = () => {
-    const toggledTheme = themeMode === 'light' ? 'dark' : 'light';
+    const toggledTheme = themeMode === 'dark' ? 'light' : 'dark';
     setThemeMode(toggledTheme);
     setLocalTheme(toggledTheme);
   };
 
   useEffect(() => {
-    if (localTheme !== 'light' && localTheme !== 'dark') {
-      const theme = getSystemTheme();
+    if (!localTheme) setThemeMode(getSystemTheme());
 
-      setThemeMode(theme);
-    }
+    localTheme === 'dark' ? setThemeMode('dark') : setThemeMode('light');
   }, [localTheme]);
 
-  const currentTheme = themeMode === 'light' ? lightTheme : darkTheme;
+  const currentTheme = themeMode === 'dark' ? darkTheme : lightTheme;
 
   return (
     <ThemeCustomContext.Provider value={{ theme: currentTheme, toggleTheme }}>
