@@ -15,36 +15,25 @@ interface ThemeProps {
   children: ReactNode;
 }
 
+const getSystemTheme = () => {
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return systemTheme ? 'dark' : 'light';
+};
+
 export const ThemeCustomContext = createContext({
   theme: lightTheme,
   toggleTheme: () => {},
 });
 
 export function ThemeCustomProvider({ children }: ThemeProps) {
-  const [themeMode, setThemeMode] = useState<ThemeModeType | null>(null);
-
+  const [themeMode, setThemeMode] = useState<ThemeModeType>(getSystemTheme());
   const [localTheme, setLocalTheme] = useLocalStorage('theme');
-
-  const getSystemTheme = () => {
-    const systemTheme = window.matchMedia(
-      '(prefers-color-scheme: light)'
-    ).matches;
-    return systemTheme ? 'light' : 'dark';
-  };
 
   const toggleTheme = () => {
     const toggledTheme = themeMode === 'light' ? 'dark' : 'light';
     setThemeMode(toggledTheme);
     setLocalTheme(toggledTheme);
   };
-
-  useEffect(() => {
-    const systemTheme = getSystemTheme();
-
-    if (!localTheme) setThemeMode(systemTheme);
-
-    localTheme === 'light' ? setThemeMode('light') : setThemeMode('dark');
-  }, []);
 
   useEffect(() => {
     if (localTheme !== 'light' && localTheme !== 'dark') {
