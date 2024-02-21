@@ -71,6 +71,10 @@ export default function Menu({
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
       >
         {menuList.map((menu, index) => {
           return (
