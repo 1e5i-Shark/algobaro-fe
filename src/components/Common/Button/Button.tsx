@@ -11,6 +11,7 @@ interface ButtonProps extends ComponentProps<'button'> {
   shape?: string;
   textColor?: string;
   backgroundColor?: string;
+  spinnerColor?: string;
   fontSize?: string;
   fontWeight?: number;
   type?: 'submit' | 'reset' | 'button';
@@ -38,6 +39,7 @@ export default function Button({
   shape,
   textColor,
   backgroundColor,
+  spinnerColor,
   fontSize = '1.8rem',
   fontWeight = 700,
   type = 'button',
@@ -61,7 +63,12 @@ export default function Button({
       $fontWeight={fontWeight}
       {...props}
     >
-      {isLoading && <Spinner size="XS" />}
+      {isLoading && (
+        <Spinner
+          size="XS"
+          color={spinnerColor}
+        />
+      )}
       {!isLoading && children}
     </BaseButton>
   );
