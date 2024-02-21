@@ -24,6 +24,7 @@ const shape = {
 };
 
 const device = {
+  tablet: `(max-width: 768px)`,
   laptop: `(max-width: 1024px)`,
 };
 
