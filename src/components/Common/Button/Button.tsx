@@ -25,8 +25,9 @@ interface ButtonProps extends ComponentProps<'button'> {
  * @param [width='13.3rem']
  * @param [height='4.3rem']
  * @param [shape='round'] - circle은 원형, square는 사각형, round는 둥근 사각형
- * @param [textColor=theme.text_primary_color]
- * @param [backgroundColor=theme.gradient]
+ * @param [textColor=text_primary_color]
+ * @param [backgroundColor=gradient]
+ * @param [spinnerColor=secondary_color]
  * @param [fontSize='1.8rem']
  * @param [fontWeight=700]
  * @param [type='button'] - submit | reset | button
