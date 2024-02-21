@@ -8,9 +8,10 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
  * Menu 컴포넌트
  * @param [children] - 아이콘 등의 버튼을 입력 받습니다.
  * @param [menuList] - 메뉴바에 들어갈 옵션의 이름과 클릭 이벤트를 받습니다.
- * @param [fontSize] - 메뉴바 텍스트의 크기를 받습니다.
- * @param [color] - 메뉴바 텍스트의 색상을 받습니다.
- * @param [shadow] - 추가하여 그림자 효과를 부여할 수 있습니다.
+ * @param [fontSize = '1.6rem'] - 메뉴바 텍스트의 크기를 받습니다.
+ * @param [color = 'black'] - 메뉴바 텍스트의 색상을 받습니다.
+ * @param [shadow = ''] - 추가하여 그림자 효과를 부여할 수 있습니다.
+ * @param [bgColor = 'grey'] - menu list의 배경색을 받습니다.
  */
 
 interface MenuListProps {
