@@ -4,7 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import ThemeContext from '@/components/ThemeContext';
+import { ThemeCustomProvider } from '@/components';
 import { GlobalStyle } from '@/styles/GlobalStyle';
 
 import App from './App.tsx';
@@ -21,10 +21,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <StyledEngineProvider>
-        <ThemeContext>
+        <ThemeCustomProvider>
           <GlobalStyle />
           <App />
-        </ThemeContext>
+        </ThemeCustomProvider>
       </StyledEngineProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
