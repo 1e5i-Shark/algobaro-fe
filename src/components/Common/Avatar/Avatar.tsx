@@ -48,9 +48,9 @@ export default function Avatar({
       onClick={onClick}
     >
       <AvatarWrapper
-        size={size}
-        shape={shape}
-        src={src}
+        $size={size}
+        $shape={shape}
+        $src={src}
         $isBorder={isBorder}
         $isShadow={isShadow}
         {...props}
