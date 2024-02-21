@@ -1,6 +1,6 @@
-import Menu from '@mui/material/Menu';
+import MuiMenu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { MouseEvent, ReactElement, useState } from 'react';
+import { HTMLAttributes, MouseEvent, ReactElement, useState } from 'react';
 import { useTheme } from 'styled-components';
 
 /**
@@ -12,7 +12,7 @@ import { useTheme } from 'styled-components';
  * @param [shadow] - 추가하여 그림자 효과를 부여할 수 있습니다.
  */
 
-interface BasicMenuProps {
+interface MenuProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactElement;
   menuList: {
     text: string;
@@ -23,13 +23,13 @@ interface BasicMenuProps {
   shadow?: string;
 }
 
-export default function MenuBar({
+export default function Menu({
   children,
   menuList,
   fontSize = '1rem',
   color = 'black',
   shadow = '',
-}: BasicMenuProps) {
+}: MenuProps) {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -44,7 +44,7 @@ export default function MenuBar({
     <div>
       <button onClick={handleClick}>{children}</button>
 
-      <Menu
+      <MuiMenu
         id="basic-menu"
         slotProps={{
           paper: {
@@ -75,7 +75,7 @@ export default function MenuBar({
             </MenuItem>
           );
         })}
-      </Menu>
+      </MuiMenu>
     </div>
   );
 }
