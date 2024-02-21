@@ -1,7 +1,7 @@
 import { EditRounded } from '@mui/icons-material';
 import { styled } from 'styled-components';
 
-import { useTheme } from '@/hooks/useTheme';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { Row } from '@/styles/GlobalStyle';
 
 const IconWrapper = styled(Row)`
@@ -14,13 +14,13 @@ const IconWrapper = styled(Row)`
 `;
 
 export default function EditButton() {
-  const theme = useTheme();
+  const { theme } = useCustomTheme();
 
   return (
     <IconWrapper>
       <EditRounded
         sx={{
-          color: theme?.black_primary,
+          color: theme.color.black_primary,
           fontSize: 18,
         }}
       />
