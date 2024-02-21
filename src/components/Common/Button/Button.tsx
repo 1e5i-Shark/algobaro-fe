@@ -1,8 +1,8 @@
-import CircularProgress from '@mui/material/CircularProgress';
 import { ComponentProps, ReactNode } from 'react';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
+import Spinner from '../Spinner/Spinner';
 import { BaseButton } from './Button.style';
 
 interface ButtonProps extends ComponentProps<'button'> {
@@ -61,7 +61,7 @@ export default function Button({
       $fontWeight={fontWeight}
       {...props}
     >
-      {isLoading && <CircularProgress size={20} />}
+      {isLoading && <Spinner size="XS" />}
       {!isLoading && children}
     </BaseButton>
   );
