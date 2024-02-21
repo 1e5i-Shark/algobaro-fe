@@ -14,6 +14,7 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
  */
 
 interface MenuListProps {
+  id: number;
   text: string;
   onClick: (event: MouseEvent<HTMLElement>) => void;
 }
@@ -58,6 +59,9 @@ export default function Menu({
             sx: {
               bgcolor: bgColor || theme.color.gray_50,
               boxShadow: shadow || 'none',
+              '& .MuiList-root': {
+                p: 0,
+              },
               '& .MuiMenuItem-root': {
                 '&:hover': {
                   borderRadius: '.2rem',
@@ -75,6 +79,7 @@ export default function Menu({
           vertical: 'bottom',
           horizontal: 'right',
         }}
+        {...props}
       >
         {menuList.map((menu, index) => {
           return (
