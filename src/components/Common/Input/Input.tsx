@@ -48,7 +48,6 @@ export default function Input<T extends FieldValues>({
   const inputError = formState?.errors[name];
   const inputErrorMessage = inputError && (inputError.message as string);
 
-  const showErrorMessage = inputErrorMessage;
   return (
     <InputWrapper>
       {label && <LabelText htmlFor={name}>{label}</LabelText>}
@@ -59,7 +58,7 @@ export default function Input<T extends FieldValues>({
           required: required && '값이 입력되지 않았어요',
         })}
         autoComplete="true"
-        $isError={!!showErrorMessage}
+        $isError={!!inputErrorMessage}
         {...props}
       />
       {type === 'password' && (
@@ -79,7 +78,7 @@ export default function Input<T extends FieldValues>({
           )}
         </ToggleVisibilityButton>
       )}
-      {showErrorMessage && (
+      {inputErrorMessage && (
         <InputErrorWrapper>
           <InputErrorMessage>{inputErrorMessage}</InputErrorMessage>
         </InputErrorWrapper>
