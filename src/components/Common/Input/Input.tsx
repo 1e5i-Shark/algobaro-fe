@@ -48,7 +48,7 @@ export default function Input<T extends FieldValues>({
   const inputError = formState?.errors[name];
   const inputErrorMessage = inputError && (inputError.message as string);
 
-  const showErrorMessage = formState?.isSubmitted && inputErrorMessage;
+  const showErrorMessage = inputErrorMessage;
   return (
     <InputWrapper>
       {label && <LabelText htmlFor={name}>{label}</LabelText>}
