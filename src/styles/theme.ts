@@ -1,3 +1,8 @@
+const ZINDEX = {
+  SPINNER: 999,
+  MODAL: 888,
+};
+
 const size = {
   XS: '0.5rem',
   S: '1rem',
@@ -24,6 +29,7 @@ const shape = {
 };
 
 const device = {
+  tablet: `(max-width: 768px)`,
   laptop: `(max-width: 1024px)`,
 };
 
@@ -57,6 +63,7 @@ export const lightTheme = {
     background_primary: '#FFFFFF',
     background_second: '#E9E9E9',
     background_modal: '#ffffff',
+    container_color: '#E3E3E3',
     text_primary_color: '#2C2C2C',
     text_secondary_color: '#F0F0F0',
     transparent_10: '#B3B3B310',
@@ -69,6 +76,7 @@ export const lightTheme = {
   shape,
   fontWeight,
   device,
+  ZINDEX,
 };
 
 export const darkTheme = {
@@ -77,6 +85,7 @@ export const darkTheme = {
     background_primary: '#1E1B1A',
     background_second: '#131010',
     background_modal: '#1e1e1e',
+    container_color: '#4D4D4D',
     text_primary_color: '#F0F0F0',
     text_secondary_color: '#2C2C2C',
     transparent_10: '#FEFEFE10',
@@ -89,6 +98,7 @@ export const darkTheme = {
   shape,
   fontWeight,
   device,
+  ZINDEX,
 };
 
 export const theme = {

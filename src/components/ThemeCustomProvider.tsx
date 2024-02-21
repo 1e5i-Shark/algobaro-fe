@@ -48,7 +48,7 @@ export function ThemeCustomProvider({ children }: ThemeProps) {
 
   return (
     <ThemeCustomContext.Provider value={{ theme: currentTheme, toggleTheme }}>
-      <ThemeProvider theme={currentTheme}>{children}</ThemeProvider>;
+      <ThemeProvider theme={currentTheme}>{children}</ThemeProvider>
     </ThemeCustomContext.Provider>
   );
 }
