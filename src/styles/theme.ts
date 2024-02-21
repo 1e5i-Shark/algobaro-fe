@@ -1,3 +1,8 @@
+const ZINDEX = {
+  SPINNER: 999,
+  MODAL: 888,
+};
+
 const size = {
   XS: '0.5rem',
   S: '1rem',
@@ -69,6 +74,7 @@ export const lightTheme = {
   shape,
   fontWeight,
   device,
+  ZINDEX,
 };
 
 export const darkTheme = {
@@ -90,6 +96,7 @@ export const darkTheme = {
   shape,
   fontWeight,
   device,
+  ZINDEX,
 };
 
 export const theme = {
