@@ -1,7 +1,8 @@
 import MuiMenu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { HTMLAttributes, MouseEvent, ReactElement, useState } from 'react';
-import { useTheme } from 'styled-components';
+
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 /**
  * Menu 컴포넌트
@@ -19,20 +20,24 @@ interface MenuProps extends HTMLAttributes<HTMLDivElement> {
     onClick: (event: MouseEvent<HTMLElement>) => void;
   }[];
   fontSize?: string;
-  color?: string;
   shadow?: string;
+  bgColor?: string;
 }
 
 export default function Menu({
   children,
   menuList,
-  fontSize = '1rem',
+  fontSize = '1.6rem',
   color = 'black',
   shadow = '',
+  bgColor = 'grey',
+  ...props
 }: MenuProps) {
-  const theme = useTheme();
+  const { theme } = useCustomTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -49,8 +54,15 @@ export default function Menu({
         slotProps={{
           paper: {
             sx: {
-              bgcolor: theme.color.gray_30,
+              bgcolor: bgColor || theme.color.gray_50,
               boxShadow: shadow || 'none',
+              '& .MuiMenuItem-root': {
+                '&:hover': {
+                  borderRadius: '.2rem',
+                  bgcolor: bgColor || theme.color.gray_50,
+                  filter: 'brightness(.8)',
+                },
+              },
             },
           },
         }}
