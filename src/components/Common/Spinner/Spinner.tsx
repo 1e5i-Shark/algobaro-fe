@@ -1,49 +1,13 @@
-import styled, { css, keyframes, useTheme } from 'styled-components';
-
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { Size } from '@/types';
+
+import { SpinnerContainer, SpinnerWrapper } from './Spinner.style';
 
 interface SpinnerProps {
   size?: Size;
   color?: string;
   weight?: string;
 }
-
-interface StyledSpinnerProps {
-  $size?: Size;
-  $color?: string;
-  $weight?: string;
-}
-
-const $spin = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const SpinnerContainer = styled.div<{ $zIndex: number }>`
-  ${({ $zIndex }) => css`
-    z-index: ${$zIndex};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-  `}
-`;
-
-const SpinnerWrapper = styled.div<StyledSpinnerProps>`
-  ${({ $size, $color, $weight, theme }) => css`
-    width: ${$size && theme.size.icon[$size]};
-    height: ${$size && theme.size.icon[$size]};
-    border: ${`${$weight} solid ${$color}`};
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: ${$spin} 0.7s linear infinite;
-  `}
-`;
 
 /**
  * 로딩중에 사용되는 스피너입니다.
@@ -57,12 +21,10 @@ export default function Spinner({
   weight = '0.3rem',
   ...props
 }: SpinnerProps) {
-  const theme = useTheme();
-
-  const ZINDEX_SPINNER = 999;
+  const { theme } = useCustomTheme();
 
   return (
-    <SpinnerContainer $zIndex={ZINDEX_SPINNER}>
+    <SpinnerContainer $zIndex={theme.ZINDEX.SPINNER}>
       <SpinnerWrapper
         $size={size}
         $color={color || theme.color.secondary_color}
