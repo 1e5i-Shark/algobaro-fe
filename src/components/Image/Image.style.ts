@@ -1,25 +1,36 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 import { Shape } from '@/types';
 
-export const ImageWrapper = styled.div<{
-  width?: string;
-  height?: string;
-  shape?: Shape;
+interface ImageWrapperProps {
+  $width?: string;
+  $height?: string;
+  $shape?: Shape;
   $isImageError: boolean;
   $isPointer: boolean;
   $fill: boolean;
-}>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: ${({ width, $fill }) => (!$fill ? width : '100%')};
-  height: ${({ height, $fill }) => (!$fill ? height : '100%')};
-  overflow: hidden;
-  cursor: ${({ $isPointer }) => $isPointer && 'pointer'};
-  background-color: ${({ theme, $isImageError }) =>
-    !$isImageError
+}
+
+export const ImageWrapper = styled.div<ImageWrapperProps>`
+  ${({
+    theme,
+    $width,
+    $height,
+    $shape,
+    $isImageError,
+    $isPointer,
+    $fill,
+  }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: ${!$fill ? $width : '100%'};
+    height: ${!$fill ? $height : '100%'};
+    overflow: hidden;
+    cursor: ${$isPointer && 'pointer'};
+    background-color: ${!$isImageError
       ? theme.color.background_primary
       : theme.color.container_color};
-  border-radius: ${({ shape, theme }) => shape && theme.shape[shape]};
+    border-radius: ${$shape && theme.shape[$shape]};
+  `}
 `;
