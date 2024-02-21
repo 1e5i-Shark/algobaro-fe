@@ -1,4 +1,5 @@
 export { Avatar, EditButton } from './Common/Avatar';
+export { default as Button } from './Common/Button/Button';
 export { default as Image } from './Common/Image/Image';
 export { default as Modal } from './Common/Modal/Modal';
 export { default as Spinner } from './Common/Spinner/Spinner';
