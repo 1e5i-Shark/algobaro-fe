@@ -1,6 +1,7 @@
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { HTMLAttributes, useState } from 'react';
-import { useTheme } from 'styled-components';
+
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 import { DeleteButton, TagWrapper } from './Tag.style';
 
@@ -8,6 +9,7 @@ export type TagModeType = 'normal' | 'select' | 'delete';
 
 interface TagProps extends HTMLAttributes<HTMLDivElement> {
   mode: TagModeType;
+  tagId: string;
   width?: string;
   height?: string;
   fontSize?: string;
@@ -22,6 +24,7 @@ interface TagProps extends HTMLAttributes<HTMLDivElement> {
 /**
  * Tag 컴포넌트
  * @param [mode = 'normal'] - 필수, `normal`(기본값), `select`, `delete` 모드 설정 가능
+ * @param [tagId] - 필수, 태그 id
  * @param [width = 'fit-content'] - 태그 너비
  * @param [height = '3rem'] - 태그 높이
  * @param [width = 'fit-content'] - 태그 너비
@@ -34,6 +37,7 @@ interface TagProps extends HTMLAttributes<HTMLDivElement> {
  */
 export default function Tag({
   mode = 'normal',
+  tagId,
   width = 'fit-content',
   height = '3rem',
   fontSize = '',
@@ -46,21 +50,17 @@ export default function Tag({
   onDeleted,
   ...props
 }: TagProps) {
-  const theme = useTheme();
+  const { theme } = useCustomTheme();
 
   const [isTagSelect, setIsTagSelect] = useState(isSelected);
 
-  const tagName = children?.toString();
-
-  // 태그 선택 handler 함수
   const handleSelectTag = () => {
     setIsTagSelect(!isTagSelect);
-    tagName && onSelected && onSelected(tagName, !isTagSelect);
+    tagId && onSelected && onSelected(tagId, !isTagSelect);
   };
 
-  // 태그 삭제 handler 함수
   const handleDeleteTag = () => {
-    tagName && onDeleted && onDeleted(tagName);
+    tagId && onDeleted && onDeleted(tagId);
   };
 
   return (
