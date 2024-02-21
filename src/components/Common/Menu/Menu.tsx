@@ -13,12 +13,14 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
  * @param [shadow] - 추가하여 그림자 효과를 부여할 수 있습니다.
  */
 
+interface MenuListProps {
+  text: string;
+  onClick: (event: MouseEvent<HTMLElement>) => void;
+}
+
 interface MenuProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactElement;
-  menuList: {
-    text: string;
-    onClick: (event: MouseEvent<HTMLElement>) => void;
-  }[];
+  menuList: MenuListProps[];
   fontSize?: string;
   shadow?: string;
   bgColor?: string;
