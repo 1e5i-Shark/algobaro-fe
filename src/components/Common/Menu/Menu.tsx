@@ -78,7 +78,7 @@ export default function Menu({
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'right',
+          horizontal: 'left',
         }}
         {...props}
       >
