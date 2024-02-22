@@ -15,7 +15,9 @@ export const BaseEllipsisText = styled.span<StyledButtonProps>`
     font-size: ${$fontSize};
     font-weight: ${$fontWeight};
     text-overflow: ellipsis;
-    word-wrap: keep-all;
+    word-break: keep-all;
+    word-wrap: break-word;
+    white-space: pre-wrap;
     -webkit-line-clamp: ${$lineClamp};
     -webkit-box-orient: vertical;
   `}
