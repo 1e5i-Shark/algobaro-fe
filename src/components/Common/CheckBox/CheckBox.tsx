@@ -46,7 +46,7 @@ export default function CheckBox({
 
   const defaultSize = size || theme.size.L;
   const defaultBackgroundColor = backgroundColor || theme.color.gray_50;
-  const defaultTextColor = textColor || theme.color.black_primary;
+  const defaultTextColor = textColor || theme.color.text_primary_color;
 
   return (
     <CheckBoxWrapper>
