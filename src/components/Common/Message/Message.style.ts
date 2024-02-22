@@ -19,10 +19,13 @@ export const MessageContainer = styled.div<MessageContainerProps>`
     padding: ${$padding};
 
     & > p {
+      width: 98%;
       padding: ${$padding};
       padding-left: ${`calc(${theme.size.icon[$avatarSize]} + ${$padding} )`};
       font-size: ${$fontSize};
-      word-break: break-all;
+      word-break: keep-all;
+      word-wrap: break-word;
+      white-space: pre-wrap;
     }
   `}
 `;
