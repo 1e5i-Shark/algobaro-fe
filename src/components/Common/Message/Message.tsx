@@ -4,7 +4,12 @@ import { HTMLAttributes, MouseEvent } from 'react';
 import { Avatar, Icon, Menu } from '@/components';
 import { Size } from '@/types';
 
-import { MessageContainer, MessageSender } from './Message.style';
+import {
+  MessageContainer,
+  MessageSender,
+  MessageText,
+  UserName,
+} from './Message.style';
 
 /**
  * Message 컴포넌트
@@ -64,14 +69,14 @@ export default function Message({
             src={avatarSrc}
             isShadow={avatarShadow}
           />
-          <span>{userName}</span>
+          <UserName>{userName}</UserName>
           <Menu menuList={menuList}>
             <Icon size={iconSize}>
               <MoreVertRoundedIcon />
             </Icon>
           </Menu>
         </MessageSender>
-        <p>{comment}</p>
+        <MessageText>{comment}</MessageText>
       </MessageContainer>
     </>
   );

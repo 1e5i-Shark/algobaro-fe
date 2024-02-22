@@ -18,29 +18,33 @@ export const MessageContainer = styled.div<MessageContainerProps>`
     width: ${$width};
     padding: ${$padding};
 
-    & > p {
-      width: 98%;
+    ${MessageText} {
       padding: ${$padding};
       padding-left: ${`calc(${theme.size.icon[$avatarSize]} + ${$padding} )`};
       font-size: ${$fontSize};
-      word-break: keep-all;
-      word-wrap: break-word;
-      white-space: pre-wrap;
     }
   `}
 `;
+
 export const MessageSender = styled.div<MessageSenderProps>`
   ${({ $fontSize }) => css`
     display: flex;
     align-items: center;
     font-size: ${$fontSize};
 
-    & > span {
-      margin-left: 8px;
-    }
-
     & > :last-child {
       margin-left: auto;
     }
   `}
+`;
+
+export const MessageText = styled.p`
+  width: 98%;
+  word-break: keep-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+`;
+
+export const UserName = styled.span`
+  margin-left: 8px;
 `;
