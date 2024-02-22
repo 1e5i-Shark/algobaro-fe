@@ -39,7 +39,7 @@ export const MessageSender = styled.div<MessageSenderProps>`
 `;
 
 export const MessageText = styled.p`
-  width: 98%;
+  width: calc(100% - 0.4rem);
   word-break: keep-all;
   word-wrap: break-word;
   white-space: pre-wrap;
