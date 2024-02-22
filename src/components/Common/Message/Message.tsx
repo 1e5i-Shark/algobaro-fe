@@ -1,9 +1,10 @@
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import { HTMLAttributes, MouseEvent } from 'react';
+import { HTMLAttributes } from 'react';
 
 import { Avatar, Icon, Menu } from '@/components';
 import { Size } from '@/types';
 
+import { MenuListProps } from '../Menu/MenuText';
 import {
   MessageContainer,
   MessageSender,
@@ -22,12 +23,6 @@ import {
  * @param [ iconSize = 'XS' ] - icon의 크기
  * @param [ comment ] - required, 메시지 내용
  */
-
-interface MenuListProps {
-  id: number;
-  text: string;
-  onClick: (event: MouseEvent<HTMLElement>) => void;
-}
 
 interface MessageProps extends HTMLAttributes<HTMLDivElement> {
   padding?: string;

@@ -1,3 +1,11 @@
+import { MouseEvent } from 'react';
+
+export interface MenuListProps {
+  id: number;
+  text: string;
+  onClick: (event: MouseEvent<HTMLElement>) => void;
+}
+
 interface MenuTextProps {
   Report: string;
   TransferHost: string;
