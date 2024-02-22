@@ -2,6 +2,7 @@ import { Checkbox } from '@mui/material';
 import { ChangeEvent } from 'react';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { Size } from '@/types';
 
 import { CheckBoxWrapper, LabelText } from './CheckBox.style';
 
@@ -9,7 +10,7 @@ interface CheckBoxProps {
   label?: string;
   checked?: boolean;
   disabled?: boolean;
-  size?: string;
+  size?: Size;
   textColor?: string;
   backgroundColor?: string;
   fontSize?: string;
