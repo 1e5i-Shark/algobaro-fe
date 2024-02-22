@@ -1,4 +1,5 @@
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
+import { HTMLAttributes } from 'react';
 
 import { Avatar } from '@/components';
 import { Size } from '@/types';
@@ -17,8 +18,9 @@ import { MessageContainer, MessageSender } from './Message.style';
  * @param [ comment ] - required, 메시지 내용
  */
 
-interface MessageProps {
+interface MessageProps extends HTMLAttributes<HTMLDivElement> {
   padding?: string;
+  width?: string;
   avatarSize?: Size;
   avatarSrc?: string;
   avatarShadow?: boolean;
@@ -30,6 +32,7 @@ interface MessageProps {
 
 export default function Message({
   padding = '8px',
+  width = '100%',
   avatarSize = 'XS',
   avatarSrc = '',
   avatarShadow = true,
@@ -37,10 +40,12 @@ export default function Message({
   fontSize = '1.6rem',
   iconSize = 'XS',
   comment,
+  ...props
 }: MessageProps) {
   return (
     <>
       <MessageContainer
+        $width={width}
         $padding={padding}
         $fontSize={fontSize}
         $avatarSize={avatarSize}

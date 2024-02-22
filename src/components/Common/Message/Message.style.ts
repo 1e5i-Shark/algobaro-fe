@@ -4,6 +4,7 @@ import { Size } from '@/types';
 
 interface MessageContainerProps {
   $padding: string;
+  $width: string;
   $fontSize: string;
   $avatarSize: Size;
 }
@@ -13,7 +14,8 @@ interface MessageSenderProps {
 }
 
 export const MessageContainer = styled.div<MessageContainerProps>`
-  ${({ $padding, $fontSize, $avatarSize, theme }) => css`
+  ${({ $padding, $width, $fontSize, $avatarSize, theme }) => css`
+    width: ${$width};
     padding: ${$padding};
 
     & > p {
@@ -21,7 +23,6 @@ export const MessageContainer = styled.div<MessageContainerProps>`
       padding-left: ${`calc(${theme.size.icon[$avatarSize]} + ${$padding} )`};
       font-size: ${$fontSize};
       word-break: break-all;
-      white-space: pre-wrap;
     }
   `}
 `;
