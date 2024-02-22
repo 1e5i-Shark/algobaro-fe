@@ -6,6 +6,13 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     border: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
   }
   
   html {
