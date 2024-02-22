@@ -1,7 +1,7 @@
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, MouseEvent } from 'react';
 
-import { Avatar } from '@/components';
+import { Avatar, Icon, Menu } from '@/components';
 import { Size } from '@/types';
 
 import { MessageContainer, MessageSender } from './Message.style';
@@ -18,6 +18,12 @@ import { MessageContainer, MessageSender } from './Message.style';
  * @param [ comment ] - required, 메시지 내용
  */
 
+interface MenuListProps {
+  id: number;
+  text: string;
+  onClick: (event: MouseEvent<HTMLElement>) => void;
+}
+
 interface MessageProps extends HTMLAttributes<HTMLDivElement> {
   padding?: string;
   width?: string;
@@ -28,6 +34,7 @@ interface MessageProps extends HTMLAttributes<HTMLDivElement> {
   fontSize?: string;
   iconSize?: Size;
   comment: string;
+  menuList: MenuListProps[];
 }
 
 export default function Message({
@@ -40,6 +47,7 @@ export default function Message({
   fontSize = '1.6rem',
   iconSize = 'XS',
   comment,
+  menuList,
   ...props
 }: MessageProps) {
   return (
@@ -57,7 +65,11 @@ export default function Message({
             isShadow={avatarShadow}
           />
           <span>{userName}</span>
-          <MoreVertRoundedIcon />
+          <Menu menuList={menuList}>
+            <Icon size={iconSize}>
+              <MoreVertRoundedIcon />
+            </Icon>
+          </Menu>
         </MessageSender>
         <p>{comment}</p>
       </MessageContainer>
