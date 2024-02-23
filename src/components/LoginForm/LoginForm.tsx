@@ -18,9 +18,10 @@ interface LoginInfo {
 }
 
 export default function LoginForm() {
-  const { register, handleSubmit, formState, watch } = useForm<LoginInfo>({
-    mode: 'onChange',
-  });
+  const { register, handleSubmit, formState, watch, reset } =
+    useForm<LoginInfo>({
+      mode: 'onChange',
+    });
 
   const { loginEmail: emailError } = formState.errors;
 
@@ -50,6 +51,8 @@ export default function LoginForm() {
       {"loginEmail":"algo@naver.com","loginPassword":"algobaro"}
     */
     console.log('제출한 데이터:', JSON.stringify(data)); // 로그인 정보 테스트 출력
+    // 성공적으로 로그인이 되면 form 리셋
+    reset();
   };
 
   return (
