@@ -1,3 +1,7 @@
+const FIXED_HEIGHT = {
+  HEADER: '8rem',
+};
+
 const ZINDEX = {
   SPINNER: 999,
   MODAL: 888,
@@ -78,6 +82,7 @@ export const lightTheme = {
   fontWeight,
   device,
   ZINDEX,
+  FIXED_HEIGHT,
 };
 
 export const darkTheme = {
@@ -101,6 +106,7 @@ export const darkTheme = {
   fontWeight,
   device,
   ZINDEX,
+  FIXED_HEIGHT,
 };
 
 export const theme = {
