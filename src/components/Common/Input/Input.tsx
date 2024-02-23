@@ -59,6 +59,7 @@ export default function Input<T extends FieldValues>({
         })}
         autoComplete="true"
         $isError={!!inputErrorMessage}
+        id={name}
         {...props}
       />
       {type === 'password' && (
