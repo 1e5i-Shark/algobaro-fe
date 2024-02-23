@@ -55,7 +55,7 @@ export default function LoginForm() {
     {
       label: '비밀번호',
       name: 'loginPassword',
-      type: 'password',
+      type: loginPassword ? 'password' : 'text',
       placeholder: '비밀번호',
     },
   ];
