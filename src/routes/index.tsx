@@ -1,7 +1,7 @@
-import { createBrowserRouter, Outlet } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
-import Header from '@/components/Common/Header/Header';
-import PSHeader from '@/components/Common/Header/PSHeader';
+import WithHeader from '@/components/layouts/WithHeader';
+import WithPSHeader from '@/components/layouts/WithPSHeader';
 import {
   CreateRoomPage,
   HomePage,
@@ -29,12 +29,7 @@ export const router = createBrowserRouter([
     loader: CheckUserLogin,
   },
   {
-    element: (
-      <>
-        <Header />
-        <Outlet />
-      </>
-    ),
+    element: <WithHeader />,
     children: [
       {
         path: PATH.HOME,
@@ -58,12 +53,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: (
-      <>
-        <PSHeader />
-        <Outlet />
-      </>
-    ),
+    element: <WithPSHeader />,
     children: [
       {
         path: `${PATH.PROBLEMSOLVE}/:roomId`,
