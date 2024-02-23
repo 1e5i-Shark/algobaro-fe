@@ -4,6 +4,8 @@ import { HTMLAttributes, MouseEvent, ReactElement, useState } from 'react';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
+import { MenuListProps } from './MenuText';
+
 /**
  * Menu 컴포넌트
  * @param [children] - 아이콘 등의 버튼을 입력 받습니다.
@@ -13,12 +15,6 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
  * @param [shadow = ''] - 추가하여 그림자 효과를 부여할 수 있습니다.
  * @param [bgColor = 'grey'] - menu list의 배경색을 받습니다.
  */
-
-interface MenuListProps {
-  id: number;
-  text: string;
-  onClick: (event: MouseEvent<HTMLElement>) => void;
-}
 
 interface MenuProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactElement;
@@ -51,7 +47,7 @@ export default function Menu({
 
   return (
     <div>
-      <button onClick={handleClick}>{children}</button>
+      <span onClick={handleClick}>{children}</span>
 
       <MuiMenu
         id="basic-menu"
