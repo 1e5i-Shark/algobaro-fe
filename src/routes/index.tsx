@@ -23,8 +23,15 @@ const checkUserLogin = async () => {
 };
 
 export const router = createBrowserRouter([
-  { path: PATH.ROOT, element: <WelcomePage /> },
-  { path: `${PATH.ROOM}/:roomId`, element: <RoomPage /> },
+  {
+    path: PATH.ROOT,
+    element: <WelcomePage />,
+  },
+  {
+    path: `${PATH.ROOM}/:roomId`,
+    element: <PrivateRoute component={<RoomPage />} />,
+    loader: checkUserLogin,
+  },
   {
     element: (
       <>
@@ -42,8 +49,16 @@ export const router = createBrowserRouter([
         path: PATH.SIGNUP,
         element: <SignUpPage />,
       },
-      { path: `${PATH.PROFILE}/:userId`, element: <ProfilePage /> },
-      { path: PATH.CREATEROOM, element: <CreateRoomPage /> },
+      {
+        path: `${PATH.PROFILE}/:userId`,
+        element: <PrivateRoute component={<ProfilePage />} />,
+        loader: checkUserLogin,
+      },
+      {
+        path: PATH.CREATEROOM,
+        element: <PrivateRoute component={<CreateRoomPage />} />,
+        loader: checkUserLogin,
+      },
     ],
   },
   {
@@ -54,9 +69,20 @@ export const router = createBrowserRouter([
       </>
     ),
     children: [
-      { path: `${PATH.PROBLEMSOLVE}/:roomId`, element: <ProblemSolvePage /> },
-      { path: `${PATH.PROBLEMSHARE}/:roomId`, element: <ProblemSharePage /> },
+      {
+        path: `${PATH.PROBLEMSOLVE}/:roomId`,
+        element: <PrivateRoute component={<ProblemSolvePage />} />,
+        loader: checkUserLogin,
+      },
+      {
+        path: `${PATH.PROBLEMSHARE}/:roomId`,
+        element: <PrivateRoute component={<ProblemSharePage />} />,
+        loader: checkUserLogin,
+      },
     ],
   },
-  { path: '*', element: <NotFoundPage /> },
+  {
+    path: '*',
+    element: <NotFoundPage />,
+  },
 ]);
