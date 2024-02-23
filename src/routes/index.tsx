@@ -1,9 +1,10 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 
+import Header from '@/components/Common/Header/Header';
+import PSHeader from '@/components/PSHeader/PSHeader';
 import {
   CreateRoomPage,
   HomePage,
-  MainPage,
   NotFoundPage,
   ProblemSharePage,
   ProblemSolvePage,
@@ -16,43 +17,33 @@ import {
 import { PATH } from './path';
 
 export const router = createBrowserRouter([
+  { path: PATH.ROOT, element: <WelcomePage /> },
+  { path: `${PATH.ROOM}/:roomId`, element: <RoomPage /> },
   {
-    path: PATH.ROOT,
-    element: <MainPage />,
-    errorElement: <NotFoundPage />,
+    element: (
+      <>
+        <Header />
+        <Outlet />
+      </>
+    ),
     children: [
-      {
-        path: PATH.ROOT,
-        element: <WelcomePage />,
-      },
-      {
-        path: PATH.SIGNUP,
-        element: <SignUpPage />,
-      },
-      {
-        path: PATH.HOME,
-        element: <HomePage />,
-      },
-      {
-        path: `${PATH.PROFILE}/:userId`,
-        element: <ProfilePage />,
-      },
-      {
-        path: PATH.CREATEROOM,
-        element: <CreateRoomPage />,
-      },
-      {
-        path: `${PATH.ROOM}/:roomId`,
-        element: <RoomPage />,
-      },
-      {
-        path: `${PATH.PROBLEMSOLVE}/:roomId`,
-        element: <ProblemSolvePage />,
-      },
-      {
-        path: `${PATH.PROBLEMSHARE}/:roomId`,
-        element: <ProblemSharePage />,
-      },
+      { path: PATH.HOME, element: <HomePage /> },
+      { path: PATH.SIGNUP, element: <SignUpPage /> },
+      { path: `${PATH.PROFILE}/:userId`, element: <ProfilePage /> },
+      { path: PATH.CREATEROOM, element: <CreateRoomPage /> },
     ],
   },
+  {
+    element: (
+      <>
+        <PSHeader />
+        <Outlet />
+      </>
+    ),
+    children: [
+      { path: `${PATH.PROBLEMSOLVE}/:roomId`, element: <ProblemSolvePage /> },
+      { path: `${PATH.PROBLEMSHARE}/:roomId`, element: <ProblemSharePage /> },
+    ],
+  },
+  { path: '*', element: <NotFoundPage /> },
 ]);
