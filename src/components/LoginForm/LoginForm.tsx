@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { InputListProps } from '@/types/input';
 
-import { Button } from '..';
 import CheckBox from '../Common/CheckBox/CheckBox';
 import Input from '../Common/Input/Input';
 import { LOGIN_VALIDATION } from './loginConstants';
 import {
+  LoginButton,
   LoginFormContainer,
   LoginFormWrapper,
   LoginInputContainer,
@@ -99,6 +99,12 @@ export default function LoginForm() {
             );
           })}
         </LoginInputContainer>
+        <LoginButton
+          type="submit"
+          disabled={!emailError && loginEmail && loginPassword ? false : true}
+        >
+          로그인
+        </LoginButton>
         <LoginOptionContainer>
           <CheckBox
             label="아이디 저장"
@@ -109,13 +115,6 @@ export default function LoginForm() {
             아직 회원가입을 안하셨나요?
           </SignUpTextLink>
         </LoginOptionContainer>
-
-        <Button
-          type="submit"
-          disabled={!emailError && loginEmail && loginPassword ? false : true}
-        >
-          로그인
-        </Button>
       </LoginFormContainer>
     </LoginFormWrapper>
   );
