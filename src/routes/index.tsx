@@ -17,6 +17,11 @@ import {
 
 import { PATH } from './path';
 
+const checkUserLogin = async () => {
+  // 유저가 로그인 했는지 검사하는 로직
+  return true;
+};
+
 export const router = createBrowserRouter([
   { path: PATH.ROOT, element: <WelcomePage /> },
   { path: `${PATH.ROOM}/:roomId`, element: <RoomPage /> },
@@ -31,6 +36,7 @@ export const router = createBrowserRouter([
       {
         path: PATH.HOME,
         element: <PrivateRoute component={<HomePage />} />,
+        loader: checkUserLogin,
       },
       {
         path: PATH.SIGNUP,
