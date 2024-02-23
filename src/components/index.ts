@@ -1,5 +1,7 @@
 export { Avatar, EditButton } from './Common/Avatar';
 export { default as Button } from './Common/Button/Button';
+export { default as DarkModeToggleButton } from './Common/DarkModeToggleButton/DarkModeToggleButton';
+export { default as Header } from './Common/Header/Header';
 export { default as Icon } from './Common/Icon/Icon';
 export { default as Menu } from './Common/Menu/Menu';
 export { default as Message } from './Common/Message/Message';
