@@ -4,6 +4,7 @@ import { InputListProps } from '@/types/input';
 
 import { Button } from '..';
 import Input from '../Common/Input/Input';
+import { LOGIN_VALIDATION } from './loginConstants';
 import {
   LoginFormContainer,
   LoginFormWrapper,
@@ -16,15 +17,6 @@ interface LoginInfo {
   loginPassword: string;
 }
 
-const LOGIN_VALIDATION = {
-  EMAIL: {
-    pattern: {
-      value: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-z]*.[a-z]{2,3}$/,
-      message: '이메일 형식과 맞지 않습니다.',
-    },
-  },
-};
-
 export default function LoginForm() {
   const { register, handleSubmit, formState, watch } = useForm<LoginInfo>({
     mode: 'onChange',
@@ -35,7 +27,6 @@ export default function LoginForm() {
 
   const inputPropsList: InputListProps<LoginInfo> = [
     {
-      // 백엔드 swagger 확인 후 맞추는 걸로
       label: '이메일',
       name: 'loginEmail',
       type: 'email',
@@ -53,6 +44,9 @@ export default function LoginForm() {
   const onSubmitData: SubmitHandler<LoginInfo> = data => {
     // TODO: 서버 인증 로직 추가
     // 인증 성공 시 토큰 로컬 스토리지에 저장
+    /* 출력 예
+      {"loginEmail":"algo@naver.com","loginPassword":"algobaro"}
+    */
     console.log('제출한 데이터:', JSON.stringify(data)); // 로그인 정보 테스트 출력
   };
 
