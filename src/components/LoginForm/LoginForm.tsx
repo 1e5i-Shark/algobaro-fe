@@ -22,6 +22,8 @@ export default function LoginForm() {
     mode: 'onChange',
   });
 
+  const { loginEmail: emailError } = formState.errors;
+
   const loginEmail = watch('loginEmail');
   const loginPassword = watch('loginPassword');
 
@@ -68,7 +70,7 @@ export default function LoginForm() {
         </LoginInputContainer>
         <Button
           type="submit"
-          disabled={loginEmail && loginPassword ? false : true}
+          disabled={!emailError && loginEmail && loginPassword ? false : true}
         >
           로그인
         </Button>
