@@ -14,6 +14,8 @@ import {
   LoginFormWrapper,
   LoginInputContainer,
   LoginInputItem,
+  LoginOptionContainer,
+  SignUpTextLink,
 } from './LoginForm.style';
 
 interface LoginInfo {
@@ -97,11 +99,17 @@ export default function LoginForm() {
             );
           })}
         </LoginInputContainer>
-        <CheckBox
-          label="아이디 저장"
-          onChange={handleChangeCheck}
-          checked={isSaveEmail}
-        />
+        <LoginOptionContainer>
+          <CheckBox
+            label="아이디 저장"
+            onChange={handleChangeCheck}
+            checked={isSaveEmail}
+          />
+          <SignUpTextLink to="/signup">
+            아직 회원가입을 안하셨나요?
+          </SignUpTextLink>
+        </LoginOptionContainer>
+
         <Button
           type="submit"
           disabled={!emailError && loginEmail && loginPassword ? false : true}
