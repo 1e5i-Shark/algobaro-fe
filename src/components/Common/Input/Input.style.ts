@@ -25,10 +25,11 @@ export const BaseInput = styled.input<{ $isError: boolean }>`
 
 export const ToggleVisibilityButton = styled.button`
   position: absolute;
-  top: 3.4rem;
   right: 0.2rem;
+  bottom: 0;
   padding: 0 0.8rem;
   background-color: transparent;
+  transform: translateY(-50%);
 `;
 
 export const InputErrorWrapper = styled.div`
