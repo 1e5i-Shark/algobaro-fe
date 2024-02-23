@@ -23,7 +23,7 @@ interface LoginInfo {
   loginPassword: string;
 }
 
-export default function LoginForm() {
+export default function LoginForm({ width = '100%' }: { width?: string }) {
   // 저장한 이메일 아이디
   const [saveEmail, setSaveEmail] = useLocalStorage('saveEmail');
   // 아이디 저장 옵션 여부
@@ -66,7 +66,7 @@ export default function LoginForm() {
     /* 출력 예
       {"loginEmail":"algo@naver.com","loginPassword":"algobaro"}
     */
-    console.log('제출한 데이터:', JSON.stringify(data)); // 로그인 정보 테스트 출력
+    alert(`제출한 데이터: ${JSON.stringify(data)}`); // 로그인 정보 테스트 출력
 
     // 아이디 저장 체크 시 로컬 스토리지에 저장
     // 해제 시 초기화
@@ -84,7 +84,7 @@ export default function LoginForm() {
   };
 
   return (
-    <LoginFormWrapper>
+    <LoginFormWrapper width={width}>
       <LoginFormContainer onSubmit={handleSubmit(onSubmitData)}>
         <LoginInputContainer>
           {inputPropsList.map(props => {
