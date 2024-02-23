@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import Header from '@/components/Common/Header/Header';
-import PSHeader from '@/components/PSHeader/PSHeader';
+import PSHeader from '@/components/Common/Header/PSHeader';
 import {
   CreateRoomPage,
   HomePage,
