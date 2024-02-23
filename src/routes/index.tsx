@@ -15,12 +15,8 @@ import {
   WelcomePage,
 } from '@/pages';
 
+import { CheckUserLogin } from './CheckUserLogin';
 import { PATH } from './path';
-
-const checkUserLogin = async () => {
-  // 유저가 로그인 했는지 검사하는 로직
-  return true;
-};
 
 export const router = createBrowserRouter([
   {
@@ -30,7 +26,7 @@ export const router = createBrowserRouter([
   {
     path: `${PATH.ROOM}/:roomId`,
     element: <PrivateRoute component={<RoomPage />} />,
-    loader: checkUserLogin,
+    loader: CheckUserLogin,
   },
   {
     element: (
@@ -43,7 +39,7 @@ export const router = createBrowserRouter([
       {
         path: PATH.HOME,
         element: <PrivateRoute component={<HomePage />} />,
-        loader: checkUserLogin,
+        loader: CheckUserLogin,
       },
       {
         path: PATH.SIGNUP,
@@ -52,12 +48,12 @@ export const router = createBrowserRouter([
       {
         path: `${PATH.PROFILE}/:userId`,
         element: <PrivateRoute component={<ProfilePage />} />,
-        loader: checkUserLogin,
+        loader: CheckUserLogin,
       },
       {
         path: PATH.CREATEROOM,
         element: <PrivateRoute component={<CreateRoomPage />} />,
-        loader: checkUserLogin,
+        loader: CheckUserLogin,
       },
     ],
   },
@@ -72,12 +68,12 @@ export const router = createBrowserRouter([
       {
         path: `${PATH.PROBLEMSOLVE}/:roomId`,
         element: <PrivateRoute component={<ProblemSolvePage />} />,
-        loader: checkUserLogin,
+        loader: CheckUserLogin,
       },
       {
         path: `${PATH.PROBLEMSHARE}/:roomId`,
         element: <PrivateRoute component={<ProblemSharePage />} />,
-        loader: checkUserLogin,
+        loader: CheckUserLogin,
       },
     ],
   },
