@@ -1,6 +1,7 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 import Header from '@/components/Common/Header/Header';
+import PrivateRoute from '@/components/PrivateRoute';
 import PSHeader from '@/components/PSHeader/PSHeader';
 import {
   CreateRoomPage,
@@ -27,8 +28,14 @@ export const router = createBrowserRouter([
       </>
     ),
     children: [
-      { path: PATH.HOME, element: <HomePage /> },
-      { path: PATH.SIGNUP, element: <SignUpPage /> },
+      {
+        path: PATH.HOME,
+        element: <PrivateRoute component={<HomePage />} />,
+      },
+      {
+        path: PATH.SIGNUP,
+        element: <SignUpPage />,
+      },
       { path: `${PATH.PROFILE}/:userId`, element: <ProfilePage /> },
       { path: PATH.CREATEROOM, element: <CreateRoomPage /> },
     ],
