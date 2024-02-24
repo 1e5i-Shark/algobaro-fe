@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import WithHeader from '@/components/layouts/WithHeader';
-import WithPSHeader from '@/components/layouts/WithPSHeader';
+import WithHeader from '@/layout/WithHeader';
+import WithPSHeader from '@/layout/WithPSHeader';
 import {
   CreateRoomPage,
   HomePage,
