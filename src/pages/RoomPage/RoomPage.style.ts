@@ -84,3 +84,51 @@ export const LogoWrapper = styled.div`
     margin-right: 0;
   }
 `;
+
+// TestInfo
+export const TestInfoWrapper = styled(Row)`
+  justify-content: space-between;
+  margin-top: 10rem;
+`;
+
+export const WaitingButtonWrapper = styled(Col)`
+  align-items: flex-end;
+`;
+
+export const Text = styled.div<{ $color: string; $padding: string }>`
+  ${({ $color, $padding }) => css`
+    padding: ${$padding};
+    color: ${$color};
+  `}
+`;
+
+export const TestInfoTable = styled.table`
+  ${({ theme }) => css`
+    width: 18rem;
+    border-spacing: 0;
+    border: 1px solid ${theme.color.transparent_90};
+    border-radius: 0.5rem;
+    tr {
+      height: 4rem;
+
+      &:first-of-type td {
+        border-bottom: 1px solid ${theme.color.transparent_90};
+      }
+    }
+
+    td {
+      padding: 1rem;
+
+      .row-content {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .icon {
+        padding-left: 0.5rem;
+        transform: rotate(135deg);
+      }
+    }
+  `}
+`;
