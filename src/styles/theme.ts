@@ -14,6 +14,7 @@ const size = {
   half: '50%',
   none: '0%',
   icon: {
+    XXS: '1.6rem',
     XS: '2.6rem',
     S: '3.6rem',
     M: '4.6rem',
