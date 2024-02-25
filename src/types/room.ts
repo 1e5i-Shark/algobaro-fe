@@ -13,4 +13,10 @@ export interface UpdateRoomType {
   problemLink: string;
   tags: string[];
   languages: string[];
+  users: UserType[];
+}
+
+export interface UserType {
+  username: string;
+  status: string;
 }
