@@ -14,6 +14,7 @@ export interface UpdateRoomType {
   tags: string[];
   languages: string[];
   users: UserType[];
+  timer: number;
 }
 
 export interface UserType {

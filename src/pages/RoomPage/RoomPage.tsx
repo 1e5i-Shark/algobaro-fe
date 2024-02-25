@@ -35,6 +35,7 @@ const DUMMY_DATA = {
       status: '대기중',
     },
   ],
+  timer: 60,
 };
 
 export default function RoomPage() {
@@ -43,7 +44,7 @@ export default function RoomPage() {
       <WaitingRoomContainer>
         <RoomHeader data={DUMMY_DATA} />
         <Participants data={DUMMY_DATA.users} />
-        <TestInfo />
+        <TestInfo data={DUMMY_DATA} />
       </WaitingRoomContainer>
       <ChatContainer>
         <h1>채팅</h1>
