@@ -86,6 +86,7 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
   return (
     <LoginFormWrapper width={width}>
       <LoginFormContainer onSubmit={handleSubmit(onSubmitData)}>
+        {/* 로그인 정보 입력 영역 */}
         <LoginInputContainer>
           {inputPropsList.map(props => {
             return (
@@ -99,12 +100,14 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
             );
           })}
         </LoginInputContainer>
+        {/* 로그인 버튼 */}
         <LoginButton
           type="submit"
           disabled={!emailError && loginEmail && loginPassword ? false : true}
         >
           로그인
         </LoginButton>
+        {/* 로그인 정보 외 설정 및 링크 영역 */}
         <LoginOptionContainer>
           <CheckBox
             label="아이디 저장"
