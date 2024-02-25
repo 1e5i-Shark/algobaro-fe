@@ -8,6 +8,12 @@ export const GlobalStyle = createGlobalStyle`
     border: 0;
     -webkit-tap-highlight-color: transparent;
   }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
   
   html {
     font-size: 62.5%;

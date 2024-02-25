@@ -1,6 +1,7 @@
 import { cloneElement, HTMLAttributes, MouseEvent, ReactElement } from 'react';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { Size } from '@/types';
 
 import { IconWrapper } from './Icon.style';
 
@@ -17,7 +18,7 @@ import { IconWrapper } from './Icon.style';
 interface IconProps extends HTMLAttributes<HTMLButtonElement> {
   children: ReactElement;
   color?: string;
-  size?: string;
+  size?: Size;
   background?: boolean;
   backgroundSize?: string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -26,7 +27,7 @@ interface IconProps extends HTMLAttributes<HTMLButtonElement> {
 export default function Icon({
   children,
   color = '',
-  size = '',
+  size = 'XS',
   background = false,
   backgroundSize = '3.6rem',
   onClick,
@@ -34,10 +35,13 @@ export default function Icon({
 }: IconProps) {
   const { theme } = useCustomTheme();
 
+  const defaultColor = color || theme.color.gray_50;
+  const defaultFontSize = theme.size.icon[size] || theme.size.icon.XS;
+
   const cloneIcon = cloneElement(children, {
     sx: {
-      color: color || theme.color.gray_50,
-      fontSize: size || theme.size.icon.XS,
+      color: defaultColor,
+      fontSize: defaultFontSize,
     },
   });
 
