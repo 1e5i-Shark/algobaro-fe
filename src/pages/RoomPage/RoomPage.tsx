@@ -3,7 +3,7 @@ import {
   RoomContainer,
   WaitingRoomContainer,
 } from './RoomPage.style';
-import RoomHeader from './RoomViews/Header/RoomHeader';
+import { Participants, RoomHeader } from './RoomViews';
 
 const DUMMY_DATA = {
   roomId: 1,
@@ -42,6 +42,7 @@ export default function RoomPage() {
     <RoomContainer>
       <WaitingRoomContainer>
         <RoomHeader data={DUMMY_DATA} />
+        <Participants data={DUMMY_DATA.users} />
       </WaitingRoomContainer>
       <ChatContainer>
         <h1>채팅</h1>
