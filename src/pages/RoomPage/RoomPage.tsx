@@ -1,8 +1,4 @@
-import {
-  ChatContainer,
-  RoomContainer,
-  WaitingRoomContainer,
-} from './RoomPage.style';
+import * as ST from './RoomPage.style';
 import { Participants, RoomHeader, TestInfo } from './RoomViews';
 
 const DUMMY_DATA = {
@@ -40,15 +36,15 @@ const DUMMY_DATA = {
 
 export default function RoomPage() {
   return (
-    <RoomContainer>
-      <WaitingRoomContainer>
+    <ST.RoomContainer>
+      <ST.WaitingRoomContainer>
         <RoomHeader data={DUMMY_DATA} />
         <Participants data={DUMMY_DATA.users} />
         <TestInfo data={DUMMY_DATA} />
-      </WaitingRoomContainer>
-      <ChatContainer>
+      </ST.WaitingRoomContainer>
+      <ST.ChatContainer>
         <h1>채팅</h1>
-      </ChatContainer>
-    </RoomContainer>
+      </ST.ChatContainer>
+    </ST.RoomContainer>
   );
 }
