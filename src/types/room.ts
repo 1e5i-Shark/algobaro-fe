@@ -20,4 +20,5 @@ export interface UpdateRoomType {
 export interface UserType {
   username: string;
   status: string;
+  image: string;
 }
