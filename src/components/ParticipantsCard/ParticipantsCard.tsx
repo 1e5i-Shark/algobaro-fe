@@ -6,6 +6,7 @@ import Icon from '../Common/Icon/Icon';
 import Menu from '../Common/Menu/Menu';
 import { MenuText } from '../Common/Menu/MenuText';
 import * as S from './ParticipantsCard.style';
+import StatusTag from './StatusTag';
 
 interface ParticipantsProps {
   username: string;
@@ -16,6 +17,7 @@ interface ParticipantsProps {
 export default function ParticipantsCard({
   username,
   image,
+  status,
 }: ParticipantsProps) {
   const menuList = [
     {
@@ -47,6 +49,7 @@ export default function ParticipantsCard({
         size="M"
       />
       <S.NameWrapper>{username}</S.NameWrapper>
+      <StatusTag status={status} />
     </S.CardWrapper>
   );
 }
