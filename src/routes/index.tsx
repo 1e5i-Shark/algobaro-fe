@@ -13,7 +13,6 @@ import {
 } from '@/pages';
 import Layout from '@/pages/Layout';
 
-import { CheckUserLogin } from './CheckUserLogin';
 import { PATH } from './path';
 import PrivateRoute from './PrivateRoute';
 
@@ -25,7 +24,6 @@ export const router = createBrowserRouter([
   {
     path: `${PATH.ROOM}/:roomId`,
     element: <PrivateRoute component={<RoomPage />} />,
-    loader: CheckUserLogin,
   },
   {
     element: <Layout kind="default" />,
@@ -33,7 +31,6 @@ export const router = createBrowserRouter([
       {
         path: PATH.HOME,
         element: <PrivateRoute component={<HomePage />} />,
-        loader: CheckUserLogin,
       },
       {
         path: PATH.SIGNUP,
@@ -42,12 +39,10 @@ export const router = createBrowserRouter([
       {
         path: `${PATH.PROFILE}/:userId`,
         element: <PrivateRoute component={<ProfilePage />} />,
-        loader: CheckUserLogin,
       },
       {
         path: PATH.CREATEROOM,
         element: <PrivateRoute component={<CreateRoomPage />} />,
-        loader: CheckUserLogin,
       },
     ],
   },
@@ -57,12 +52,10 @@ export const router = createBrowserRouter([
       {
         path: `${PATH.PROBLEMSOLVE}/:roomId`,
         element: <PrivateRoute component={<ProblemSolvePage />} />,
-        loader: CheckUserLogin,
       },
       {
         path: `${PATH.PROBLEMSHARE}/:roomId`,
         element: <PrivateRoute component={<ProblemSharePage />} />,
-        loader: CheckUserLogin,
       },
     ],
   },
