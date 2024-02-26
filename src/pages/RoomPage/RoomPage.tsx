@@ -1,4 +1,4 @@
-import * as ST from './RoomPage.style';
+import * as S from './RoomPage.style';
 import { Participants, RoomHeader, TestInfo } from './RoomViews';
 
 const DUMMY_DATA = {
@@ -23,39 +23,33 @@ const DUMMY_DATA = {
   users: [
     {
       username: '김방장',
-      status: '준비완료',
+      status: '방장',
       image: '',
-      isManager: true,
     },
     {
       username: '아무개',
       status: '준비완료',
       image: '',
-      isManager: false,
     },
     {
       username: '갓코딩',
       status: '대기중',
       image: 'https://picsum.photos/100/100',
-      isManager: false,
     },
     {
       username: '하이',
       status: '준비완료',
       image: '',
-      isManager: false,
     },
     {
       username: '헬로월드',
       status: '대기중',
       image: '',
-      isManager: false,
     },
     {
       username: '취준생',
       status: '준비완료',
       image: '',
-      isManager: false,
     },
   ],
   timer: 60,
@@ -63,15 +57,15 @@ const DUMMY_DATA = {
 
 export default function RoomPage() {
   return (
-    <ST.RoomContainer>
-      <ST.WaitingRoomContainer>
+    <S.RoomContainer>
+      <S.WaitingRoomContainer>
         <RoomHeader data={DUMMY_DATA} />
         <Participants data={DUMMY_DATA.users} />
         <TestInfo data={DUMMY_DATA} />
-      </ST.WaitingRoomContainer>
-      <ST.ChatContainer>
+      </S.WaitingRoomContainer>
+      <S.ChatContainer>
         <h1>채팅</h1>
-      </ST.ChatContainer>
-    </ST.RoomContainer>
+      </S.ChatContainer>
+    </S.RoomContainer>
   );
 }
