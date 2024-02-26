@@ -20,15 +20,42 @@ const DUMMY_DATA = {
   shortUUID: 'x15964',
   languages: ['java', 'python', 'javascript', 'cpp'],
   tags: ['Gold 4', 'BFS'],
-  userManager: '김방장',
   users: [
+    {
+      username: '김방장',
+      status: '준비완료',
+      image: '',
+      isManager: true,
+    },
     {
       username: '아무개',
       status: '준비완료',
+      image: '',
+      isManager: false,
     },
     {
       username: '갓코딩',
       status: '대기중',
+      image: 'https://picsum.photos/100/100',
+      isManager: false,
+    },
+    {
+      username: '하이',
+      status: '준비완료',
+      image: '',
+      isManager: false,
+    },
+    {
+      username: '헬로월드',
+      status: '대기중',
+      image: '',
+      isManager: false,
+    },
+    {
+      username: '취준생',
+      status: '준비완료',
+      image: '',
+      isManager: false,
     },
   ],
   timer: 60,
