@@ -6,10 +6,10 @@ import { PATH } from '@/routes/path';
 import * as S from './Header.style';
 
 export default function Header() {
-  const naviate = useNavigate();
+  const navigate = useNavigate();
 
   const handleAvatarClick = () => {
-    naviate(PATH.PROFILE);
+    navigate(PATH.PROFILE);
   };
 
   return (
