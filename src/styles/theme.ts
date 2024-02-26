@@ -3,6 +3,10 @@ const ZINDEX = {
   MODAL: 888,
 };
 
+const WIDTH = {
+  CARD: '25rem',
+};
+
 const size = {
   XS: '0.5rem',
   S: '1rem',
@@ -53,7 +57,7 @@ const commonTheme = {
   gray_20: '#E3E3E3',
   gray_10: '#EFEFEF',
   red: '#FF7C60',
-  green: '#72EC5E',
+  green: '#67CF56',
   gradation: 'linear-gradient(90deg, #A5F1F6, #CFBEFF)',
   circle_gradation: 'linear-gradient(135deg, #A5F1F6, #CFBEFF)',
 };
@@ -78,6 +82,7 @@ export const lightTheme = {
   fontWeight,
   device,
   ZINDEX,
+  WIDTH,
 };
 
 export const darkTheme = {
@@ -100,6 +105,7 @@ export const darkTheme = {
   fontWeight,
   device,
   ZINDEX,
+  WIDTH,
 };
 
 export const theme = {
