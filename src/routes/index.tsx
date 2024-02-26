@@ -1,5 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import Header from '@/components/Common/Header/Header';
+import PSHeader from '@/components/Common/Header/PSHeader';
 import {
   CreateRoomPage,
   HomePage,
@@ -26,7 +28,7 @@ export const router = createBrowserRouter([
     element: <PrivateRoute component={<RoomPage />} />,
   },
   {
-    element: <Layout kind="default" />,
+    element: <Layout header={<Header />} />,
     children: [
       {
         path: PATH.HOME,
@@ -47,7 +49,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <Layout kind="ps" />,
+    element: <Layout header={<PSHeader />} />,
     children: [
       {
         path: `${PATH.PROBLEMSOLVE}/:roomId`,

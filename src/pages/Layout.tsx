@@ -1,16 +1,14 @@
+import { ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import Header from '@/components/Common/Header/Header';
-import PSHeader from '@/components/Common/Header/PSHeader';
-
 interface LayoutProps {
-  kind?: 'default' | 'ps';
+  header?: ReactNode;
 }
 
-export default function Layout({ kind = 'default' }: LayoutProps) {
+export default function Layout({ header }: LayoutProps) {
   return (
     <>
-      {kind === 'default' ? <Header /> : <PSHeader />}
+      {header && header}
       <Outlet />
     </>
   );
