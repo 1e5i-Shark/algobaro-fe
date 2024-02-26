@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { Shape, Size } from '@/types';
 
 import {
@@ -38,9 +36,7 @@ export default function Avatar({
   onClick,
   ...props
 }: AvatarProps) {
-  const isPointer = useMemo(() => {
-    return onClick ? true : false;
-  }, []);
+  const isPointer = onClick ? true : false;
 
   return (
     <AvatarContainer
@@ -48,9 +44,9 @@ export default function Avatar({
       onClick={onClick}
     >
       <AvatarWrapper
-        size={size}
-        shape={shape}
-        src={src}
+        $size={size}
+        $shape={shape}
+        $src={src}
         $isBorder={isBorder}
         $isShadow={isShadow}
         {...props}
