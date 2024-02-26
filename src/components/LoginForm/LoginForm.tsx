@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +8,7 @@ import { InputListProps } from '@/types/input';
 
 import CheckBox from '../Common/CheckBox/CheckBox';
 import Input from '../Common/Input/Input';
-import { LOGIN_VALIDATION } from './loginConstants';
+import { LOGIN_VALIDATION, SIGNIN_URL } from './loginConstants';
 import {
   LoginButton,
   LoginFormContainer,
@@ -59,6 +60,41 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
       placeholder: '비밀번호',
     },
   ];
+
+  const signIn = async (email: string, password: string) => {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    const reqBody = {
+      email,
+      password,
+    };
+
+    console.log(JSON.stringify(reqBody));
+
+    try {
+      const res = await axios.post(
+        // `${import.meta.env.VITE_API_URL}${SIGNIN_URL}`,
+        `${SIGNIN_URL}`,
+        // JSON.stringify(reqBody),
+        reqBody,
+        // new URLSearchParams(reqBody),
+        {
+          headers,
+        }
+      );
+
+      console.log('응답:', res);
+
+      // return res;
+    } catch (e) {
+      console.log('에러');
+
+      console.error(e);
+    }
+  };
+
   // 로그인 데이터 api 통신 후 데이터 저장 및 메인페이지(홈) 이동하는 함수
   const onSubmitData: SubmitHandler<LoginInfo> = data => {
     // TODO: 서버 인증 로직 추가
@@ -66,16 +102,20 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
     /* 출력 예
       {"loginEmail":"algo@naver.com","loginPassword":"algobaro"}
     */
-    alert(`제출한 데이터: ${JSON.stringify(data)}`); // 로그인 정보 테스트 출력
+    // alert(`제출한 데이터: ${JSON.stringify(data)}`); // 로그인 정보 테스트 출력
+
+    const { loginEmail, loginPassword } = data;
 
     // 아이디 저장 체크 시 로컬 스토리지에 저장
     // 해제 시 초기화
     setSaveEmail(isSaveEmail ? JSON.stringify(data.loginEmail) : '');
 
+    signIn(loginEmail, loginPassword);
+
     // 성공적으로 로그인이 되면 form 리셋
     reset();
     // 메인 페이지(홈) 다이렉팅
-    navigate('/home');
+    // navigate('/home');
   };
   // 아이디 저장 체크 박스 변경 사항을 상태로 저장한다.
   const handleChangeCheck = (e: ChangeEvent<HTMLInputElement>) => {
