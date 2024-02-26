@@ -5,15 +5,13 @@ import { Col, Row } from '@/styles/GlobalStyle';
 // RoomPage
 export const RoomContainer = styled(Row)`
   height: 100vh;
-  padding-top: 3rem;
-  background-color: 'peru';
+  padding: 5rem 5rem;
 `;
 
 export const WaitingRoomContainer = styled(Col)`
   flex-grow: 3;
   min-width: 50rem;
-  padding: 0 1rem;
-  /* background-color: #789456; */
+  padding-right: 7rem;
 `;
 
 export const ChatContainer = styled(Col)`
@@ -21,7 +19,7 @@ export const ChatContainer = styled(Col)`
     flex-grow: 1;
     min-width: 25rem;
     padding: 0 1rem;
-    /* background-color: #f2f13f; */
+    background-color: lightgoldenrodyellow;
     border-left: 1px solid ${theme.color.transparent_30};
   `}
 `;
@@ -30,11 +28,10 @@ export const ChatContainer = styled(Col)`
 export const HeaderContainer = styled(Row)`
   justify-content: space-between;
   width: 100%;
-  /* background-color: lightblue; */
 `;
 
 export const RoomInfoContainer = styled.div`
-  background-color: 'peru';
+  /* background-color: 'peru'; */
 `;
 
 export const ButtonsWrapper = styled(Row)``;
@@ -85,10 +82,13 @@ export const LogoWrapper = styled.div`
   }
 `;
 
+// Participants
+export const ParticipantsContainer = styled.div``;
+
 // TestInfo
 export const TestInfoWrapper = styled(Row)`
   justify-content: space-between;
-  margin-top: 10rem;
+  margin-top: 5rem;
 `;
 
 export const WaitingButtonWrapper = styled(Col)`
