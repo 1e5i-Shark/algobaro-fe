@@ -1,9 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 
+import Header from '@/components/Common/Header/Header';
+import PSHeader from '@/components/Common/Header/PSHeader';
 import {
   CreateRoomPage,
   HomePage,
-  MainPage,
   NotFoundPage,
   ProblemSharePage,
   ProblemSolvePage,
@@ -12,47 +13,56 @@ import {
   SignUpPage,
   WelcomePage,
 } from '@/pages';
+import Layout from '@/pages/Layout';
 
 import { PATH } from './path';
+import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([
   {
     path: PATH.ROOT,
-    element: <MainPage />,
-    errorElement: <NotFoundPage />,
+    element: <WelcomePage />,
+  },
+  {
+    path: `${PATH.ROOM}/:roomId`,
+    element: <PrivateRoute component={<RoomPage />} />,
+  },
+  {
+    element: <Layout header={<Header />} />,
     children: [
       {
-        path: PATH.ROOT,
-        element: <WelcomePage />,
+        path: PATH.HOME,
+        element: <PrivateRoute component={<HomePage />} />,
       },
       {
         path: PATH.SIGNUP,
         element: <SignUpPage />,
       },
       {
-        path: PATH.HOME,
-        element: <HomePage />,
-      },
-      {
         path: `${PATH.PROFILE}/:userId`,
-        element: <ProfilePage />,
+        element: <PrivateRoute component={<ProfilePage />} />,
       },
       {
         path: PATH.CREATEROOM,
-        element: <CreateRoomPage />,
+        element: <PrivateRoute component={<CreateRoomPage />} />,
       },
-      {
-        path: `${PATH.ROOM}/:roomId`,
-        element: <RoomPage />,
-      },
+    ],
+  },
+  {
+    element: <Layout header={<PSHeader />} />,
+    children: [
       {
         path: `${PATH.PROBLEMSOLVE}/:roomId`,
-        element: <ProblemSolvePage />,
+        element: <PrivateRoute component={<ProblemSolvePage />} />,
       },
       {
         path: `${PATH.PROBLEMSHARE}/:roomId`,
-        element: <ProblemSharePage />,
+        element: <PrivateRoute component={<ProblemSharePage />} />,
       },
     ],
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
   },
 ]);

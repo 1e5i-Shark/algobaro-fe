@@ -1,3 +1,7 @@
+const FIXED_HEIGHT = {
+  HEADER: '8rem',
+};
+
 const ZINDEX = {
   SPINNER: 999,
   MODAL: 888,
@@ -63,6 +67,7 @@ export const lightTheme = {
     background_primary: '#FFFFFF',
     background_second: '#E9E9E9',
     background_modal: '#ffffff',
+    background_menu: '#FAFAFA',
     container_color: '#E3E3E3',
     text_primary_color: '#2C2C2C',
     text_secondary_color: '#F0F0F0',
@@ -77,6 +82,7 @@ export const lightTheme = {
   fontWeight,
   device,
   ZINDEX,
+  FIXED_HEIGHT,
 };
 
 export const darkTheme = {
@@ -85,6 +91,7 @@ export const darkTheme = {
     background_primary: '#1E1B1A',
     background_second: '#131010',
     background_modal: '#1e1e1e',
+    background_menu: '#131010',
     container_color: '#4D4D4D',
     text_primary_color: '#F0F0F0',
     text_secondary_color: '#2C2C2C',
@@ -99,6 +106,7 @@ export const darkTheme = {
   fontWeight,
   device,
   ZINDEX,
+  FIXED_HEIGHT,
 };
 
 export const theme = {
