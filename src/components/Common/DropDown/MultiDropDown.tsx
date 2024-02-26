@@ -111,6 +111,9 @@ export default function MultiDropDown({
               // '& .MuiPopover-paper': {
               //   left: '0 !important',
               // },
+              '& .MuiPaper-root': {
+                backgroundColor: theme.color.background_primary,
+              },
               '& .MuiList-root': {
                 color: theme.color.text_primary_color,
                 backgroundColor:
