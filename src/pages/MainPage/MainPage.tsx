@@ -1,10 +1,16 @@
 import { Outlet } from 'react-router-dom';
 
+import { Header } from '@/components';
+
+import * as S from './MainPage.style';
+
 export default function MainPage() {
   return (
     <>
-      <header>MainPage's Header</header>
-      <Outlet />
+      <Header />
+      <S.OutletWrapper>
+        <Outlet />
+      </S.OutletWrapper>
     </>
   );
 }
