@@ -94,9 +94,10 @@ export default function DropDown({
           onChange={handleChange}
           MenuProps={{
             sx: {
-              '& .MuiPopover-paper': {
-                left: '0 !important',
-              },
+              // 외부 padding이 있다면 left 자체 속성이 잘 동작하므로 임시 생략
+              // '& .MuiPopover-paper': {
+              //   left: '0 !important',
+              // },
               '& .MuiList-root': {
                 color: theme.color.text_primary_color,
                 backgroundColor:
