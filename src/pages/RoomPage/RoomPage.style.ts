@@ -83,7 +83,15 @@ export const LogoWrapper = styled.div`
 `;
 
 // Participants
-export const ParticipantsContainer = styled.div``;
+export const ParticipantsContainer = styled.div`
+  ${({ theme }) => css`
+    display: grid;
+    grid-template-columns: repeat(3, ${theme.WIDTH.CARD});
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 5rem;
+  `}
+`;
 
 // TestInfo
 export const TestInfoWrapper = styled(Row)`

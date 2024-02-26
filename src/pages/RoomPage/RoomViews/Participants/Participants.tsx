@@ -1,3 +1,5 @@
+import ParticipantsCard from '@/components/ParticipantsCard/ParticipantsCard';
+import * as S from '@/pages/RoomPage/RoomPage.style';
 import { UserType } from '@/types/room';
 
 interface ParticipantsProps {
@@ -6,11 +8,17 @@ interface ParticipantsProps {
 
 export default function Participants({ data }: ParticipantsProps) {
   return (
-    <div>
-      <h1>Participants</h1>
-      {data.map((user, index) => (
-        <div key={user.username + index}>{user.username}</div>
-      ))}
-    </div>
+    <S.ParticipantsContainer>
+      {data.map((user, index) => {
+        return (
+          <ParticipantsCard
+            key={user.username + index}
+            username={user.username}
+            status={user.status}
+            image={user.image}
+          />
+        );
+      })}
+    </S.ParticipantsContainer>
   );
 }
