@@ -33,4 +33,8 @@ const IconWrapper = styled.div`
   align-items: center;
 `;
 
-export { HeaderWrapper, IconWrapper, LogoText, LogoWrapper };
+const AvatarWrapper = styled.div`
+  padding-top: 0.5rem;
+`;
+
+export { AvatarWrapper, HeaderWrapper, IconWrapper, LogoText, LogoWrapper };

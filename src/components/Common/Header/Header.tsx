@@ -19,7 +19,9 @@ export default function Header() {
       </S.LogoWrapper>
       <S.IconWrapper>
         <DarkModeToggleButton />
-        <Avatar onClick={handleAvatarClick} />
+        <S.AvatarWrapper>
+          <Avatar onClick={handleAvatarClick} />
+        </S.AvatarWrapper>
       </S.IconWrapper>
     </S.HeaderWrapper>
   );
