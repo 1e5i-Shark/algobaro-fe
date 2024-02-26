@@ -1,4 +1,4 @@
-import ParticipantsCard from '@/components/ParticipantsCard/ParticipantsCard';
+import { ParticipantsCard } from '@/components';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { UserType } from '@/types/room';
 

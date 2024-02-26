@@ -2,9 +2,9 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import PendingRoundedIcon from '@mui/icons-material/PendingRounded';
 import SportsRoundedIcon from '@mui/icons-material/SportsRounded';
 
+import { Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
-import Icon from '../Common/Icon/Icon';
 import * as S from './ParticipantsCard.style';
 
 interface StatusTagProps {

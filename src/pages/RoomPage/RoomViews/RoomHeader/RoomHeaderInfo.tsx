@@ -3,16 +3,7 @@ import { ContentCopyRounded, LockRounded } from '@mui/icons-material';
 import { Icon, Image, Tag } from '@/components';
 import { LOGOS } from '@/constants/logos';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
-import {
-  CopyRoomIdTag,
-  LogosWrapper,
-  LogoWrapper,
-  RoomIdWrapper,
-  TagsWrapper,
-  TagWrapper,
-  TextId,
-  TitleWrapper,
-} from '@/pages/RoomPage/RoomPage.style';
+import * as S from '@/pages/RoomPage/RoomPage.style';
 import { UpdateRoomType } from '@/types/room';
 
 interface RoomInfoProps {
@@ -31,15 +22,15 @@ export default function RoomInfoContainer({ className, data }: RoomInfoProps) {
 
   return (
     <div className={className}>
-      <RoomIdWrapper className="roomId">
-        <CopyRoomIdTag onClick={handleCopyRoomId}>
-          <TextId>방 코드 : {shortUUID}</TextId>
+      <S.RoomIdWrapper className="roomId">
+        <S.CopyRoomIdTag onClick={handleCopyRoomId}>
+          <S.TextId>방 코드 : {shortUUID}</S.TextId>
           <Icon>
             <ContentCopyRounded />
           </Icon>
-        </CopyRoomIdTag>
-      </RoomIdWrapper>
-      <TitleWrapper className="title">
+        </S.CopyRoomIdTag>
+      </S.RoomIdWrapper>
+      <S.TitleWrapper className="title">
         <Icon
           color={theme.color.text_primary_color}
           style={{
@@ -50,10 +41,10 @@ export default function RoomInfoContainer({ className, data }: RoomInfoProps) {
           <LockRounded />
         </Icon>
         <h2>{title}</h2>
-      </TitleWrapper>
-      <TagsWrapper className="tagsGroup">
+      </S.TitleWrapper>
+      <S.TagsWrapper className="tagsGroup">
         {tags.map((tag, index) => (
-          <TagWrapper key={tag + index}>
+          <S.TagWrapper key={tag + index}>
             <Tag
               fontSize="1.4rem"
               mode="normal"
@@ -61,21 +52,21 @@ export default function RoomInfoContainer({ className, data }: RoomInfoProps) {
             >
               {tag}
             </Tag>
-          </TagWrapper>
+          </S.TagWrapper>
         ))}
-      </TagsWrapper>
-      <LogosWrapper className="logosGroup">
+      </S.TagsWrapper>
+      <S.LogosWrapper className="logosGroup">
         {languages.map(language => (
-          <LogoWrapper key={language}>
+          <S.LogoWrapper key={language}>
             <Image
               shape="circle"
               alt="logo"
               fill={true}
               src={LOGOS[language]}
             />
-          </LogoWrapper>
+          </S.LogoWrapper>
         ))}
-      </LogosWrapper>
+      </S.LogosWrapper>
     </div>
   );
 }

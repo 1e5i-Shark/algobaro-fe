@@ -1,8 +1,7 @@
+import * as S from '@/pages/RoomPage/RoomPage.style';
 import { UpdateRoomType } from '@/types/room';
 
-import { HeaderContainer } from '../../RoomPage.style';
-import RoomHeaderButtons from './RoomHeaderButtons';
-import RoomHeaderInfo from './RoomHeaderInfo';
+import { RoomHeaderButtons, RoomHeaderInfo } from '.';
 
 interface RoomProps {
   data: UpdateRoomType;
@@ -10,12 +9,12 @@ interface RoomProps {
 
 export default function RoomHeader({ data }: RoomProps) {
   return (
-    <HeaderContainer>
+    <S.HeaderContainer>
       <RoomHeaderInfo
         className="roomInfo"
         data={data}
       />
       <RoomHeaderButtons className="roomButtons" />
-    </HeaderContainer>
+    </S.HeaderContainer>
   );
 }

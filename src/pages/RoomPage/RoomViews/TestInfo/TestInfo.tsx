@@ -2,12 +2,7 @@ import { AttachmentRounded } from '@mui/icons-material';
 
 import { Button, Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
-import {
-  TestInfoTable,
-  TestInfoWrapper,
-  Text,
-  WaitingButtonWrapper,
-} from '@/pages/RoomPage/RoomPage.style';
+import * as S from '@/pages/RoomPage/RoomPage.style';
 import { UpdateRoomType } from '@/types/room';
 
 interface TestInfoProps {
@@ -21,8 +16,8 @@ export default function TestInfo({ data }: TestInfoProps) {
   const { theme } = useCustomTheme();
 
   return (
-    <TestInfoWrapper>
-      <TestInfoTable className="TestInfoTable">
+    <S.TestInfoWrapper>
+      <S.TestInfoTable className="TestInfoTable">
         <tr>
           <td
             colSpan={2}
@@ -42,25 +37,25 @@ export default function TestInfo({ data }: TestInfoProps) {
           </td>
           <td>{timer}분</td>
         </tr>
-      </TestInfoTable>
+      </S.TestInfoTable>
       {isReady ? (
         <Button onClick={() => alert('테스트 시작')}>테스트 시작</Button>
       ) : (
-        <WaitingButtonWrapper>
+        <S.WaitingButtonWrapper>
           <Button
             onClick={() => alert('대기중')}
             disabled
           >
             대기중
           </Button>
-          <Text
+          <S.Text
             $color={theme.color.gray_50}
             $padding="1rem 0 0 0"
           >
             모두 준비 완료되면 시작할 수 있습니다
-          </Text>
-        </WaitingButtonWrapper>
+          </S.Text>
+        </S.WaitingButtonWrapper>
       )}
-    </TestInfoWrapper>
+    </S.TestInfoWrapper>
   );
 }
