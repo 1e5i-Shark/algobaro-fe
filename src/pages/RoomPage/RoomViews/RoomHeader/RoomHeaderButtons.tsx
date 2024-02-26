@@ -18,7 +18,7 @@ export default function RoomHeaderButtons({ className }: RoomButtonsProps) {
     <ButtonsWrapper className={className}>
       <Button
         className="changeRoomInfo"
-        fontSize="1.4rem"
+        fontSize="1.6rem"
         onClick={() => {
           alert('changeRoomInfo');
         }}
@@ -51,7 +51,6 @@ export default function RoomHeaderButtons({ className }: RoomButtonsProps) {
         className="exitRoom"
         background={true}
         onClick={() => alert('RoomExit')}
-        style={{ marginRight: '1rem' }}
       >
         <ExitToAppRounded fontSize="large" />
       </Icon>
