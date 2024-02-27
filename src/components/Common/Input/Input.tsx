@@ -1,6 +1,6 @@
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
@@ -47,6 +47,10 @@ export default function Input<T extends FieldValues>({
 
   const inputError = formState?.errors[name];
   const inputErrorMessage = inputError && (inputError.message as string);
+
+  useEffect(() => {
+    setInputType(type);
+  }, [type]);
 
   return (
     <InputWrapper>
