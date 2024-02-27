@@ -68,7 +68,7 @@ export const RoomInfoContainer = styled.div`
 export const ButtonsWrapper = styled(Row)``;
 
 export const RoomIdWrapper = styled(Row)`
-  padding-bottom: 0.8rem;
+  padding-bottom: 1rem;
 
   &:hover {
     filter: brightness(95%);
@@ -77,7 +77,7 @@ export const RoomIdWrapper = styled(Row)`
 
 export const CopyRoomIdTag = styled(Row)`
   ${({ theme }) => css`
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1rem;
     cursor: pointer;
     background-color: ${theme.color.container_color};
     border-radius: 0.3rem;
@@ -86,15 +86,16 @@ export const CopyRoomIdTag = styled(Row)`
 
 export const TextId = styled.div`
   padding-right: 0.3rem;
+  font-size: 1.4rem;
 `;
 
 export const TitleWrapper = styled(Row)`
   align-items: center;
-  padding-bottom: 0.7rem;
+  padding-bottom: 2rem;
 `;
 
 export const TagsWrapper = styled(Row)`
-  padding-bottom: 0.7rem;
+  padding-bottom: 1rem;
 `;
 
 export const TagWrapper = styled.div`
@@ -104,20 +105,24 @@ export const TagWrapper = styled.div`
 export const LogosWrapper = styled(Row)``;
 
 export const LogoWrapper = styled.div`
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-right: 0.5rem;
+  ${({ theme }) => css`
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 0.5rem;
+    border: 1px solid ${theme.color.transparent_50};
+    border-radius: ${theme.size.half};
 
-  &:last-of-type {
-    margin-right: 0;
-  }
+    &:last-of-type {
+      margin-right: 0;
+    }
+  `}
 `;
 
 // Participants
 export const ParticipantsContainer = styled.div`
   ${({ theme }) => css`
     display: grid;
-    grid-template-columns: repeat(3, ${theme.WIDTH.CARD});
+    grid-template-columns: repeat(3, ${theme.FIXED_WIDTH.CARD});
     gap: 2rem;
     justify-content: center;
     margin-top: 5rem;

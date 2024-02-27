@@ -25,7 +25,7 @@ export default function RoomInfoContainer({ className, data }: RoomInfoProps) {
       <S.RoomIdWrapper className="roomId">
         <S.CopyRoomIdTag onClick={handleCopyRoomId}>
           <S.TextId>방 코드 : {shortUUID}</S.TextId>
-          <Icon>
+          <Icon size="XXS">
             <ContentCopyRounded />
           </Icon>
         </S.CopyRoomIdTag>
@@ -46,6 +46,7 @@ export default function RoomInfoContainer({ className, data }: RoomInfoProps) {
         {tags.map((tag, index) => (
           <S.TagWrapper key={tag + index}>
             <Tag
+              height="2.6rem"
               fontSize="1.4rem"
               mode="normal"
               tagId={tag + index}

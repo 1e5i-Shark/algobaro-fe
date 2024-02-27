@@ -30,6 +30,7 @@ export const StatusWrapper = styled(Row)`
     position: absolute;
     bottom: 2rem;
     justify-content: center;
+    padding-top: 1.5rem;
     border-top: 1px solid ${theme.color.transparent_50};
   `}
 `;
