@@ -3,10 +3,12 @@ import {
   ExitToAppRounded,
   LightModeRounded,
 } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { ButtonsWrapper } from '@/pages/RoomPage/RoomPage.style';
+import { PATH } from '@/routes/path';
 
 interface RoomButtonsProps {
   className: string;
@@ -14,6 +16,8 @@ interface RoomButtonsProps {
 
 export default function RoomHeaderButtons({ className }: RoomButtonsProps) {
   const { theme, toggleTheme } = useCustomTheme();
+  const navigate = useNavigate();
+
   return (
     <ButtonsWrapper className={className}>
       <Button
@@ -50,7 +54,7 @@ export default function RoomHeaderButtons({ className }: RoomButtonsProps) {
       <Icon
         className="exitRoom"
         background={true}
-        onClick={() => alert('RoomExit')}
+        onClick={() => navigate(PATH.HOME)}
       >
         <ExitToAppRounded fontSize="large" />
       </Icon>
