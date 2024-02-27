@@ -10,6 +10,8 @@ const handleAxiosError = (error: AxiosError<ErrorDataType>) => {
     const errorCode = error.errorCode;
 
     switch (errorCode) {
+      // 에러코드 별로 추가할 수 있다.
+      // Todo: 객체 형태로 키 밸류 형태로 리팩토링한다.
       case 'E00202':
         console.log('비밀번호가 일치하지 않습니다.');
         break;
