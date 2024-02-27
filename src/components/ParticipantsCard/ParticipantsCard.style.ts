@@ -8,8 +8,8 @@ export const CardWrapper = styled(Col)`
     flex-shrink: 0;
     gap: 1rem;
     align-items: center;
-    width: ${theme.WIDTH.CARD};
-    height: 22rem;
+    width: ${theme.FIXED_WIDTH.CARD};
+    height: ${theme.FIXED_HEIGHT.CARD};
     padding-top: 4.5rem;
     margin-right: 2rem;
     border-radius: 1rem;
@@ -30,7 +30,6 @@ export const StatusWrapper = styled(Row)`
     position: absolute;
     bottom: 2rem;
     justify-content: center;
-    padding-top: 2rem;
     border-top: 1px solid ${theme.color.transparent_50};
   `}
 `;
