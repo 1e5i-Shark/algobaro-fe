@@ -5,6 +5,7 @@ import PSHeader from '@/components/Common/Header/PSHeader';
 import {
   CreateRoomPage,
   HomePage,
+  Layout,
   NotFoundPage,
   ProblemSharePage,
   ProblemSolvePage,
@@ -13,7 +14,6 @@ import {
   SignUpPage,
   WelcomePage,
 } from '@/pages';
-import Layout from '@/pages/Layout';
 
 import { PATH } from './path';
 import PrivateRoute from './PrivateRoute';
