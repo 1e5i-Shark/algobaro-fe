@@ -1,9 +1,13 @@
 import { AttachmentRounded } from '@mui/icons-material';
+import { useMutation } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import * as S from '@/pages/RoomPage/RoomPage.style';
+import { PATH } from '@/routes/path';
+import { axiosAuthInstance } from '@/services/axiosInstance';
 import { RoomType } from '@/types/room';
 
 interface TestInfoProps {
@@ -11,10 +15,11 @@ interface TestInfoProps {
 }
 
 export default function TestInfo({ data }: TestInfoProps) {
-  const { timeLimit, problemLink } = data;
+  const { timeLimit, problemLink, roomId } = data;
   const isReady = true;
 
   const { theme } = useCustomTheme();
+  const navigate = useNavigate();
 
   const calcTime = useMemo(() => {
     const hour = Math.floor(timeLimit / 60);
@@ -22,6 +27,19 @@ export default function TestInfo({ data }: TestInfoProps) {
 
     return { hour, minute };
   }, []);
+
+  // 테스트 시작
+  const startTest = async () => {
+    const data = await axiosAuthInstance.post(`/v1/rooms/codes/${roomId}`);
+    return data;
+  };
+
+  const mutation = useMutation(startTest);
+
+  const handleStartTest = () => {
+    mutation.mutate();
+    navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
+  };
 
   return (
     <S.TestInfoWrapper>
@@ -51,7 +69,7 @@ export default function TestInfo({ data }: TestInfoProps) {
         </tbody>
       </S.TestInfoTable>
       {isReady ? (
-        <Button onClick={() => alert('테스트 시작')}>테스트 시작</Button>
+        <Button onClick={handleStartTest}>테스트 시작</Button>
       ) : (
         <S.WaitingButtonWrapper>
           <Button
