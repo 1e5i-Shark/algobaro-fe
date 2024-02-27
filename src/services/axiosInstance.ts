@@ -38,10 +38,7 @@ const onResponse = (response: AxiosResponse): AxiosResponse => response.data;
 const onError = (error: AxiosError): Promise<AxiosError> => {
   // 응답 오류가 있을 경우 추가 작업 수행
   if (isAxiosError<ErrorDataType>(error) && error.response) {
-    const errorResponse = error.response;
-
     handleAxiosError(error);
-    console.error(errorResponse.data);
   }
 
   return Promise.reject(error);

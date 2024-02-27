@@ -11,10 +11,14 @@ const handleAxiosError = (error: AxiosError<ErrorDataType>) => {
 
     switch (errorCode) {
       case 'E00202':
-        console.error('비밀번호가 일치하지 않습니다.');
+        console.log('비밀번호가 일치하지 않습니다.');
         break;
-      case 'E01301':
-        console.error('가입되지 않은 이메일입니다.');
+      case 'E01302':
+        console.log('가입되지 않은 이메일입니다.');
+        break;
+      default:
+        console.error(error);
+        break;
     }
   }
 };
