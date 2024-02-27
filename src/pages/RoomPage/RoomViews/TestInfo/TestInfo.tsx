@@ -16,6 +16,7 @@ interface TestInfoProps {
 
 export default function TestInfo({ data }: TestInfoProps) {
   const { timeLimit, problemLink, roomId } = data;
+  // Todo: 참가자 상태에 따라 isReady 구현
   const isReady = true;
 
   const { theme } = useCustomTheme();
