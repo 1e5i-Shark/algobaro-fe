@@ -65,8 +65,8 @@ const onRequest = (
 
   return config;
 };
-// 요청 인터셉터를 추가한다.
-axiosInstance.interceptors.request.use(onRequest, onError);
+// 인증이 필요하면 요청 인터셉터를 추가한다.
+axiosAuthInstance.interceptors.request.use(onRequest, onError);
 // 응답 인터셉터를 추가한다.
 axiosInstance.interceptors.response.use(onResponse, onError);
 axiosAuthInstance.interceptors.response.use(onResponse, onError);
