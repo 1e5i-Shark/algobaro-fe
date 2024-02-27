@@ -1,5 +1,6 @@
 export { default as CreateRoomPage } from './CreateRoomPage/CreateRoomPage';
 export { default as HomePage } from './HomePage/HomePage';
+export { default as Layout } from './Layout/Layout';
 export { default as MainPage } from './MainPage/MainPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
 export { default as ProblemSharePage } from './ProblemSharePage/ProblemSharePage';
