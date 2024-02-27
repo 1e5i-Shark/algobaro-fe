@@ -54,6 +54,10 @@ export default function Input<T extends FieldValues>({
   const inputError = formState?.errors[name];
   const inputErrorMessage = inputError && (inputError.message as string);
 
+  useEffect(() => {
+    setInputType(type);
+  }, [type]);
+
   return (
     <S.Wrapper>
       {label && <S.LabelText htmlFor={name}>{label}</S.LabelText>}
