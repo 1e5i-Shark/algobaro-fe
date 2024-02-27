@@ -3,12 +3,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { axiosInstance } from '@/services/axiosInstance';
+import { signIn } from '@/services/Auth';
 import { InputListProps } from '@/types/input';
 
 import CheckBox from '../Common/CheckBox/CheckBox';
 import Input from '../Common/Input/Input';
-import { LOGIN_EMIAL_VALIDATION, SIGNIN_URL } from './loginConstants';
+import { LOGIN_EMIAL_VALIDATION } from './loginConstants';
 import {
   LoginButton,
   LoginFormContainer,
@@ -60,21 +60,6 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
       placeholder: '비밀번호',
     },
   ];
-
-  const signIn = async (email: string, password: string) => {
-    const reqBody = {
-      email,
-      password,
-    };
-
-    try {
-      const res = await axiosInstance.post(`${SIGNIN_URL}`, reqBody);
-
-      console.log('응답:', res);
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   // 로그인 데이터 api 통신 후 데이터 저장 및 메인페이지(홈) 이동하는 함수
   const onSubmitData: SubmitHandler<LoginInfo> = data => {
