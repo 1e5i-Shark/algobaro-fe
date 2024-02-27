@@ -5,13 +5,13 @@ import { Col, Row } from '@/styles/GlobalStyle';
 // RoomPage
 export const RoomContainer = styled(Row)`
   height: 100vh;
-  padding: 5rem 5rem;
+  padding: 3rem 0rem 3rem 5rem;
 `;
 
 export const WaitingRoomContainer = styled(Col)`
-  flex-grow: 3;
+  flex-grow: 2;
   min-width: 50rem;
-  padding-right: 7rem;
+  padding-right: 3rem;
 `;
 
 export const ChatContainer = styled(Col)`
@@ -19,7 +19,6 @@ export const ChatContainer = styled(Col)`
     flex-grow: 1;
     min-width: 25rem;
     padding: 0 1rem;
-    background-color: lightgoldenrodyellow;
     border-left: 1px solid ${theme.color.transparent_30};
   `}
 `;
