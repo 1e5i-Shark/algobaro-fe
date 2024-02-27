@@ -7,4 +7,4 @@ export const LOGIN_EMIAL_VALIDATION = {
   },
 };
 
-export const SIGNIN_URL = '/api/v1/auth/sign-in';
+export const SIGNIN_URL = '/v1/auth/sign-in';
