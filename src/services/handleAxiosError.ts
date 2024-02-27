@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
 
-import { errorData } from '@/types/api';
+import { ErrorDataType } from '@/types/api';
 
-const handleAxiosError = (error: AxiosError<errorData>) => {
+const handleAxiosError = (error: AxiosError<ErrorDataType>) => {
   const errorData = error.response?.data;
 
   if (errorData) {

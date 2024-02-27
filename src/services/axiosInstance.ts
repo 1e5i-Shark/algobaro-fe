@@ -5,7 +5,7 @@ import axios, {
   isAxiosError,
 } from 'axios';
 
-import { CustomInstance, errorData } from '@/types/api';
+import { CustomInstance, ErrorDataType } from '@/types/api';
 
 import handleAxiosError from './handleAxiosError';
 
@@ -37,7 +37,7 @@ const onResponse = (response: AxiosResponse): AxiosResponse => response.data;
  */
 const onError = (error: AxiosError): Promise<AxiosError> => {
   // 응답 오류가 있을 경우 추가 작업 수행
-  if (isAxiosError<errorData>(error) && error.response) {
+  if (isAxiosError<ErrorDataType>(error) && error.response) {
     const errorResponse = error.response;
 
     handleAxiosError(error);
@@ -55,6 +55,7 @@ const onError = (error: AxiosError): Promise<AxiosError> => {
 const onRequest = (
   config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig => {
+  // 로컬 스토리지 훅 관련 에러가 있어 일단 대체한다.
   // const accessToken = useLocalStorage('accessToken')[0];
   const accessToken = localStorage.getItem('accessToken');
 

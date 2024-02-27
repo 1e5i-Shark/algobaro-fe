@@ -16,7 +16,7 @@ export type CustomResponseType<T = unknown> = {
   data?: T;
 };
 
-export interface errorData {
+export interface ErrorDataType {
   success: boolean;
   error: {
     errorCode: string;
