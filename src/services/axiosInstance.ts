@@ -15,7 +15,7 @@ const headers = {
 
 const axiosConfig = {
   baseURL: import.meta.env.VITE_BASE_API_URL,
-  timeout: 1000, // axios 통신 최대 대기 시간
+  timeout: 10000, // axios 통신 최대 대기 시간
   headers,
 };
 
