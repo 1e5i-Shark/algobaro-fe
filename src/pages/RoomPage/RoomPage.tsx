@@ -1,3 +1,4 @@
+import ChatViews from './ChatViews/ChatViews';
 import * as S from './RoomPage.style';
 import { Participants, RoomHeader, TestInfo } from './RoomViews';
 
@@ -64,7 +65,7 @@ export default function RoomPage() {
         <TestInfo data={DUMMY_DATA} />
       </S.WaitingRoomContainer>
       <S.ChatContainer>
-        <h1>채팅</h1>
+        <ChatViews />
       </S.ChatContainer>
     </S.RoomContainer>
   );

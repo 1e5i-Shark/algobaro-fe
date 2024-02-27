@@ -23,6 +23,38 @@ export const ChatContainer = styled(Col)`
   `}
 `;
 
+// ChatInput
+export const ChatInputWrapper = styled(Col)`
+  justify-content: center;
+  height: 5rem;
+`;
+
+export const ChatListWrapper = styled.div`
+  flex-grow: 1;
+  overflow-y: auto;
+`;
+
+export const Form = styled(Row)`
+  align-items: center;
+  justify-content: center;
+`;
+
+export const InputWrapper = styled.div`
+  flex-grow: 1;
+  width: 10rem;
+  height: 4rem;
+`;
+
+export const SendButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin-left: 1rem;
+  border-radius: 0.5rem;
+`;
+
 // RoomHeader
 export const HeaderContainer = styled(Row)`
   justify-content: space-between;
