@@ -26,6 +26,19 @@ export default function ChatInput({ className }: ChatInputProps) {
     reset();
   };
 
+  const handleSendClick = () => {
+    alert('submit!');
+    handleSubmit(onSubmit)();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key !== 'Enter') {
+      return;
+    } else {
+      handleSubmit(onSubmit)();
+    }
+  };
+
   return (
     <ChatInputWrapper className={className}>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -35,9 +48,13 @@ export default function ChatInput({ className }: ChatInputProps) {
             name="chatValue"
             register={register}
             style={inputStyle}
+            onKeyDown={handleKeyDown}
           />
         </InputWrapper>
-        <SendButton as="button">
+        <SendButton
+          as="button"
+          onClick={handleSendClick}
+        >
           <Icon background={true}>
             <SendRoundedIcon />
           </Icon>
