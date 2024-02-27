@@ -1,3 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+
+import { Spinner } from '@/components';
+import { axiosAuthInstance } from '@/services/axiosInstance';
+
 import ChatViews from './ChatViews/ChatViews';
 import * as S from './RoomPage.style';
 import { Participants, RoomHeader, TestInfo } from './RoomViews';
@@ -55,6 +61,31 @@ const DUMMY_DATA = {
 };
 
 export default function RoomPage() {
+  // 개별 방 정보 조회
+  const { data, isLoading, error, isSuccess } = useQuery({
+    queryKey: ['room'],
+    queryFn: async () =>
+      await axiosAuthInstance.get(`/v1/rooms/`, {
+        params: {
+          roomUuid: `${DUMMY_DATA.roomUUID}`,
+        },
+      }),
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log('data: ' + data);
+    }
+  }, [isSuccess]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <h1>RoomPage API 호출 실패</h1>;
+  }
+
   return (
     <S.RoomContainer>
       <S.WaitingRoomContainer>
