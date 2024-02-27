@@ -60,7 +60,6 @@ const onRequest = (
   const accessToken = localStorage.getItem('accessToken');
 
   if (accessToken) {
-    console.log(accessToken);
     config.headers.Authorization = `Bearer ${JSON.parse(accessToken)}`;
   }
 
