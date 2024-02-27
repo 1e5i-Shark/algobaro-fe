@@ -35,8 +35,8 @@ export const AvatarWrapper = styled.div<AvatarStyledProps>`
       content: '';
       background-color: ${theme.color.background_primary};
       background-image: ${$src
-        ? `url(${$src}), url('src/assets/avatar-${theme.mode}.png')`
-        : `url('src/assets/avatar-${theme.mode}.png')`};
+        ? `url(${$src}), url('/assets/avatar-${theme.mode}.png')`
+        : `url('/assets/avatar-${theme.mode}.png')`};
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
