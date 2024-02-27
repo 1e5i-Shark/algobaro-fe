@@ -1,42 +1,54 @@
 import { AttachmentRounded } from '@mui/icons-material';
+import { useMemo } from 'react';
 
 import { Button, Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import { UpdateRoomType } from '@/types/room';
+import { RoomType } from '@/types/room';
 
 interface TestInfoProps {
-  data: UpdateRoomType;
+  data: RoomType;
 }
 
 export default function TestInfo({ data }: TestInfoProps) {
-  const { timer, problemLink } = data;
+  const { timeLimit, problemLink } = data;
   const isReady = true;
 
   const { theme } = useCustomTheme();
 
+  const calcTime = useMemo(() => {
+    const hour = Math.floor(timeLimit / 60);
+    const minute = Math.floor(timeLimit % 60);
+
+    return { hour, minute };
+  }, []);
+
   return (
     <S.TestInfoWrapper>
       <S.TestInfoTable className="TestInfoTable">
-        <tr>
-          <td
-            colSpan={2}
-            onClick={() => window.open(problemLink, '_blank')}
-          >
-            <span className="row-content">
-              <h4>문제링크</h4>
-              <Icon className="icon">
-                <AttachmentRounded />
-              </Icon>
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <h4>제한시간</h4>
-          </td>
-          <td>{timer}분</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td
+              colSpan={2}
+              onClick={() => window.open(problemLink, '_blank')}
+            >
+              <span className="row-content">
+                <h4>문제링크</h4>
+                <Icon className="icon">
+                  <AttachmentRounded />
+                </Icon>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4>제한시간</h4>
+            </td>
+            <td>
+              {calcTime.hour}시간 {calcTime.minute}분
+            </td>
+          </tr>
+        </tbody>
       </S.TestInfoTable>
       {isReady ? (
         <Button onClick={() => alert('테스트 시작')}>테스트 시작</Button>
