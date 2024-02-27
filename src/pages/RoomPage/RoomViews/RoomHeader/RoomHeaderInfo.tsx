@@ -14,19 +14,20 @@ interface RoomInfoProps {
 export default function RoomInfoContainer({ className, data }: RoomInfoProps) {
   const { theme } = useCustomTheme();
 
-  const { shortUUID, title, tags, languages } = data;
+  const { roomUUID, title, tags, languages } = data;
 
   const tagsArray: string[] = tags.replace(/[{}']/g, '').split(', ');
 
   const handleCopyRoomId = () => {
-    alert(`코드가 복사되었습니다 : ` + shortUUID);
+    window.navigator.clipboard.writeText(roomUUID);
+    alert('방 번호가 복사되었습니다!');
   };
 
   return (
     <div className={className}>
       <S.RoomIdWrapper className="roomId">
         <S.CopyRoomIdTag onClick={handleCopyRoomId}>
-          <S.TextId>방 코드 : {shortUUID}</S.TextId>
+          <S.TextId>방 번호 복사</S.TextId>
           <Icon size="XXS">
             <ContentCopyRounded />
           </Icon>
