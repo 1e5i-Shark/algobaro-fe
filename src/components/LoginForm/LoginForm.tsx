@@ -1,14 +1,14 @@
-import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { axiosInstance } from '@/services/axiosInstance';
 import { InputListProps } from '@/types/input';
 
 import CheckBox from '../Common/CheckBox/CheckBox';
 import Input from '../Common/Input/Input';
-import { LOGIN_VALIDATION, SIGNIN_URL } from './loginConstants';
+import { LOGIN_EMIAL_VALIDATION, SIGNIN_URL } from './loginConstants';
 import {
   LoginButton,
   LoginFormContainer,
@@ -51,7 +51,7 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
       name: 'loginEmail',
       type: 'email',
       placeholder: 'algo@email.com',
-      validation: LOGIN_VALIDATION.EMAIL,
+      validation: LOGIN_EMIAL_VALIDATION.EMAIL,
     },
     {
       label: '비밀번호',
@@ -62,35 +62,16 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
   ];
 
   const signIn = async (email: string, password: string) => {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-
     const reqBody = {
       email,
       password,
     };
 
-    console.log(JSON.stringify(reqBody));
-
     try {
-      const res = await axios.post(
-        // `${import.meta.env.VITE_API_URL}${SIGNIN_URL}`,
-        `${SIGNIN_URL}`,
-        // JSON.stringify(reqBody),
-        reqBody,
-        // new URLSearchParams(reqBody),
-        {
-          headers,
-        }
-      );
+      const res = await axiosInstance.post(`${SIGNIN_URL}`, reqBody);
 
       console.log('응답:', res);
-
-      // return res;
     } catch (e) {
-      console.log('에러');
-
       console.error(e);
     }
   };
@@ -115,6 +96,7 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
     // 성공적으로 로그인이 되면 form 리셋
     reset();
     // 메인 페이지(홈) 다이렉팅
+    // Todo: path 상수 사용하기
     // navigate('/home');
   };
   // 아이디 저장 체크 박스 변경 사항을 상태로 저장한다.
@@ -154,6 +136,7 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
             onChange={handleChangeCheck}
             checked={isSaveEmail}
           />
+          {/* Todo: path 상수 쓰기 */}
           <SignUpTextLink to="/signup">
             아직 회원가입을 안하셨나요?
           </SignUpTextLink>

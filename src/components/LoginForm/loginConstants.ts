@@ -1,4 +1,4 @@
-export const LOGIN_VALIDATION = {
+export const LOGIN_EMIAL_VALIDATION = {
   EMAIL: {
     pattern: {
       value: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-z]+[.]+[a-z]{2,3}$/,
@@ -6,3 +6,5 @@ export const LOGIN_VALIDATION = {
     },
   },
 };
+
+export const SIGNIN_URL = '/api/v1/auth/sign-in';
