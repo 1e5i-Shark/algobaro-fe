@@ -11,9 +11,13 @@ export const CardWrapper = styled(Col)`
     width: ${theme.FIXED_WIDTH.CARD};
     height: ${theme.FIXED_HEIGHT.CARD};
     padding-top: 4.5rem;
-    margin-right: 2rem;
+    background-color: ${theme.color.transparent_10};
+    border: 1px solid ${theme.color.transparent_30};
     border-radius: 1rem;
-    box-shadow: 0 4px 8px 0 ${theme.color.transparent_30};
+    box-shadow: 4px 4px 4px 0
+      ${theme.mode === 'light'
+        ? `${theme.color.transparent_50}`
+        : `${theme.color.black_primary}`};
   `}
 `;
 
@@ -30,8 +34,9 @@ export const StatusWrapper = styled(Row)`
     position: absolute;
     bottom: 2rem;
     justify-content: center;
+    width: calc(${theme.FIXED_WIDTH.CARD} - 5rem);
     padding-top: 1.5rem;
-    border-top: 1px solid ${theme.color.transparent_50};
+    border-top: 1px solid ${theme.color.transparent_30};
   `}
 `;
 
