@@ -37,6 +37,7 @@ export const BaseButton = styled.button<StyledButtonProps>`
       color: ${({ theme }) => theme.color.gray_50};
       cursor: default;
       filter: saturate(0);
+      opacity: 0.3;
     }
 
     &:focus {
