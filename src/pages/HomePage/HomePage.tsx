@@ -118,6 +118,8 @@ export default function HomePage() {
             </S.SectionLowerArea>
           </S.MainSection>
         </S.HomeMain>
+
+        <S.HomeFooter>푸터</S.HomeFooter>
       </S.HomeWrapper>
     </S.HomeContainer>
   );

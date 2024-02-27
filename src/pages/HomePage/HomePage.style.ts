@@ -138,8 +138,17 @@ const LowerAreaImageWrapper = styled.div`
   }
 `;
 
+// ####################### Footer #######################
+
+const HomeFooter = styled.footer`
+  display: flex;
+  justify-content: center;
+  padding: 4rem 0;
+`;
+
 export {
   HomeContainer,
+  HomeFooter,
   HomeMain,
   HomeNavWrapper,
   HomeWrapper,
