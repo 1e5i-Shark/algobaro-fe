@@ -12,15 +12,13 @@ const DUMMY_DATA = {
   problemName: 'A+B',
   password: 'password1234',
   roomLimit: 4,
-  levelTag: 'Gold 4',
-  algorithmTag: 'BFS',
-  // roomUUID: '2ad2e9db-30af-4fa2-895c-b6b1f7e95203',
+  roomUUID: '2ad2e9db-30af-4fa2-895c-b6b1f7e95203',
+  tags: '{ Gold4, BFS }',
+  // Todo: 백엔드 데이터 확인
   problemLink:
     'https://school.programmers.co.kr/learn/courses/30/lessons/86051',
-  // Todo: 백엔드 데이터 확인
   shortUUID: 'x15964',
   languages: ['java', 'python', 'javascript', 'cpp'],
-  tags: ['Gold 4', 'BFS'],
   users: [
     {
       username: '김방장',
@@ -53,7 +51,7 @@ const DUMMY_DATA = {
       image: '',
     },
   ],
-  timer: 60,
+  timeLimit: 68,
 };
 
 export default function RoomPage() {
