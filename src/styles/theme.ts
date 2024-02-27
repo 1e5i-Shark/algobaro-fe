@@ -3,7 +3,12 @@ const ZINDEX = {
   MODAL: 888,
 };
 
-const WIDTH = {
+const FIXED_HEIGHT = {
+  HEADER: '8rem',
+  CARD: '23rem',
+};
+
+const FIXED_WIDTH = {
   CARD: '25rem',
 };
 
@@ -82,7 +87,8 @@ export const lightTheme = {
   fontWeight,
   device,
   ZINDEX,
-  WIDTH,
+  FIXED_WIDTH,
+  FIXED_HEIGHT,
 };
 
 export const darkTheme = {
@@ -105,7 +111,8 @@ export const darkTheme = {
   fontWeight,
   device,
   ZINDEX,
-  WIDTH,
+  FIXED_WIDTH,
+  FIXED_HEIGHT,
 };
 
 export const theme = {
