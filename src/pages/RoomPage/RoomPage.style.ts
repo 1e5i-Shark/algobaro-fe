@@ -148,7 +148,7 @@ export const Text = styled.div<{ $color: string; $padding: string }>`
 
 export const TestInfoTable = styled.table`
   ${({ theme }) => css`
-    width: 18rem;
+    width: fit-content;
     border-spacing: 0;
     border: 1px solid ${theme.color.transparent_90};
     border-radius: 0.5rem;
@@ -161,7 +161,7 @@ export const TestInfoTable = styled.table`
     }
 
     td {
-      padding: 1rem;
+      padding: 1rem 1.5rem;
 
       .row-content {
         display: flex;
