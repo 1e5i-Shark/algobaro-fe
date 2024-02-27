@@ -4,7 +4,7 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import { Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
-export default function DarkModeToggleButton() {
+export default function ThemeModeToggleButton() {
   const { theme, toggleTheme } = useCustomTheme();
 
   return (
