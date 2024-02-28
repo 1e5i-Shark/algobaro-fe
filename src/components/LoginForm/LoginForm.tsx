@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { PATH } from '@/routes/path';
 import { signIn } from '@/services/Auth';
 import { InputListProps } from '@/types/input';
 
@@ -32,15 +33,14 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
   // 아이디 저장 옵션 여부
   const [isSaveEmail, setIsSaveEmail] = useState(saveEmail ? true : false);
   // login react form
-  const { register, handleSubmit, formState, watch, reset } =
-    useForm<LoginInfo>({
-      mode: 'onChange',
-      defaultValues: {
-        // 아이디 저장한 것을 기본값으로 불러온다.
-        loginEmail: saveEmail ? saveEmail : '',
-        loginPassword: '',
-      },
-    });
+  const { register, handleSubmit, formState, reset } = useForm<LoginInfo>({
+    mode: 'onChange',
+    defaultValues: {
+      // 아이디 저장한 것을 기본값으로 불러온다.
+      loginEmail: saveEmail ? saveEmail : '',
+      loginPassword: '',
+    },
+  });
   const navigate = useNavigate();
   // 입력값 유효성 체크
   const isValid = formState.isValid;
@@ -65,7 +65,6 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
 
   // 로그인 데이터 api 통신 후 데이터 저장 및 메인페이지(홈) 이동하는 함수
   const onSubmitData: SubmitHandler<LoginInfo> = async data => {
-    // TODO: 서버 인증 로직 추가
     // 아이디 저장 체크 시 로컬 스토리지에 저장
     // 해제 시 초기화
     const { loginEmail, loginPassword } = data;
@@ -80,8 +79,7 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
     // 성공적으로 로그인이 되면 form 리셋
     reset();
     // 메인 페이지(홈) 다이렉팅
-    // Todo: path 상수 사용하기
-    // navigate('/home');
+    navigate(PATH.HOME);
   };
   // 아이디 저장 체크 박스 변경 사항을 상태로 저장한다.
   const handleChangeCheck = (e: ChangeEvent<HTMLInputElement>) => {
@@ -120,8 +118,7 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
             onChange={handleChangeCheck}
             checked={isSaveEmail}
           />
-          {/* Todo: path 상수 쓰기 */}
-          <SignUpTextLink to="/signup">
+          <SignUpTextLink to={PATH.SIGNUP}>
             아직 회원가입을 안하셨나요?
           </SignUpTextLink>
         </LoginOptionContainer>
