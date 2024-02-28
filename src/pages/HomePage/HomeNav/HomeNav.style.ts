@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-// ####################### Nav #######################
-
 const NavContainer = styled.nav`
   position: relative;
   display: flex;
@@ -9,7 +7,6 @@ const NavContainer = styled.nav`
   justify-content: space-between;
   height: 14rem;
   padding: 2rem 0;
-  border: 1px solid red;
 `;
 
 const NavWrapper = styled.div`
@@ -26,7 +23,6 @@ const SearchOptionsContainer = styled.div`
   justify-content: space-between;
   width: 50%;
   height: 4.3rem;
-  border: 2px solid yellow;
 `;
 
 const SearchInputWrapper = styled.form`
