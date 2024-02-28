@@ -1,49 +1,15 @@
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
-import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
-import { Button, CheckBox, Icon, Image, Tag } from '@/components';
+import { Button, Icon, Image, Tag } from '@/components';
 
+import HomeNav from './HomeNav/HomeNav';
 import * as S from './HomePage.style';
 
 export default function HomePage() {
-  const latestUpdate = '1분전';
-
   return (
-    <S.HomeContainer>
-      <S.HomeWrapper>
-        <S.NavContainer>
-          <S.NavWrapper>
-            <Button>방 만들기</Button>
-            <S.HomeNavWrapper>
-              <S.SearchWrapper>
-                <S.SearchInput
-                  type="text"
-                  placeholder="방 제목을 검색해 주세요."
-                />
-                <Icon>
-                  <SearchRoundedIcon />
-                </Icon>
-              </S.SearchWrapper>
-              <div>dropdown</div>
-              <CheckBox
-                label="비밀방"
-                checked={true}
-              />
-              <CheckBox
-                label="입장 가능"
-                checked={true}
-              />
-            </S.HomeNavWrapper>
-          </S.NavWrapper>
-          <S.UpdateData>
-            {/* 글자 크기 작게 수정하기 */}
-            {`마지막 업데이트: ${latestUpdate}`}
-            <Icon>
-              <RefreshRoundedIcon />
-            </Icon>
-          </S.UpdateData>
-        </S.NavContainer>
+    <S.HomePageContainer>
+      <S.HomePageWrapper>
+        <HomeNav />
 
         <S.HomeMain>
           <S.MainSection>
@@ -120,7 +86,7 @@ export default function HomePage() {
         </S.HomeMain>
 
         <S.HomeFooter>푸터</S.HomeFooter>
-      </S.HomeWrapper>
-    </S.HomeContainer>
+      </S.HomePageWrapper>
+    </S.HomePageContainer>
   );
 }
