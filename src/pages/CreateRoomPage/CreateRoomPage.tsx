@@ -5,6 +5,7 @@ import {
   CheckBox,
   CreateTagInput,
   DropDown,
+  ErrorMessage,
   Input,
   Tag,
   TitleWithAsterisk,
@@ -50,7 +51,7 @@ export default function CreateRoomPage() {
       defaultValues,
     });
 
-  const { isValid } = formState;
+  const { isValid, errors } = formState;
 
   const onSubmit: SubmitHandler<CreateRoomData> = async data => {};
 
@@ -98,6 +99,9 @@ export default function CreateRoomPage() {
                   </Tag>
                 ))}
               </S.TagWrapper>
+              {errors.languages && (
+                <ErrorMessage>언어를 선택해 주세요</ErrorMessage>
+              )}
             </S.LanguagesWrapper>
           )}
         />
@@ -175,6 +179,9 @@ export default function CreateRoomPage() {
               />
             )}
           />
+          {errors.roomLimit && (
+            <ErrorMessage>최대 인원을 선택해 주세요</ErrorMessage>
+          )}
         </S.RoomLimitWrapper>
       ),
     },
@@ -200,6 +207,7 @@ export default function CreateRoomPage() {
               />
             )}
           />
+          {errors.tags && <ErrorMessage>{errors.tags.message}</ErrorMessage>}
           <S.TagGuideText>
             태그는 최대 5개까지 입력할 수 있습니다.
           </S.TagGuideText>
