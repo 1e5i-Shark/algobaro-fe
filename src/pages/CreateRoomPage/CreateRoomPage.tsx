@@ -104,7 +104,7 @@ export default function CreateRoomPage() {
           name="languages"
           rules={{ required: true }}
           control={control}
-          render={({ field: { value, onChange } }) => (
+          render={({ field: { value: languages, onChange } }) => (
             <S.LanguagesWrapper>
               <S.TagWrapper>
                 {PS_LANGUAGES.map((language, index) => (
@@ -112,12 +112,12 @@ export default function CreateRoomPage() {
                     key={index}
                     tagId={language}
                     mode="select"
-                    isSelected={value.includes(language)}
+                    isSelected={languages.includes(language)}
                     onSelected={tagName => {
-                      if (value.includes(language)) {
-                        onChange(value.filter(item => item !== tagName));
+                      if (languages.includes(language)) {
+                        onChange(languages.filter(item => item !== tagName));
                       } else {
-                        onChange([...value, tagName]);
+                        onChange([...languages, tagName]);
                       }
                     }}
                   >
