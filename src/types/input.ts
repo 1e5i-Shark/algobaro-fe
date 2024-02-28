@@ -24,9 +24,15 @@ export interface InputProps<T extends FieldValues>
 }
 
 export interface InputListType<T extends FieldValues>
-  extends Pick<
+  extends Omit<
     InputProps<T>,
-    'name' | 'label' | 'type' | 'required' | 'formState' | 'validation'
+    | 'register'
+    | 'width'
+    | 'height'
+    | 'fontSize'
+    | 'borderRadius'
+    | 'borderColor'
+    | 'backgroundColor'
   > {
   guide?: React.ReactNode;
 }
