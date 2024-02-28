@@ -27,6 +27,8 @@ interface LoginInfo {
 export default function LoginForm({ width = '100%' }: { width?: string }) {
   // 저장한 이메일 아이디
   const [saveEmail, setSaveEmail] = useLocalStorage('saveEmail');
+  // accessToken 로컬 스토리지 저장 훅
+  const [, setAccessToken] = useLocalStorage('accessToken');
   // 아이디 저장 옵션 여부
   const [isSaveEmail, setIsSaveEmail] = useState(saveEmail ? true : false);
   // login react form
@@ -35,15 +37,13 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
       mode: 'onChange',
       defaultValues: {
         // 아이디 저장한 것을 기본값으로 불러온다.
-        loginEmail: saveEmail ? JSON.parse(saveEmail) : '',
+        loginEmail: saveEmail ? saveEmail : '',
+        loginPassword: '',
       },
     });
   const navigate = useNavigate();
-
-  const { loginEmail: emailError } = formState.errors;
-
-  const loginEmail = watch('loginEmail');
-  const loginPassword = watch('loginPassword');
+  // 입력값 유효성 체크
+  const isValid = formState.isValid;
 
   const inputPropsList: InputListProps<LoginInfo> = [
     {
@@ -51,32 +51,31 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
       name: 'loginEmail',
       type: 'email',
       placeholder: 'algo@email.com',
+      required: true,
       validation: LOGIN_EMIAL_VALIDATION.EMAIL,
     },
     {
       label: '비밀번호',
       name: 'loginPassword',
-      type: loginPassword ? 'password' : 'text',
+      type: 'password',
+      required: true,
       placeholder: '비밀번호',
     },
   ];
 
   // 로그인 데이터 api 통신 후 데이터 저장 및 메인페이지(홈) 이동하는 함수
-  const onSubmitData: SubmitHandler<LoginInfo> = data => {
+  const onSubmitData: SubmitHandler<LoginInfo> = async data => {
     // TODO: 서버 인증 로직 추가
-    // 인증 성공 시 토큰 로컬 스토리지에 저장
-    /* 출력 예
-      {"loginEmail":"algo@naver.com","loginPassword":"algobaro"}
-    */
-    // alert(`제출한 데이터: ${JSON.stringify(data)}`); // 로그인 정보 테스트 출력
-
-    const { loginEmail, loginPassword } = data;
-
     // 아이디 저장 체크 시 로컬 스토리지에 저장
     // 해제 시 초기화
-    setSaveEmail(isSaveEmail ? JSON.stringify(data.loginEmail) : '');
+    const { loginEmail, loginPassword } = data;
+    setSaveEmail(isSaveEmail ? loginEmail : '');
 
-    signIn(loginEmail, loginPassword);
+    // api를 호출한다.
+    const { response } = await signIn(loginEmail, loginPassword);
+
+    // 인증 성공 시 토큰 로컬 스토리지에 저장
+    setAccessToken(response.accessToken);
 
     // 성공적으로 로그인이 되면 form 리셋
     reset();
@@ -110,7 +109,7 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
         {/* 로그인 버튼 */}
         <LoginButton
           type="submit"
-          disabled={!emailError && loginEmail && loginPassword ? false : true}
+          disabled={isValid ? false : true}
         >
           로그인
         </LoginButton>
