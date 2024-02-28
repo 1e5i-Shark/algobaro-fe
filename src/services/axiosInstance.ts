@@ -53,11 +53,10 @@ const onRequest = (
   config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig => {
   // 로컬 스토리지 훅 관련 에러가 있어 일단 대체한다.
-  // const accessToken = useLocalStorage('accessToken')[0];
   const accessToken = localStorage.getItem('accessToken');
 
   if (accessToken) {
-    config.headers.Authorization = `Bearer ${JSON.parse(accessToken)}`;
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
 
   return config;
