@@ -145,11 +145,13 @@ export default function CreateRoomPage() {
           name="roomAccessType"
           defaultValue={ROOM_STATUS.PUBLIC}
           control={control}
-          render={({ field: { value, onChange } }) => (
+          render={({ field: { value: roomAccessType, onChange } }) => (
             <S.RoomAccessWrapper>
               <S.CheckBoxWrapper>
                 <CheckBox
-                  checked={value === ROOM_STATUS.PRIVATE ? true : false}
+                  checked={
+                    roomAccessType === ROOM_STATUS.PRIVATE ? true : false
+                  }
                   onChange={event => {
                     const { checked } = event.target;
 
@@ -163,7 +165,7 @@ export default function CreateRoomPage() {
                   }}
                 />
               </S.CheckBoxWrapper>
-              {value === ROOM_STATUS.PRIVATE && (
+              {roomAccessType === ROOM_STATUS.PRIVATE && (
                 <S.PasswordWrapper>
                   <S.PasswordTitle>암호</S.PasswordTitle>
                   {/*
@@ -175,7 +177,7 @@ export default function CreateRoomPage() {
                     name="password"
                     register={register}
                     formState={formState}
-                    required={value === ROOM_STATUS.PRIVATE}
+                    required={roomAccessType === ROOM_STATUS.PRIVATE}
                     backgroundColor={theme.color.white_primary}
                     borderColor={theme.color.gray_30}
                   />
