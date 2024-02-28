@@ -1,6 +1,6 @@
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
@@ -53,10 +53,7 @@ export default function Input<T extends FieldValues>({
 
   const inputError = formState?.errors[name];
   const inputErrorMessage = inputError && (inputError.message as string);
-
-  useEffect(() => {
-    setInputType(type);
-  }, [type]);
+  const isDirty = formState?.isDirty;
 
   return (
     <S.Wrapper>
@@ -67,7 +64,6 @@ export default function Input<T extends FieldValues>({
       >
         <S.Input
           id={name}
-          type={inputType}
           autoComplete="true"
           $isPassword={type === 'password'}
           $isError={!!inputErrorMessage}
@@ -81,7 +77,7 @@ export default function Input<T extends FieldValues>({
           })}
           {...props}
         />
-        {type === 'password' && (
+        {type === 'password' && isDirty && (
           <S.ToggleButtonWrapper
             type="button"
             tabIndex={-1}
