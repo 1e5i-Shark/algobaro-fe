@@ -20,6 +20,7 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
   backgroundColor?: string;
   fontSize?: string;
   labelFontSize?: string;
+  onSelected?: (value: string) => void;
 }
 
 /**
@@ -32,6 +33,7 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
  * @param {string} backgroundColor - 배경색 `옵션`
  * @param {string} fontSize - 폰트사이즈 `옵션`, 기본값 `"2rem"`
  * @param {string} labelFontSize - 라벨폰트사이즈 `옵션`
+ * @param {(value: string) => void} onSelected - 선택 값 전달 함수 `옵션`, `(value: string) => void}`
  * @returns
  */
 export default function DropDown({
@@ -43,6 +45,7 @@ export default function DropDown({
   backgroundColor,
   fontSize = '2rem',
   labelFontSize,
+  onSelected,
   ...props
 }: DropDownProps) {
   const { theme } = useCustomTheme();
@@ -54,6 +57,7 @@ export default function DropDown({
   const handleChange = (event: SelectChangeEvent) => {
     const { value } = event.target;
     setSelectedValue(value);
+    onSelected?.(value);
   };
 
   return (
