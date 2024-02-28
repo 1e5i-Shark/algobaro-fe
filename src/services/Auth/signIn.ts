@@ -1,5 +1,4 @@
-import { SIGNIN_URL } from '@/components/LoginForm/loginConstants';
-
+import { SIGNIN_URL } from '../apiEndpoint';
 import { axiosInstance } from '../axiosInstance';
 
 interface signInResponse {
