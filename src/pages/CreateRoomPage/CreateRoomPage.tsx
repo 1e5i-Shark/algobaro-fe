@@ -12,6 +12,7 @@ import {
 } from '@/components';
 import { TagType } from '@/components/CreateRoom/CreateTagInput/CreateTagInput';
 import {
+  MAX_TAG_LENGTH,
   PS_LANGUAGES,
   ROOM_LIMIT_DATASET,
   ROOM_STATUS,
@@ -237,9 +238,9 @@ export default function CreateRoomPage() {
                   clearErrors('tags');
                 }}
                 onSelected={tag => {
-                  if (tags.length < 5) {
+                  if (tags.length < MAX_TAG_LENGTH) {
                     onChange([...tags, tag]);
-                  } else if (tags.length === 5) {
+                  } else if (tags.length === MAX_TAG_LENGTH) {
                     // 5개가 입력된 상태에서 입력을 하면 에러를 표시합니다. rules에 적절한 메서드가 없어서 setError 함수를 사용했어요.
                     setError('tags', {
                       type: 'custom',
