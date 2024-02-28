@@ -13,14 +13,15 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-const axiosConfig = {
+const axiosCustomConfig = {
   baseURL: import.meta.env.VITE_BASE_API_URL,
   timeout: 10000, // axios 통신 최대 대기 시간
   headers,
 };
 
-export const axiosInstance: CustomInstance = axios.create(axiosConfig);
-export const axiosAuthInstance: CustomInstance = axios.create(axiosConfig);
+export const axiosInstance: CustomInstance = axios.create(axiosCustomConfig);
+export const axiosAuthInstance: CustomInstance =
+  axios.create(axiosCustomConfig);
 
 /**
  * `response.data`란 코드 형태가 반복 입력해야 하는 것을
