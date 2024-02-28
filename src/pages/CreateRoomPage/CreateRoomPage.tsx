@@ -64,12 +64,17 @@ export default function CreateRoomPage() {
   const { mutateAsync: createRoom } = useCreateRoom();
 
   const onSubmit: SubmitHandler<CreateRoomData> = async data => {
+    // 서버에서 정의한 date 형식으로 변환하기 위해 ISOString 사용. 예시: 2024-02-27T13:36:49.089Z
     const currentDate = new Date().toISOString();
+
+    // 서버의 string[] 형식과 맞추기 위해 Tag 데이터의 value만 갖도록 필터링
     const filteredTag = data.tags.map(tag => tag.value);
+
     const submitData = { ...data, statAt: currentDate, tags: filteredTag };
 
     console.log('submit data: ', submitData);
 
+    // response를 출력해서 확인하기 위해 async-await 사용 (확인용이라 추후 제거할 예정)
     const response = await createRoom(submitData);
     console.log('response', response);
   };
@@ -89,6 +94,8 @@ export default function CreateRoomPage() {
         />
       ),
     },
+    // 외부 컴포넌트를 react-hook-form과 연동하려면 Controller를 사용하면 됩니다!
+    // value, onChange를 이용해서 상태를 관리하고 name에 명시된 상태가 변경돼요
     {
       title: '언어',
       isRequired: true,
@@ -118,6 +125,10 @@ export default function CreateRoomPage() {
                   </Tag>
                 ))}
               </S.TagWrapper>
+              {/*
+                useForm의 mode가 onChange 상태라서 클릭했다가 다시 삭제하면
+                바로 에러 메세지가 표시됩니다
+              */}
               {errors.languages && (
                 <ErrorMessage>언어를 선택해 주세요</ErrorMessage>
               )}
@@ -145,6 +156,7 @@ export default function CreateRoomPage() {
                     if (checked) {
                       onChange(ROOM_STATUS.PRIVATE);
                     } else {
+                      // 공개방으로 전환시 password 값을 초기화합니다.
                       onChange(ROOM_STATUS.PUBLIC);
                       resetField('password');
                     }
@@ -154,6 +166,9 @@ export default function CreateRoomPage() {
               {value === ROOM_STATUS.PRIVATE && (
                 <S.PasswordWrapper>
                   <S.PasswordTitle>암호</S.PasswordTitle>
+                  {/*
+                    password는 비밀방인 경우에만 required 입니다.
+                  */}
                   <Input
                     type="password"
                     width="12rem"
@@ -215,6 +230,7 @@ export default function CreateRoomPage() {
             render={({ field: { value: tags, onChange } }) => (
               <CreateTagInput
                 tagList={tags}
+                // 입력 중일 때는 에러를 표기하지 않습니다.
                 onChange={() => {
                   clearErrors('tags');
                 }}
@@ -222,6 +238,7 @@ export default function CreateRoomPage() {
                   if (tags.length < 5) {
                     onChange([...tags, tag]);
                   } else if (tags.length === 5) {
+                    // 5개가 입력된 상태에서 입력을 하면 에러를 표시합니다. rules에 적절한 메서드가 없어서 setError 함수를 사용했어요.
                     setError('tags', {
                       type: 'custom',
                       message:
@@ -229,6 +246,7 @@ export default function CreateRoomPage() {
                     });
                   }
                 }}
+                // id에 따라서 tag를 제거합니다. id는 uuid 라이브러리를 사용했어요.
                 onDeleted={tagId => {
                   onChange(tags.filter(tag => tag.id !== tagId));
                 }}
