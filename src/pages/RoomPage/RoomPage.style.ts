@@ -118,6 +118,33 @@ export const LogoWrapper = styled.div`
   `}
 `;
 
+export const ModalWrapper = styled(Col)`
+  gap: 2rem;
+`;
+
+export const ModalHeader = styled.h3``;
+
+export const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+export const PasswordWrapper = styled(Row)`
+  gap: 1rem;
+  align-items: center;
+  height: 7rem;
+
+  > :first-child {
+    width: 20rem;
+  }
+`;
+
+export const ModalButtonsWrapper = styled(Row)`
+  gap: 1rem;
+  padding-top: 1rem;
+`;
+
 // Participants
 export const ParticipantsContainer = styled.div`
   ${({ theme }) => css`

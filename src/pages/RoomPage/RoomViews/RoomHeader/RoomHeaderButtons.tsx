@@ -69,11 +69,19 @@ export default function RoomHeaderButtons({
         </Icon>
       </ButtonsWrapper>
       <Modal
+        width="70rem"
+        height="50rem"
         ref={modalRef}
         isOpen={isOpen}
         onClose={closeModal}
       >
-        <ModalRoom roomId={data.roomId} />
+        <ModalRoom
+          roomId={data.roomId}
+          problemLink={data.problemLink}
+          timeLimit={data.timeLimit}
+          password={data.password}
+          roomAccessType={data.roomAccessType}
+        />
       </Modal>
     </>
   );
