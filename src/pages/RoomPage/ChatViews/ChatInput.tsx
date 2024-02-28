@@ -53,10 +53,7 @@ export default function ChatInput({ className }: ChatInputProps) {
             onKeyDown={handleKeyDown}
           />
         </InputWrapper>
-        <SendButton
-          as="button"
-          onClick={handleSendClick}
-        >
+        <SendButton onClick={handleSendClick}>
           <Icon background={true}>
             <SendRoundedIcon />
           </Icon>
