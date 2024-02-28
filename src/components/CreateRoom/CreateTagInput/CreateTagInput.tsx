@@ -1,14 +1,20 @@
 import { HTMLAttributes, KeyboardEvent, useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 import { Tag } from '../..';
 import * as S from './CreateTagInput.style';
 
+export interface TagType {
+  id: string;
+  value: string;
+}
+
 interface TagInputProps extends HTMLAttributes<HTMLInputElement> {
-  tagList?: string[];
-  onSelected?: (tagName: string) => void;
-  onDeleted?: (tagName: string) => void;
+  tagList?: TagType[];
+  onSelected?: (tag: TagType) => void;
+  onDeleted?: (tagId: string) => void;
 }
 
 export default function CreateTagInput({
@@ -30,11 +36,11 @@ export default function CreateTagInput({
     if (isComposing || !inputRef.current) return;
 
     if (code === 'Enter') {
-      const tag = inputRef.current.value;
+      const tagName = inputRef.current.value;
 
-      if (!tag) return;
+      if (!tagName) return;
 
-      onSelected?.(tag);
+      onSelected?.({ id: uuidv4(), value: tagName });
 
       inputRef.current.value = '';
       inputRef.current.focus();
@@ -43,21 +49,20 @@ export default function CreateTagInput({
     }
   };
 
-  const handleDeleteTag = (tagName: string) => {
-    console.log(tagList, tagName);
+  const handleDeleteTag = (tagId: string) => {
     if (tagList == null) return;
 
-    onDeleted?.(tagName);
+    onDeleted?.(tagId);
   };
 
   return (
     <S.Wrapper>
       <S.TagListWrapper>
-        {tagList?.map((value, index) => (
+        {tagList?.map(({ id, value }, index) => (
           <S.TagItem key={index}>
             <Tag
               mode="delete"
-              tagId={value}
+              tagId={id}
               onDeleted={handleDeleteTag}
               backgroundColor={theme.color.secondary_color}
               fontSize={theme.size.M}
