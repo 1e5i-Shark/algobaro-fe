@@ -95,6 +95,7 @@ export default function Tag({
       {children}
       {mode === 'delete' && (
         <DeleteButton
+          type="button"
           className="tag-delete-button"
           onClick={handleDeleteTag}
         >
