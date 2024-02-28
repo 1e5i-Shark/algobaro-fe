@@ -1,29 +1,30 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Spinner } from '@/components';
 import { axiosAuthInstance } from '@/services/axiosInstance';
+import { OmitRoomType, RoomResponse, RoomType } from '@/types/room';
 
 import ChatViews from './ChatViews/ChatViews';
 import * as S from './RoomPage.style';
 import { Participants, RoomHeader, TestInfo } from './RoomViews';
 
-const DUMMY_DATA = {
-  roomId: 1,
-  roomStatus: '문제 푸는 중',
+const DUMMY_DATA: RoomType = {
+  roomId: 6,
+  roomStatus: 'RECRUITING',
   title: '같이 푸실분~',
   introduce: '저랑 같이 A+B 문제 푸실 분 구해요',
-  roomAccessType: '공개 방',
+  roomAccessType: 'PUBLIC',
   problemPlatform: '백준',
   problemName: 'A+B',
   password: 'password1234',
   roomLimit: 4,
-  roomUUID: '2ad2e9db-30af-4fa2-895c-b6b1f7e95203',
-  tags: '{ Gold4, BFS }',
+  tags: ['Gold4', 'BFS'],
+  timeLimit: 20,
+  roomUUID: '2ad2e9db-30af-4fa2-895c-b6b1f7e95202',
   // Todo: 백엔드 데이터 확인
   problemLink:
     'https://school.programmers.co.kr/learn/courses/30/lessons/86051',
-  shortUUID: 'x15964',
   languages: ['java', 'python', 'javascript', 'cpp'],
   users: [
     {
@@ -57,24 +58,35 @@ const DUMMY_DATA = {
       image: '',
     },
   ],
-  timeLimit: 68,
 };
 
 export default function RoomPage() {
+  const [roomData, setRoomData] = useState<OmitRoomType>({
+    roomId: 6,
+    roomStatus: 'RECRUITING',
+    title: '같이 푸실분~',
+    introduce: '저랑 같이 A+B 문제 푸실 분 구해요',
+    roomAccessType: 'PUBLIC',
+    problemPlatform: '백준',
+    problemName: 'A+B',
+    password: 'password1234',
+    roomLimit: 4,
+    tags: ['BFS'],
+    timeLimit: 20,
+    roomUUID: '2ad2e9db-30af-4fa2-895c-b6b1f7e95202',
+  });
+
   // 개별 방 정보 조회
-  const { data, isLoading, error, isSuccess } = useQuery({
+  const { data, isLoading, error, isSuccess } = useQuery<RoomResponse>({
     queryKey: ['room'],
     queryFn: async () =>
-      await axiosAuthInstance.get(`/v1/rooms/`, {
-        params: {
-          roomUuid: `${DUMMY_DATA.roomUUID}`,
-        },
-      }),
+      await axiosAuthInstance.get(`/v1/rooms/${DUMMY_DATA.roomUUID}`),
   });
 
   useEffect(() => {
     if (isSuccess) {
-      console.log('data: ' + data);
+      setRoomData(data.response);
+      console.log(roomData);
     }
   }, [isSuccess]);
 

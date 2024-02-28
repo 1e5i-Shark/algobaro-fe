@@ -16,10 +16,9 @@ export default function RoomInfoContainer({ className, data }: RoomInfoProps) {
 
   const { roomUUID, title, tags, languages } = data;
 
-  const tagsArray: string[] = tags.replace(/[{}']/g, '').split(', ');
-
   const handleCopyRoomId = () => {
     window.navigator.clipboard.writeText(roomUUID);
+
     alert('방 번호가 복사되었습니다!');
   };
 
@@ -46,7 +45,7 @@ export default function RoomInfoContainer({ className, data }: RoomInfoProps) {
         <h2>{title}</h2>
       </S.TitleWrapper>
       <S.TagsWrapper className="tagsGroup">
-        {tagsArray.map((tag, index) => (
+        {tags.map((tag, index) => (
           <S.TagWrapper key={tag + index}>
             <Tag
               height="2.6rem"
