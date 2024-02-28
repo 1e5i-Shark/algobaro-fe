@@ -1,10 +1,10 @@
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import { UpdateRoomType } from '@/types/room';
+import { RoomType } from '@/types/room';
 
 import { RoomHeaderButtons, RoomHeaderInfo } from '.';
 
 interface RoomProps {
-  data: UpdateRoomType;
+  data: RoomType;
 }
 
 export default function RoomHeader({ data }: RoomProps) {
@@ -14,7 +14,10 @@ export default function RoomHeader({ data }: RoomProps) {
         className="roomInfo"
         data={data}
       />
-      <RoomHeaderButtons className="roomButtons" />
+      <RoomHeaderButtons
+        className="roomButtons"
+        data={data}
+      />
     </S.HeaderContainer>
   );
 }
