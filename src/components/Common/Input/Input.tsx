@@ -64,6 +64,7 @@ export default function Input<T extends FieldValues>({
       >
         <S.Input
           id={name}
+          type={inputType}
           autoComplete="true"
           $isPassword={type === 'password'}
           $isError={!!inputErrorMessage}
