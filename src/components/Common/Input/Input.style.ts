@@ -64,6 +64,7 @@ export const ToggleButtonWrapper = styled.button`
   position: absolute;
   top: 50%;
   right: 0.2rem;
+  bottom: 0;
   padding: 0 0.8rem;
   transform: translateY(calc(-50% + 0.2rem));
 `;
