@@ -45,11 +45,18 @@ const defaultValues = {
 export default function CreateRoomPage() {
   const { theme } = useCustomTheme();
 
-  const { control, formState, register, handleSubmit, resetField } =
-    useForm<CreateRoomData>({
-      mode: 'onChange',
-      defaultValues,
-    });
+  const {
+    control,
+    formState,
+    register,
+    handleSubmit,
+    resetField,
+    setError,
+    clearErrors,
+  } = useForm<CreateRoomData>({
+    mode: 'onChange',
+    defaultValues,
+  });
 
   const { isValid, errors } = formState;
 
@@ -196,9 +203,18 @@ export default function CreateRoomPage() {
             render={({ field: { value: tags, onChange } }) => (
               <CreateTagInput
                 tagList={tags}
+                onChange={() => {
+                  clearErrors('tags');
+                }}
                 onSelected={tag => {
                   if (tags.length < 5) {
                     onChange([...tags, tag]);
+                  } else if (tags.length === 5) {
+                    setError('tags', {
+                      type: 'custom',
+                      message:
+                        '최대 입력 개수를 초과했습니다. 태그를 삭제하고 다시 추가해 주세요.',
+                    });
                   }
                 }}
                 onDeleted={tagId => {
