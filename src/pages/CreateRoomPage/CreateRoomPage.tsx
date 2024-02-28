@@ -17,6 +17,7 @@ import {
   ROOM_STATUS,
 } from '@/constants/room';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { useCreateRoom } from '@/hooks/useRooms';
 
 import * as S from './CreateRoomPage.style';
 
@@ -60,7 +61,18 @@ export default function CreateRoomPage() {
 
   const { isValid, errors } = formState;
 
-  const onSubmit: SubmitHandler<CreateRoomData> = async data => {};
+  const { mutateAsync: createRoom } = useCreateRoom();
+
+  const onSubmit: SubmitHandler<CreateRoomData> = async data => {
+    const currentDate = new Date().toISOString();
+    const filteredTag = data.tags.map(tag => tag.value);
+    const submitData = { ...data, statAt: currentDate, tags: filteredTag };
+
+    console.log('submit data: ', submitData);
+
+    const response = await createRoom(submitData);
+    console.log('response', response);
+  };
 
   const contentList = [
     {
