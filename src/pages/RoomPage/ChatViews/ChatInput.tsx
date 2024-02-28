@@ -22,12 +22,14 @@ export default function ChatInput({ className }: ChatInputProps) {
   };
 
   const onSubmit = (data: FormProps) => {
+    if (!data.chatValue) return;
     console.log(data);
+
     reset();
+    alert('submit!');
   };
 
   const handleSendClick = () => {
-    alert('submit!');
     handleSubmit(onSubmit)();
   };
 
