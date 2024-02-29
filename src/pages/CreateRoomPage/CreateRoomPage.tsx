@@ -176,7 +176,7 @@ export default function CreateRoomPage() {
                   */}
                   <Input
                     type="password"
-                    width="12rem"
+                    width="20rem"
                     name="password"
                     register={register}
                     formState={formState}
