@@ -150,7 +150,7 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
           width="30rem"
           onClick={handleComplete}
         >
-          수정 완료
+          수정하기
         </Button>
         <Button
           backgroundColor={theme.color.transparent_50}
