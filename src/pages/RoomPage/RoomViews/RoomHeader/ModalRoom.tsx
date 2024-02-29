@@ -10,7 +10,7 @@ import useRoomStore from '@/store/Room';
 import { AccessType } from '@/types/room';
 
 interface ModalRoomProps {
-  onClick: () => void;
+  onClose: () => void;
 }
 interface InputProps {
   problemLink: string;
@@ -18,7 +18,7 @@ interface InputProps {
   password: string;
 }
 
-export default function ModalRoom({ onClick }: ModalRoomProps) {
+export default function ModalRoom({ onClose }: ModalRoomProps) {
   const { roomData, setRoomData } = useRoomStore();
   const { roomId, problemLink, timeLimit, password, roomAccessType } = roomData;
 
@@ -82,7 +82,8 @@ export default function ModalRoom({ onClick }: ModalRoomProps) {
 
     // Todo: api 연결 확인
     mutation.mutate(roomId);
-    onClick();
+    alert('방 정보가 수정되었습니다');
+    onClose();
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -143,7 +144,12 @@ export default function ModalRoom({ onClick }: ModalRoomProps) {
         >
           수정 완료
         </Button>
-        <Button backgroundColor={theme.color.transparent_50}>취소</Button>
+        <Button
+          backgroundColor={theme.color.transparent_50}
+          onClick={onClose}
+        >
+          취소
+        </Button>
       </S.ModalButtonsWrapper>
     </S.ModalWrapper>
   );

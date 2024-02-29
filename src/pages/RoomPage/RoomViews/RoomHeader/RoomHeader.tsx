@@ -25,8 +25,7 @@ export default function RoomHeader() {
         ref={modalRef}
       >
         <ModalRoom
-          onClick={() => {
-            alert('방 정보가 수정되었습니다');
+          onClose={() => {
             closeModal();
           }}
         />
