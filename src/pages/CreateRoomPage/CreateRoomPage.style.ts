@@ -20,6 +20,7 @@ const InputListWrapper = styled.ul`
 const InputItemWrapper = styled.li`
   position: relative;
   display: flex;
+  gap: 1rem;
   align-items: start;
   min-height: 10rem;
 `;
@@ -69,7 +70,7 @@ const RoomLimitWrapper = styled(Col)`
 
 const PasswordTitle = styled.span`
   position: relative;
-  top: 1.5rem;
+  top: 1.2rem;
   width: fit-content;
   white-space: nowrap;
 `;
