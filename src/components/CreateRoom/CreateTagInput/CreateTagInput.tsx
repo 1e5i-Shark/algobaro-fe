@@ -66,6 +66,7 @@ export default function CreateTagInput({
               onDeleted={handleDeleteTag}
               backgroundColor={theme.color.secondary_color}
               fontSize={theme.size.M}
+              textColor={theme.color.black_primary}
             >
               {value}
             </Tag>

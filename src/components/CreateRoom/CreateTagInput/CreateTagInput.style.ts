@@ -23,7 +23,11 @@ const Input = styled.input`
     display: flex;
     flex: 1;
     height: 4rem;
+    padding: 0.4rem;
+    color: ${theme.color.text_primary_color};
+    background-color: ${theme.color.background_primary};
     border-bottom: 3px solid ${theme.color.secondary_color};
+    border-radius: ${theme.shape.round} ${theme.shape.round} 0 0;
   `}
 `;
 
