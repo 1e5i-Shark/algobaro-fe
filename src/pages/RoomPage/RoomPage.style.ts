@@ -128,6 +128,10 @@ export const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
 `;
 
 export const PasswordWrapper = styled(Row)`
@@ -173,8 +177,8 @@ export const Text = styled.div<{ $color: string; $padding: string }>`
   `}
 `;
 
-export const TestInfoTable = styled.table`
-  ${({ theme }) => css`
+export const TestInfoTable = styled.table<{ $problemLink: string }>`
+  ${({ theme, $problemLink }) => css`
     width: fit-content;
     border-spacing: 0;
     border: 1px solid ${theme.color.transparent_90};
@@ -193,7 +197,7 @@ export const TestInfoTable = styled.table`
       .row-content {
         display: flex;
         align-items: center;
-        cursor: pointer;
+        cursor: ${$problemLink ? 'pointer' : 'default'};
       }
 
       .icon {
