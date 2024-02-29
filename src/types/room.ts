@@ -1,11 +1,12 @@
 // 개별 방 정보 조회
-export type StatusType = 'RECRUITING' | 'RUNNING';
+export type RoomStatusType = 'RECRUITING' | 'RUNNING';
 export type AccessType = 'PUBLIC' | 'PRIVATE';
+export type RoleType = 'HOST' | 'READY' | 'WAITING';
 
 export interface RoomType {
   roomId: number;
   introduce: string; // 삭제 예정
-  roomStatus: StatusType;
+  roomStatus: RoomStatusType;
   title: string;
   roomAccessType: AccessType;
   problemPlatform: '백준';
@@ -18,7 +19,7 @@ export interface RoomType {
   roomUUID: string;
   startAt: string;
   languages: string[];
-  members: Member[];
+  members: MemberType[];
 }
 
 export interface OmitRoomType
@@ -50,8 +51,11 @@ export interface ChangeHostResponse {
   roomId: number;
 }
 
-export interface Member {
-  username: string;
-  status: string;
-  image: string;
+export interface MemberType {
+  id: number;
+  nickname: string;
+  bojId: string;
+  profileImage: string;
+  role: RoleType;
+  // ready: boolean;
 }
