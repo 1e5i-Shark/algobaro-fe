@@ -1,24 +1,23 @@
 import { ParticipantsCard } from '@/components';
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import { UserType } from '@/types/room';
+import useRoomStore from '@/store/Room';
 
-interface ParticipantsProps {
-  data: UserType[];
-}
-
-export default function Participants({ data }: ParticipantsProps) {
+export default function Participants() {
+  const { roomData } = useRoomStore();
+  const { members } = roomData;
   return (
     <S.ParticipantsContainer>
-      {data.map((user, index) => {
-        return (
-          <ParticipantsCard
-            key={user.username + index}
-            username={user.username}
-            status={user.status}
-            image={user.image}
-          />
-        );
-      })}
+      {members &&
+        members.map((member, index) => {
+          return (
+            <ParticipantsCard
+              key={member.username + index}
+              username={member.username}
+              status={member.status}
+              image={member.image}
+            />
+          );
+        })}
     </S.ParticipantsContainer>
   );
 }

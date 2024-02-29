@@ -8,14 +8,11 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { PATH } from '@/routes/path';
 import { axiosAuthInstance } from '@/services/axiosInstance';
-import { RoomType } from '@/types/room';
+import useRoomStore from '@/store/Room';
 
-interface TestInfoProps {
-  data: RoomType;
-}
-
-export default function TestInfo({ data }: TestInfoProps) {
-  const { timeLimit, problemLink, roomId } = data;
+export default function TestInfo() {
+  const { roomData } = useRoomStore();
+  const { timeLimit, problemLink, roomId } = roomData;
   // Todo: 참가자 상태에 따라 isReady 구현
   const isReady = true;
 
@@ -23,11 +20,11 @@ export default function TestInfo({ data }: TestInfoProps) {
   const navigate = useNavigate();
 
   const calcTime = useMemo(() => {
-    const hour = Math.floor(timeLimit / 60);
-    const minute = Math.floor(timeLimit % 60);
+    const hours = Math.floor(timeLimit / 60);
+    const minutes = Math.floor(timeLimit % 60);
 
-    return { hour, minute };
-  }, []);
+    return { hours, minutes };
+  }, [timeLimit]);
 
   // 테스트 시작
   const startTest = async () => {
@@ -42,20 +39,34 @@ export default function TestInfo({ data }: TestInfoProps) {
     navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
   };
 
+  const handleClickLink = () => {
+    if (!problemLink) return;
+
+    window.open(problemLink, '_blank');
+  };
+
   return (
     <S.TestInfoWrapper>
-      <S.TestInfoTable className="TestInfoTable">
+      <S.TestInfoTable
+        className="TestInfoTable"
+        $problemLink={problemLink}
+      >
         <tbody>
           <tr>
             <td
               colSpan={2}
-              onClick={() => window.open(problemLink, '_blank')}
+              onClick={handleClickLink}
             >
               <span className="row-content">
                 <h4>문제링크</h4>
                 <Icon className="icon">
                   <AttachmentRounded />
                 </Icon>
+                {!problemLink ? (
+                  <span>문제를 설정해주세요</span>
+                ) : (
+                  <span>{problemLink.split('/').pop()}</span>
+                )}
               </span>
             </td>
           </tr>
@@ -64,7 +75,8 @@ export default function TestInfo({ data }: TestInfoProps) {
               <h4>제한시간</h4>
             </td>
             <td>
-              {calcTime.hour}시간 {calcTime.minute}분
+              {calcTime.hours > 0 && <span>{calcTime.hours}시간</span>}
+              {calcTime.minutes > 0 && <span>{calcTime.minutes}분</span>}
             </td>
           </tr>
         </tbody>

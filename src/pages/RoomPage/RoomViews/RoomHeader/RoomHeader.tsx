@@ -1,23 +1,12 @@
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import { RoomType } from '@/types/room';
 
 import { RoomHeaderButtons, RoomHeaderInfo } from '.';
 
-interface RoomProps {
-  data: RoomType;
-}
-
-export default function RoomHeader({ data }: RoomProps) {
+export default function RoomHeader() {
   return (
     <S.HeaderContainer>
-      <RoomHeaderInfo
-        className="roomInfo"
-        data={data}
-      />
-      <RoomHeaderButtons
-        className="roomButtons"
-        data={data}
-      />
+      <RoomHeaderInfo className="roomInfo" />
+      <RoomHeaderButtons className="roomButtons" />
     </S.HeaderContainer>
   );
 }

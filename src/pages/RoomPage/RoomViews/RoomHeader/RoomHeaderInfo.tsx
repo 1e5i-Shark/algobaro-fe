@@ -4,17 +4,17 @@ import { Icon, Image, Tag } from '@/components';
 import { LOGOS } from '@/constants/logos';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import { RoomType } from '@/types/room';
+import useRoomStore from '@/store/Room';
 
 interface RoomInfoProps {
-  data: RoomType;
   className: string;
 }
 
-export default function RoomInfoContainer({ className, data }: RoomInfoProps) {
+export default function RoomInfoContainer({ className }: RoomInfoProps) {
+  const { roomData } = useRoomStore();
   const { theme } = useCustomTheme();
 
-  const { roomUUID, title, tags, languages } = data;
+  const { roomUUID, title, tags, languages } = roomData;
 
   const handleCopyRoomId = () => {
     window.navigator.clipboard.writeText(roomUUID);

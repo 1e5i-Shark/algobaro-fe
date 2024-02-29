@@ -1,43 +1,33 @@
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button, CheckBox, Input } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { axiosAuthInstance } from '@/services/axiosInstance';
+import useRoomStore from '@/store/Room';
+import { AccessType } from '@/types/room';
 
 interface ModalRoomProps {
-  roomId: number;
-  problemLink: string;
-  timeLimit: number;
-  password: string;
-  roomAccessType: string;
+  onClick: () => void;
 }
-
 interface InputProps {
   problemLink: string;
   timeLimit: number;
   password: string;
 }
 
-export default function ModalRoom({
-  roomId,
-  problemLink,
-  timeLimit,
-  password,
-  roomAccessType,
-}: ModalRoomProps) {
+export default function ModalRoom({ onClick }: ModalRoomProps) {
+  const { roomData, setRoomData } = useRoomStore();
+  const { roomId, problemLink, timeLimit, password, roomAccessType } = roomData;
+
   const [isPrivate, setIsPrivate] = useState(
     roomAccessType === 'PRIVATE' ? true : false
   );
 
   const { theme } = useCustomTheme();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<InputProps>({
+  const { register, handleSubmit } = useForm<InputProps>({
     defaultValues: {
       problemLink: problemLink ?? '',
       timeLimit: timeLimit ?? 60,
@@ -46,25 +36,67 @@ export default function ModalRoom({
   });
 
   const changeRoomInfo = async (id: number) => {
+    const { title, startAt, problemPlatform, problemName, tags, roomLimit } =
+      roomData;
+
     return await axiosAuthInstance.patch(`/v1/rooms/${id}`, {
-      title: '같이 푸실분~',
-      introduce: '저랑 같이 A+B 문제 푸실 분 구해요',
-      startAt: '2024-02-27T16:31:06.533Z',
-      roomAccessType: '공개 방',
-      problemLink: 'https://www.acmicpc.net/problem/1000',
-      problemPlatform: '백준',
-      problemName: 'A+B',
-      password: 'password1234',
-      roomLimit: 4,
-      tags: ['Gold 4'],
-      timeLimit: 20,
+      title,
+      startAt,
+      roomAccessType: isPrivate ? 'PRIVATE' : 'PUBLIC',
+      problemLink,
+      problemPlatform,
+      problemName,
+      password,
+      roomLimit,
+      tags,
+      timeLimit,
     });
   };
 
   const mutation = useMutation(changeRoomInfo);
 
-  const onSubmit = (data: InputProps) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<InputProps> = data => {
+    const newPassword = () => {
+      const newAccessType: AccessType = isPrivate ? 'PRIVATE' : 'PUBLIC';
+
+      if (isPrivate) {
+        return {
+          password: data.password,
+          roomAccessType: newAccessType,
+        };
+      } else {
+        return {
+          password: '',
+          roomAccessType: newAccessType,
+        };
+      }
+    };
+
+    const newData = {
+      ...newPassword(),
+      problemLink: data.problemLink,
+      timeLimit: data.timeLimit,
+    };
+
+    setRoomData({ ...roomData, ...newData });
+
+    // Todo: api 연결 확인
+    mutation.mutate(roomId);
+    onClick();
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const regex = /^[0-9]$/;
+    if (!regex.test(event.key) && event.key !== 'Backspace') {
+      event.preventDefault();
+    }
+    // if (['e', 'E', '+', '-'].includes(event.key)) {
+    //   event.preventDefault();
+    // }
+  };
+
+  const handleComplete = () => {
+    handleSubmit(onSubmit)();
   };
 
   return (
@@ -80,10 +112,16 @@ export default function ModalRoom({
         <Input
           label="제한시간(분)"
           name="timeLimit"
+          type="number"
+          onKeyDown={handleKeyDown}
+          validation={{
+            valueAsNumber: true,
+          }}
           register={register}
         />
         <S.PasswordWrapper>
           <CheckBox
+            checked={isPrivate}
             label="비밀방"
             onChange={() => setIsPrivate(!isPrivate)}
           />
@@ -99,17 +137,13 @@ export default function ModalRoom({
       </S.FormWrapper>
       <S.ModalButtonsWrapper>
         <Button
+          type="submit"
           width="30rem"
-          onClick={() => mutation.mutate(roomId)}
+          onClick={handleComplete}
         >
           수정 완료
         </Button>
-        <Button
-          backgroundColor={theme.color.transparent_50}
-          onClick={() => alert('취소')}
-        >
-          취소
-        </Button>
+        <Button backgroundColor={theme.color.transparent_50}>취소</Button>
       </S.ModalButtonsWrapper>
     </S.ModalWrapper>
   );
