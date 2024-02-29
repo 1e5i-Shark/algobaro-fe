@@ -25,6 +25,8 @@ interface LoginInfo {
 }
 
 export default function LoginForm({ width = '100%' }: { width?: string }) {
+  // 저장된 accessToken
+  const [accessToken] = useLocalStorage('accessToken');
   // 저장한 이메일 아이디
   const [saveEmail, setSaveEmail] = useLocalStorage('saveEmail');
   // 아이디 저장 옵션 여부
@@ -82,41 +84,45 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
   };
 
   return (
-    <LoginFormWrapper width={width}>
-      <LoginFormContainer onSubmit={handleSubmit(onSubmitData)}>
-        {/* 로그인 정보 입력 영역 */}
-        <LoginInputContainer>
-          {inputPropsList.map(props => {
-            return (
-              <LoginInputItem key={props.name}>
-                <Input
-                  register={register}
-                  formState={formState}
-                  {...props}
-                />
-              </LoginInputItem>
-            );
-          })}
-        </LoginInputContainer>
-        {/* 로그인 버튼 */}
-        <LoginButton
-          type="submit"
-          disabled={isValid ? false : true}
-        >
-          로그인
-        </LoginButton>
-        {/* 로그인 정보 외 설정 및 링크 영역 */}
-        <LoginOptionContainer>
-          <CheckBox
-            label="아이디 저장"
-            onChange={handleChangeCheck}
-            checked={isSaveEmail}
-          />
-          <SignUpTextLink to={PATH.SIGNUP}>
-            아직 회원가입을 안하셨나요?
-          </SignUpTextLink>
-        </LoginOptionContainer>
-      </LoginFormContainer>
-    </LoginFormWrapper>
+    <>
+      {!accessToken ? (
+        <LoginFormWrapper width={width}>
+          <LoginFormContainer onSubmit={handleSubmit(onSubmitData)}>
+            {/* 로그인 정보 입력 영역 */}
+            <LoginInputContainer>
+              {inputPropsList.map(props => {
+                return (
+                  <LoginInputItem key={props.name}>
+                    <Input
+                      register={register}
+                      formState={formState}
+                      {...props}
+                    />
+                  </LoginInputItem>
+                );
+              })}
+            </LoginInputContainer>
+            {/* 로그인 버튼 */}
+            <LoginButton
+              type="submit"
+              disabled={isValid ? false : true}
+            >
+              로그인
+            </LoginButton>
+            {/* 로그인 정보 외 설정 및 링크 영역 */}
+            <LoginOptionContainer>
+              <CheckBox
+                label="아이디 저장"
+                onChange={handleChangeCheck}
+                checked={isSaveEmail}
+              />
+              <SignUpTextLink to={PATH.SIGNUP}>
+                아직 회원가입을 안하셨나요?
+              </SignUpTextLink>
+            </LoginOptionContainer>
+          </LoginFormContainer>
+        </LoginFormWrapper>
+      ) : null}
+    </>
   );
 }
