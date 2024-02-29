@@ -157,6 +157,14 @@ export const MembersContainer = styled.div`
     gap: 2rem;
     justify-content: center;
     margin-top: 5rem;
+
+    @media screen and (max-width: 71rem) {
+      grid-template-columns: repeat(2, ${theme.FIXED_WIDTH.CARD});
+    }
+
+    @media screen and (max-width: 56rem) {
+      grid-template-columns: repeat(1, ${theme.FIXED_WIDTH.CARD});
+    }
   `}
 `;
 
