@@ -14,5 +14,5 @@ export { default as Modal } from './Common/Modal/Modal';
 export { default as Spinner } from './Common/Spinner/Spinner';
 export { default as Tag } from './Common/Tag/Tag';
 export { default as ThemeModeToggleButton } from './Common/ThemeModeToggleButton/ThemeModeToggleButton';
-export { ParticipantsCard } from './ParticipantsCard';
+export { MemberCard } from './MemberCard';
 export { ThemeCustomProvider } from './ThemeCustomProvider';

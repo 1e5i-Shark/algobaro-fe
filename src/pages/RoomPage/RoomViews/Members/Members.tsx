@@ -1,16 +1,16 @@
-import { ParticipantsCard } from '@/components';
+import { MemberCard } from '@/components';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import useRoomStore from '@/store/Room';
 
-export default function Participants() {
+export default function Members() {
   const { roomData } = useRoomStore();
   const { members } = roomData;
   return (
-    <S.ParticipantsContainer>
+    <S.MembersContainer>
       {members &&
         members.map((member, index) => {
           return (
-            <ParticipantsCard
+            <MemberCard
               key={member.username + index}
               username={member.username}
               status={member.status}
@@ -18,6 +18,6 @@ export default function Participants() {
             />
           );
         })}
-    </S.ParticipantsContainer>
+    </S.MembersContainer>
   );
 }

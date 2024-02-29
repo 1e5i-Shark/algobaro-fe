@@ -5,7 +5,7 @@ import SportsRoundedIcon from '@mui/icons-material/SportsRounded';
 import { Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
-import * as S from './ParticipantsCard.style';
+import * as S from './MemberCard.style';
 
 interface StatusTagProps {
   status: string;

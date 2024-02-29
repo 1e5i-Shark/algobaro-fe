@@ -149,8 +149,8 @@ export const ModalButtonsWrapper = styled(Row)`
   padding-top: 1rem;
 `;
 
-// Participants
-export const ParticipantsContainer = styled.div`
+// Members
+export const MembersContainer = styled.div`
   ${({ theme }) => css`
     display: grid;
     grid-template-columns: repeat(3, ${theme.FIXED_WIDTH.CARD});

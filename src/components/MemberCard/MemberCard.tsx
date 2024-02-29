@@ -5,20 +5,16 @@ import { Avatar } from '@/components/Common/Avatar';
 import Icon from '../Common/Icon/Icon';
 import Menu from '../Common/Menu/Menu';
 import { MenuText } from '../Common/Menu/MenuText';
-import * as S from './ParticipantsCard.style';
+import * as S from './MemberCard.style';
 import StatusTag from './StatusTag';
 
-interface ParticipantsProps {
+interface MemberProps {
   username: string;
   image: string;
   status: string;
 }
 
-export default function ParticipantsCard({
-  username,
-  image,
-  status,
-}: ParticipantsProps) {
+export default function MemberCard({ username, image, status }: MemberProps) {
   const menuList = [
     {
       id: 1,

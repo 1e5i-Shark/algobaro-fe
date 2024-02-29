@@ -1,6 +1,6 @@
 import ChatViews from './ChatViews/ChatViews';
 import * as S from './RoomPage.style';
-import { Participants, RoomHeader, TestInfo } from './RoomViews';
+import { Members, RoomHeader, TestInfo } from './RoomViews';
 
 export default function RoomPage() {
   // console.log(roomData);
@@ -31,7 +31,7 @@ export default function RoomPage() {
     <S.RoomContainer>
       <S.WaitingRoomContainer>
         <RoomHeader />
-        <Participants />
+        <Members />
         <TestInfo />
       </S.WaitingRoomContainer>
       <S.ChatContainer>
