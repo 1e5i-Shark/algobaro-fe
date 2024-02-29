@@ -2,8 +2,8 @@ import { css, styled } from 'styled-components';
 
 import { Col, Row } from '@/styles/GlobalStyle';
 
-export const CardWrapper = styled(Col)`
-  ${({ theme }) => css`
+export const CardWrapper = styled(Col)<{ $isEmpty: boolean }>`
+  ${({ theme, $isEmpty }) => css`
     position: relative;
     flex-shrink: 0;
     gap: 1rem;
@@ -11,13 +11,19 @@ export const CardWrapper = styled(Col)`
     width: ${theme.FIXED_WIDTH.CARD};
     height: ${theme.FIXED_HEIGHT.CARD};
     padding-top: 4.5rem;
-    background-color: ${theme.color.transparent_10};
-    border: 1px solid ${theme.color.transparent_30};
+    background-color: ${!$isEmpty
+      ? theme.color.transparent_10
+      : theme.color.background_second};
+    border: ${!$isEmpty ? `1px solid ${theme.color.transparent_30}` : 'none'};
     border-radius: 1rem;
-    box-shadow: 4px 4px 4px 0
-      ${theme.mode === 'light'
-        ? `${theme.color.transparent_50}`
-        : `${theme.color.black_primary}`};
+    box-shadow: ${!$isEmpty
+      ? `4px 4px 4px 0
+      ${
+        theme.mode === 'light'
+          ? `${theme.color.transparent_50}`
+          : `${theme.color.black_primary}`
+      }`
+      : 0};
   `}
 `;
 

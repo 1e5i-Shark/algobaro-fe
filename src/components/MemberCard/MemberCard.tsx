@@ -10,12 +10,15 @@ import * as S from './MemberCard.style';
 import StatusTag from './StatusTag';
 
 interface MemberProps
-  extends Pick<MemberType, 'nickname' | 'profileImage' | 'role'> {}
+  extends Partial<Pick<MemberType, 'nickname' | 'profileImage' | 'role'>> {
+  isEmpty?: boolean;
+}
 
 export default function MemberCard({
   nickname,
   profileImage,
-  role,
+  role = 'WAITING',
+  isEmpty = false,
 }: MemberProps) {
   const menuList = [
     {
@@ -31,23 +34,27 @@ export default function MemberCard({
   ];
 
   return (
-    <S.CardWrapper>
-      <S.MenuWrapper>
-        <Menu
-          menuList={menuList}
-          className="menu"
-        >
-          <Icon>
-            <MoreVertRoundedIcon />
-          </Icon>
-        </Menu>
-      </S.MenuWrapper>
-      <Avatar
-        src={profileImage}
-        size="M"
-      />
-      <S.NameWrapper>{nickname}</S.NameWrapper>
-      <StatusTag role={role} />
+    <S.CardWrapper $isEmpty={isEmpty}>
+      {!isEmpty && (
+        <>
+          <S.MenuWrapper>
+            <Menu
+              menuList={menuList}
+              className="menu"
+            >
+              <Icon>
+                <MoreVertRoundedIcon />
+              </Icon>
+            </Menu>
+          </S.MenuWrapper>
+          <Avatar
+            src={profileImage}
+            size="M"
+          />
+          <S.NameWrapper>{nickname}</S.NameWrapper>
+          <StatusTag role={role} />
+        </>
+      )}
     </S.CardWrapper>
   );
 }
