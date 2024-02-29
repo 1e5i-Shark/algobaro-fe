@@ -50,6 +50,7 @@ export const Input = styled.input<InputProps>`
     width: 100%;
     padding: 0.4rem ${$isPassword ? '3.4rem' : '1rem'} 0.4rem 1rem;
     font-size: ${$fontSize};
+    color: ${theme.color.text_primary_color};
     background-color: ${$backgroundColor};
     border: ${$isError
       ? `1px solid ${theme.color.red}`
