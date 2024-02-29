@@ -1,10 +1,9 @@
 import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
+import { useSignIn } from '@/hooks/Api/useAuth';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
-import { signIn } from '@/services/Auth';
 import { InputListProps } from '@/types/input';
 
 import CheckBox from '../Common/CheckBox/CheckBox';
@@ -28,8 +27,6 @@ interface LoginInfo {
 export default function LoginForm({ width = '100%' }: { width?: string }) {
   // 저장한 이메일 아이디
   const [saveEmail, setSaveEmail] = useLocalStorage('saveEmail');
-  // accessToken 로컬 스토리지 저장 훅
-  const [, setAccessToken] = useLocalStorage('accessToken');
   // 아이디 저장 옵션 여부
   const [isSaveEmail, setIsSaveEmail] = useState(saveEmail ? true : false);
   // login react form
@@ -41,7 +38,8 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
       loginPassword: '',
     },
   });
-  const navigate = useNavigate();
+  // signIn api mutate 훅
+  const { mutate: signInMutate } = useSignIn();
   // 입력값 유효성 체크
   const isValid = formState.isValid;
 
@@ -67,19 +65,15 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
   const onSubmitData: SubmitHandler<LoginInfo> = async data => {
     // 아이디 저장 체크 시 로컬 스토리지에 저장
     // 해제 시 초기화
-    const { loginEmail, loginPassword } = data;
+    const { loginEmail } = data;
     setSaveEmail(isSaveEmail ? loginEmail : '');
 
-    // api를 호출한다.
-    const { response } = await signIn(loginEmail, loginPassword);
-
-    // 인증 성공 시 토큰 로컬 스토리지에 저장
-    setAccessToken(response.accessToken);
+    // api를 호출하고 인증 성공 시 토큰을 로컬 스토리지에 저장한다.
+    // 이후 메인 페이지(홈)으로 다이렉팅한다.
+    signInMutate(data);
 
     // 성공적으로 로그인이 되면 form 리셋
     reset();
-    // 메인 페이지(홈) 다이렉팅
-    navigate(PATH.HOME);
   };
   // 아이디 저장 체크 박스 변경 사항을 상태로 저장한다.
   const handleChangeCheck = (e: ChangeEvent<HTMLInputElement>) => {
