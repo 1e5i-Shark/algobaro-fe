@@ -1,25 +1,28 @@
 // 개별 방 정보 조회
+export type StatusType = 'RECRUITING' | 'RUNNING';
+export type AccessType = 'PUBLIC' | 'PRIVATE';
+
 export interface RoomType {
   roomId: number;
-  roomStatus: string;
+  introduce: string; // 삭제 예정
+  roomStatus: StatusType;
   title: string;
-  introduce: string;
-  roomAccessType: string;
-  problemPlatform: string;
+  roomAccessType: AccessType;
+  problemPlatform: '백준';
   problemName: string;
-  password: string;
+  problemLink: string;
+  password?: string;
   roomLimit: number;
   tags: string[];
   timeLimit: number;
   roomUUID: string;
-  // Todo: 백엔드 요청 보류
+  startAt: string;
   languages: string[];
-  users: User[];
-  problemLink: string;
+  members: Member[];
 }
 
 export interface OmitRoomType
-  extends Omit<RoomType, 'languages' | 'users' | 'problemLink'> {}
+  extends Omit<RoomType, 'languages' | 'members' | 'problemLink'> {}
 
 export interface RoomResponse {
   success: boolean;
@@ -27,26 +30,27 @@ export interface RoomResponse {
 }
 
 // 방 수정 API
-export interface UpdateRoom {
-  title: string;
-  introduce: string;
-  startAt: string;
-  roomAccessType: string;
-  problemLink: string;
-  problemPlatform: string;
-  problemName: string;
-  password: string;
-  roomLimit: number;
-  tags: string[];
-  timeLimit: number;
-}
+export interface UpdateRoom
+  extends Pick<
+    RoomType,
+    | 'title'
+    | 'startAt'
+    | 'roomAccessType'
+    | 'problemLink'
+    | 'problemPlatform'
+    | 'problemName'
+    | 'password'
+    | 'roomLimit'
+    | 'tags'
+    | 'timeLimit'
+  > {}
 
 export interface ChangeHostResponse {
   id: number;
   roomId: number;
 }
 
-export interface User {
+export interface Member {
   username: string;
   status: string;
   image: string;
