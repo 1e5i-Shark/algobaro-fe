@@ -10,14 +10,17 @@ import * as S from './MemberCard.style';
 import StatusTag from './StatusTag';
 
 interface MemberProps
-  extends Partial<Pick<MemberType, 'nickname' | 'profileImage' | 'role'>> {
+  extends Partial<
+    Pick<MemberType, 'nickname' | 'profileImage' | 'role' | 'ready'>
+  > {
   isEmpty?: boolean;
 }
 
 export default function MemberCard({
   nickname,
   profileImage,
-  role = 'WAITING',
+  role = 'HOST',
+  ready,
   isEmpty = false,
 }: MemberProps) {
   const menuList = [
@@ -52,7 +55,10 @@ export default function MemberCard({
             size="M"
           />
           <S.NameWrapper>{nickname}</S.NameWrapper>
-          <StatusTag role={role} />
+          <StatusTag
+            role={role}
+            ready={ready ?? false}
+          />
         </>
       )}
     </S.CardWrapper>

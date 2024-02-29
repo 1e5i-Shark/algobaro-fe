@@ -1,7 +1,7 @@
 // 개별 방 정보 조회
 export type RoomStatusType = 'RECRUITING' | 'RUNNING';
 export type AccessType = 'PUBLIC' | 'PRIVATE';
-export type RoleType = 'HOST' | 'READY' | 'WAITING';
+export type RoleType = 'HOST' | 'MEMBER';
 
 export interface RoomType {
   roomId: number;
@@ -57,5 +57,5 @@ export interface MemberType {
   bojId: string;
   profileImage: string;
   role: RoleType;
-  // ready: boolean;
+  ready: boolean;
 }

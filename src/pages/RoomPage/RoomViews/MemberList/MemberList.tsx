@@ -12,6 +12,7 @@ const MAX_MEMBERS = 6;
 
 export default function MemberList({ className }: MemberListProps) {
   const { roomData } = useRoomStore();
+
   const { members } = roomData;
 
   const renderCards = useMemo(() => {
@@ -21,6 +22,7 @@ export default function MemberList({ className }: MemberListProps) {
         nickname={member.nickname}
         role={member.role}
         profileImage={member.profileImage}
+        ready={member.ready}
       />
     ));
 

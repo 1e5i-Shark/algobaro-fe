@@ -10,35 +10,35 @@ import * as S from './MemberCard.style';
 
 interface StatusTagProps {
   role: RoleType;
+  ready: boolean;
 }
 
-export default function StatusTag({ role }: StatusTagProps) {
+export default function StatusTag({ role, ready }: StatusTagProps) {
   const { theme } = useCustomTheme();
 
-  const roleToText = {
+  const statusToText = {
     HOST: '방장',
-    READY: '준비 완료',
-    WAITING: '대기중',
+    MEMBER: (ready: boolean) => (ready ? '준비 완료' : '대기중'),
   };
 
   return (
     <S.StatusWrapper>
       <S.StatusText
         $color={
-          role === 'READY'
-            ? theme.color.green
-            : role === 'WAITING'
-              ? theme.color.red
-              : theme.color.text_primary_color
+          role === 'HOST'
+            ? theme.color.text_primary_color
+            : ready
+              ? theme.color.green
+              : theme.color.red
         }
       >
-        {roleToText[role]}
+        {role === 'HOST' ? statusToText[role] : statusToText[role](ready)}
       </S.StatusText>
       {role === 'HOST' ? (
         <Icon color={theme.color.text_primary_color}>
           <SportsRoundedIcon />
         </Icon>
-      ) : role === 'READY' ? (
+      ) : ready ? (
         <Icon color={theme.color.green}>
           <CheckCircleRoundedIcon />
         </Icon>
