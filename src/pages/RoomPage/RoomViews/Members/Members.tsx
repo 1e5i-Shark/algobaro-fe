@@ -5,16 +5,17 @@ import useRoomStore from '@/store/Room';
 export default function Members() {
   const { roomData } = useRoomStore();
   const { members } = roomData;
+
   return (
     <S.MembersContainer>
       {members &&
-        members.map((member, index) => {
+        members.map(member => {
           return (
             <MemberCard
-              key={member.username + index}
-              username={member.username}
-              status={member.status}
-              image={member.image}
+              key={member.id}
+              nickname={member.nickname}
+              role={member.role}
+              profileImage={member.profileImage}
             />
           );
         })}

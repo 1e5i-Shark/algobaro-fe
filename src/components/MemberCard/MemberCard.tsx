@@ -1,6 +1,7 @@
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
 import { Avatar } from '@/components/Common/Avatar';
+import { MemberType } from '@/types/room';
 
 import Icon from '../Common/Icon/Icon';
 import Menu from '../Common/Menu/Menu';
@@ -8,13 +9,14 @@ import { MenuText } from '../Common/Menu/MenuText';
 import * as S from './MemberCard.style';
 import StatusTag from './StatusTag';
 
-interface MemberProps {
-  username: string;
-  image: string;
-  status: string;
-}
+interface MemberProps
+  extends Pick<MemberType, 'nickname' | 'profileImage' | 'role'> {}
 
-export default function MemberCard({ username, image, status }: MemberProps) {
+export default function MemberCard({
+  nickname,
+  profileImage,
+  role,
+}: MemberProps) {
   const menuList = [
     {
       id: 1,
@@ -41,11 +43,11 @@ export default function MemberCard({ username, image, status }: MemberProps) {
         </Menu>
       </S.MenuWrapper>
       <Avatar
-        src={image}
+        src={profileImage}
         size="M"
       />
-      <S.NameWrapper>{username}</S.NameWrapper>
-      <StatusTag status={status} />
+      <S.NameWrapper>{nickname}</S.NameWrapper>
+      <StatusTag role={role} />
     </S.CardWrapper>
   );
 }

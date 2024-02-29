@@ -4,34 +4,41 @@ import SportsRoundedIcon from '@mui/icons-material/SportsRounded';
 
 import { Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { RoleType } from '@/types/room';
 
 import * as S from './MemberCard.style';
 
 interface StatusTagProps {
-  status: string;
+  role: RoleType;
 }
 
-export default function StatusTag({ status }: StatusTagProps) {
+export default function StatusTag({ role }: StatusTagProps) {
   const { theme } = useCustomTheme();
+
+  const roleToText = {
+    HOST: '방장',
+    READY: '준비 완료',
+    WAITING: '대기중',
+  };
 
   return (
     <S.StatusWrapper>
       <S.StatusText
         $color={
-          status === '준비완료'
+          role === 'READY'
             ? theme.color.green
-            : status === '대기중'
+            : role === 'WAITING'
               ? theme.color.red
               : theme.color.text_primary_color
         }
       >
-        {status}
+        {roleToText[role]}
       </S.StatusText>
-      {status === '방장' ? (
+      {role === 'HOST' ? (
         <Icon color={theme.color.text_primary_color}>
           <SportsRoundedIcon />
         </Icon>
-      ) : status === '준비완료' ? (
+      ) : role === 'READY' ? (
         <Icon color={theme.color.green}>
           <CheckCircleRoundedIcon />
         </Icon>
