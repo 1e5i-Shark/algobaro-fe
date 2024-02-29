@@ -5,26 +5,21 @@ import {
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Icon, Modal } from '@/components';
+import { Button, Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
-import useModal from '@/hooks/useModal';
 import { ButtonsWrapper } from '@/pages/RoomPage/RoomPage.style';
 import { PATH } from '@/routes/path';
-import { RoomType } from '@/types/room';
-
-import ModalRoom from './ModalRoom';
 
 interface RoomButtonsProps {
   className: string;
-  data: RoomType;
+  onClick: () => void;
 }
 
 export default function RoomHeaderButtons({
   className,
-  data,
+  onClick,
 }: RoomButtonsProps) {
   const { theme, toggleTheme } = useCustomTheme();
-  const { modalRef, isOpen, openModal, closeModal } = useModal();
 
   const navigate = useNavigate();
 
@@ -34,7 +29,7 @@ export default function RoomHeaderButtons({
         <Button
           className="changeRoomInfo"
           fontSize="1.6rem"
-          onClick={openModal}
+          onClick={onClick}
           style={{ marginRight: '1rem' }}
         >
           방 정보 변경
@@ -68,21 +63,6 @@ export default function RoomHeaderButtons({
           <ExitToAppRounded fontSize="large" />
         </Icon>
       </ButtonsWrapper>
-      <Modal
-        width="70rem"
-        height="50rem"
-        ref={modalRef}
-        isOpen={isOpen}
-        onClose={closeModal}
-      >
-        <ModalRoom
-          roomId={data.roomId}
-          problemLink={data.problemLink}
-          timeLimit={data.timeLimit}
-          password={data.password}
-          roomAccessType={data.roomAccessType}
-        />
-      </Modal>
     </>
   );
 }
