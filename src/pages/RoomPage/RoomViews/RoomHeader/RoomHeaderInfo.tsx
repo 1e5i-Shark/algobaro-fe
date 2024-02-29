@@ -14,7 +14,7 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
   const { roomData } = useRoomStore();
   const { theme } = useCustomTheme();
 
-  const { roomUUID, title, tags, languages } = roomData;
+  const { roomUUID, title, tags, languages, roomAccessType } = roomData;
 
   const handleCopyRoomId = () => {
     window.navigator.clipboard.writeText(roomUUID);
@@ -33,15 +33,17 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
         </S.CopyRoomIdTag>
       </S.RoomIdWrapper>
       <S.TitleWrapper className="title">
-        <Icon
-          color={theme.color.text_primary_color}
-          style={{
-            paddingRight: '0.5rem',
-            cursor: 'default',
-          }}
-        >
-          <LockRounded />
-        </Icon>
+        {roomAccessType === 'PRIVATE' && (
+          <Icon
+            color={theme.color.text_primary_color}
+            style={{
+              paddingRight: '0.5rem',
+              cursor: 'default',
+            }}
+          >
+            <LockRounded />
+          </Icon>
+        )}
         <h2>{title}</h2>
       </S.TitleWrapper>
       <S.TagsWrapper className="tagsGroup">
