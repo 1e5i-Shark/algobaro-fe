@@ -33,9 +33,8 @@ const SearchInputWrapper = styled.form`
 
   & :last-child {
     position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(-10%, 10%);
+    top: 20%;
+    right: 4%;
   }
 `;
 
