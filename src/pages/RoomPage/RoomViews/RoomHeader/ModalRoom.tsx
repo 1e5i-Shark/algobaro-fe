@@ -86,14 +86,21 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     onClose();
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const regex = /^[0-9]$/;
-    if (!regex.test(event.key) && event.key !== 'Backspace') {
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'];
+
+  const handleValidLink = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const regex = /^[a-z0-9.:/]$/;
+
+    if (!regex.test(event.key) && !allowedKeys.includes(event.key)) {
       event.preventDefault();
     }
-    // if (['e', 'E', '+', '-'].includes(event.key)) {
-    //   event.preventDefault();
-    // }
+  };
+
+  const handleValidNumber = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const regex = /^[0-9]$/;
+    if (!regex.test(event.key) && !allowedKeys.includes(event.key)) {
+      event.preventDefault();
+    }
   };
 
   const handleComplete = () => {
@@ -109,12 +116,13 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
           label="문제링크"
           name="problemLink"
           register={register}
+          onKeyDown={handleValidLink}
         />
         <Input
           label="제한시간(분)"
           name="timeLimit"
           type="number"
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleValidNumber}
           validation={{
             valueAsNumber: true,
           }}
