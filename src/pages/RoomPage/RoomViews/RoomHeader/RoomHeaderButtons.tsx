@@ -23,6 +23,14 @@ export default function RoomHeaderButtons({
 
   const navigate = useNavigate();
 
+  const handleExitRoom = () => {
+    const confirmed = confirm('정말로 나가시겠습니까?');
+
+    if (confirmed) {
+      navigate(PATH.HOME);
+    }
+  };
+
   return (
     <>
       <ButtonsWrapper className={className}>
@@ -58,7 +66,7 @@ export default function RoomHeaderButtons({
         <Icon
           className="exitRoom"
           background={true}
-          onClick={() => navigate(PATH.HOME)}
+          onClick={handleExitRoom}
         >
           <ExitToAppRounded fontSize="large" />
         </Icon>
