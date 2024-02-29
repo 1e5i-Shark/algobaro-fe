@@ -15,10 +15,25 @@ export interface InputProps<T extends FieldValues>
   required?: boolean;
   formState?: FormState<T>;
   validation?: RegisterOptions;
+  width?: string;
+  height?: string;
+  fontSize?: string;
+  borderRadius?: string;
+  borderColor?: string;
+  backgroundColor?: string;
 }
 
 export interface InputListType<T extends FieldValues>
-  extends Omit<InputProps<T>, 'register' | 'errors'> {
+  extends Omit<
+    InputProps<T>,
+    | 'register'
+    | 'width'
+    | 'height'
+    | 'fontSize'
+    | 'borderRadius'
+    | 'borderColor'
+    | 'backgroundColor'
+  > {
   guide?: React.ReactNode;
 }
 

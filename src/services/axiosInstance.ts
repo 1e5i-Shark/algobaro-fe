@@ -13,14 +13,15 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-const axiosConfig = {
+const axiosCustomConfig = {
   baseURL: import.meta.env.VITE_BASE_API_URL,
   timeout: 10000, // axios 통신 최대 대기 시간
   headers,
 };
 
-export const axiosInstance: CustomInstance = axios.create(axiosConfig);
-export const axiosAuthInstance: CustomInstance = axios.create(axiosConfig);
+export const axiosInstance: CustomInstance = axios.create(axiosCustomConfig);
+export const axiosAuthInstance: CustomInstance =
+  axios.create(axiosCustomConfig);
 
 /**
  * `response.data`란 코드 형태가 반복 입력해야 하는 것을
@@ -53,11 +54,10 @@ const onRequest = (
   config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig => {
   // 로컬 스토리지 훅 관련 에러가 있어 일단 대체한다.
-  // const accessToken = useLocalStorage('accessToken')[0];
   const accessToken = localStorage.getItem('accessToken');
 
   if (accessToken) {
-    config.headers.Authorization = `Bearer ${JSON.parse(accessToken)}`;
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
 
   return config;

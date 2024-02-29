@@ -3,6 +3,7 @@ export { default as Button } from './Common/Button/Button';
 export { default as CheckBox } from './Common/CheckBox/CheckBox';
 export { DropDown, MultiDropDown } from './Common/DropDown';
 export { default as EllipsisText } from './Common/EllipsisText/EllipsisText';
+export { default as ErrorMessage } from './Common/ErrorMessage/ErrorMessage';
 export { default as Header } from './Common/Header/Header';
 export { default as Icon } from './Common/Icon/Icon';
 export { default as Image } from './Common/Image/Image';
