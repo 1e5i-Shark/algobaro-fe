@@ -140,7 +140,7 @@ export default function CreateRoomPage() {
     },
     {
       title: '비밀방',
-      isRequired: true,
+      isRequired: false,
       content: (
         <Controller
           name="roomAccessType"
@@ -168,7 +168,9 @@ export default function CreateRoomPage() {
               </S.CheckBoxWrapper>
               {roomAccessType === ROOM_STATUS.PRIVATE && (
                 <S.PasswordWrapper>
-                  <S.PasswordTitle>암호</S.PasswordTitle>
+                  <S.PasswordTitle>
+                    <TitleWithAsterisk>암호</TitleWithAsterisk>
+                  </S.PasswordTitle>
                   {/*
                     password는 비밀방인 경우에만 required 입니다.
                   */}
