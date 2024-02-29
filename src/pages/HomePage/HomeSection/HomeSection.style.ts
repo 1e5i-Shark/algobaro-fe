@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const SectionWrapper = styled.section`
   position: relative;
@@ -35,11 +35,10 @@ const RoomLimit = styled.span``;
 
 const RoomTags = styled.div`
   display: flex;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
   width: 100%;
 `;
+
+const TagText = styled.span``;
 
 const RoomFooter = styled.div`
   position: absolute;
@@ -50,8 +49,6 @@ const RoomFooter = styled.div`
   width: calc(100% - 6rem);
 `;
 
-const TagText = styled.span``;
-
 const LanguageImgs = styled.div`
   display: flex;
 
@@ -60,7 +57,22 @@ const LanguageImgs = styled.div`
   }
 `;
 
+const InProgress = styled.span`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 13.3rem;
+    height: 4.3rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: ${theme.color.red};
+    cursor: default;
+  `}
+`;
+
 export {
+  InProgress,
   LanguageImgs,
   RoomFooter,
   RoomHeader,
