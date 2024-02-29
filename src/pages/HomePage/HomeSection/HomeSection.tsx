@@ -1,10 +1,15 @@
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
 
 import { Button, Icon, Image, Tag } from '@/components';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 import * as S from './HomeSection.style';
 
 export default function HomeSection() {
+  const { theme } = useCustomTheme();
+  const dummyText =
+    'Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow Meow ';
+
   return (
     <S.SectionWrapper>
       <S.RoomHeader>
@@ -25,25 +30,21 @@ export default function HomeSection() {
           tagId="코딩테스트"
           height="2.4rem"
           fontSize="1rem"
-          isSelected={false}
+          style={{
+            backgroundColor: theme.color.gray_30,
+            maxWidth: '100%',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+          }}
         >
-          코딩테스트코딩테스트코딩테스트
-        </Tag>
-        <Tag
-          mode="normal"
-          tagId="알고리즘"
-          height="2.4rem"
-          fontSize="1rem"
-        >
-          알고리즘
-        </Tag>
-        <Tag
-          mode="normal"
-          tagId="알고리즘"
-          height="2.4rem"
-          fontSize="1rem"
-        >
-          알고리즘
+          <S.TagText
+            style={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {dummyText}
+          </S.TagText>
         </Tag>
       </S.RoomTags>
 

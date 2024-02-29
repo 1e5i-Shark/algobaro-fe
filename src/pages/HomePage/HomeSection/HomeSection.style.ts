@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-// ####################### Section #######################
-
 const SectionWrapper = styled.section`
   position: relative;
   display: flex;
@@ -37,12 +35,10 @@ const RoomLimit = styled.span``;
 
 const RoomTags = styled.div`
   display: flex;
-  overflow-x: auto;
-
-  & > * {
-    flex-shrink: 0;
-    margin-right: 0.5rem;
-  }
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  width: 100%;
 `;
 
 const RoomFooter = styled.div`
@@ -53,6 +49,8 @@ const RoomFooter = styled.div`
   justify-content: space-between;
   width: calc(100% - 6rem);
 `;
+
+const TagText = styled.span``;
 
 const LanguageImgs = styled.div`
   display: flex;
@@ -70,5 +68,6 @@ export {
   RoomTags,
   RoomTitle,
   SectionWrapper,
+  TagText,
   TitleWrapper,
 };
