@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const NavContainer = styled.nav`
   position: relative;
@@ -39,11 +39,14 @@ const SearchInputWrapper = styled.form`
 `;
 
 const SearchInput = styled.input`
-  width: 100%;
-  height: 100%;
-  padding: 0 2rem;
-  background-color: ${({ theme }) => theme.color.gray_10};
-  border-radius: 2rem;
+  ${({ theme }) => css`
+    width: 100%;
+    height: 100%;
+    padding: 0 2rem;
+    color: ${theme.color.text_primary_color};
+    background-color: ${theme.color.background_second};
+    border-radius: 2rem;
+  `}
 `;
 
 const UpdateData = styled.span`

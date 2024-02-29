@@ -1,13 +1,19 @@
 import styled, { css } from 'styled-components';
 
 const SectionWrapper = styled.section`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 3rem;
-  background-color: ${({ theme }) => theme.color.gray_10};
-  border-radius: 12px;
-  box-shadow: 0px 2px 3px 1px rgba(200, 200, 200, 3);
+  ${({ theme }) => css`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    background-color: ${theme.mode === 'light'
+      ? theme.color.container_color
+      : theme.color.transparent_30};
+    border-radius: 12px;
+    box-shadow: ${theme.mode === 'light'
+      ? `0px 2px 3px 1px rgba(200, 200, 200, 3)`
+      : `0px 2px 3px 1px ${theme.color.transparent_30}`};
+  `}
 `;
 
 const RoomHeader = styled.div`
