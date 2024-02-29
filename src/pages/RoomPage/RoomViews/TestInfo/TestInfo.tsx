@@ -10,7 +10,11 @@ import { PATH } from '@/routes/path';
 import { axiosAuthInstance } from '@/services/axiosInstance';
 import useRoomStore from '@/store/Room';
 
-export default function TestInfo() {
+interface TestInfoProps {
+  className: string;
+}
+
+export default function TestInfo({ className }: TestInfoProps) {
   const { roomData } = useRoomStore();
   const { timeLimit, problemLink, roomId } = roomData;
   // Todo: 참가자 상태에 따라 isReady 구현
@@ -46,7 +50,7 @@ export default function TestInfo() {
   };
 
   return (
-    <S.TestInfoWrapper>
+    <S.TestInfoWrapper className={className}>
       <S.TestInfoTable
         className="TestInfoTable"
         $problemLink={problemLink}

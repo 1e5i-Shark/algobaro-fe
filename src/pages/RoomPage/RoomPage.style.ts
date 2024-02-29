@@ -14,7 +14,7 @@ export const WaitingRoomContainer = styled(Col)`
   padding-right: 3rem;
 `;
 
-export const ChatContainer = styled(Col)`
+export const ChatContainer = styled(Col)<{ className: string }>`
   ${({ theme }) => css`
     flex-grow: 1;
     min-width: 25rem;
@@ -160,10 +160,6 @@ export const MembersContainer = styled.div`
 
     @media screen and (max-width: 71rem) {
       grid-template-columns: repeat(2, ${theme.FIXED_WIDTH.CARD});
-    }
-
-    @media screen and (max-width: 56rem) {
-      grid-template-columns: repeat(1, ${theme.FIXED_WIDTH.CARD});
     }
   `}
 `;

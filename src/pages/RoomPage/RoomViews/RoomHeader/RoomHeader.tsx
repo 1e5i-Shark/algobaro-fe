@@ -5,12 +5,16 @@ import * as S from '@/pages/RoomPage/RoomPage.style';
 import { RoomHeaderButtons, RoomHeaderInfo } from '.';
 import ModalRoom from './ModalRoom';
 
-export default function RoomHeader() {
+interface HeaderProps {
+  className: string;
+}
+
+export default function RoomHeader({ className }: HeaderProps) {
   const { modalRef, isOpen, openModal, closeModal } = useModal();
 
   return (
     <>
-      <S.HeaderContainer>
+      <S.HeaderContainer className={className}>
         <RoomHeaderInfo className="roomInfo" />
         <RoomHeaderButtons
           className="roomButtons"
