@@ -4,6 +4,7 @@ import * as S from './Timer.style';
 interface TimerProps {
   minutes?: number;
   seconds?: number;
+  openModal?: () => void;
 }
 
 let interval: NodeJS.Timeout | null = null;
@@ -26,7 +27,11 @@ const converToSec = (time: number) => {
   return String(Math.floor((time / MS) % 60)).padStart(2, '0');
 };
 
-export default function Timer({ minutes = 0, seconds = 0 }: TimerProps) {
+export default function Timer({
+  minutes = 0,
+  seconds = 0,
+  openModal,
+}: TimerProps) {
   const [timeLeft, setTimeLeft] = useState<number>(
     minutes * MINUTES_IN_MS + seconds * MS
   );
@@ -36,6 +41,8 @@ export default function Timer({ minutes = 0, seconds = 0 }: TimerProps) {
       if (interval != null) {
         clearInterval(interval);
       }
+      setTimeLeft(0);
+      openModal?.();
     }
   }, [timeLeft]);
 
