@@ -48,6 +48,7 @@ export default function Icon({
   return (
     <IconWrapper
       onClick={onClick}
+      $hasOnClick={!!onClick}
       $background={background}
       $backgroundSize={backgroundSize}
       {...props}
