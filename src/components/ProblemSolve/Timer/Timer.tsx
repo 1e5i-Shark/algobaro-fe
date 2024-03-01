@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import * as S from './Timer.style';
 interface TimerProps {
   minutes?: number;
   seconds?: number;
@@ -51,8 +52,13 @@ export default function Timer({ minutes = 0, seconds = 0 }: TimerProps) {
   }, []);
 
   return (
-    <div>
-      {convertToMin(timeLeft)}:{converToSec(timeLeft)}
-    </div>
+    <S.Wrapper>
+      <S.LeftTimeWrapper>
+        남은 시간
+        <S.TimerText>
+          {convertToMin(timeLeft)}:{converToSec(timeLeft)}
+        </S.TimerText>
+      </S.LeftTimeWrapper>
+    </S.Wrapper>
   );
 }
