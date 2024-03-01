@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
 interface TimerProps {
-  minutes: number;
+  minutes?: number;
+  seconds?: number;
 }
 
+let interval: NodeJS.Timeout | null = null;
 const MS = 1000;
 const MINUTES_IN_MS = 60 * MS;
 
@@ -23,19 +25,23 @@ const converToSec = (time: number) => {
   return String(Math.floor((time / MS) % 60)).padStart(2, '0');
 };
 
-export default function Timer({ minutes }: TimerProps) {
-  const [timeLeft, setTimeLeft] = useState<number>(minutes * MINUTES_IN_MS);
+export default function Timer({ minutes = 0, seconds = 0 }: TimerProps) {
+  const [timeLeft, setTimeLeft] = useState<number>(
+    minutes * MINUTES_IN_MS + seconds * MS
+  );
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
+    if (timeLeft <= 0) {
+      if (interval != null) {
+        clearInterval(interval);
+      }
+    }
+  }, [timeLeft]);
 
+  useEffect(() => {
     interval = setInterval(() => {
       setTimeLeft(prevTime => prevTime - MS);
     }, MS);
-
-    if (timeLeft <= 0) {
-      clearInterval(interval);
-    }
 
     return () => {
       if (interval != null) {
