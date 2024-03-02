@@ -17,7 +17,7 @@ export const useSignIn = () => {
   const navigate = useNavigate();
   const [, setAccessToken] = useLocalStorage('accessToken');
 
-  const { mutate, data } = useMutation({
+  return useMutation({
     mutationFn: ({ loginEmail, loginPassword }: SignInProps) => {
       return signIn(loginEmail, loginPassword);
     },
@@ -26,6 +26,4 @@ export const useSignIn = () => {
       navigate(PATH.HOME);
     },
   });
-
-  return { mutate, data };
 };
