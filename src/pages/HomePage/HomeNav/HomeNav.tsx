@@ -19,6 +19,7 @@ export default function HomeNav() {
     setSearchInputValue,
     setSelectedPrivate,
     setSelectedAccess,
+    setSelectedLanguage,
   } = useRoomFilterStore();
 
   const handleSearchTextChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +31,6 @@ export default function HomeNav() {
       <Button>방 만들기</Button>
 
       <S.SearchOptionsContainer>
-        {/* 작업할 input 영역  */}
         <S.SearchInputWrapper>
           <S.SearchInput
             type="text"
@@ -42,7 +42,6 @@ export default function HomeNav() {
             <SearchRoundedIcon />
           </Icon>
         </S.SearchInputWrapper>
-        {/* 작업할 input 영역  */}
 
         <MultiDropDown
           dataId="search-code-language"
@@ -51,6 +50,7 @@ export default function HomeNav() {
           labelName="언어"
           fontSize={theme.size.M}
           width="13.3rem"
+          onSelected={setSelectedLanguage}
         />
 
         <CheckBox
