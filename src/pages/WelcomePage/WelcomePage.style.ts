@@ -7,8 +7,9 @@ export const WelcomePageWrapper = styled.div`
 `;
 
 export const MainContainer = styled(Row)`
+  gap: 15%;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   height: 90vh;
 
   > :last-of-type {
@@ -37,6 +38,31 @@ export const MainSubList = styled.ul``;
 
 export const MainSubListItem = styled.li``;
 
+export const MainRightContainer = styled(Col)`
+  ${({ theme }) => css`
+    gap: ${theme.size.M};
+
+    button {
+      position: relative;
+      width: 80%;
+      svg {
+        position: absolute;
+        right: ${theme.size.XS};
+        font-size: ${theme.size.L};
+        color: ${theme.color.black_primary};
+      }
+
+      &:hover {
+        filter: none;
+      }
+    }
+  `}
+`;
+
+export const UserNameContainer = styled.div``;
+
+export const UserNickName = styled.strong``;
+
 export const MoreDetailContainer = styled.div`
   height: fit-content;
 `;
@@ -57,8 +83,8 @@ export const DarkModeButtonContainer = styled.div`
 
     button {
       position: fixed;
-      right: ${theme.size.M};
-      bottom: ${theme.size.M};
+      right: ${theme.size.XL};
+      bottom: ${theme.size.XL};
     }
   `}
 `;
