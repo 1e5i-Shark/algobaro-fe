@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { useSignIn } from '@/hooks/Api/useAuth';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
@@ -26,7 +27,7 @@ interface LoginInfo {
 
 export default function LoginForm({ width = '100%' }: { width?: string }) {
   // 저장된 accessToken
-  const [accessToken] = useLocalStorage('accessToken');
+  const [accessToken] = useLocalStorage(LOCAL_ACCESSTOKEN);
   // 저장한 이메일 아이디
   const [saveEmail, setSaveEmail] = useLocalStorage('saveEmail');
   // 아이디 저장 옵션 여부

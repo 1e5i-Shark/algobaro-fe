@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
+import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { PATH } from '@/routes/path';
 import { signIn } from '@/services/Auth';
 
@@ -15,7 +16,7 @@ import { SignInProps } from './type';
  */
 export const useSignIn = () => {
   const navigate = useNavigate();
-  const [, setAccessToken] = useLocalStorage('accessToken');
+  const [, setAccessToken] = useLocalStorage(LOCAL_ACCESSTOKEN);
 
   return useMutation({
     mutationFn: ({ loginEmail, loginPassword }: SignInProps) => {
