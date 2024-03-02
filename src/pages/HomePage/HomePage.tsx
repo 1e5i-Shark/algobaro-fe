@@ -1,9 +1,15 @@
+import useRoomFilterStore from '@/store/useRoomFilterStore';
+
 import { DUMMY_DATA } from './DummyData';
 import HomeNav from './HomeNav/HomeNav';
 import * as S from './HomePage.style';
 import HomeSection from './HomeSection/HomeSection';
 
 export default function HomePage() {
+  const { searchInputValue, selectedPrivate, selectedAccess } =
+    useRoomFilterStore();
+  console.log(searchInputValue, selectedPrivate, selectedAccess);
+
   return (
     <S.HomePageContainer>
       <S.HomePageWrapper>

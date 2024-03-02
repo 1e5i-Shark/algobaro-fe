@@ -1,41 +1,52 @@
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { useState } from 'react';
+import { ChangeEvent } from 'react';
 
 import { Button, CheckBox, Icon, MultiDropDown } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import useRoomFilterStore from '@/store/useRoomFilterStore';
 
+import { DummyDataSet } from '../DummyData';
 import * as S from './HomeNav.style';
 
 export default function HomeNav() {
-  const { theme } = useCustomTheme();
-  const [check, setCheck] = useState(false);
-  const dataSet: { [key: string]: string } = {
-    python: '파이썬',
-    javascript: '자바스크립트',
-    cPlusPlus: 'C++',
-    java: 'Java',
-  };
   const latestUpdate = '1분전';
+  const { theme } = useCustomTheme();
+  const {
+    searchInputValue,
+    selectedPrivate,
+    selectedAccess,
+    setSearchInputValue,
+    setSelectedPrivate,
+    setSelectedAccess,
+  } = useRoomFilterStore();
+
+  const handleSearchTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInputValue(e.target.value);
+  };
 
   return (
     <S.NavContainer>
       <Button>방 만들기</Button>
 
       <S.SearchOptionsContainer>
+        {/* 작업할 input 영역  */}
         <S.SearchInputWrapper>
           <S.SearchInput
             type="text"
             placeholder="방 제목을 검색해 주세요."
+            value={searchInputValue}
+            onChange={handleSearchTextChange}
           />
           <Icon>
             <SearchRoundedIcon />
           </Icon>
         </S.SearchInputWrapper>
+        {/* 작업할 input 영역  */}
 
         <MultiDropDown
           dataId="search-code-language"
-          dataSet={dataSet}
+          dataSet={DummyDataSet}
           labelId="search-code-language-label"
           labelName="언어"
           fontSize={theme.size.M}
@@ -44,13 +55,14 @@ export default function HomeNav() {
 
         <CheckBox
           label="비밀방"
-          checked={check}
-          onChange={() => setCheck(!check)}
+          checked={selectedPrivate}
+          onChange={() => setSelectedPrivate(!selectedPrivate)}
         />
 
         <CheckBox
           label="입장 가능"
-          checked={true}
+          checked={selectedAccess}
+          onChange={() => setSelectedAccess(!selectedAccess)}
         />
       </S.SearchOptionsContainer>
 
