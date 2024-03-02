@@ -21,8 +21,8 @@ import {
 } from './LoginForm.style';
 
 interface LoginInfo {
-  loginEmail: string;
-  loginPassword: string;
+  email: string;
+  password: string;
 }
 
 export default function LoginForm({ width = '100%' }: { width?: string }) {
@@ -37,8 +37,8 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
     mode: 'onChange',
     defaultValues: {
       // 아이디 저장한 것을 기본값으로 불러온다.
-      loginEmail: saveEmail ? saveEmail : '',
-      loginPassword: '',
+      email: saveEmail ? saveEmail : '',
+      password: '',
     },
   });
   // signIn api mutate 훅
@@ -49,7 +49,7 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
   const inputPropsList: InputListProps<LoginInfo> = [
     {
       label: '이메일',
-      name: 'loginEmail',
+      name: 'email',
       type: 'email',
       placeholder: 'algo@email.com',
       required: true,
@@ -57,7 +57,7 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
     },
     {
       label: '비밀번호',
-      name: 'loginPassword',
+      name: 'password',
       type: 'password',
       required: true,
       placeholder: '비밀번호',
@@ -68,8 +68,8 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
   const onSubmitData: SubmitHandler<LoginInfo> = async data => {
     // 아이디 저장 체크 시 로컬 스토리지에 저장
     // 해제 시 초기화
-    const { loginEmail } = data;
-    setSaveEmail(isSaveEmail ? loginEmail : '');
+    const { email } = data;
+    setSaveEmail(isSaveEmail ? email : '');
 
     // api를 호출하고 인증 성공 시 토큰을 로컬 스토리지에 저장한다.
     // 이후 메인 페이지(홈)으로 다이렉팅한다.

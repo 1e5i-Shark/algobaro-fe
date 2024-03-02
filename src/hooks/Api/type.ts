@@ -1,4 +1,4 @@
 export interface SignInProps {
-  loginEmail: string;
-  loginPassword: string;
+  email: string;
+  password: string;
 }

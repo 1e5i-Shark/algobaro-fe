@@ -19,8 +19,8 @@ export const useSignIn = () => {
   const [, setAccessToken] = useLocalStorage(LOCAL_ACCESSTOKEN);
 
   return useMutation({
-    mutationFn: ({ loginEmail, loginPassword }: SignInProps) => {
-      return signIn(loginEmail, loginPassword);
+    mutationFn: ({ email, password }: SignInProps) => {
+      return signIn(email, password);
     },
     onSuccess: ({ response }) => {
       setAccessToken(response.accessToken);
