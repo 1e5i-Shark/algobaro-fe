@@ -1,2 +1,2 @@
 export { DUMMY_DATA, DummyDataSet, DummyImgLink } from './DummyData';
-export type { DummyLanguageType, RoomDataProps } from './DummyData.type';
+export type { RoomDataProps } from './DummyData.type';
