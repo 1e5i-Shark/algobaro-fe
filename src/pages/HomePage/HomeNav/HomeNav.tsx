@@ -1,6 +1,6 @@
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { Button, CheckBox, Icon, MultiDropDown } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
@@ -12,8 +12,8 @@ import * as S from './HomeNav.style';
 export default function HomeNav() {
   const latestUpdate = '1분전';
   const { theme } = useCustomTheme();
+  const [inputValue, setInputValue] = useState('');
   const {
-    searchInputValue,
     selectedPrivate,
     selectedAccess,
     setSearchInputValue,
@@ -22,8 +22,14 @@ export default function HomeNav() {
     setSelectedLanguage,
   } = useRoomFilterStore();
 
-  const handleSearchTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInputValue(e.target.value);
+  const handleInputSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearchInputValue(inputValue);
+    setInputValue('');
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
 
   return (
@@ -31,12 +37,12 @@ export default function HomeNav() {
       <Button>방 만들기</Button>
 
       <S.SearchOptionsContainer>
-        <S.SearchInputWrapper>
+        <S.SearchInputWrapper onSubmit={handleInputSubmit}>
           <S.SearchInput
             type="text"
             placeholder="방 제목을 검색해 주세요."
-            value={searchInputValue}
-            onChange={handleSearchTextChange}
+            value={inputValue}
+            onChange={handleInputChange}
           />
           <Icon>
             <SearchRoundedIcon />
