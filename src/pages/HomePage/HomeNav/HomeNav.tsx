@@ -25,11 +25,19 @@ export default function HomeNav() {
   const handleInputSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchInputValue(inputValue);
-    setInputValue('');
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    const { value } = e.target;
+
+    // Input 내부가 빈 문자열일 경우, 초기화
+    if (value === '') {
+      setInputValue('');
+      setSearchInputValue('');
+      return;
+    }
+
+    setInputValue(value);
   };
 
   return (
