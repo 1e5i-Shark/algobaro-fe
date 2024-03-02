@@ -1,3 +1,5 @@
+import { SignInProps } from '@/hooks/Api/type';
+
 import { SIGNIN_URL } from '../apiEndpoint';
 import { axiosInstance } from '../axiosInstance';
 
@@ -8,7 +10,7 @@ interface SignInResponse {
   };
 }
 
-const signIn = async (email: string, password: string) => {
+const signIn = async ({ email, password }: SignInProps) => {
   const reqBody = {
     email,
     password,
