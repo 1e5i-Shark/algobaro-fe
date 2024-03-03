@@ -1,4 +1,6 @@
-import { Button } from '@/components';
+import { Panel, PanelGroup } from 'react-resizable-panels';
+
+import { Button, ResizeHandle } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
 
@@ -18,6 +20,18 @@ const MOCK_DATA = {
   },
 };
 
+const DIRECTION = {
+  HORIZONTAL: 'horizontal',
+  VERTICAL: 'vertical',
+} as const;
+
+const SIZE_PERCENTAGE = {
+  PROBLEM: 40,
+  SOLVE: 60,
+  EDITOR: 80,
+  EXCEUTION: 20,
+} as const;
+
 export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
 
@@ -34,11 +48,23 @@ export default function ProblemSolvePage() {
   return (
     <S.Wrapper>
       <S.ContentsWrapper>
-        <S.ProblemWrapper>문제</S.ProblemWrapper>
-        <S.SolveWrapper>
-          <S.EditorWrapper>에디터</S.EditorWrapper>
-          <S.ExecutionWrapper>출력 및 실행 결과</S.ExecutionWrapper>
-        </S.SolveWrapper>
+        <PanelGroup direction={DIRECTION.HORIZONTAL}>
+          <Panel defaultSize={SIZE_PERCENTAGE.PROBLEM}>
+            <S.ProblemWrapper>문제</S.ProblemWrapper>
+          </Panel>
+          <ResizeHandle direction={DIRECTION.HORIZONTAL} />
+          <Panel defaultSize={SIZE_PERCENTAGE.SOLVE}>
+            <PanelGroup direction={DIRECTION.VERTICAL}>
+              <Panel defaultSize={SIZE_PERCENTAGE.EDITOR}>
+                <S.EditorWrapper>에디터</S.EditorWrapper>
+              </Panel>
+              <ResizeHandle direction={DIRECTION.VERTICAL} />
+              <Panel defaultSize={SIZE_PERCENTAGE.EXCEUTION}>
+                <S.ExecutionWrapper>출력 및 실행 결과</S.ExecutionWrapper>
+              </Panel>
+            </PanelGroup>
+          </Panel>
+        </PanelGroup>
       </S.ContentsWrapper>
       <S.ButtonWrapper>
         <Button
