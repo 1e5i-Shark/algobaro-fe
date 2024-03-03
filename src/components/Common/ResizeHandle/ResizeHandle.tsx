@@ -9,6 +9,11 @@ type ResizeHandleProps = {
   direction: DirectionType;
 };
 
+/**
+ * react-resizable-panels를 활용해서 Panel 영역을 조정하는 ResizeHandle
+ * @param [direction='horizontal'] - horizontal | vertical
+ */
+
 export default function ResizeHandle({
   direction = 'horizontal',
 }: ResizeHandleProps) {
