@@ -16,12 +16,28 @@ const HomeSectionContainer = styled.main`
   grid-gap: 2rem;
   height: 58rem;
 `;
-// ####################### Footer #######################
 
+const NoRoom = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 20rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+`;
+
+// ####################### Footer #######################
 const HomeFooter = styled.footer`
   display: flex;
   justify-content: center;
   padding: 4rem 0;
 `;
 
-export { HomeFooter, HomePageContainer, HomePageWrapper, HomeSectionContainer };
+export {
+  HomeFooter,
+  HomePageContainer,
+  HomePageWrapper,
+  HomeSectionContainer,
+  NoRoom,
+};

@@ -9,7 +9,7 @@ import HomeSection from './HomeSection/HomeSection';
 
 export default function HomePage() {
   const [roomData, setRoomData] = useState<RoomDataProps[]>([]);
-  const [filteredData, setFilteredData] = useState<RoomDataProps[]>([]);
+  const [filteredRoomData, setFilteredRoomData] = useState<RoomDataProps[]>([]);
   const { searchInputValue, selectedLanguage, selectedAccess, selectedStatus } =
     useRoomFilterStore();
 
@@ -18,6 +18,7 @@ export default function HomePage() {
     !!selectedLanguage.length ||
     selectedAccess ||
     selectedStatus;
+  const renderingData = hasOption ? filteredRoomData : roomData;
 
   console.log(
     searchInputValue,
@@ -51,7 +52,7 @@ export default function HomePage() {
       dataToFilter = dataToFilter.filter(data => data.roomStatus === '대기중');
     }
 
-    setFilteredData(dataToFilter);
+    setFilteredRoomData(dataToFilter);
   };
 
   useEffect(() => {
@@ -77,16 +78,20 @@ export default function HomePage() {
         <HomeNav />
 
         {/* 방 목록  */}
-        <S.HomeSectionContainer>
-          {(!hasOption ? roomData : filteredData).map(data => {
-            return (
-              <HomeSection
-                key={data.id}
-                {...data}
-              />
-            );
-          })}
-        </S.HomeSectionContainer>
+        {renderingData.length === 0 ? (
+          <S.NoRoom>검색하신 방이 존재하지 않습니다.</S.NoRoom>
+        ) : (
+          <S.HomeSectionContainer>
+            {renderingData.map(data => {
+              return (
+                <HomeSection
+                  key={data.id}
+                  {...data}
+                />
+              );
+            })}
+          </S.HomeSectionContainer>
+        )}
 
         {/* 페이지네이션 파트 */}
         <S.HomeFooter>푸터</S.HomeFooter>
