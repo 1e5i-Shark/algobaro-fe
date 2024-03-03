@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
-import { Tag } from '../..';
+import { EllipsisText, Tag } from '../..';
 import * as S from './CreateTagInput.style';
 
 export interface TagType {
@@ -68,7 +68,12 @@ export default function CreateTagInput({
               fontSize={theme.size.M}
               textColor={theme.color.black_primary}
             >
-              {value}
+              <EllipsisText
+                width="30rem"
+                lineClamp={1}
+              >
+                {value}
+              </EllipsisText>
             </Tag>
           </S.TagItem>
         ))}
