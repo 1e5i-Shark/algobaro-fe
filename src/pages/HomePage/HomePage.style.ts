@@ -27,15 +27,17 @@ const NoRoom = styled.div`
   font-weight: 700;
 `;
 
-// ####################### Footer #######################
-const HomeFooter = styled.footer`
+// Footer
+
+const FooterContainer = styled.footer`
   display: flex;
   justify-content: center;
   padding: 4rem 0;
+  border: 2px solid red;
 `;
 
 export {
-  HomeFooter,
+  FooterContainer,
   HomePageContainer,
   HomePageWrapper,
   HomeSectionContainer,
