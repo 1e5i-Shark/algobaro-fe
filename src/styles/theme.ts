@@ -3,8 +3,9 @@ const FIXED_HEIGHT = {
 };
 
 const ZINDEX = {
-  SPINNER: 999,
-  MODAL: 888,
+  SPINNER: 1000,
+  MODAL: 999,
+  HEADER: 998,
 };
 
 const size = {
