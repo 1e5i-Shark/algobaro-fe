@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import * as S from './Timer.style';
 interface TimerProps {
@@ -7,7 +7,6 @@ interface TimerProps {
   openModal?: () => void;
 }
 
-let interval: NodeJS.Timeout | null = null;
 const MS = 1000;
 const MINUTES_IN_MS = 60 * MS;
 
@@ -32,14 +31,15 @@ export default function Timer({
   seconds = 0,
   openModal,
 }: TimerProps) {
+  const timer = useRef<NodeJS.Timeout | null>(null);
   const [timeLeft, setTimeLeft] = useState<number>(
     minutes * MINUTES_IN_MS + seconds * MS
   );
 
   useEffect(() => {
     if (timeLeft <= 0) {
-      if (interval != null) {
-        clearInterval(interval);
+      if (timer.current != null) {
+        clearInterval(timer.current);
       }
       setTimeLeft(0);
       openModal?.();
@@ -47,13 +47,13 @@ export default function Timer({
   }, [timeLeft]);
 
   useEffect(() => {
-    interval = setInterval(() => {
+    timer.current = setInterval(() => {
       setTimeLeft(prevTime => prevTime - MS);
     }, MS);
 
     return () => {
-      if (interval != null) {
-        clearInterval(interval);
+      if (timer.current != null) {
+        clearInterval(timer.current);
       }
     };
   }, []);
