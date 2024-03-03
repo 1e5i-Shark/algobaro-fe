@@ -14,16 +14,17 @@ export default function HomeNav() {
   const { theme } = useCustomTheme();
   const [inputValue, setInputValue] = useState('');
   const {
-    selectedPrivate,
     selectedAccess,
+    selectedStatus,
     setSearchInputValue,
-    setSelectedPrivate,
-    setSelectedAccess,
     setSelectedLanguage,
+    setSelectedAccess,
+    setSelectedStatus,
   } = useRoomFilterStore();
 
   const handleInputSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!inputValue) return;
     setSearchInputValue(inputValue);
   };
 
@@ -68,15 +69,15 @@ export default function HomeNav() {
         />
 
         <CheckBox
-          label="비밀방"
-          checked={selectedPrivate}
-          onChange={() => setSelectedPrivate(!selectedPrivate)}
+          label="공개방"
+          checked={selectedAccess}
+          onChange={() => setSelectedAccess(!selectedAccess)}
         />
 
         <CheckBox
           label="입장 가능"
-          checked={selectedAccess}
-          onChange={() => setSelectedAccess(!selectedAccess)}
+          checked={selectedStatus}
+          onChange={() => setSelectedStatus(!selectedStatus)}
         />
       </S.SearchOptionsContainer>
 
