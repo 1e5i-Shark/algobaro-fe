@@ -1,20 +1,30 @@
 import { Pagination, Stack } from '@mui/material';
-
-import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { ChangeEvent } from 'react';
 
 import * as S from './HomeFooter.style';
 
-export default function HomeFooter() {
-  const { theme } = useCustomTheme();
+interface HomeFooterProps {
+  pageCount: number;
+  currentPage: number;
+  onPageChange: (_: ChangeEvent<unknown>, page: number) => void;
+}
 
+export default function HomeFooter({
+  pageCount,
+  currentPage,
+  onPageChange,
+}: HomeFooterProps) {
   return (
     <S.FooterContainer>
       <Stack spacing={2}>
         <Pagination
-          count={30}
+          count={pageCount}
+          page={currentPage}
+          onChange={onPageChange}
+          showFirstButton
+          showLastButton
           size="large"
           color="primary"
-          //   color={theme.color.gradation}
         />
       </Stack>
     </S.FooterContainer>

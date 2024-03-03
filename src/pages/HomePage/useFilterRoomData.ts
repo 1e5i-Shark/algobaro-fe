@@ -10,7 +10,7 @@ const useFilteredRoomData = (roomData: RoomDataProps[]) => {
 
   return useMemo(() => {
     if (!roomData.length) {
-      return;
+      return [];
     }
 
     let filteredData = roomData;

@@ -27,19 +27,4 @@ const NoRoom = styled.div`
   font-weight: 700;
 `;
 
-// Footer
-
-const FooterContainer = styled.footer`
-  display: flex;
-  justify-content: center;
-  padding: 4rem 0;
-  border: 2px solid red;
-`;
-
-export {
-  FooterContainer,
-  HomePageContainer,
-  HomePageWrapper,
-  HomeSectionContainer,
-  NoRoom,
-};
+export { HomePageContainer, HomePageWrapper, HomeSectionContainer, NoRoom };
