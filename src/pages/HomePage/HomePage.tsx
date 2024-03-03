@@ -19,23 +19,22 @@ export default function HomePage() {
     selectedAccess ||
     selectedStatus;
 
-  // console.log(
-  //   searchInputValue,
-  //   !!selectedLanguage.length,
-  //   selectedAccess,
-  //   selectedStatus
-  // );
-  // console.log('filteredData : ', filteredData);
+  console.log(
+    searchInputValue,
+    !!selectedLanguage.length,
+    selectedAccess,
+    selectedStatus
+  );
+
+  // TODO: !hasOption에서, roomData 값 변화가 없으면 변화 없게끔
+  // TODO: hasOption에서, dataToFilter 값 변화가 없으면 변화 없게끔
 
   const filterData = () => {
     let dataToFilter = roomData;
+
     if (searchInputValue) {
-      setFilteredData(
-        filteredData.filter(data =>
-          data.title
-            .toLowerCase()
-            .includes(searchInputValue.toLowerCase().trim())
-        )
+      dataToFilter = dataToFilter.filter(data =>
+        data.title.toLowerCase().includes(searchInputValue.toLowerCase().trim())
       );
     }
     if (!!selectedLanguage.length) {
@@ -51,6 +50,7 @@ export default function HomePage() {
     if (selectedStatus) {
       dataToFilter = dataToFilter.filter(data => data.roomStatus === '대기중');
     }
+
     setFilteredData(dataToFilter);
   };
 
