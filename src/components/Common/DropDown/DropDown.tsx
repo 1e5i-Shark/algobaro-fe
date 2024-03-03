@@ -17,6 +17,7 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
   labelId: string;
   labelName: string;
   width?: string;
+  borderColor?: string;
   backgroundColor?: string;
   fontSize?: string;
   labelFontSize?: string;
@@ -42,6 +43,7 @@ export default function DropDown({
   labelId,
   labelName,
   width,
+  borderColor,
   backgroundColor,
   fontSize = '2rem',
   labelFontSize,
@@ -69,6 +71,12 @@ export default function DropDown({
         size="small"
         fullWidth
         sx={{
+          '& .MuiInputBase-root': {
+            border: borderColor ? `1px solid ${borderColor}` : '',
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+            border: borderColor ? 'none' : '',
+          },
           '& .Mui-focused': {
             color: selectedValue ? '' : theme.color.text_primary_color,
           },
