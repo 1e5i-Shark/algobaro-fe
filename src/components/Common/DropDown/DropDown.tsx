@@ -15,7 +15,7 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
   dataId: string;
   dataSet: DropDownData;
   labelId: string;
-  labelName: string;
+  labelName?: string;
   width?: string;
   borderColor?: string;
   backgroundColor?: string;
@@ -83,7 +83,7 @@ export default function DropDown({
         }}
       >
         {/* 조건부 라벨 렌더링 */}
-        {selectedValue ? null : (
+        {selectedValue || !labelName ? null : (
           <InputLabel
             sx={{
               fontSize: labelFontSize || fontSize,
