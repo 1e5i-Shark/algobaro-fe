@@ -90,8 +90,8 @@ export default function CreateRoomPage() {
           register={register}
           formState={formState}
           required
-          backgroundColor={theme.color.white_primary}
           borderColor={theme.color.gray_30}
+          backgroundColor={theme.color.background_primary}
         />
       ),
     },
@@ -181,8 +181,8 @@ export default function CreateRoomPage() {
                     register={register}
                     formState={formState}
                     required={roomAccessType === ROOM_STATUS.PRIVATE}
-                    backgroundColor={theme.color.white_primary}
                     borderColor={theme.color.gray_30}
+                    backgroundColor={theme.color.background_primary}
                   />
                 </S.PasswordWrapper>
               )}
@@ -205,9 +205,7 @@ export default function CreateRoomPage() {
                 width="100%"
                 dataId="roomLimit"
                 labelId="roomLimit-label"
-                labelName=""
                 dataSet={ROOM_LIMIT_DATASET}
-                backgroundColor={theme.color.white_primary}
                 onSelected={value => {
                   if (value) {
                     onChange(parseInt(value));
@@ -215,6 +213,8 @@ export default function CreateRoomPage() {
                     onChange();
                   }
                 }}
+                borderColor={theme.color.gray_30}
+                backgroundColor={theme.color.background_primary}
               />
             )}
           />
