@@ -6,13 +6,13 @@ import * as S from './HomeFooter.style';
 interface HomeFooterProps {
   pageCount: number;
   currentPage: number;
-  onPageChange: (_: ChangeEvent<unknown>, page: number) => void;
+  handlePageChange: (_: ChangeEvent<unknown>, page: number) => void;
 }
 
 export default function HomeFooter({
   pageCount,
   currentPage,
-  onPageChange,
+  handlePageChange,
 }: HomeFooterProps) {
   return (
     <S.FooterContainer>
@@ -20,7 +20,7 @@ export default function HomeFooter({
         <Pagination
           count={pageCount}
           page={currentPage}
-          onChange={onPageChange}
+          onChange={handlePageChange}
           showFirstButton
           showLastButton
           size="large"
