@@ -7,7 +7,7 @@ export const WelcomePageWrapper = styled.div`
 `;
 
 export const MainContainer = styled(Row)`
-  gap: 10%;
+  gap: 5%;
   align-items: center;
   justify-content: center;
   height: 90vh;
@@ -44,7 +44,7 @@ export const MainRightContainer = styled(Col)`
 
     button {
       position: relative;
-      width: 80%;
+      width: 70%;
       svg {
         position: absolute;
         right: ${theme.size.XS};

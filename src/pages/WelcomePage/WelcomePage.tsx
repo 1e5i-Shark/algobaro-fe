@@ -69,7 +69,7 @@ export default function WelcomePage() {
             })}
           </S.MainSubList>
         </S.MainLeftContainer>
-        <S.MainRightContainer>
+        <S.MainRightContainer style={{ width: `${myNickName ? '25%' : ''}` }}>
           {myNickName ? (
             <>
               <S.UserNameContainer>
