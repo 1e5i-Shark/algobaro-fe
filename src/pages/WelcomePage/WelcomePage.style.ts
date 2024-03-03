@@ -7,7 +7,7 @@ export const WelcomePageWrapper = styled.div`
 `;
 
 export const MainContainer = styled(Row)`
-  gap: 15%;
+  gap: 10%;
   align-items: center;
   justify-content: center;
   height: 90vh;
@@ -64,14 +64,43 @@ export const UserNameContainer = styled.div``;
 export const UserNickName = styled.strong``;
 
 export const MoreDetailContainer = styled.div`
-  height: fit-content;
+  ${({ theme }) => css`
+    height: fit-content;
+    background: ${theme.color.background_start_gradation};
+  `}
 `;
 
 export const MoreDetailTitle = styled.p`
+  padding-left: 5rem;
+`;
+
+export const MoreDetailList = styled.ul`
   ${({ theme }) => css`
-    padding-left: ${theme.size.XXL};
+    display: flex;
+    flex-direction: column;
+    gap: 10rem;
+    padding: 10rem 15%;
+    color: ${theme.color.black_primary};
   `}
 `;
+
+export const DetailItem = styled.li`
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: row;
+    gap: ${theme.size.XL};
+    height: 20rem;
+    background: transparent;
+    &:nth-child(2n) {
+      flex-direction: row-reverse;
+    }
+  `}
+`;
+
+export const DetailContents = styled(Col)``;
+
+export const DetailTitle = styled.h1``;
+export const DetailDescription = styled.p``;
 
 export const DarkModeButtonContainer = styled.div`
   ${({ theme }) => css`
