@@ -3,31 +3,29 @@ import {
   ExitToAppRounded,
   LightModeRounded,
 } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { ButtonsWrapper } from '@/pages/RoomPage/RoomPage.style';
-import { PATH } from '@/routes/path';
 
 interface RoomButtonsProps {
   className: string;
   onClick: () => void;
+  onExit: () => void;
 }
 
 export default function RoomHeaderButtons({
   className,
   onClick,
+  onExit,
 }: RoomButtonsProps) {
   const { theme, toggleTheme } = useCustomTheme();
 
-  const navigate = useNavigate();
-
-  const handleExitRoom = () => {
+  const handleClickExit = () => {
     const confirmed = confirm('정말로 나가시겠습니까?');
 
     if (confirmed) {
-      navigate(PATH.HOME);
+      onExit();
     }
   };
 
@@ -66,7 +64,7 @@ export default function RoomHeaderButtons({
         <Icon
           className="exitRoom"
           background={true}
-          onClick={handleExitRoom}
+          onClick={handleClickExit}
         >
           <ExitToAppRounded fontSize="large" />
         </Icon>
