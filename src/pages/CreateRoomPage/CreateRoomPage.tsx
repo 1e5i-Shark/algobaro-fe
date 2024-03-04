@@ -32,6 +32,7 @@ interface CreateRoomData {
   tags: TagType[];
   roomLimit: number;
   roomUUID: string;
+  problemLink: string;
 }
 
 const defaultValues = {
@@ -42,6 +43,7 @@ const defaultValues = {
   roomAccessType: 'PUBLIC',
   password: '',
   tags: [],
+  problemLink: '',
 };
 
 export default function CreateRoomPage() {
@@ -92,7 +94,31 @@ export default function CreateRoomPage() {
           required
           borderColor={theme.color.gray_30}
           backgroundColor={theme.color.background_primary}
+          placeholder="제목을 입력해 주세요"
         />
+      ),
+    },
+    {
+      title: '문제 URL',
+      isRequired: true,
+      content: (
+        <S.ProblemLinkWrapper>
+          <Input
+            name="problemLink"
+            register={register}
+            formState={formState}
+            required
+            borderColor={theme.color.gray_30}
+            backgroundColor={theme.color.background_primary}
+            placeholder="예) https://www.acmicpc.net/problem/1000"
+          />
+          <S.ProblemLinkGuideText
+            href="https://www.acmicpc.net/problemset"
+            target="_blank"
+          >
+            백준 문제 찾기
+          </S.ProblemLinkGuideText>
+        </S.ProblemLinkWrapper>
       ),
     },
     // 외부 컴포넌트를 react-hook-form과 연동하려면 Controller를 사용하면 됩니다!
