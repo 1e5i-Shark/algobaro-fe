@@ -6,7 +6,7 @@ import { MyType } from '@/types/me';
 import { MyStateProps } from './types';
 
 const initialData = {
-  id: 2,
+  id: null,
   email: '',
   nickname: '',
   bojId: '',
