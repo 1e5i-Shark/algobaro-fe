@@ -5,6 +5,7 @@ import axios, {
   isAxiosError,
 } from 'axios';
 
+import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { CustomInstance, ErrorDataType } from '@/types/api';
 
 import handleAxiosError from './handleAxiosError';
@@ -54,7 +55,7 @@ const onRequest = (
   config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig => {
   // 로컬 스토리지 훅 관련 에러가 있어 일단 대체한다.
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = localStorage.getItem(LOCAL_ACCESSTOKEN);
 
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
