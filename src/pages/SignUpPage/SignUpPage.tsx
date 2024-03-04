@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { CheckBox, Input } from '@/components';
 import { FORM_VALIDATION } from '@/constants/formValidation';
+import { useSignUp } from '@/hooks/Api/useAuth';
 import { PATH } from '@/routes/path';
 import { InputListProps } from '@/types/input';
 
@@ -18,6 +19,7 @@ interface SignUpInfo {
 }
 
 export default function SignUpPage() {
+  const { mutate: signUpMutate } = useSignUp();
   const { register, handleSubmit, formState, watch } = useForm<SignUpInfo>({
     mode: 'onChange',
   });
@@ -81,9 +83,9 @@ export default function SignUpPage() {
       },
     },
   ];
-
+  // 회원가입 폼 데이터 제출 함수
   const onSubmitData: SubmitHandler<SignUpInfo> = async data => {
-    console.log(data);
+    signUpMutate(data);
   };
   // 개인정보동의 체크 여부 핸들러 함수
   const handleChangeCheck = (e: ChangeEvent<HTMLInputElement>) => {
@@ -112,11 +114,14 @@ export default function SignUpPage() {
           })}
         </S.SignUpInputContainer>
         <CheckBox
-          label="개인 정보 제공에 동의합니다."
+          label="개인 정보 제공에 동의합니다"
           onChange={handleChangeCheck}
           checked={isAgree}
         />
-        <S.SignUpButton disabled={isValid && isAgree ? false : true}>
+        <S.SignUpButton
+          type="submit"
+          disabled={isValid && isAgree ? false : true}
+        >
           가입하기
         </S.SignUpButton>
         <S.HomeButton onClick={handleClickHome}>홈으로</S.HomeButton>
