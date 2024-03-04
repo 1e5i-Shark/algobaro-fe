@@ -11,7 +11,7 @@ export interface InputProps<T extends FieldValues>
   name: Path<T>;
   register: UseFormRegister<T>;
   label?: string;
-  type?: 'email' | 'password' | 'text';
+  type?: 'email' | 'password' | 'text' | 'number';
   required?: boolean;
   formState?: FormState<T>;
   validation?: RegisterOptions;
