@@ -2,9 +2,8 @@ import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import { useForm } from 'react-hook-form';
 
 import { Icon, Input } from '@/components';
-import { InputWrapper } from '@/components/Common/Input/Input.style';
 
-import { ChatInputWrapper, Form, SendButton } from '../RoomPage.style';
+import * as S from '../RoomPage.style';
 
 interface ChatInputProps {
   className: string;
@@ -23,7 +22,8 @@ export default function ChatInput({ className }: ChatInputProps) {
 
   const onSubmit = (data: FormProps) => {
     if (!data.chatValue) return;
-    console.log(data);
+
+    // Todo: 소켓 연결
 
     reset();
     alert('submit!');
@@ -42,23 +42,23 @@ export default function ChatInput({ className }: ChatInputProps) {
   };
 
   return (
-    <ChatInputWrapper className={className}>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+    <S.ChatInputWrapper className={className}>
+      <S.Form onSubmit={handleSubmit(onSubmit)}>
         {/* Todo: Input name 백엔드 데이터와 통일하기 */}
-        <InputWrapper>
+        <S.InputWrapper>
           <Input
             name="chatValue"
             register={register}
             style={inputStyle}
             onKeyDown={handleKeyDown}
           />
-        </InputWrapper>
-        <SendButton onClick={handleSendClick}>
+        </S.InputWrapper>
+        <S.SendButton onClick={handleSendClick}>
           <Icon background={true}>
             <SendRoundedIcon />
           </Icon>
-        </SendButton>
-      </Form>
-    </ChatInputWrapper>
+        </S.SendButton>
+      </S.Form>
+    </S.ChatInputWrapper>
   );
 }
