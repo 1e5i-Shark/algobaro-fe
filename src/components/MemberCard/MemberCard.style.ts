@@ -2,7 +2,7 @@ import { css, styled } from 'styled-components';
 
 import { Col, Row } from '@/styles/GlobalStyle';
 
-export const CardWrapper = styled(Col)<{ $isEmpty: boolean }>`
+export const CardWrapper = styled(Col)<{ $isEmpty?: boolean }>`
   ${({ theme, $isEmpty }) => css`
     position: relative;
     flex-shrink: 0;
