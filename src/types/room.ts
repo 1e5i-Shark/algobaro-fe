@@ -17,13 +17,13 @@ export interface RoomType {
   tags: string[];
   timeLimit: number;
   roomUUID: string;
-  startAt: string;
+  startAt?: string;
   languages: string[];
   members: MemberType[];
 }
 
 export interface OmitRoomType
-  extends Omit<RoomType, 'languages' | 'members' | 'problemLink'> {}
+  extends Omit<RoomType, 'languages' | 'members' | 'problemLink' | 'startAt'> {}
 
 export interface RoomResponse {
   success: boolean;
@@ -46,9 +46,14 @@ export interface UpdateRoom
     | 'timeLimit'
   > {}
 
+export interface ChangeHostProps {
+  hostId: number;
+  organizerId: number;
+}
+
 export interface ChangeHostResponse {
-  id: number;
-  roomId: number;
+  success: boolean;
+  organizerId?: number;
 }
 
 export interface MemberType {
