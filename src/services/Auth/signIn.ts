@@ -1,4 +1,4 @@
-import { SignInProps, SignInResponse } from '@/hooks/Api/type';
+import { SignInProps, SignInResponse } from '@/services/Auth/type';
 
 import { SIGNIN_URL } from '../apiEndpoint';
 import { axiosInstance } from '../axiosInstance';

@@ -1,4 +1,4 @@
-import { SignUpProps, SignUpResponse } from '@/hooks/Api/type';
+import { SignUpProps, SignUpResponse } from '@/services/Auth/type';
 
 import { SIGNUP_URL } from '../apiEndpoint';
 import { axiosInstance } from '../axiosInstance';
