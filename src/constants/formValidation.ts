@@ -1,4 +1,4 @@
-export const LOGIN_EMIAL_VALIDATION = {
+export const FORM_VALIDATION = {
   EMAIL: {
     pattern: {
       value: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-z]+[.][a-z]{2,3}$/,
