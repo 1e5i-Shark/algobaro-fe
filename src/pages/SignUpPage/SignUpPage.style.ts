@@ -61,10 +61,9 @@ export const SignUpInputItem = styled.li`
 
     input {
       padding-left: 2rem;
-      line-height: 9.3rem;
       color: ${theme.color.text_primary_color};
-
       &::placeholder {
+        line-height: 4rem;
         color: ${theme.color.gray_50};
       }
     }
@@ -79,7 +78,18 @@ export const SignUpInputItem = styled.li`
 
 export const SignUpButton = styled(Button)`
   ${commonWidth}
+  transition: transform 0.2s ease;
+  &:not(:disabled):hover {
+    transform: scale(1.05);
+  }
 `;
 export const HomeButton = styled(Button)`
-  ${commonWidth}
+  ${({ theme }) => css`
+    ${commonWidth}
+    margin-top: ${theme.size.S};
+    transition: transform 0.2s ease;
+    &:hover {
+      transform: scale(1.05);
+    }
+  `}
 `;
