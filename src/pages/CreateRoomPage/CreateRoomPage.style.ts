@@ -37,6 +37,18 @@ const ContentsWrapper = styled(Row)`
   min-height: 6rem;
 `;
 
+const ProblemLinkWrapper = styled(Col)`
+  gap: 1rem;
+  width: 100%;
+`;
+
+const ProblemLinkGuideText = styled.a`
+  ${({ theme }) => css`
+    padding-left: 0.2rem;
+    color: ${theme.color.gray_30};
+  `}
+`;
+
 const LanguagesWrapper = styled(Col)`
   position: relative;
   transform: translateY(0.8rem);
@@ -95,6 +107,8 @@ export {
   LanguagesWrapper,
   PasswordTitle,
   PasswordWrapper,
+  ProblemLinkGuideText,
+  ProblemLinkWrapper,
   RoomAccessWrapper,
   RoomLimitWrapper,
   TagGuideText,
