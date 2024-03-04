@@ -50,6 +50,19 @@ export const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  ::-webkit-scrollbar {
+    width: 1.5rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.color.background_modal};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.color.gray_50};
+    border-radius: 1rem;
+  }
 `;
 
 export const Col = styled.div`
