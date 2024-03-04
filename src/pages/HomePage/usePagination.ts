@@ -13,15 +13,15 @@ const usePagination = ({
 }: usePaginationProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  // 필터링된 방 데이터
   const lastItem = currentPage * itemPerPage;
   const firstItem = lastItem - itemPerPage;
-  const currentItems = filteredData.slice(firstItem, lastItem);
   // 전체 페이지 수 계산
   const pageCount =
     filteredData.length % itemPerPage === 0
       ? filteredData.length / itemPerPage
       : Math.floor(filteredData.length / itemPerPage) + 1;
+  // 출력할 페이지에 대한 데이터
+  const currentItems = filteredData.slice(firstItem, lastItem);
 
   const handlePageChange = (_: ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
