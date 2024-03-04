@@ -93,7 +93,7 @@ export const darkTheme = {
     background_second: '#131010',
     background_modal: '#1e1e1e',
     background_menu: '#131010',
-    background_start_gradation: `linear-gradient(to bottom, #1E1B1A, #a5f1f6, #cfbeff, #1E1B1A)`,
+    background_start_gradation: `linear-gradient(to bottom, #1E1B1A, #a5f1f670, #cfbeff70, #1E1B1A)`,
     container_color: '#4D4D4D',
     text_primary_color: '#F0F0F0',
     text_secondary_color: '#2C2C2C',

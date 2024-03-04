@@ -75,13 +75,10 @@ export const MoreDetailTitle = styled.p`
 `;
 
 export const MoreDetailList = styled.ul`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    gap: 10rem;
-    padding: 10rem 15%;
-    color: ${theme.color.black_primary};
-  `}
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+  padding: 10rem 15%;
 `;
 
 export const DetailItem = styled.li`
