@@ -9,7 +9,7 @@ export interface RoomType {
   roomStatus: RoomStatusType;
   title: string;
   roomAccessType: AccessType;
-  problemPlatform: '백준';
+  problemPlatform: 'BOJ';
   problemName: string;
   problemLink: string;
   password?: string;
