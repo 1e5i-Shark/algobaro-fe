@@ -140,7 +140,7 @@ export const PasswordWrapper = styled(Row)`
   height: 7rem;
 
   > :first-child {
-    width: 20rem;
+    width: 18rem;
   }
 `;
 

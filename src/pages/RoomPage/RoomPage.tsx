@@ -17,11 +17,10 @@ export default function RoomPage() {
     [roomId, members]
   );
 
-  // 개별 방 정보 조회
-  // const { data, isLoading, error, isSuccess } = useQuery<RoomResponse>({
-  //   queryKey: ['room'],
-  //   queryFn: async () =>
-  //     await axiosAuthInstance.get(`/v1/rooms/${DUMMY_DATA.roomUUID}`),
+  // Todo: 개별 방 정보 조회 API
+  // const { data, isLoading, error, isSuccess } = useQuery({
+  //   queryKey: [ROOM_UUID_INFO],
+  //   queryFn: async () => await getUuidRoom(`/${roomUUID}`),
   // });
 
   // useEffect(() => {
@@ -42,7 +41,10 @@ export default function RoomPage() {
   return (
     <S.RoomContainer className="room-page">
       <S.WaitingRoomContainer className="waiting-room">
-        <RoomHeader className="header" />
+        <RoomHeader
+          className="header"
+          myRoomData={myRoomData}
+        />
         <MemberList className="members-list" />
         <TestInfo
           className="test-info"
