@@ -1,7 +1,10 @@
+import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { CheckBox, Input } from '@/components';
 import { FORM_VALIDATION } from '@/constants/formValidation';
+import { PATH } from '@/routes/path';
 import { InputListProps } from '@/types/input';
 
 import * as S from './SignUpPage.style';
@@ -18,6 +21,8 @@ export default function SignUpPage() {
   const { register, handleSubmit, formState, watch } = useForm<SignUpInfo>({
     mode: 'onChange',
   });
+  const [isAgree, setIsAgree] = useState(false);
+  const navigate = useNavigate();
 
   const password = watch('password');
 
@@ -80,6 +85,15 @@ export default function SignUpPage() {
   const onSubmitData: SubmitHandler<SignUpInfo> = async data => {
     console.log(data);
   };
+  // 개인정보동의 체크 여부 핸들러 함수
+  const handleChangeCheck = (e: ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.target;
+    setIsAgree(checked);
+  };
+  // 홈버튼 클릭 이벤트 핸들러 함수
+  const handleClickHome = () => {
+    navigate(PATH.HOME);
+  };
 
   return (
     <S.SignUpPageWrapper>
@@ -97,9 +111,15 @@ export default function SignUpPage() {
             );
           })}
         </S.SignUpInputContainer>
-        <CheckBox label="개인 정보 제공에 동의합니다." />
-        <S.SignUpButton>가입하기</S.SignUpButton>
-        <S.HomeButton>홈으로</S.HomeButton>
+        <CheckBox
+          label="개인 정보 제공에 동의합니다."
+          onChange={handleChangeCheck}
+          checked={isAgree}
+        />
+        <S.SignUpButton disabled={isValid && isAgree ? false : true}>
+          가입하기
+        </S.SignUpButton>
+        <S.HomeButton onClick={handleClickHome}>홈으로</S.HomeButton>
       </S.SignUpFormContainer>
     </S.SignUpPageWrapper>
   );
