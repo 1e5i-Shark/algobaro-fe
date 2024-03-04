@@ -5,7 +5,7 @@ export default function ChatViews() {
   return (
     <>
       <ChatListWrapper>ChatViews</ChatListWrapper>
-      <ChatInput className="ChatInput" />
+      <ChatInput className="chat-input" />
     </>
   );
 }
