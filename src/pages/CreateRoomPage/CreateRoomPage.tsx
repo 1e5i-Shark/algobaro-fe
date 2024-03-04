@@ -33,6 +33,7 @@ interface CreateRoomData {
   roomLimit: number;
   roomUUID: string;
   problemLink: string;
+  problemPlatform: string;
 }
 
 const defaultValues = {
@@ -44,6 +45,7 @@ const defaultValues = {
   password: '',
   tags: [],
   problemLink: '',
+  problemPlatform: 'BOJ',
 };
 
 export default function CreateRoomPage() {

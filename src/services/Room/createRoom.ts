@@ -7,6 +7,8 @@ export interface CreateRoomRequest {
   roomAccessType: string; // [PRIVATE, PUBLIC]
   roomLimit: number;
   startAt: string; // ($date-time) 2024-02-27T13:36:49.089Z
+  problemLink: string;
+  problemPlatform: string;
   password?: string;
   tags?: string[];
   timeLimit?: number;
@@ -18,6 +20,7 @@ export interface CreateRoomResponse {
   title: string;
   roomAccessType: string; // [PRIVATE, PUBLIC]
   roomLimit: number;
+  problemPlatform: string;
   tags?: string[];
   timeLimit?: number;
 }
