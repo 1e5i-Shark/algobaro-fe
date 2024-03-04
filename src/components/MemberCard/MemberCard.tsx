@@ -1,6 +1,7 @@
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
 import { Avatar } from '@/components/Common/Avatar';
+import { ROOM_ROLE } from '@/services/Room/Room';
 import { MemberType } from '@/types/room';
 
 import Icon from '../Common/Icon/Icon';
@@ -40,16 +41,18 @@ export default function MemberCard({
     <S.CardWrapper $isEmpty={isEmpty}>
       {!isEmpty && (
         <>
-          <S.MenuWrapper>
-            <Menu
-              menuList={menuList}
-              className="menu"
-            >
-              <Icon>
-                <MoreVertRoundedIcon />
-              </Icon>
-            </Menu>
-          </S.MenuWrapper>
+          {role === ROOM_ROLE.MEMBER && (
+            <S.MenuWrapper>
+              <Menu
+                menuList={menuList}
+                className="menu"
+              >
+                <Icon>
+                  <MoreVertRoundedIcon />
+                </Icon>
+              </Menu>
+            </S.MenuWrapper>
+          )}
           <Avatar
             src={profileImage}
             size="M"

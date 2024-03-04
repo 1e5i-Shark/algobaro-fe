@@ -11,6 +11,11 @@ export const ROOM_ACCESS = {
   PRIVATE: 'PRIVATE',
 };
 
+export const ROOM_ROLE = {
+  HOST: 'HOST',
+  MEMBER: 'MEMBER',
+};
+
 // 개별 방 정보 조회
 export const getUuidRoom = async (endPoint: string) => {
   return await axiosAuthInstance.get(`${ROOMS_URL}/${endPoint}`);
