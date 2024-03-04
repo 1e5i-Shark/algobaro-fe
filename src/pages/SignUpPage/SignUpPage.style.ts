@@ -41,11 +41,9 @@ export const SignUpFormContainer = styled.form`
 `;
 
 export const SignUpInputContainer = styled.ul`
-  ${({ theme }) => css`
-    ${commonWidth}
-    display: flex;
-    flex-direction: column;
-  `}
+  ${commonWidth}
+  display: flex;
+  flex-direction: column;
 `;
 
 export const SignUpInputItem = styled.li`
