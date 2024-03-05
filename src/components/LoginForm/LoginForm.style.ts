@@ -58,6 +58,7 @@ export const LoginButton = styled(Button)`
 
 export const LoginOptionContainer = styled(Row)`
   ${({ theme }) => css`
+    align-items: center;
     justify-content: space-between;
     & {
       span {

@@ -14,5 +14,7 @@ export { default as Modal } from './Common/Modal/Modal';
 export { default as Spinner } from './Common/Spinner/Spinner';
 export { default as Tag } from './Common/Tag/Tag';
 export { default as ThemeModeToggleButton } from './Common/ThemeModeToggleButton/ThemeModeToggleButton';
+export { default as CreateTagInput } from './CreateRoom/CreateTagInput/CreateTagInput';
+export { default as TitleWithAsterisk } from './CreateRoom/TitleWithAsterisk/TitleWithAsterisk';
 export { MemberCard } from './MemberCard';
 export { ThemeCustomProvider } from './ThemeCustomProvider';
