@@ -39,6 +39,7 @@ export default function Input<T extends FieldValues>({
   borderRadius,
   borderColor,
   backgroundColor,
+  isTrim = false,
   ...props
 }: InputProps<T>) {
   const { theme } = useCustomTheme();
@@ -75,6 +76,7 @@ export default function Input<T extends FieldValues>({
           {...register(name, {
             ...validation,
             required: required && '값이 입력되지 않았어요',
+            setValueAs: value => (isTrim ? value.trim() : value),
           })}
           {...props}
         />

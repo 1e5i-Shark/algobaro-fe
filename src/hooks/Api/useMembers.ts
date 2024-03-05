@@ -8,5 +8,6 @@ export const useMyInfo = () => {
     queryKey: [MY_INFO_KEY],
     queryFn: myInfo,
     enabled: false,
+    retry: 0,
   });
 };

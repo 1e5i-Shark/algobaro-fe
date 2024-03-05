@@ -21,6 +21,7 @@ export interface InputProps<T extends FieldValues>
   borderRadius?: string;
   borderColor?: string;
   backgroundColor?: string;
+  isTrim?: boolean;
 }
 
 export interface InputListType<T extends FieldValues>
