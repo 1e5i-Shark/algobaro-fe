@@ -27,7 +27,7 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     roomAccessType === 'PRIVATE' ? true : false
   );
 
-  const { register, handleSubmit } = useForm<InputProps>({
+  const { register, formState, handleSubmit } = useForm<InputProps>({
     defaultValues: {
       problemLink: problemLink ?? '',
       timeLimit: timeLimit ?? 60,
@@ -135,6 +135,7 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
               label="암호"
               name="password"
               type="password"
+              formState={formState}
               register={register}
             />
           )}
