@@ -66,7 +66,10 @@ export default function Message({
           />
           <UserName>{userName}</UserName>
           <Menu menuList={menuList}>
-            <Icon size={iconSize}>
+            <Icon
+              size={iconSize}
+              onClick={() => {}}
+            >
               <MoreVertRoundedIcon />
             </Icon>
           </Menu>
