@@ -77,7 +77,7 @@ export const CopyRoomIdTag = styled(Row)`
   ${({ theme }) => css`
     padding: 0.6rem 1rem;
     cursor: pointer;
-    background-color: ${theme.color.container_color};
+    background-color: ${theme.color.transparent_30};
     border-radius: 0.3rem;
   `}
 `;
@@ -93,11 +93,11 @@ export const TitleWrapper = styled(Row)`
 `;
 
 export const TagsWrapper = styled(Row)`
-  padding-bottom: 1rem;
+  padding-bottom: 1.2rem;
 `;
 
 export const TagWrapper = styled.div`
-  padding-right: 0.5rem;
+  padding-right: 0.6rem;
 `;
 
 export const LogosWrapper = styled(Row)``;
