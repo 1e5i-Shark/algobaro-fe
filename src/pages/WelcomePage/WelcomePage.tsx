@@ -13,7 +13,7 @@ import * as S from './WelcomePage.style';
 
 export default function WelcomePage() {
   const navigate = useNavigate();
-  const { data: myInfo, refetch, isStale } = useMyInfo();
+  const { data: myInfo, refetch } = useMyInfo();
   const [accessToken] = useLocalStorage(LOCAL_ACCESSTOKEN);
   // 유저 닉네임 쿼리 호출 업데이트
   const myNickName = myInfo?.response.nickname;
