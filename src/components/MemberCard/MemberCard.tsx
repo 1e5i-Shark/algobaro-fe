@@ -1,12 +1,11 @@
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
+import { Icon, Menu } from '@/components';
 import { Avatar } from '@/components/Common/Avatar';
-import { ROOM_ROLE } from '@/services/Room/Room';
+import { MenuListProps, MenuText } from '@/components/Common/Menu/MenuText';
+import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import { MemberType, RoleType } from '@/types/room';
 
-import Icon from '../Common/Icon/Icon';
-import Menu from '../Common/Menu/Menu';
-import { MenuListProps, MenuText } from '../Common/Menu/MenuText';
 import * as S from './MemberCard.style';
 import StatusTag from './StatusTag';
 

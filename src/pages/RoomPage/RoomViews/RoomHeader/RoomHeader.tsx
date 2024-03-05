@@ -9,8 +9,7 @@ import { changeHostAuto } from '@/services/Room/Room';
 import useRoomStore from '@/store/Room';
 import { MemberType } from '@/types/room';
 
-import { RoomHeaderButtons, RoomHeaderInfo } from '.';
-import ModalRoom from './ModalRoom';
+import { ModalRoom, RoomHeaderButtons, RoomHeaderInfo } from '.';
 
 interface HeaderProps {
   className: string;
@@ -19,6 +18,7 @@ interface HeaderProps {
 
 export default function RoomHeader({ className, myRoomData }: HeaderProps) {
   const { id: myId, role: myRole } = myRoomData;
+
   const { roomData, setRoomData } = useRoomStore();
   const { members } = roomData;
 

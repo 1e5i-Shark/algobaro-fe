@@ -61,9 +61,7 @@ export const HeaderContainer = styled(Row)`
   width: 100%;
 `;
 
-export const RoomInfoContainer = styled.div`
-  /* background-color: 'peru'; */
-`;
+export const RoomInfoContainer = styled.div``;
 
 export const ButtonsWrapper = styled(Row)``;
 

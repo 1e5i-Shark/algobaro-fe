@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button, CheckBox, Input } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
-import { ROOM_ACCESS } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { editRoom } from '@/services/Room/Room';
 import useRoomStore from '@/store/Room';
@@ -69,15 +68,15 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     setRoomData({ ...roomData, ...newData });
 
     // Todo: 방 수정 API 테스트
-    mutation.mutate({
-      endPoint: `/${roomId}`,
-      requestBody: {
-        roomAccessType: isPrivate ? ROOM_ACCESS.PRIVATE : ROOM_ACCESS.PUBLIC,
-        problemLink,
-        timeLimit,
-        ...(password && { password }),
-      },
-    });
+    // mutation.mutate({
+    //   endPoint: `/${roomId}`,
+    //   requestBody: {
+    //     roomAccessType: isPrivate ? ROOM_ACCESS.PRIVATE : ROOM_ACCESS.PUBLIC,
+    //     problemLink,
+    //     timeLimit,
+    //     ...(password && { password }),
+    //   },
+    // });
 
     alert('방 정보가 수정되었습니다');
     onClose();

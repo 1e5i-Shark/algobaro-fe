@@ -11,9 +11,8 @@ interface RoomInfoProps {
 }
 
 export default function RoomInfoContainer({ className }: RoomInfoProps) {
-  const { roomData } = useRoomStore();
   const { theme } = useCustomTheme();
-
+  const { roomData } = useRoomStore();
   const { roomUUID, title, tags, languages, roomAccessType } = roomData;
 
   const handleCopyRoomId = () => {

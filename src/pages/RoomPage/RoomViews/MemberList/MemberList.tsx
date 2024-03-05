@@ -4,8 +4,9 @@ import { useMemo } from 'react';
 import { MemberCard } from '@/components';
 import { MenuText } from '@/components/Common/Menu/MenuText';
 import { CardWrapper } from '@/components/MemberCard/MemberCard.style';
+import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import { changeHost, ROOM_ROLE } from '@/services/Room/Room';
+import { changeHost } from '@/services/Room/Room';
 import useRoomStore from '@/store/Room';
 import { MemberType, RoleType } from '@/types/room';
 
@@ -18,8 +19,8 @@ const MAX_MEMBERS = 6;
 
 export default function MemberList({ className, myRole }: MemberListProps) {
   const { roomData, setRoomData } = useRoomStore();
-
   const { members } = roomData;
+
   const [host] = members.filter(member => member.role === ROOM_ROLE.HOST);
 
   const mutation = useMutation({

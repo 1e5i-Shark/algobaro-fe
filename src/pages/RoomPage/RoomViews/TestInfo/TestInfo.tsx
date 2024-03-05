@@ -18,17 +18,18 @@ interface TestInfoProps {
 }
 
 export default function TestInfo({ className, myRoomData }: TestInfoProps) {
+  const { theme } = useCustomTheme();
+
   const { roomData, setRoomData } = useRoomStore();
-  const { me } = useMeStore();
   const { timeLimit, problemLink, roomId, members } = roomData;
+  const { me } = useMeStore();
+
+  const navigate = useNavigate();
 
   const isTestReady = useMemo(() => {
     const result = members.findIndex(member => member.ready === false);
     return result === -1 ? true : false;
   }, [members]);
-
-  const { theme } = useCustomTheme();
-  const navigate = useNavigate();
 
   const calcTime = useMemo(() => {
     const hours = Math.floor(timeLimit / 60);
