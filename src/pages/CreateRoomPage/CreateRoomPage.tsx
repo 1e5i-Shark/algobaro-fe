@@ -302,7 +302,9 @@ export default function CreateRoomPage() {
             )}
           />
           {errors.tags ? (
-            <ErrorMessage>{errors.tags.message}</ErrorMessage>
+            <ErrorMessage style={{ transform: 'translateY(-0.8rem)' }}>
+              {errors.tags.message}
+            </ErrorMessage>
           ) : (
             <S.TagGuideText>
               태그는 최대 5개까지 입력할 수 있습니다.
