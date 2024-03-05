@@ -5,6 +5,7 @@ export const ROOM_STATUS = {
 };
 
 export const MAX_TAG_LENGTH = 5;
+export const MAX_TAG_INPUT_LENGTH = 15;
 
 export const ROOM_LIMIT_DATASET = [1, 2, 3, 4, 5, 6].reduce(
   (acc, cur) => {
