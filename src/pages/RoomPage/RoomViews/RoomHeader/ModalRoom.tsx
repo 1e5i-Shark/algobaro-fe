@@ -4,8 +4,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button, CheckBox, Input } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { ROOM_ACCESS } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import { axiosAuthInstance } from '@/services/axiosInstance';
+import { editRoom } from '@/services/Room/Room';
 import useRoomStore from '@/store/Room';
 import { AccessType } from '@/types/room';
 
@@ -19,6 +20,7 @@ interface InputProps {
 }
 
 export default function ModalRoom({ onClose }: ModalRoomProps) {
+  const { theme } = useCustomTheme();
   const { roomData, setRoomData } = useRoomStore();
   const { roomId, problemLink, timeLimit, password, roomAccessType } = roomData;
 
@@ -26,7 +28,6 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     roomAccessType === 'PRIVATE' ? true : false
   );
 
-  const { theme } = useCustomTheme();
   const { register, handleSubmit } = useForm<InputProps>({
     defaultValues: {
       problemLink: problemLink ?? '',
@@ -35,25 +36,12 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     },
   });
 
-  const changeRoomInfo = async (id: number) => {
-    const { title, startAt, problemPlatform, problemName, tags, roomLimit } =
-      roomData;
-
-    return await axiosAuthInstance.patch(`/v1/rooms/${id}`, {
-      title,
-      startAt,
-      roomAccessType: isPrivate ? 'PRIVATE' : 'PUBLIC',
-      problemLink,
-      problemPlatform,
-      problemName,
-      password,
-      roomLimit,
-      tags,
-      timeLimit,
-    });
-  };
-
-  const mutation = useMutation(changeRoomInfo);
+  const mutation = useMutation({
+    mutationFn: editRoom,
+    onSuccess: () => {
+      alert('mutation 방 수정 성공!');
+    },
+  });
 
   const onSubmit: SubmitHandler<InputProps> = data => {
     const newPassword = () => {
@@ -80,8 +68,17 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
 
     setRoomData({ ...roomData, ...newData });
 
-    // Todo: api 연결 확인
-    mutation.mutate(roomId);
+    // Todo: 방 수정 API 테스트
+    mutation.mutate({
+      endPoint: `/${roomId}`,
+      requestBody: {
+        roomAccessType: isPrivate ? ROOM_ACCESS.PRIVATE : ROOM_ACCESS.PUBLIC,
+        problemLink,
+        timeLimit,
+        ...(password && { password }),
+      },
+    });
+
     alert('방 정보가 수정되었습니다');
     onClose();
   };

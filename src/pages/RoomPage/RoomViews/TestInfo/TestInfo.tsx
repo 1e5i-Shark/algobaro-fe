@@ -7,7 +7,7 @@ import { Button, Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { PATH } from '@/routes/path';
-import { axiosAuthInstance } from '@/services/axiosInstance';
+import { startTest } from '@/services/Room/Room';
 import useMeStore from '@/store/Me';
 import useRoomStore from '@/store/Room';
 import { MemberType } from '@/types/room';
@@ -37,11 +37,6 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
     return { hours, minutes };
   }, [timeLimit]);
 
-  const startTest = async () => {
-    const data = await axiosAuthInstance.post(`/v1/rooms/codes/${roomId}`);
-    return data;
-  };
-
   const changeMemberData = (newData: Partial<MemberType>) => {
     const myIndex = members.findIndex(member => member.id === me.id);
 
@@ -54,10 +49,17 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
     setRoomData({ ...roomData, members: updatedData });
   };
 
-  const mutation = useMutation(startTest);
+  const mutation = useMutation({
+    mutationFn: startTest,
+    onError: () => {
+      alert('테스트를 시작하지 못했습니다.');
 
-  const handleStartTest = () => {
-    mutation.mutate();
+      navigate(`${PATH.ROOM}/${roomId}`);
+    },
+  });
+
+  const handleStartTest = async () => {
+    await mutation.mutate(`/${roomId}`);
     navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
   };
 
