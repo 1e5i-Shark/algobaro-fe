@@ -15,12 +15,14 @@ interface TagInputProps extends HTMLAttributes<HTMLInputElement> {
   tagList?: TagType[];
   onSelected?: (tag: TagType) => void;
   onDeleted?: (tagId: string) => void;
+  maxLength?: number;
 }
 
 export default function CreateTagInput({
   tagList,
   onSelected,
   onDeleted,
+  maxLength,
   ...props
 }: TagInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,9 +38,10 @@ export default function CreateTagInput({
     if (isComposing || !inputRef.current) return;
 
     if (code === 'Enter') {
-      const tagName = inputRef.current.value;
+      const tagName = inputRef.current.value.trim();
 
       if (!tagName) return;
+      if (maxLength && tagName.length > maxLength) return;
 
       onSelected?.({ id: uuidv4(), value: tagName });
 
