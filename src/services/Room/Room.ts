@@ -1,46 +1,24 @@
 import {
-  AccessType,
-  ChangeHostProps,
-  ChangeHostResponse,
-  RoleType,
-  RoomResponse,
-  RoomStatusType,
-} from '@/types/room';
-
-import { ROOMS_CODES_URL, ROOMS_HOST_URL, ROOMS_URL } from '../apiEndpoint';
-import { axiosAuthInstance } from '../axiosInstance';
-
-export const ROOM_STATUS: { [key: string]: RoomStatusType } = {
-  RECRUITING: 'RECRUITING',
-  RUNNING: 'RUNNING',
-};
-
-export const ROOM_ACCESS: { [key: string]: AccessType } = {
-  PUBLIC: 'PUBLIC',
-  PRIVATE: 'PRIVATE',
-};
-
-export const ROOM_ROLE: { [key: string]: RoleType } = {
-  HOST: 'HOST',
-  MEMBER: 'MEMBER',
-};
+  ROOMS_CODES_URL,
+  ROOMS_HOST_URL,
+  ROOMS_URL,
+} from '@/services/apiEndpoint';
+import { axiosAuthInstance } from '@/services/axiosInstance';
+import * as T from '@/types/room';
 
 // 개별 방 정보 조회
 export const getUuidRoom = async (endPoint: string) => {
-  const response: RoomResponse = await axiosAuthInstance.get(
+  const response: T.RoomResponse = await axiosAuthInstance.get(
     `${ROOMS_URL}${endPoint}`
   );
   return response;
 };
 
 // 방 수정
-export const editRoom = async (
-  endPoint: number,
-  params: Record<string, string | number>
-) => {
-  const response = await axiosAuthInstance.patch(
+export const editRoom = async ({ endPoint, requestBody }: T.EditRoomProps) => {
+  const response: T.OmitRoomType = await axiosAuthInstance.patch(
     `${ROOMS_URL}${endPoint}`,
-    params
+    requestBody
   );
   return response;
 };
@@ -57,8 +35,11 @@ export const changeHostAuto = async () => {
 };
 
 // 방장 수동 변경
-export const changeHost = async ({ hostId, organizerId }: ChangeHostProps) => {
-  const response: ChangeHostResponse = await axiosAuthInstance.get(
+export const changeHost = async ({
+  hostId,
+  organizerId,
+}: T.ChangeHostProps) => {
+  const response: T.ChangeHostResponse = await axiosAuthInstance.get(
     `${ROOMS_HOST_URL}/${hostId}/${organizerId}`
   );
 
