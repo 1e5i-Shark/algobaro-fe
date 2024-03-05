@@ -45,11 +45,7 @@ export default function SignUpPage() {
       type: 'text',
       placeholder: '닉네임',
       required: true,
-      validation: {
-        validate: nickname =>
-          nickname.length === nickname.trim().length ||
-          '앞뒤 공백을 제거해주세요.',
-      },
+      isTrim: true,
     },
     {
       label: '백준 ID',
@@ -57,11 +53,7 @@ export default function SignUpPage() {
       type: 'text',
       placeholder: '백준 ID',
       required: true,
-      validation: {
-        validate: nickname =>
-          nickname.length === nickname.trim().length ||
-          '앞뒤 공백을 제거해주세요.',
-      },
+      isTrim: true,
     },
     {
       label: '비밀번호',
@@ -69,7 +61,10 @@ export default function SignUpPage() {
       type: 'password',
       placeholder: '영문+숫자+특수기호 8~20자리',
       required: true,
-      validation: FORM_VALIDATION.PASSWORD,
+      isTrim: true,
+      validation: {
+        ...FORM_VALIDATION.PASSWORD,
+      },
     },
     {
       label: '비밀번호 확인',
@@ -77,6 +72,7 @@ export default function SignUpPage() {
       type: 'password',
       placeholder: '비밀번호 확인',
       required: true,
+      isTrim: true,
       validation: {
         validate: passwordCheck =>
           password === passwordCheck || '비밀번호가 일치하지 않습니다.',
