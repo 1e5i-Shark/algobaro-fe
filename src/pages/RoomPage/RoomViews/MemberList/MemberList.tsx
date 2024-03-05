@@ -7,15 +7,16 @@ import { CardWrapper } from '@/components/MemberCard/MemberCard.style';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { changeHost, ROOM_ROLE } from '@/services/Room/Room';
 import useRoomStore from '@/store/Room';
-import { MemberType } from '@/types/room';
+import { MemberType, RoleType } from '@/types/room';
 
 interface MemberListProps {
   className: string;
+  myRole: RoleType;
 }
 
 const MAX_MEMBERS = 6;
 
-export default function MemberList({ className }: MemberListProps) {
+export default function MemberList({ className, myRole }: MemberListProps) {
   const { roomData, setRoomData } = useRoomStore();
 
   const { members } = roomData;
@@ -43,7 +44,7 @@ export default function MemberList({ className }: MemberListProps) {
   const handleMenu = async (menu: string, memberId: number) => {
     switch (menu) {
       case MenuText.TransferHost:
-        // API 연결 후 삭제할 코드
+        // 테스트용 삭제 예정 코드입니다
         const updatedMembers = members.map(member => {
           if (member.id === host.id) {
             return { ...member, role: ROOM_ROLE.MEMBER };
@@ -75,6 +76,7 @@ export default function MemberList({ className }: MemberListProps) {
     const renderedMembers = members.map(member => (
       <MemberCard
         key={member.id}
+        myRole={myRole}
         memberId={member.id}
         nickname={member.nickname}
         role={member.role}

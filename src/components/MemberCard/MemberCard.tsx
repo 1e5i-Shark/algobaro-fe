@@ -2,7 +2,7 @@ import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
 import { Avatar } from '@/components/Common/Avatar';
 import { ROOM_ROLE } from '@/services/Room/Room';
-import { MemberType } from '@/types/room';
+import { MemberType, RoleType } from '@/types/room';
 
 import Icon from '../Common/Icon/Icon';
 import Menu from '../Common/Menu/Menu';
@@ -14,15 +14,17 @@ interface MemberProps
   extends Partial<
     Pick<MemberType, 'nickname' | 'profileImage' | 'role' | 'ready'>
   > {
+  myRole: RoleType;
   memberId: number;
   onMenuClick: (menu: string, memberId: number) => void;
 }
 
 export default function MemberCard({
+  myRole,
   memberId,
   nickname,
   profileImage,
-  role = 'HOST',
+  role,
   ready,
   onMenuClick,
 }: MemberProps) {
@@ -41,7 +43,7 @@ export default function MemberCard({
 
   return (
     <S.CardWrapper>
-      {role === ROOM_ROLE.MEMBER && (
+      {myRole === ROOM_ROLE.HOST && role === ROOM_ROLE.MEMBER && (
         <S.MenuWrapper>
           <Menu
             menuList={menuList}
@@ -59,7 +61,7 @@ export default function MemberCard({
       />
       <S.NameWrapper>{nickname}</S.NameWrapper>
       <StatusTag
-        role={role}
+        role={role ?? ROOM_ROLE.MEMBER}
         ready={ready ?? false}
       />
     </S.CardWrapper>

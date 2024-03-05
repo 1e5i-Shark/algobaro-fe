@@ -45,7 +45,10 @@ export default function RoomPage() {
           className="header"
           myRoomData={myRoomData}
         />
-        <MemberList className="members-list" />
+        <MemberList
+          className="members-list"
+          myRole={myRoomData.role}
+        />
         <TestInfo
           className="test-info"
           myRoomData={myRoomData}
