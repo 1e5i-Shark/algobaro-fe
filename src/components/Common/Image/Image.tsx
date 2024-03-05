@@ -66,7 +66,6 @@ export default function Image({
           sizes={sizes}
           loading={!priority ? 'lazy' : 'eager'}
           decoding={!priority ? 'async' : 'auto'}
-          object-fit={fill ? 'cover' : 'contain'}
           onError={() => setIsError(true)}
           onClick={onClick}
           {...props}
