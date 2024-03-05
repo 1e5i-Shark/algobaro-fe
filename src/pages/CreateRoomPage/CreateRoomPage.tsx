@@ -12,6 +12,7 @@ import {
 } from '@/components';
 import { TagType } from '@/components/CreateRoom/CreateTagInput/CreateTagInput';
 import {
+  MAX_TAG_INPUT_LENGTH,
   MAX_TAG_LENGTH,
   PS_LANGUAGES,
   ROOM_LIMIT_DATASET,
@@ -263,9 +264,19 @@ export default function CreateRoomPage() {
             render={({ field: { value: tags, onChange } }) => (
               <CreateTagInput
                 tagList={tags}
+                maxLength={MAX_TAG_INPUT_LENGTH}
                 // 입력 중일 때는 에러를 표기하지 않습니다.
-                onChange={() => {
-                  clearErrors('tags');
+                onChange={event => {
+                  const { value } = event.currentTarget;
+
+                  if (value.trim().length > MAX_TAG_INPUT_LENGTH) {
+                    setError('tags', {
+                      type: 'custom',
+                      message: '최대 15자까지 입력할 수 있습니다.',
+                    });
+                  } else {
+                    clearErrors('tags');
+                  }
                 }}
                 onSelected={tag => {
                   if (tags.length < MAX_TAG_LENGTH) {
