@@ -1,9 +1,10 @@
 import { AxiosError } from 'axios';
 
+import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { ErrorDataType } from '@/types/api';
 
-const handleAxiosError = (error: AxiosError<ErrorDataType>) => {
-  const errorData = error.response?.data;
+const handleAxiosError = (errorAxios: AxiosError<ErrorDataType>) => {
+  const errorData = errorAxios.response?.data;
 
   if (errorData) {
     const { error } = errorData;
@@ -17,6 +18,9 @@ const handleAxiosError = (error: AxiosError<ErrorDataType>) => {
         break;
       case 'E01302':
         console.log('가입되지 않은 이메일입니다.');
+        break;
+      case 'E00201': // 401 에러와 같이 인증 관련 접근 제한 에러
+        localStorage.removeItem(LOCAL_ACCESSTOKEN);
         break;
       default:
         console.error(error);
