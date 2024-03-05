@@ -17,6 +17,15 @@ const InputListWrapper = styled.ul`
   margin-bottom: 4rem;
 `;
 
+const InputWrapper = styled.div`
+  ${({ theme }) => css`
+    width: 100%;
+    input::placeholder {
+      color: ${theme.color.gray_30};
+    }
+  `}
+`;
+
 const InputItemWrapper = styled.li`
   position: relative;
   display: flex;
@@ -104,6 +113,7 @@ export {
   FormWrapper,
   InputItemWrapper,
   InputListWrapper,
+  InputWrapper,
   LanguagesWrapper,
   PasswordTitle,
   PasswordWrapper,

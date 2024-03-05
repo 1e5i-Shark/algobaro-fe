@@ -90,15 +90,17 @@ export default function CreateRoomPage() {
       title: '방 제목',
       isRequired: true,
       content: (
-        <Input
-          name="title"
-          register={register}
-          formState={formState}
-          required
-          borderColor={theme.color.gray_30}
-          backgroundColor={theme.color.background_primary}
-          placeholder="제목을 입력해 주세요"
-        />
+        <S.InputWrapper>
+          <Input
+            name="title"
+            register={register}
+            formState={formState}
+            required
+            borderColor={theme.color.gray_30}
+            backgroundColor={theme.color.background_primary}
+            placeholder="제목을 입력해 주세요"
+          />
+        </S.InputWrapper>
       ),
     },
     {
@@ -106,15 +108,17 @@ export default function CreateRoomPage() {
       isRequired: true,
       content: (
         <S.ProblemLinkWrapper>
-          <Input
-            name="problemLink"
-            register={register}
-            formState={formState}
-            required
-            borderColor={theme.color.gray_30}
-            backgroundColor={theme.color.background_primary}
-            placeholder="예) https://www.acmicpc.net/problem/1000"
-          />
+          <S.InputWrapper>
+            <Input
+              name="problemLink"
+              register={register}
+              formState={formState}
+              required
+              borderColor={theme.color.gray_30}
+              backgroundColor={theme.color.background_primary}
+              placeholder="예) https://www.acmicpc.net/problem/1000"
+            />
+          </S.InputWrapper>
           <S.ProblemLinkGuideText
             href="https://www.acmicpc.net/problemset"
             target="_blank"
