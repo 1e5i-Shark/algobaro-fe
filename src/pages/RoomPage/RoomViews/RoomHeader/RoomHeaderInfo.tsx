@@ -52,6 +52,7 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
               height="2.6rem"
               fontSize="1.4rem"
               mode="normal"
+              backgroundColor={theme.color.transparent_50}
               tagId={tag + index}
             >
               {tag}
