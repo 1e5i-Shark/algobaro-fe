@@ -1,4 +1,3 @@
-// 개별 방 정보 조회
 export type RoomStatusType = 'RECRUITING' | 'RUNNING';
 export type AccessType = 'PUBLIC' | 'PRIVATE';
 export type RoleType = 'HOST' | 'MEMBER';
@@ -30,8 +29,7 @@ export interface RoomResponse {
   response: OmitRoomType;
 }
 
-// 방 수정 API
-export interface UpdateRoom
+export interface UpdateRoomType
   extends Pick<
     RoomType,
     | 'title'
@@ -45,6 +43,14 @@ export interface UpdateRoom
     | 'tags'
     | 'timeLimit'
   > {}
+
+export interface EditRoomProps {
+  endPoint: string;
+  requestBody: Pick<
+    RoomType,
+    'roomAccessType' | 'problemLink' | 'timeLimit' | 'password'
+  >;
+}
 
 export interface ChangeHostProps {
   hostId: number;
