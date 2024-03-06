@@ -68,7 +68,7 @@ export default function Timer({
   return (
     <S.Wrapper>
       <S.TimeLeftWrapper>
-        <S.TimeLeftText>남은 시간</S.TimeLeftText>
+        {timeLeft > 0 && <S.TimeLeftText>남은 시간</S.TimeLeftText>}
         <S.TimerText>{convertedTime(timeLeft)}</S.TimerText>
       </S.TimeLeftWrapper>
     </S.Wrapper>
