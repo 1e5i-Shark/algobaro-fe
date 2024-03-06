@@ -28,7 +28,6 @@ export default function PSHeader() {
       <S.TimerWrapper>타이머</S.TimerWrapper>
       <S.ButtonWrapper>
         <ThemeModeToggleButton />
-
         <Button
           height="4rem"
           backgroundColor={theme.color.red}
@@ -39,7 +38,7 @@ export default function PSHeader() {
       </S.ButtonWrapper>
       <Modal
         width="fit-content"
-        height="20rem"
+        height="18rem"
         ref={modalRef}
         isOpen={isOpen}
         onClose={closeModal}
