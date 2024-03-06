@@ -1,12 +1,13 @@
 import styled, { css } from 'styled-components';
 
-import { Row } from '@/styles/GlobalStyle';
+import { Col, Row } from '@/styles/GlobalStyle';
 
 const HeaderWrapper = styled.header`
   ${({ theme }) => css`
     position: fixed;
     top: 0;
     left: 0;
+    z-index: ${theme.ZINDEX.HEADER};
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,4 +27,29 @@ const ButtonWrapper = styled(Row)`
   align-items: center;
 `;
 
-export { ButtonWrapper, HeaderWrapper, TimerWrapper };
+const ConfirmModalWrapper = styled(Col)`
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 4rem;
+`;
+
+const ConfirmText = styled.span`
+  ${({ theme }) => css`
+    font-weight: ${theme.fontWeight.semiBold};
+  `}
+`;
+
+const ConfirmButtonWrapper = styled(Row)`
+  gap: 2rem;
+  align-items: center;
+`;
+
+export {
+  ButtonWrapper,
+  ConfirmButtonWrapper,
+  ConfirmModalWrapper,
+  ConfirmText,
+  HeaderWrapper,
+  TimerWrapper,
+};
