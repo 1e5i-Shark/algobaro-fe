@@ -38,7 +38,7 @@ export default function Timer({
   seconds = 0,
   openModal,
 }: TimerProps) {
-  const timer = useRef<NodeJS.Timeout | null>(null);
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const [timeLeft, setTimeLeft] = useState<number>(
     minutes * MINUTES_IN_MS + seconds * MS
   );
