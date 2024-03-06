@@ -15,4 +15,6 @@ export { default as ResizeHandle } from './Common/ResizeHandle/ResizeHandle';
 export { default as Spinner } from './Common/Spinner/Spinner';
 export { default as Tag } from './Common/Tag/Tag';
 export { default as ThemeModeToggleButton } from './Common/ThemeModeToggleButton/ThemeModeToggleButton';
+export { default as CreateTagInput } from './CreateRoom/CreateTagInput/CreateTagInput';
+export { default as TitleWithAsterisk } from './CreateRoom/TitleWithAsterisk/TitleWithAsterisk';
 export { ThemeCustomProvider } from './ThemeCustomProvider';

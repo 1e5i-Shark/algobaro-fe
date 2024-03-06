@@ -10,7 +10,7 @@ interface StyledButtonProps {
 export const BaseEllipsisText = styled.span<StyledButtonProps>`
   ${({ $width, $fontSize, $fontWeight, $lineClamp }) => css`
     display: -webkit-box;
-    width: ${$width};
+    max-width: ${$width};
     overflow: hidden;
     font-size: ${$fontSize};
     font-weight: ${$fontWeight};
