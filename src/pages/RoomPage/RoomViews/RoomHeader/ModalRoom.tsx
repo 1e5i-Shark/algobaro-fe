@@ -82,7 +82,7 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     onClose();
   };
 
-  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'];
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
 
   const handleValidLink = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const regex = /^[a-z0-9.:/]$/;
