@@ -39,18 +39,18 @@ export default function RoomPage() {
   // }
 
   return (
-    <S.RoomContainer className="room-page">
-      <S.WaitingRoomContainer className="waiting-room">
+    <S.RoomContainer className="roompage">
+      <S.WaitingRoomContainer className="waitingroom">
         <RoomHeader
-          className="header"
+          className="roomheader-container"
           myRoomData={myRoomData}
         />
         <MemberList
-          className="members-list"
+          className="memberlist-container"
           myRole={myRoomData.role}
         />
         <TestInfo
-          className="test-info"
+          className="testinfo-container"
           myRoomData={myRoomData}
         />
       </S.WaitingRoomContainer>
