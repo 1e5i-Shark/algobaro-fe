@@ -10,20 +10,27 @@ interface TimerProps {
 const MS = 1000;
 const MINUTES_IN_MS = 60 * MS;
 
-const convertToMin = (time: number) => {
+const convertedTime = (time: number) => {
   const minutes = Math.floor((time / MINUTES_IN_MS) % 60);
   const hours = Math.floor(time / (60 * MINUTES_IN_MS));
+  const seconds = Math.floor((time / MS) % 60);
 
   const convertedMinutes = String(minutes).padStart(2, '0');
-  if (hours > 0) {
-    return `${hours}:${convertedMinutes}`;
-  } else {
-    return `${convertedMinutes}`;
-  }
-};
+  const convertedSeconds = String(seconds).padStart(2, '0');
 
-const converToSec = (time: number) => {
-  return String(Math.floor((time / MS) % 60)).padStart(2, '0');
+  if (hours > 0) {
+    return `${hours}시간 ${convertedMinutes}분`;
+  }
+
+  if (minutes > 0) {
+    return `${convertedMinutes}분 ${convertedSeconds}초`;
+  }
+
+  if (seconds > 0) {
+    return `${convertedSeconds}초`;
+  }
+
+  return `시험 종료`;
 };
 
 export default function Timer({
@@ -60,12 +67,10 @@ export default function Timer({
 
   return (
     <S.Wrapper>
-      <S.LeftTimeWrapper>
-        남은 시간
-        <S.TimerText>
-          {convertToMin(timeLeft)}:{converToSec(timeLeft)}
-        </S.TimerText>
-      </S.LeftTimeWrapper>
+      <S.TimeLeftWrapper>
+        <S.TimeLeftText>남은 시간</S.TimeLeftText>
+        <S.TimerText>{convertedTime(timeLeft)}</S.TimerText>
+      </S.TimeLeftWrapper>
     </S.Wrapper>
   );
 }
