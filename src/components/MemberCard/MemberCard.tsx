@@ -48,7 +48,7 @@ export default function MemberCard({
             menuList={menuList}
             className="menu"
           >
-            <Icon>
+            <Icon onClick={() => {}}>
               <MoreVertRoundedIcon />
             </Icon>
           </Menu>
