@@ -12,13 +12,16 @@ const Wrapper = styled(Row)`
   `}
 `;
 
-const LeftTimeWrapper = styled.span``;
+const TimeLeftWrapper = styled.div``;
+
+const TimeLeftText = styled.span`
+  margin-right: 0.6rem;
+`;
 
 const TimerText = styled.span`
   ${({ theme }) => css`
-    margin-left: 0.6rem;
     font-weight: ${theme.fontWeight.semiBold};
   `}
 `;
 
-export { LeftTimeWrapper, TimerText, Wrapper };
+export { TimeLeftText, TimeLeftWrapper, TimerText, Wrapper };
