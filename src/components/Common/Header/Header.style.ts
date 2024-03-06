@@ -6,6 +6,7 @@ const HeaderWrapper = styled.header`
     position: fixed;
     top: 0;
     left: 0;
+    z-index: ${theme.ZINDEX.HEADER};
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -18,7 +19,12 @@ const HeaderWrapper = styled.header`
   `}
 `;
 
-const LogoWrapper = styled.div``;
+const LogoWrapper = styled.div`
+  ${({ theme }) => css`
+    padding: ${theme.size.S};
+    cursor: pointer;
+  `}
+`;
 
 const LogoText = styled.span`
   ${({ theme }) => css`
