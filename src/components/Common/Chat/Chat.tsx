@@ -30,7 +30,7 @@ export default function Chat() {
           return (
             <S.MessageWrapper key={v4()}>
               <Message
-                userName={userId}
+                userName={message.userId}
                 comment={message.value}
                 menuList={menuList}
               />
