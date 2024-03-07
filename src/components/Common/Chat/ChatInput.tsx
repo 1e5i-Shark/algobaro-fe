@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 import { Icon } from '@/components';
 import { chatType } from '@/constants/chat';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useMessageStore from '@/store/MessageStore';
 
 import * as S from './Chat.style';
@@ -13,6 +14,7 @@ interface ChatInputProps {
 }
 
 export default function ChatInput({ className }: ChatInputProps) {
+  const { theme } = useCustomTheme();
   const { connected, messageEntered, disconnect, sendMessage, changeInput } =
     useMessageStore();
 
@@ -48,6 +50,10 @@ export default function ChatInput({ className }: ChatInputProps) {
         value={messageEntered}
         onChange={handleChangeInput}
         maxRows={20}
+        style={{
+          color: `${theme.color.text_primary_color}`,
+          backgroundColor: `${theme.mode === 'light' ? theme.color.container_color : theme.color.transparent_10}`,
+        }}
       />
 
       <Icon
