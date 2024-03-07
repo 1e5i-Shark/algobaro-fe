@@ -11,7 +11,7 @@ import ChatInput from './ChatInput';
 
 export default function Chat() {
   const navigate = useNavigate();
-  const { messageLogs, userId } = useMessageStore();
+  const { messageLogs } = useMessageStore();
 
   const menuList = [
     {
@@ -33,6 +33,7 @@ export default function Chat() {
                 userName={message.userId}
                 comment={message.value}
                 menuList={menuList}
+                createdAt={message.timestamp}
               />
             </S.MessageWrapper>
           );

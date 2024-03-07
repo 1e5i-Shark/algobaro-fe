@@ -18,7 +18,7 @@ export interface MessageStoreValue {
   connected: boolean;
   currentRoomId: number;
   messageEntered: string;
-  messageLogs: Pick<Message, 'id' | 'value' | 'userId'>[];
+  messageLogs: Omit<Message, 'type'>[];
   subscription: Stomp.StompSubscription | null;
 }
 export interface MessageStoreState extends MessageStoreValue {
@@ -30,7 +30,7 @@ export interface MessageStoreState extends MessageStoreValue {
   subscribe: (listener: Function) => void;
   unSubscribe: (listener: Function) => void;
   receiveMessage: (messageReceived: { body: string }) => void;
-  formatMessage: (message: Message) => Pick<Message, 'id' | 'value' | 'userId'>;
+  formatMessage: (message: Message) => Omit<Message, 'type'>;
   publish: () => void;
   setMessageValue: (newValue: Partial<MessageStoreValue>) => void;
 }

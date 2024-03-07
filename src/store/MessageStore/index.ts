@@ -8,6 +8,7 @@ import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { PATH } from '@/routes/path';
 import { sendMessageService } from '@/services/Message/sendMessageService';
 import { ChatValueUnion } from '@/types/chat';
+import { ukToKoreaTime } from '@/utils/convertDate';
 
 import { MessageStoreState, MessageStoreValue } from './type';
 
@@ -109,32 +110,37 @@ const useMessageStore = create<MessageStoreState>()(
       publish();
     },
     formatMessage: message => {
-      const { type, userId, id, value } = message;
+      const { type, userId, id, value, timestamp } = message;
+      const formattedTime = ukToKoreaTime(timestamp);
 
       switch (type) {
         case chatType.ENTER:
           return {
             id,
             userId,
-            value: `${userId} 님이 들어오셨습니다`,
+            value: `${userId}님이 입장하였습니다`,
+            timestamp: formattedTime,
           };
         case chatType.QUIT:
           return {
             id,
             userId,
-            value: `${userId} 님이 나가셨습니다`,
+            value: `${userId}님이 퇴장하였습니다.`,
+            timestamp: formattedTime,
           };
         case chatType.MESSAGE:
           return {
             id,
             userId,
             value: `${value}`,
+            timestamp: formattedTime,
           };
         default:
           return {
             id,
             userId,
             value: 'Unknown Type Message',
+            timestamp: formattedTime,
           };
       }
     },
