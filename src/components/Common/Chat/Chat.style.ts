@@ -1,9 +1,9 @@
 import { styled } from 'styled-components';
 
-import { Col, Row } from '@/styles/GlobalStyle';
+import { Col } from '@/styles/GlobalStyle';
 
 export const ChatContainer = styled(Col)`
-  height: 100%;
+  height: 100vh;
 `;
 
 export const MessagesContainer = styled(Col)`
@@ -12,7 +12,6 @@ export const MessagesContainer = styled(Col)`
 `;
 
 export const MessageWrapper = styled.div`
-  /* cursor: pointer; */
   border-top: 1px solid gray;
 `;
 
@@ -25,11 +24,6 @@ export const ChatInputWrapper = styled(Col)`
 export const ChatListWrapper = styled.div`
   flex-grow: 1;
   overflow-y: auto;
-`;
-
-export const Form = styled(Row)`
-  align-items: center;
-  justify-content: center;
 `;
 
 export const InputWrapper = styled.div`

@@ -1,7 +1,9 @@
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
-import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 
-import { Icon, Input } from '@/components';
+import { Icon } from '@/components';
+import { chatType } from '@/constants/chat';
+import useMessageStore from '@/store/MessageStore';
 
 import * as S from './Chat.style';
 
@@ -9,58 +11,65 @@ interface ChatInputProps {
   className: string;
 }
 
-interface FormProps {
-  chatValue: string;
-}
-
 export default function ChatInput({ className }: ChatInputProps) {
-  const { register, handleSubmit, reset } = useForm<FormProps>();
+  const { connected, messageEntered, disconnect, sendMessage, changeInput } =
+    useMessageStore();
 
   const inputStyle = {
     height: '4rem',
   };
 
-  const onSubmit = (data: FormProps) => {
-    if (!data.chatValue) return;
-
-    // Todo: 소켓 연결
-
-    reset();
-    alert('submit!');
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    sendMessage(chatType.MESSAGE);
   };
 
-  const handleSendClick = () => {
-    handleSubmit(onSubmit)();
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key !== 'Enter') {
-      return;
-    } else {
-      handleSubmit(onSubmit)();
+  const beforeUnloadListener = () => {
+    if (connected) {
+      disconnect();
     }
   };
 
+  useEffect(() => {
+    window.addEventListener('beforeunload', beforeUnloadListener);
+    return () => {
+      window.removeEventListener('beforeunload', beforeUnloadListener);
+    };
+  }, []);
+
+  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    changeInput(value);
+  };
+
+  const handleSendClick = () => {
+    sendMessage(chatType.MESSAGE);
+  };
+
+  if (!connected) {
+    return null;
+  }
+
   return (
     <S.ChatInputWrapper className={className}>
-      <S.Form onSubmit={handleSubmit(onSubmit)}>
-        <S.InputWrapper>
-          <Input
-            name="chatValue"
-            register={register}
+      <S.InputWrapper>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
             style={inputStyle}
-            onKeyDown={handleKeyDown}
+            value={messageEntered}
+            onChange={handleChangeInput}
           />
-        </S.InputWrapper>
-        <S.SendButton>
-          <Icon
-            background={true}
-            onClick={handleSendClick}
-          >
-            <SendRoundedIcon />
-          </Icon>
-        </S.SendButton>
-      </S.Form>
+        </form>
+      </S.InputWrapper>
+      <S.SendButton>
+        <Icon
+          background={true}
+          onClick={handleSendClick}
+        >
+          <SendRoundedIcon />
+        </Icon>
+      </S.SendButton>
     </S.ChatInputWrapper>
   );
 }
