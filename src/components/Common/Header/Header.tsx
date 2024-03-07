@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { Avatar, ThemeModeToggleButton } from '@/components';
+import { useMyInfo } from '@/hooks/Api/useMembers';
 import { PATH } from '@/routes/path';
 
 import * as S from './Header.style';
@@ -8,8 +9,17 @@ import * as S from './Header.style';
 export default function Header() {
   const navigate = useNavigate();
 
-  const handleAvatarClick = () => {
-    navigate(PATH.PROFILE);
+  // Todo: 수영님의 MeStore에서 추출하는 것으로 이후 변경
+  const { data: myInfo, refetch } = useMyInfo();
+
+  if (!myInfo) {
+    refetch();
+  }
+
+  const myId = myInfo?.response.id;
+
+  const handleMyProfileClick = () => {
+    navigate(`${PATH.PROFILE}/${myId}`);
   };
 
   const handleLogoClick = () => {
@@ -24,7 +34,7 @@ export default function Header() {
       <S.IconWrapper>
         <ThemeModeToggleButton />
         <S.AvatarWrapper>
-          <Avatar onClick={handleAvatarClick} />
+          <Avatar onClick={handleMyProfileClick} />
         </S.AvatarWrapper>
       </S.IconWrapper>
     </S.HeaderWrapper>
