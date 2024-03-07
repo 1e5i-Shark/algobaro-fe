@@ -109,7 +109,7 @@ const useMessageStore = create<MessageStoreState>()(
       publish();
     },
     formatMessage: message => {
-      const { type, userId, id, value, timestamp } = message;
+      const { type, userId, id, value } = message;
 
       switch (type) {
         case chatType.ENTER:
@@ -122,13 +122,13 @@ const useMessageStore = create<MessageStoreState>()(
           return {
             id,
             userId,
-            value: `User ${userId} Quit (${timestamp})`,
+            value: `${userId} 님이 나가셨습니다`,
           };
         case chatType.MESSAGE:
           return {
             id,
             userId,
-            value: `${value} (${timestamp})`,
+            value: `${value}`,
           };
         default:
           return {
@@ -149,7 +149,11 @@ const useMessageStore = create<MessageStoreState>()(
     publish() {
       get().listeners.forEach(listener => listener());
     },
-    setUserID: userId => set({ userId }),
+    setMessageValue: (newValue: Partial<MessageStoreValue>) =>
+      set(state => ({
+        ...state,
+        ...newValue,
+      })),
   }))
 );
 

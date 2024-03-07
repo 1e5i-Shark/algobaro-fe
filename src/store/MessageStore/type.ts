@@ -32,5 +32,5 @@ export interface MessageStoreState extends MessageStoreValue {
   receiveMessage: (messageReceived: { body: string }) => void;
   formatMessage: (message: Message) => Pick<Message, 'id' | 'value' | 'userId'>;
   publish: () => void;
-  setUserID: (userId: string) => void;
+  setMessageValue: (newValue: Partial<MessageStoreValue>) => void;
 }
