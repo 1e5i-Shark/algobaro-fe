@@ -4,10 +4,10 @@ import { ChatValueUnion } from '@/types/chat';
 
 export interface Message {
   id: number;
-  userId?: string;
-  type?: string;
+  userId: string;
+  type: string;
   value: string;
-  timestamp?: string;
+  timestamp: string;
 }
 
 export interface MessageStoreValue {
@@ -18,7 +18,7 @@ export interface MessageStoreValue {
   connected: boolean;
   currentRoomId: number;
   messageEntered: string;
-  messageLogs: Message[];
+  messageLogs: Pick<Message, 'id' | 'value' | 'userId'>[];
   subscription: Stomp.StompSubscription | null;
 }
 export interface MessageStoreState extends MessageStoreValue {
@@ -30,6 +30,7 @@ export interface MessageStoreState extends MessageStoreValue {
   subscribe: (listener: Function) => void;
   unSubscribe: (listener: Function) => void;
   receiveMessage: (messageReceived: { body: string }) => void;
-  formatMessage: (message: Message) => Message;
+  formatMessage: (message: Message) => Pick<Message, 'id' | 'value' | 'userId'>;
   publish: () => void;
+  setUserID: (userId: string) => void;
 }
