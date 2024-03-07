@@ -11,6 +11,7 @@ import {
 } from './Modal.style';
 
 interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+  mode?: 'normal' | 'confirm';
   width?: string;
   height?: string;
   borderRadius?: string;
@@ -30,6 +31,7 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
     {
       children,
+      mode = 'normal',
       width = '50%',
       height = '50%',
       borderRadius = '1.5rem',
