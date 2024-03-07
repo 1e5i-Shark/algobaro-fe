@@ -29,23 +29,27 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalContainer = styled.div<ModalContainerProps>`
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: ${props => props.width};
-  height: ${props => props.height};
-  background-color: ${({ theme }) => theme.color.background_modal};
-  border-radius: ${props => props.$borderRadius};
-  box-shadow: 0 0.4rem 1.6rem 0 rgba(0, 0, 0, 0.04);
+  ${({ theme, width, height, $borderRadius }) => css`
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: ${width};
+    height: ${height};
+    background-color: ${theme.color.background_modal};
+    border-radius: ${$borderRadius};
+    box-shadow: 0 0.4rem 1.6rem 0 rgba(0, 0, 0, 0.04);
+  `}
 `;
 
 export const ModalCloseButton = styled.button<{ $coordinate: string }>`
-  position: absolute;
-  top: ${props => props.$coordinate};
-  right: ${props => props.$coordinate};
-  color: inherit;
+  ${({ $coordinate }) => css`
+    position: absolute;
+    top: ${$coordinate};
+    right: ${$coordinate};
+    color: inherit;
+  `}
 `;
 
 export const ModalContent = styled.div``;
