@@ -1,6 +1,5 @@
 import * as Stomp from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
-import { v4 } from 'uuid';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -14,7 +13,7 @@ import { MessageStoreState, MessageStoreValue } from './type';
 
 const initialValue: MessageStoreValue = {
   listeners: new Set<Function>(),
-  userId: v4(),
+  userId: '',
   client: new Stomp.Client(),
   connected: false,
   roomIndices: [111, 222, 333],
@@ -92,7 +91,7 @@ const useMessageStore = create<MessageStoreState>()(
         client,
         type,
         messageToSend: {
-          roomId: currentRoomId || 0,
+          roomId: currentRoomId,
           userId: userId,
           message,
         },
@@ -116,21 +115,25 @@ const useMessageStore = create<MessageStoreState>()(
         case chatType.ENTER:
           return {
             id,
-            value: `User ${userId} Enter (${timestamp})`,
+            userId,
+            value: `${userId} 님이 들어오셨습니다`,
           };
         case chatType.QUIT:
           return {
             id,
+            userId,
             value: `User ${userId} Quit (${timestamp})`,
           };
         case chatType.MESSAGE:
           return {
             id,
-            value: `${userId}: ${value} (${timestamp})`,
+            userId,
+            value: `${value} (${timestamp})`,
           };
         default:
           return {
             id,
+            userId,
             value: 'Unknown Type Message',
           };
       }
@@ -146,6 +149,7 @@ const useMessageStore = create<MessageStoreState>()(
     publish() {
       get().listeners.forEach(listener => listener());
     },
+    setUserID: userId => set({ userId }),
   }))
 );
 
