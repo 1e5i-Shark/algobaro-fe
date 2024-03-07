@@ -1,12 +1,18 @@
 import { MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { v4 } from 'uuid';
 
 import { Message } from '@/components';
+import useMessageStore from '@/store/MessageStore';
 
 import { MenuText } from '../Menu/MenuText';
 import * as S from './Chat.style';
 import ChatInput from './ChatInput';
 
 export default function Chat() {
+  const navigate = useNavigate();
+  const { messageLogs, userId } = useMessageStore();
+
   const menuList = [
     {
       id: 1,
@@ -18,23 +24,21 @@ export default function Chat() {
 
   return (
     <S.ChatContainer>
+      <button onClick={() => navigate('/home')}>홈으로가기</button>
       <S.MessagesContainer>
-        <S.MessageWrapper>
-          <Message
-            userName="김방장"
-            comment={'메시지1'}
-            menuList={menuList}
-          />
-        </S.MessageWrapper>
-        <S.MessageWrapper>
-          <Message
-            userName="김방장"
-            comment={'메시지2'}
-            menuList={menuList}
-          />
-        </S.MessageWrapper>
+        {messageLogs.map(message => {
+          return (
+            <S.MessageWrapper key={v4()}>
+              <Message
+                userName={userId}
+                comment={message.value}
+                menuList={menuList}
+              />
+            </S.MessageWrapper>
+          );
+        })}
       </S.MessagesContainer>
-      <ChatInput className={'chat-input'} />
+      <ChatInput className={'chatinput'} />
     </S.ChatContainer>
   );
 }
