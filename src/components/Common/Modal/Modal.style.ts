@@ -1,5 +1,5 @@
 import { HTMLAttributes } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface ModalContainerProps extends HTMLAttributes<HTMLDivElement> {
   width: string;
@@ -8,14 +8,17 @@ interface ModalContainerProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const ModalWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  ${({ theme }) => css`
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: ${theme.ZINDEX.MODAL};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  `}
 `;
 
 export const ModalBackground = styled.div`

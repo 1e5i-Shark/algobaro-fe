@@ -80,7 +80,7 @@ export default function Input<T extends FieldValues>({
           })}
           {...props}
         />
-        {type === 'password' && isDirty && (
+        {type === 'password' && (
           <S.ToggleButtonWrapper
             type="button"
             tabIndex={-1}
