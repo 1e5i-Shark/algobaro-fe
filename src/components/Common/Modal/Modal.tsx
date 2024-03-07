@@ -1,5 +1,5 @@
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { forwardRef, HTMLAttributes } from 'react';
+import { forwardRef, HTMLAttributes, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import {
@@ -41,6 +41,13 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
     },
     ref
   ) => {
+    // modal이 떠 있을 땐 스크롤 막음
+    // modal 닫히면 다시 스크롤 가능하도록 함
+    useEffect(() => {
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      document.documentElement.style.height = isOpen ? '100vh' : '';
+    }, [isOpen]);
+
     return createPortal(
       isOpen ? (
         <ModalWrapper ref={ref}>
