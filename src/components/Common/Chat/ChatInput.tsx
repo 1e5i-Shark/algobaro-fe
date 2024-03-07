@@ -1,4 +1,5 @@
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
+import { TextareaAutosize } from '@mui/material';
 import { useEffect } from 'react';
 
 import { Icon } from '@/components';
@@ -15,11 +16,6 @@ export default function ChatInput({ className }: ChatInputProps) {
   const { connected, messageEntered, disconnect, sendMessage, changeInput } =
     useMessageStore();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    sendMessage(chatType.MESSAGE);
-  };
-
   const beforeUnloadListener = () => {
     if (connected) {
       disconnect();
@@ -33,7 +29,7 @@ export default function ChatInput({ className }: ChatInputProps) {
     };
   }, []);
 
-  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;
     changeInput(value);
   };
@@ -48,23 +44,18 @@ export default function ChatInput({ className }: ChatInputProps) {
 
   return (
     <S.ChatInputContainer className={className}>
-      <S.InputWrapper>
-        <S.Form onSubmit={handleSubmit}>
-          <S.Input
-            type="text"
-            value={messageEntered}
-            onChange={handleChangeInput}
-          />
-        </S.Form>
-      </S.InputWrapper>
-      <S.SendButton>
-        <Icon
-          background={true}
-          onClick={handleSendClick}
-        >
-          <SendRoundedIcon />
-        </Icon>
-      </S.SendButton>
+      <TextareaAutosize
+        value={messageEntered}
+        onChange={handleChangeInput}
+        maxRows={20}
+      />
+
+      <Icon
+        background={true}
+        onClick={handleSendClick}
+      >
+        <SendRoundedIcon />
+      </Icon>
     </S.ChatInputContainer>
   );
 }
