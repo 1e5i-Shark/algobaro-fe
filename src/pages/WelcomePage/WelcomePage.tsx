@@ -72,8 +72,8 @@ export default function WelcomePage() {
             })}
           </S.MainSubList>
         </S.MainLeftContainer>
-        <S.MainRightContainer style={{ width: `${myNickName ? '25%' : ''}` }}>
-          {myNickName ? (
+        {accessToken && myNickName ? (
+          <S.MainRightContainer style={{ width: `${myNickName ? '25%' : ''}` }}>
             <>
               <S.UserNameContainer>
                 <S.UserNickName>{myNickName}</S.UserNickName> 님
@@ -83,8 +83,8 @@ export default function WelcomePage() {
                 <ArrowForwardIosRoundedIcon />
               </Button>
             </>
-          ) : null}
-        </S.MainRightContainer>
+          </S.MainRightContainer>
+        ) : null}
         <LoginForm width="25%" />
       </S.MainContainer>
       <S.MoreDetailContainer>
