@@ -58,14 +58,14 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
             $borderRadius={borderRadius}
             {...props}
           >
-            {mode === 'normal' ? (
+            {mode === 'normal' && (
               <ModalCloseButton
                 $coordinate={borderRadius}
                 onClick={onClose}
               >
                 <CloseRoundedIcon />
               </ModalCloseButton>
-            ) : null}
+            )}
             <ModalContent>{children}</ModalContent>
           </ModalContainer>
         </ModalWrapper>
