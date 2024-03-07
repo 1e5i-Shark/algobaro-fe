@@ -44,19 +44,21 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
     return createPortal(
       isOpen ? (
         <ModalWrapper ref={ref}>
-          <ModalBackground onClick={onClose} />
+          <ModalBackground onClick={mode === 'normal' ? onClose : undefined} />
           <ModalContainer
             width={width}
             height={height}
             $borderRadius={borderRadius}
             {...props}
           >
-            <ModalCloseButton
-              $coordinate={borderRadius}
-              onClick={onClose}
-            >
-              <CloseRoundedIcon />
-            </ModalCloseButton>
+            {mode === 'normal' ? (
+              <ModalCloseButton
+                $coordinate={borderRadius}
+                onClick={onClose}
+              >
+                <CloseRoundedIcon />
+              </ModalCloseButton>
+            ) : null}
             <ModalContent>{children}</ModalContent>
           </ModalContainer>
         </ModalWrapper>
