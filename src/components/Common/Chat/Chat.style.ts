@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 import { Col } from '@/styles/GlobalStyle';
 
@@ -12,32 +12,49 @@ export const MessagesContainer = styled(Col)`
 `;
 
 export const MessageWrapper = styled.div`
-  border-top: 1px solid gray;
+  ${({ theme }) => css`
+    border-top: ${`1px solid ${theme.color.transparent_50}`};
+  `}
 `;
 
-export const ChatInputWrapper = styled(Col)`
-  justify-content: center;
-  height: 5rem;
-  border-top: 1px solid gray;
-`;
-
-export const ChatListWrapper = styled.div`
-  flex-grow: 1;
-  overflow-y: auto;
+export const ChatInputContainer = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 6rem;
+    border-top: ${`2px solid ${theme.color.transparent_50}`};
+  `}
 `;
 
 export const InputWrapper = styled.div`
   flex-grow: 1;
-  width: 10rem;
-  height: 4rem;
+  height: 100%;
+`;
+
+export const Form = styled.form`
+  width: 100%;
+  height: 100%;
+`;
+
+export const Input = styled.input`
+  ${({ theme }) => css`
+    width: 100%;
+    height: 100%;
+    padding: 0 1rem;
+    color: ${theme.color.text_primary_color};
+    background-color: ${theme.color.background_primary};
+  `}
 `;
 
 export const SendButton = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  margin-left: 1rem;
-  border-radius: 0.5rem;
+  height: 100%;
+  margin: 0 1rem;
+`;
+
+export const ChatListWrapper = styled.div`
+  flex-grow: 1;
+  overflow-y: auto;
 `;

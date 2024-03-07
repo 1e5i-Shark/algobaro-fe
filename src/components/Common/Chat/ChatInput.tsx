@@ -15,10 +15,6 @@ export default function ChatInput({ className }: ChatInputProps) {
   const { connected, messageEntered, disconnect, sendMessage, changeInput } =
     useMessageStore();
 
-  const inputStyle = {
-    height: '4rem',
-  };
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     sendMessage(chatType.MESSAGE);
@@ -51,16 +47,15 @@ export default function ChatInput({ className }: ChatInputProps) {
   }
 
   return (
-    <S.ChatInputWrapper className={className}>
+    <S.ChatInputContainer className={className}>
       <S.InputWrapper>
-        <form onSubmit={handleSubmit}>
-          <input
+        <S.Form onSubmit={handleSubmit}>
+          <S.Input
             type="text"
-            style={inputStyle}
             value={messageEntered}
             onChange={handleChangeInput}
           />
-        </form>
+        </S.Form>
       </S.InputWrapper>
       <S.SendButton>
         <Icon
@@ -70,6 +65,6 @@ export default function ChatInput({ className }: ChatInputProps) {
           <SendRoundedIcon />
         </Icon>
       </S.SendButton>
-    </S.ChatInputWrapper>
+    </S.ChatInputContainer>
   );
 }
