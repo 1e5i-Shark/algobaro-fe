@@ -72,7 +72,7 @@ export default function WelcomePage() {
             })}
           </S.MainSubList>
         </S.MainLeftContainer>
-        {accessToken && myNickName ? (
+        {accessToken && myNickName && (
           <S.MainRightContainer style={{ width: `${myNickName ? '25%' : ''}` }}>
             <>
               <S.UserNameContainer>
@@ -84,7 +84,7 @@ export default function WelcomePage() {
               </Button>
             </>
           </S.MainRightContainer>
-        ) : null}
+        )}
         <LoginForm width="25%" />
       </S.MainContainer>
       <S.MoreDetailContainer>
