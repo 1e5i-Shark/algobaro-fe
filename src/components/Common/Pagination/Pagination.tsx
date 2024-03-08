@@ -42,7 +42,6 @@ export default function Pagination({
         showLastButton // 끝페이지 이동 버튼 표시 여부
         size={size} // Pagination 컴포넌트 전체 사이즈
         sx={{
-          //
           '& .MuiPaginationItem-root': {
             color: textColor || theme.color.text_primary_color,
             fontSize: textSize || theme.size.M,
