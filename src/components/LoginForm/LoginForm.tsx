@@ -7,9 +7,9 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
 import { InputListProps } from '@/types/input';
 
+import { FORM_VALIDATION } from '../../constants/formValidation';
 import CheckBox from '../Common/CheckBox/CheckBox';
 import Input from '../Common/Input/Input';
-import { LOGIN_EMIAL_VALIDATION } from './loginConstants';
 import {
   LoginButton,
   LoginFormContainer,
@@ -53,7 +53,7 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
       type: 'email',
       placeholder: 'algo@email.com',
       required: true,
-      validation: LOGIN_EMIAL_VALIDATION.EMAIL,
+      validation: FORM_VALIDATION.EMAIL,
     },
     {
       label: '비밀번호',

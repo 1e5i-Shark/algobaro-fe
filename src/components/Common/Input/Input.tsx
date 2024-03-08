@@ -39,6 +39,7 @@ export default function Input<T extends FieldValues>({
   borderRadius,
   borderColor,
   backgroundColor,
+  isTrim = false,
   ...props
 }: InputProps<T>) {
   const { theme } = useCustomTheme();
@@ -53,7 +54,6 @@ export default function Input<T extends FieldValues>({
 
   const inputError = formState?.errors[name];
   const inputErrorMessage = inputError && (inputError.message as string);
-  const isDirty = formState?.isDirty;
 
   return (
     <S.Wrapper>
@@ -75,10 +75,11 @@ export default function Input<T extends FieldValues>({
           {...register(name, {
             ...validation,
             required: required && '값이 입력되지 않았어요',
+            setValueAs: value => (isTrim ? value.trim() : value),
           })}
           {...props}
         />
-        {type === 'password' && isDirty && (
+        {type === 'password' && (
           <S.ToggleButtonWrapper
             type="button"
             tabIndex={-1}

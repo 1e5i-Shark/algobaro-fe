@@ -1,5 +1,4 @@
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
@@ -47,10 +46,14 @@ export default function WelcomePage() {
     navigate(PATH.HOME);
   };
 
-  useEffect(() => {
-    // 로그인했을 경우 사용자의 닉네임을 가져온다.
-    accessToken && refetch();
-  }, []);
+  // 수현 의견: App.tsx에서 요 코드를 선언해서 진입 초기에 1번은 refetch를 하고 전역 상태에 저장하기
+  // 커피챗에서 첫 마운트 시에만 useQuery를 실행하기 위해서는 어떻게 해야 할까 여쭤보기
+  // 로그인했을 경우 사용자의 닉네임을 가져온다.
+  // isStale을 사용해보려고 했으나 main.tsx에서 전역적으로 1분 staleTime이 있어 다시 원복
+  // Todo: 수영님 useMeStore에 데이터 연동하기.
+  if (accessToken && !myInfo) {
+    refetch();
+  }
 
   return (
     <S.WelcomePageWrapper>
@@ -69,8 +72,8 @@ export default function WelcomePage() {
             })}
           </S.MainSubList>
         </S.MainLeftContainer>
-        <S.MainRightContainer style={{ width: `${myNickName ? '25%' : ''}` }}>
-          {myNickName ? (
+        {accessToken && myNickName && (
+          <S.MainRightContainer style={{ width: `${myNickName ? '25%' : ''}` }}>
             <>
               <S.UserNameContainer>
                 <S.UserNickName>{myNickName}</S.UserNickName> 님
@@ -80,8 +83,8 @@ export default function WelcomePage() {
                 <ArrowForwardIosRoundedIcon />
               </Button>
             </>
-          ) : null}
-        </S.MainRightContainer>
+          </S.MainRightContainer>
+        )}
         <LoginForm width="25%" />
       </S.MainContainer>
       <S.MoreDetailContainer>

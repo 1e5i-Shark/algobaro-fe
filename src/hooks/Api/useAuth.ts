@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { PATH } from '@/routes/path';
-import { signIn } from '@/services/Auth';
+import { signIn, signUp } from '@/services/Auth';
 
 import { useLocalStorage } from '../useLocalStorage';
 
@@ -21,6 +21,24 @@ export const useSignIn = () => {
     onSuccess: ({ response }) => {
       setAccessToken(response.accessToken);
       navigate(PATH.HOME);
+    },
+  });
+};
+
+/**
+ * 회원가입 signUp API 함수를 사용하는 useMutation 커스텀 훅이다.
+ * - 회원가입 성공 시 동시에 해당 인증 정보로 로그인도 진행한다.
+ * @returns 회원가입 성공 시 서버 내 유저 고유 id를 반환한다.
+ */
+export const useSignUp = () => {
+  const { mutate: signInMutate } = useSignIn();
+  return useMutation({
+    mutationFn: signUp,
+    onSuccess: (data, signUpReqBody) => {
+      const { email, password } = signUpReqBody;
+
+      signInMutate({ email, password });
+      return data;
     },
   });
 };
