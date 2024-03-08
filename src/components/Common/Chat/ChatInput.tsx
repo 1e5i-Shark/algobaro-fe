@@ -1,6 +1,6 @@
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import { TextareaAutosize } from '@mui/material';
-import { useEffect } from 'react';
+import { KeyboardEvent, useEffect } from 'react';
 
 import { Icon } from '@/components';
 import { chatType } from '@/constants/chat';
@@ -18,6 +18,33 @@ export default function ChatInput({ className }: ChatInputProps) {
   const { connected, messageEntered, disconnect, sendMessage, changeInput } =
     useMessageStore();
 
+  const handleChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = event.target;
+    changeInput(value);
+  };
+
+  const handleMessageSend = () => {
+    if (messageEntered.trim() === '') {
+      changeInput('');
+      return;
+    }
+    sendMessage(chatType.MESSAGE);
+  };
+
+  const onEnterPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    // 한글의 경우, 자음 모음의 조합 언어라 같은 이벤트라도 영어랑 달리 2번 발생함. 이를 방지해준다.
+    if (e.nativeEvent.isComposing) return;
+    if (e.key === 'Enter') {
+      if (e.shiftKey || e.altKey || e.metaKey || e.ctrlKey) return;
+
+      // e.preventDefault() => 기본 동작을 중단시킴.
+      // Input 내장 기능 => 페이지 새로고침.
+      // Textarea 내장 기능 => 줄바꿈.
+      e.preventDefault();
+      handleMessageSend();
+    }
+  };
+
   const beforeUnloadListener = () => {
     if (connected) {
       disconnect();
@@ -31,15 +58,6 @@ export default function ChatInput({ className }: ChatInputProps) {
     };
   }, []);
 
-  const handleChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { value } = event.target;
-    changeInput(value);
-  };
-
-  const handleSendClick = () => {
-    sendMessage(chatType.MESSAGE);
-  };
-
   if (!connected) {
     return null;
   }
@@ -47,9 +65,10 @@ export default function ChatInput({ className }: ChatInputProps) {
   return (
     <S.ChatInputContainer className={className}>
       <TextareaAutosize
+        onKeyDown={onEnterPress}
         value={messageEntered}
         onChange={handleChangeInput}
-        maxRows={20}
+        maxRows={10}
         style={{
           color: `${theme.color.text_primary_color}`,
           backgroundColor: `${theme.mode === 'light' ? theme.color.container_color : theme.color.transparent_10}`,
@@ -58,7 +77,7 @@ export default function ChatInput({ className }: ChatInputProps) {
 
       <Icon
         background={true}
-        onClick={handleSendClick}
+        onClick={handleMessageSend}
       >
         <SendRoundedIcon />
       </Icon>
