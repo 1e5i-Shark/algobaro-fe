@@ -1,3 +1,9 @@
+import { CodeEditor } from '@/components';
+
 export default function ProblemSolvePage() {
-  return <div>ProblemSolvePage</div>;
+  return (
+    <>
+      <CodeEditor />
+    </>
+  );
 }
