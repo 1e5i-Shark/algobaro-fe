@@ -77,8 +77,8 @@ export default function CodeEditor() {
         }}
         editorWillUnmount={() => {
           console.log('unmount');
-          const removeEditor = editorRef.current as any;
-          removeEditor.display.wrapper.remove();
+          const removeEditor = editorRef.current;
+          removeEditor?.display.wrapper.remove();
         }}
       />
     </S.Wrapper>
