@@ -16,4 +16,5 @@ export { default as Tag } from './Common/Tag/Tag';
 export { default as ThemeModeToggleButton } from './Common/ThemeModeToggleButton/ThemeModeToggleButton';
 export { default as CreateTagInput } from './CreateRoom/CreateTagInput/CreateTagInput';
 export { default as TitleWithAsterisk } from './CreateRoom/TitleWithAsterisk/TitleWithAsterisk';
+export { default as CodeEditor } from './IDE/CodeEditor/CodeEditor';
 export { ThemeCustomProvider } from './ThemeCustomProvider';
