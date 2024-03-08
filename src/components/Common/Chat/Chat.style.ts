@@ -2,13 +2,20 @@ import { css, styled } from 'styled-components';
 
 import { Col } from '@/styles/GlobalStyle';
 
-export const ChatContainer = styled(Col)`
-  height: 100%;
+export const ChatContainer = styled(Col)<{ $height: string }>`
+  ${({ $height }) => css`
+    height: ${$height};
+  `}
 `;
 
+// justify-content: flex-end; 의 경우 scroll이 안됨
 export const MessagesContainer = styled(Col)`
-  flex-grow: 1;
-  justify-content: flex-end;
+  height: 100%;
+  overflow-y: scroll;
+
+  & > :first-child {
+    margin-top: auto !important;
+  }
 `;
 
 export const MessageWrapper = styled.div`
@@ -50,9 +57,4 @@ export const InputWrapper = styled.div`
       background-color: ${theme.color.background_primary};
     }
   `}
-`;
-
-export const ChatListWrapper = styled.div`
-  flex-grow: 1;
-  overflow-y: auto;
 `;
