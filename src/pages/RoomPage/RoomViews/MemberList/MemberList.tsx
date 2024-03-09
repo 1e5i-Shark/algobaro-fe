@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import { v4 } from 'uuid';
 
 import { MemberCard } from '@/components';
 import { MENU_TEXT } from '@/components/Common/Menu/MenuText';
@@ -96,7 +97,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
     for (let i = 0; i < emptyCount; i++) {
       cardList.push(
         <CardWrapper
-          key={Date.now() + i}
+          key={v4()}
           $isEmpty={true}
         />
       );
