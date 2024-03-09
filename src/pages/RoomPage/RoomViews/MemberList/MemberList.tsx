@@ -77,8 +77,8 @@ export default function MemberList({ className, myRole }: MemberListProps) {
     }
   };
 
-  const renderCards = useMemo(() => {
-    const renderedMembers = members.map(member => (
+  const memberCards = useMemo(() => {
+    const cardList = members.map(member => (
       <MemberCard
         key={member.id}
         myRole={myRole}
@@ -94,7 +94,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
     const emptyCount = MAX_MEMBERS - members.length;
 
     for (let i = 0; i < emptyCount; i++) {
-      renderedMembers.push(
+      cardList.push(
         <CardWrapper
           key={Date.now() + i}
           $isEmpty={true}
@@ -102,10 +102,10 @@ export default function MemberList({ className, myRole }: MemberListProps) {
       );
     }
 
-    return renderedMembers;
+    return cardList;
   }, [members]);
 
   return (
-    <S.MembersContainer className={className}>{renderCards}</S.MembersContainer>
+    <S.MembersContainer className={className}>{memberCards}</S.MembersContainer>
   );
 }
