@@ -8,7 +8,7 @@ import * as T from '@/types/room';
 
 // 개별 방 정보 조회
 export const getUuidRoom = async (endPoint: string) => {
-  const response: T.RoomResponse = await axiosAuthInstance.get(
+  const response = await axiosAuthInstance.get<T.RoomResponse>(
     `${ROOMS_URL}${endPoint}`
   );
   return response;
@@ -16,7 +16,7 @@ export const getUuidRoom = async (endPoint: string) => {
 
 // 방 수정
 export const editRoom = async ({ endPoint, requestBody }: T.EditRoomProps) => {
-  const response: T.OmitRoomType = await axiosAuthInstance.patch(
+  const response = await axiosAuthInstance.patch<T.OmitRoomType>(
     `${ROOMS_URL}${endPoint}`,
     requestBody
   );
@@ -36,10 +36,11 @@ export const changeHostAuto = async () => {
 
 // 방장 수동 변경
 export const changeHost = async ({
+  roomId,
   hostId,
   organizerId,
 }: T.ChangeHostProps) => {
-  const response: T.ChangeHostResponse = await axiosAuthInstance.get(
+  const response = await axiosAuthInstance.get<T.ChangeHostResponse>(
     `${ROOMS_HOST_URL}/${hostId}/${organizerId}`
   );
 
