@@ -9,7 +9,7 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
 
-import { problemHistory } from './problemHistory';
+import { problemHistoryResponse } from './problemHistoryResponse';
 import * as S from './ProfilePage.style';
 
 export default function ProfilePage() {
@@ -19,14 +19,17 @@ export default function ProfilePage() {
   // 로그아웃 후 시작 페이지 이동을 위한 네비게이터 훅이다.
   const navigate = useNavigate();
   // 페이지네이션 상태 관리 함수이다.
-  const [pageNum, setPageNum] = useState(1);
+  const [pageNum, setPageNum] = useState(0);
   const [isOpenModal, setIsOpenModal] = useState(false);
   // 내 정보 가져오는 쿼리를 호출한다.
   const { data: myInfoData } = useMyInfo();
   const myInfo = myInfoData?.response;
 
+  const totalPageNum = problemHistoryResponse[0].totalPages;
+  const totalHistoryNum = problemHistoryResponse[0].totalElements;
+
   const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
-    if (event) setPageNum(value);
+    if (event) setPageNum(value - 1);
   };
   // 로그아웃 버튼 클릭 이벤트 핸들러 함수이다.
   const handleClickLogOut = () => {
@@ -69,20 +72,21 @@ export default function ProfilePage() {
       {/* 내가 푼 문제 */}
       <S.MySolveTextContainer>
         <p>내가 푼 문제</p>
-        <p>11</p>
+        <p>{totalHistoryNum}</p>
       </S.MySolveTextContainer>
       {/* 풀이 히스토리 컨테이너 */}
       <div>
         <p>풀이 히스토리</p>
         <ul>
-          {problemHistory.map(problem => {
+          {problemHistoryResponse[pageNum].content.map(problem => {
             return (
               <li key={problem.id}>
-                <p>{problem.title}</p>
+                <p>{problem.roomUuid}</p>
                 <Tag
                   mode="normal"
-                  tagId={problem.languageId}
+                  tagId={problem.language || 'null'}
                   backgroundColor={theme.color.gray_20}
+                  textColor={theme.color.black_primary}
                 >
                   {problem.language}
                 </Tag>
@@ -91,8 +95,8 @@ export default function ProfilePage() {
           })}
         </ul>
         <Pagination
-          count={10} // 표시할 페이지네이션 페이지 수
-          page={pageNum} // 현재 페이지 위치
+          count={totalPageNum} // 표시할 페이지네이션 페이지 수
+          page={pageNum + 1} // 현재 페이지 위치
           siblingCount={1} // 현재 페이지 기준 양쪽 몇 개 표시
           boundaryCount={0}
           onChange={handlePageChange}
