@@ -5,6 +5,7 @@ import { Avatar, Button, Tag } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 import { problemHistory } from './problemHistory';
+import * as S from './ProfilePage.style';
 
 export default function ProfilePage() {
   const { theme } = useCustomTheme();
@@ -13,24 +14,29 @@ export default function ProfilePage() {
     if (event) setPageNum(value);
   };
   return (
-    <div>
+    <S.ProfilePageWrapper>
       {/* 유저 정보 컨테이너 */}
-      <div>
-        <Avatar isEdit />
-        <div>
-          <p>알고나</p>
-          <p>algo@gmail.com</p>
-        </div>
-        <div>
-          <Button>수정</Button>
+      <S.UserInfoContainer>
+        <S.UserAvatarContainer>
+          <Avatar
+            size="L"
+            isEdit
+          />
+        </S.UserAvatarContainer>
+        <S.UserInfoTextContainer>
+          <S.UserName>알고나</S.UserName>
+          <S.UserEmail>algo@gmail.com</S.UserEmail>
+        </S.UserInfoTextContainer>
+        <S.UserInfoButtonContainer>
+          <Button backgroundColor={theme.color.gray_20}>수정</Button>
           <Button>로그아웃</Button>
-        </div>
-      </div>
+        </S.UserInfoButtonContainer>
+      </S.UserInfoContainer>
       {/* 내가 푼 문제 */}
-      <div>
+      <S.MySolveTextContainer>
         <p>내가 푼 문제</p>
         <p>11</p>
-      </div>
+      </S.MySolveTextContainer>
       {/* 풀이 히스토리 컨테이너 */}
       <div>
         <p>풀이 히스토리</p>
@@ -76,6 +82,6 @@ export default function ProfilePage() {
           }}
         />
       </div>
-    </div>
+    </S.ProfilePageWrapper>
   );
 }
