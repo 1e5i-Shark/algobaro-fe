@@ -1,52 +1,52 @@
-import {
-  ROOMS_CODES_URL,
-  ROOMS_HOST_URL,
-  ROOMS_URL,
-} from '@/services/apiEndpoint';
+import { API_ENDPOINT } from '@/services/apiEndpoint';
 import { axiosAuthInstance } from '@/services/axiosInstance';
 import * as T from '@/types/room';
 
+// 방 API
 // 개별 방 정보 조회
-export const getUuidRoom = async (endPoint: string) => {
-  const response = await axiosAuthInstance.get<T.RoomResponse>(
-    `${ROOMS_URL}${endPoint}`
+export const getUuidRoom = async (path: string) => {
+  return await axiosAuthInstance.get<T.RoomResponse>(
+    `${API_ENDPOINT.ROOM.ROOMS}${path}`
   );
-  return response;
 };
 
-// 방 수정
-export const editRoom = async ({ endPoint, requestBody }: T.EditRoomProps) => {
-  const response = await axiosAuthInstance.patch<T.OmitRoomType>(
-    `${ROOMS_URL}${endPoint}`,
+// 방 정보 수정
+export const updateRoom = async ({ path, requestBody }: T.UpdateRoomProps) => {
+  return await axiosAuthInstance.patch<T.UpdateRoomResponse>(
+    `${API_ENDPOINT.ROOM.ROOMS}${path}`,
     requestBody
   );
-  return response;
 };
 
 // 문제 풀이 시작
-export const startTest = async (endPoint: string) => {
-  return await axiosAuthInstance.post(`${ROOMS_CODES_URL}${endPoint}`);
+export const startTest = async (path: string) => {
+  return await axiosAuthInstance.post<T.RoomResponse>(
+    `${API_ENDPOINT.ROOM.CODES}${path}`
+  );
+};
+
+// 방-회원 API
+// 준비 상태 변경
+export const toggleReady = async (path: string) => {
+  return await axiosAuthInstance.post<T.ToggleReadyResponse>(
+    `${API_ENDPOINT.ROOM.READY}${path}`
+  );
 };
 
 // 방장 자동 변경
-export const changeHostAuto = async () => {
-  const response = await axiosAuthInstance.get(`${ROOMS_HOST_URL}`);
-  return response;
+export const changeHostAuto = async (requestBody: T.ChangeHostAutoProps) => {
+  return await axiosAuthInstance.post<T.ChangeHostAutoResponse>(
+    `${API_ENDPOINT.ROOM.CHANGE_HOST_AUTO}`,
+    requestBody
+  );
 };
 
 // 방장 수동 변경
-export const changeHost = async ({
-  roomId,
-  hostId,
-  organizerId,
-}: T.ChangeHostProps) => {
-  const response = await axiosAuthInstance.get<T.ChangeHostResponse>(
-    `${ROOMS_HOST_URL}/${hostId}/${organizerId}`
+export const changeHostManual = async (
+  requestBody: T.ChangeHostManualProps
+) => {
+  return await axiosAuthInstance.post<T.ChangeHostManualResponse>(
+    `${API_ENDPOINT.ROOM.CHANGE_HOST_MANUAL}`,
+    requestBody
   );
-
-  if (response.success) {
-    return { response, organizerId };
-  }
-
-  return response;
 };

@@ -7,9 +7,13 @@ import { MENU_TEXT } from '@/components/Common/Menu/MenuText';
 import { CardWrapper } from '@/components/MemberCard/MemberCard.style';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import { changeHost } from '@/services/Room/Room';
+import { changeHostManual } from '@/services/Room/Room';
 import useRoomStore from '@/store/Room';
-import { MemberType, RoleType } from '@/types/room';
+import {
+  ChangeHostManualResponse,
+  RoleType,
+  RoomMemberType,
+} from '@/types/room';
 
 interface MemberListProps {
   className: string;
@@ -20,28 +24,31 @@ const MAX_MEMBERS = 6;
 
 export default function MemberList({ className, myRole }: MemberListProps) {
   const { roomData, setRoomData } = useRoomStore();
-  const { members } = roomData;
+  const { roomId, roomMembers } = roomData;
 
-  const [host] = members.filter(member => member.role === ROOM_ROLE.HOST);
+  const [host] = roomMembers.filter(member => member.role === ROOM_ROLE.HOST);
 
   const { mutate: changeHostMutate } = useMutation({
-    mutationFn: changeHost,
-    onSuccess: response => {
-      const { previousHostId, newHostId } = response;
+    mutationFn: changeHostManual,
+    onSuccess: (data: ChangeHostManualResponse) => {
+      if (!data.response) return;
+
+      const { previousHostId, newHostId } = data.response;
       // Todo: API 테스트
-      const updatedMembers: MemberType[] = members.map(member => {
+      const updatedMembers: RoomMemberType[] = roomMembers.map(member => {
+        // Todo: 백엔드 요청: member.id와 newHostId, previousHostId 일치 필요
         if (member.id === newHostId) {
           return { ...member, role: ROOM_ROLE.HOST };
         }
 
-        if (member.role === previousHostId) {
+        if (member.id === previousHostId) {
           return { ...member, role: ROOM_ROLE.MEMBER };
         }
 
         return member;
       });
 
-      setRoomData({ members: updatedMembers });
+      setRoomData({ roomMembers: updatedMembers });
     },
   });
 
@@ -49,7 +56,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
     switch (menu) {
       case MENU_TEXT.TRANSFER_HOST:
         // 테스트용 삭제 예정 코드입니다
-        const updatedMembers = members.map(member => {
+        const updatedMembers = roomMembers.map(member => {
           if (member.id === host.id) {
             return { ...member, role: ROOM_ROLE.MEMBER };
           }
@@ -61,16 +68,22 @@ export default function MemberList({ className, myRole }: MemberListProps) {
           return member;
         });
 
-        setRoomData({ members: updatedMembers });
+        setRoomData({ roomMembers: updatedMembers });
         // Todo: 방장 수동 변경 API 테스트
-        // await changeHostMutate({ roomId, hostId: host.id, organizerId: memberId });
+        await changeHostMutate({
+          roomId,
+          hostId: host.id,
+          organizerId: memberId,
+        });
         break;
       case MENU_TEXT.KICKOUT:
         const answer = confirm('정말 강제 퇴장하시겠습니까?');
 
         if (answer) {
-          const newMembers = members.filter(member => member.id !== memberId);
-          setRoomData({ members: newMembers });
+          const newMembers = roomMembers.filter(
+            member => member.id !== memberId
+          );
+          setRoomData({ roomMembers: newMembers });
         }
         break;
       default:
@@ -79,7 +92,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
   };
 
   const memberCards = useMemo(() => {
-    const cardList = members.map(member => (
+    const cardList = roomMembers.map(member => (
       <MemberCard
         key={member.id}
         myRole={myRole}
@@ -92,7 +105,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
       />
     ));
 
-    const emptyCount = MAX_MEMBERS - members.length;
+    const emptyCount = MAX_MEMBERS - roomMembers.length;
 
     for (let i = 0; i < emptyCount; i++) {
       cardList.push(
@@ -104,7 +117,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
     }
 
     return cardList;
-  }, [members]);
+  }, [roomMembers]);
 
   return (
     <S.MembersContainer className={className}>{memberCards}</S.MembersContainer>

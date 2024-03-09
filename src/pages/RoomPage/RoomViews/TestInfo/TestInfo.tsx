@@ -21,15 +21,15 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
   const { theme } = useCustomTheme();
 
   const { roomData, setRoomData } = useRoomStore();
-  const { timeLimit, problemLink, roomId, members } = roomData;
+  const { timeLimit, problemLink, roomId, roomMembers } = roomData;
   const { me } = useMeStore();
 
   const navigate = useNavigate();
 
   const isTestReady = useMemo(() => {
-    const result = members.findIndex(member => member.ready === false);
+    const result = roomMembers.findIndex(member => member.ready === false);
     return result === -1 ? true : false;
-  }, [members]);
+  }, [roomMembers]);
 
   const calcTime = useMemo(() => {
     const hours = Math.floor(timeLimit / 60);
@@ -39,17 +39,17 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
   }, [timeLimit]);
 
   const changeMemberData = (newData: Partial<MemberType>) => {
-    const myIndex = members.findIndex(member => member.id === me.id);
+    const myIndex = roomMembers.findIndex(member => member.id === me.id);
 
     if (myIndex === -1) return;
 
-    const updatedData = [...members];
+    const updatedData = [...roomMembers];
     updatedData[myIndex] = {
       ...updatedData[myIndex],
       ...newData,
     };
 
-    setRoomData({ ...roomData, members: updatedData });
+    setRoomData({ ...roomData, roomMembers: updatedData });
   };
 
   const { mutate: startTestMutate } = useMutation({

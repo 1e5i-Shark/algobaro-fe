@@ -20,7 +20,7 @@ export default function RoomHeader({ className, myRoomData }: HeaderProps) {
   const { id: myId, role: myRole } = myRoomData;
 
   const { roomData, setRoomData } = useRoomStore();
-  const { members } = roomData;
+  const { roomMembers } = roomData;
 
   const { modalRef, isOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
@@ -30,8 +30,8 @@ export default function RoomHeader({ className, myRoomData }: HeaderProps) {
   });
 
   const handleExitRoom = async () => {
-    const newMembers = members.filter(member => member.id !== myId);
-    setRoomData({ members: newMembers });
+    const newMembers = roomMembers.filter(member => member.id !== myId);
+    setRoomData({ roomMembers: newMembers });
 
     if (myRole === 'HOST') {
       alert('방장 자동 변경!');
