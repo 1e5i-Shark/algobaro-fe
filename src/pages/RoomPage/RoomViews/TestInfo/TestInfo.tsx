@@ -105,7 +105,7 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
               <h4>제한시간</h4>
             </td>
             <td>
-              {calcTime.hours > 0 && <span>{calcTime.hours}시간</span>}
+              {calcTime.hours > 0 && <span>{calcTime.hours}시간 </span>}
               {calcTime.minutes > 0 && <span>{calcTime.minutes}분</span>}
             </td>
           </tr>
