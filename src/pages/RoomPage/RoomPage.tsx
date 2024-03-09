@@ -40,7 +40,7 @@ export default function RoomPage() {
 
   return (
     <S.RoomContainer className="roompage">
-      <S.WaitingRoomContainer className="waitingroom">
+      <S.WaitingRoomContainer className="waitingroom-container">
         <RoomHeader
           className="roomheader-container"
           myRoomData={myRoomData}
@@ -54,7 +54,7 @@ export default function RoomPage() {
           myRoomData={myRoomData}
         />
       </S.WaitingRoomContainer>
-      <S.ChatContainer className="chat-room">
+      <S.ChatContainer className="chat-container">
         <ChatViews />
       </S.ChatContainer>
     </S.RoomContainer>
