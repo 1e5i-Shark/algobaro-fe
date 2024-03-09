@@ -1,4 +1,5 @@
 import { ContentCopyRounded, LockRounded } from '@mui/icons-material';
+import { v4 } from 'uuid';
 
 import { Icon, Image, Tag } from '@/components';
 import { LOGOS } from '@/constants/logos';
@@ -54,7 +55,7 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
       </S.TitleWrapper>
       <S.TagsWrapper className="tagsGroup">
         {tags.map((tag, index) => (
-          <S.TagWrapper key={tag + index}>
+          <S.TagWrapper key={v4()}>
             <Tag
               height="2.6rem"
               fontSize="1.4rem"
