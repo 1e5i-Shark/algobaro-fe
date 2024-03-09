@@ -67,7 +67,7 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
               shape="circle"
               alt="logo"
               fill={true}
-              src={LOGOS[language]}
+              src={LOGOS[language.toUpperCase()]}
             />
           </S.LogoWrapper>
         ))}
