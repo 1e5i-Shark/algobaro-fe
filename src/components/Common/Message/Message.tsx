@@ -48,7 +48,7 @@ export default function Message({
   iconSize = 'XS',
   comment,
   menuList,
-  ...props
+  // ...props
 }: MessageProps) {
   return (
     <>

@@ -19,7 +19,12 @@ const HeaderWrapper = styled.header`
   `}
 `;
 
-const LogoWrapper = styled.div``;
+const LogoWrapper = styled.div`
+  ${({ theme }) => css`
+    padding: ${theme.size.S};
+    cursor: pointer;
+  `}
+`;
 
 const LogoText = styled.span`
   ${({ theme }) => css`
