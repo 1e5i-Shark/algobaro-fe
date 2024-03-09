@@ -20,6 +20,7 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   // 페이지네이션 상태 관리 함수이다.
   const [pageNum, setPageNum] = useState(1);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   // 내 정보 가져오는 쿼리를 호출한다.
   const { data: myInfoData } = useMyInfo();
   const myInfo = myInfoData?.response;
@@ -31,6 +32,14 @@ export default function ProfilePage() {
   const handleClickLogOut = () => {
     setAccessToken('');
     navigate(PATH.ROOT);
+  };
+
+  const handleClickEditBtn = () => {
+    setIsOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpenModal(false);
   };
 
   return (
@@ -48,7 +57,12 @@ export default function ProfilePage() {
           <S.UserEmail>{myInfo ? myInfo.email : ''}</S.UserEmail>
         </S.UserInfoTextContainer>
         <S.UserInfoButtonContainer>
-          <Button backgroundColor={theme.color.gray_20}>수정</Button>
+          <Button
+            onClick={handleClickEditBtn}
+            backgroundColor={theme.color.gray_20}
+          >
+            수정
+          </Button>
           <Button onClick={handleClickLogOut}>로그아웃</Button>
         </S.UserInfoButtonContainer>
       </S.UserInfoContainer>
@@ -102,6 +116,12 @@ export default function ProfilePage() {
           }}
         />
       </div>
+      <S.EditModal
+        isOpen={isOpenModal}
+        onClose={handleCloseModal}
+        width="60%"
+        height="60%"
+      />
     </S.ProfilePageWrapper>
   );
 }

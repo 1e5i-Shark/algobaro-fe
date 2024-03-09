@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components';
 
 import { Col, Row } from '@/styles/GlobalStyle';
 
+import ProfileEditModal from './ProfileEditModal/ProfileEditModal';
+
 export const ProfilePageWrapper = styled(Col)`
   align-items: center;
   width: 100%;
@@ -47,4 +49,9 @@ export const UserInfoButtonContainer = styled(Row)`
 
 export const MySolveTextContainer = styled(Row)`
   justify-content: normal;
+`;
+
+export const EditModal = styled(ProfileEditModal)`
+  max-width: 60rem;
+  min-height: 50rem;
 `;
