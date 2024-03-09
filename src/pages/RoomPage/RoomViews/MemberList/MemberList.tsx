@@ -26,7 +26,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
   const mutation = useMutation({
     mutationFn: changeHost,
     onSuccess: response => {
-      const { organizerId } = response;
+      const { id: organizerId } = response;
       // Todo: API 테스트
       const updatedMembers: MemberType[] = members.map(member => {
         if (member.id === organizerId) {

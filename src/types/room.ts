@@ -59,7 +59,8 @@ export interface ChangeHostProps {
 
 export interface ChangeHostResponse {
   success: boolean;
-  organizerId?: number;
+  id?: number;
+  roomId?: number;
 }
 
 export interface MemberType {
