@@ -63,7 +63,9 @@ export const HeaderContainer = styled(Row)`
 
 export const RoomInfoContainer = styled.div``;
 
-export const ButtonsWrapper = styled(Row)``;
+export const ButtonsWrapper = styled(Row)`
+  gap: 1rem;
+`;
 
 export const RoomIdWrapper = styled(Row)`
   padding-bottom: 1rem;
