@@ -1,2 +1,6 @@
-export const ROOM_UUID_INFO = 'roomUuidInfo';
 export const MY_INFO_KEY = 'myInfo';
+export const QUERY_KEY = {
+  ROOM: {
+    UUID_INFO: 'roomUuidInfo',
+  },
+};

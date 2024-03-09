@@ -19,7 +19,7 @@ export default function RoomPage() {
 
   // Todo: 개별 방 정보 조회 API
   // const { data, isLoading, error, isSuccess } = useQuery({
-  //   queryKey: [ROOM_UUID_INFO],
+  //   queryKey: [QUERY_KEY.ROOM.UUID_INFO],
   //   queryFn: async () => await getUuidRoom(`/${roomUUID}`),
   // });
 
