@@ -30,7 +30,10 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
       <S.RoomIdWrapper className="roomId">
         <S.CopyRoomIdTag onClick={handleCopyRoomId}>
           <S.TextId>방 번호 복사</S.TextId>
-          <Icon size="XXS">
+          <Icon
+            size="XXS"
+            onClick={() => {}}
+          >
             <ContentCopyRounded />
           </Icon>
         </S.CopyRoomIdTag>
