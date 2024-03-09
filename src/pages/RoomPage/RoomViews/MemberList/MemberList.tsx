@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
 import { MemberCard } from '@/components';
-import { MenuText } from '@/components/Common/Menu/MenuText';
+import { MENU_TEXT } from '@/components/Common/Menu/MenuText';
 import { CardWrapper } from '@/components/MemberCard/MemberCard.style';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
@@ -44,7 +44,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
 
   const handleMenu = async (menu: string, memberId: number) => {
     switch (menu) {
-      case MenuText.TransferHost:
+      case MENU_TEXT.TRANSFER_HOST:
         // 테스트용 삭제 예정 코드입니다
         const updatedMembers = members.map(member => {
           if (member.id === host.id) {
@@ -60,7 +60,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
         // Todo: 방장 수동 변경 API 테스트
         // await mutation.mutate({ hostId: host.id, organizerId: memberId });
         break;
-      case MenuText.KickOut:
+      case MENU_TEXT.KICKOUT:
         const answer = confirm('정말 강제 퇴장하시겠습니까?');
 
         if (answer) {

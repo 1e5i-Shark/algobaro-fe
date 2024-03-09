@@ -2,7 +2,7 @@ import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 
 import { Icon, Menu } from '@/components';
 import { Avatar } from '@/components/Common/Avatar';
-import { MenuListProps, MenuText } from '@/components/Common/Menu/MenuText';
+import { MENU_TEXT, MenuListProps } from '@/components/Common/Menu/MenuText';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import { MemberType, RoleType } from '@/types/room';
 
@@ -30,13 +30,13 @@ export default function MemberCard({
   const menuList: MenuListProps[] = [
     {
       id: 1,
-      text: MenuText.TransferHost,
-      onClick: () => onMenuClick(MenuText.TransferHost, memberId),
+      text: MENU_TEXT.TRANSFER_HOST,
+      onClick: () => onMenuClick(MENU_TEXT.TRANSFER_HOST, memberId),
     },
     {
       id: 2,
-      text: MenuText.KickOut,
-      onClick: () => onMenuClick(MenuText.KickOut, memberId),
+      text: MENU_TEXT.KICKOUT,
+      onClick: () => onMenuClick(MENU_TEXT.KICKOUT, memberId),
     },
   ];
 
