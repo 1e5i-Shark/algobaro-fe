@@ -16,9 +16,13 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
   const { roomUUID, title, tags, languages, roomAccessType } = roomData;
 
   const handleCopyRoomId = () => {
-    window.navigator.clipboard.writeText(roomUUID);
+    if (window.navigator.clipboard) {
+      window.navigator.clipboard.writeText(roomUUID);
 
-    alert('방 번호가 복사되었습니다!');
+      alert('방 번호가 복사되었습니다!');
+    } else {
+      alert('복사하기가 지원되지 않는 브라우저입니다.');
+    }
   };
 
   return (
