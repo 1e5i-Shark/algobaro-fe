@@ -55,7 +55,7 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
   const mutation = useMutation({
     mutationFn: startTest,
     onError: () => {
-      alert('테스트를 시작하지 못했습니다.');
+      alert('서버 통신에 문제가 있습니다. 잠시 후 다시 시도해주세요.');
 
       navigate(`${PATH.ROOM}/${roomId}`);
     },
