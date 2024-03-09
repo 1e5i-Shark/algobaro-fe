@@ -31,11 +31,13 @@ export default function MemberList({ className, myRole }: MemberListProps) {
       const updatedMembers: MemberType[] = members.map(member => {
         if (member.id === organizerId) {
           return { ...member, role: ROOM_ROLE.HOST };
-        } else if (member.role === ROOM_ROLE.HOST) {
-          return { ...member, role: ROOM_ROLE.MEMBER };
-        } else {
-          return member;
         }
+
+        if (member.role === ROOM_ROLE.HOST) {
+          return { ...member, role: ROOM_ROLE.MEMBER };
+        }
+
+        return member;
       });
 
       setRoomData({ members: updatedMembers });
