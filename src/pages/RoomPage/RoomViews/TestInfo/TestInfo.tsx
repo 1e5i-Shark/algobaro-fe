@@ -86,7 +86,10 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
             >
               <span className="row-content">
                 <h4>문제링크</h4>
-                <Icon className="icon">
+                <Icon
+                  className="icon"
+                  onClick={() => {}}
+                >
                   <AttachmentRounded />
                 </Icon>
                 {!problemLink ? (
