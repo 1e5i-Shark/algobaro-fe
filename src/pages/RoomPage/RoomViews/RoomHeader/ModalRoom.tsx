@@ -33,7 +33,7 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     },
   });
 
-  // const mutation = useMutation({
+  // const {mutate: editRoomMutate} = useMutation({
   //   mutationFn: editRoom,
   //   onSuccess: () => {
   //     alert('mutation 방 수정 성공!');
@@ -59,7 +59,7 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     setRoomData({ ...roomData, ...newData });
 
     // Todo: 방 수정 API 테스트
-    // mutation.mutate({
+    // editRoomMutate({
     //   endPoint: `/${roomId}`,
     //   requestBody: {
     //     roomAccessType: isPrivate ? ROOM_ACCESS.PRIVATE : ROOM_ACCESS.PUBLIC,

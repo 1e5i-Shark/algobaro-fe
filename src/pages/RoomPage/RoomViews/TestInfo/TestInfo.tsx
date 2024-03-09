@@ -52,7 +52,7 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
     setRoomData({ ...roomData, members: updatedData });
   };
 
-  const mutation = useMutation({
+  const { mutate: startTestMutate } = useMutation({
     mutationFn: startTest,
     onError: () => {
       alert('서버 통신에 문제가 있습니다. 잠시 후 다시 시도해주세요.');
@@ -62,7 +62,7 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
   });
 
   const handleStartTest = async () => {
-    await mutation.mutate(`/${roomId}`);
+    // await startTestMutate(`/${roomId}`);
     navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
   };
 

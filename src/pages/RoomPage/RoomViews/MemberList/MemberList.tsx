@@ -24,17 +24,17 @@ export default function MemberList({ className, myRole }: MemberListProps) {
 
   const [host] = members.filter(member => member.role === ROOM_ROLE.HOST);
 
-  const mutation = useMutation({
+  const { mutate: changeHostMutate } = useMutation({
     mutationFn: changeHost,
     onSuccess: response => {
-      const { id: organizerId } = response;
+      const { previousHostId, newHostId } = response;
       // Todo: API 테스트
       const updatedMembers: MemberType[] = members.map(member => {
-        if (member.id === organizerId) {
+        if (member.id === newHostId) {
           return { ...member, role: ROOM_ROLE.HOST };
         }
 
-        if (member.role === ROOM_ROLE.HOST) {
+        if (member.role === previousHostId) {
           return { ...member, role: ROOM_ROLE.MEMBER };
         }
 
@@ -63,7 +63,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
 
         setRoomData({ members: updatedMembers });
         // Todo: 방장 수동 변경 API 테스트
-        // await mutation.mutate({ hostId: host.id, organizerId: memberId });
+        // await changeHostMutate({ roomId, hostId: host.id, organizerId: memberId });
         break;
       case MENU_TEXT.KICKOUT:
         const answer = confirm('정말 강제 퇴장하시겠습니까?');

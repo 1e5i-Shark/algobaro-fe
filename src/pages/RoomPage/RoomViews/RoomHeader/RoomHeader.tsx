@@ -25,7 +25,7 @@ export default function RoomHeader({ className, myRoomData }: HeaderProps) {
   const { modalRef, isOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
 
-  const mutation = useMutation({
+  const { mutate: changeHostAutoMutate } = useMutation({
     mutationFn: changeHostAuto,
   });
 
@@ -36,7 +36,7 @@ export default function RoomHeader({ className, myRoomData }: HeaderProps) {
     if (myRole === 'HOST') {
       alert('방장 자동 변경!');
       // Todo: 방장 자동 변경 API 테스트
-      // await mutation.mutate();
+      // await changeHostAutoMutate();
     }
 
     navigate(PATH.HOME);
