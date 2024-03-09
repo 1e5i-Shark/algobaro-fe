@@ -2,6 +2,7 @@ import { Pagination } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 
 import { Avatar, Button, Tag } from '@/components';
+import { useMyInfo } from '@/hooks/Api/useMembers';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 import { problemHistory } from './problemHistory';
@@ -10,6 +11,10 @@ import * as S from './ProfilePage.style';
 export default function ProfilePage() {
   const { theme } = useCustomTheme();
   const [pageNum, setPageNum] = useState(1);
+  const { data: myInfoData } = useMyInfo();
+
+  const myInfo = myInfoData?.response;
+
   const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
     if (event) setPageNum(value);
   };
@@ -24,8 +29,8 @@ export default function ProfilePage() {
           />
         </S.UserAvatarContainer>
         <S.UserInfoTextContainer>
-          <S.UserName>알고나</S.UserName>
-          <S.UserEmail>algo@gmail.com</S.UserEmail>
+          <S.UserName>{myInfo ? myInfo.nickname : ''}</S.UserName>
+          <S.UserEmail>{myInfo ? myInfo.email : ''}</S.UserEmail>
         </S.UserInfoTextContainer>
         <S.UserInfoButtonContainer>
           <Button backgroundColor={theme.color.gray_20}>수정</Button>
