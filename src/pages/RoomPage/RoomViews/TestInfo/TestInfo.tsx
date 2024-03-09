@@ -41,6 +41,8 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
   const changeMemberData = (newData: Partial<MemberType>) => {
     const myIndex = members.findIndex(member => member.id === me.id);
 
+    if (myIndex === -1) return;
+
     const updatedData = [...members];
     updatedData[myIndex] = {
       ...updatedData[myIndex],
