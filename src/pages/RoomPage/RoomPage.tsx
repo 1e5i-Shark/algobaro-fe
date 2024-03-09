@@ -10,11 +10,11 @@ import { MemberList, RoomHeader, TestInfo } from './RoomViews';
 export default function RoomPage() {
   const { me } = useMeStore();
   const { roomData } = useRoomStore();
-  const { members, roomId } = roomData;
+  const { members } = roomData;
 
   const myRoomData = useMemo(
     () => members.filter(member => member.id === me.id)[0],
-    [roomId, members]
+    [members]
   );
 
   // Todo: 개별 방 정보 조회 API
