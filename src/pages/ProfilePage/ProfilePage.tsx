@@ -1,5 +1,5 @@
 import { Pagination } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Avatar, Button, Tag } from '@/components';
@@ -14,6 +14,10 @@ import * as S from './ProfilePage.style';
 
 export default function ProfilePage() {
   const { theme } = useCustomTheme();
+
+  const fileInput = useRef<HTMLInputElement>(null);
+  const [avatarImage, setAvatarImage] = useState('');
+
   // 로그아웃 버튼 기능을 위한 로컬스토리지 AccessToken set 함수를 가져온다.
   const [, setAccessToken] = useLocalStorage(LOCAL_ACCESSTOKEN);
   // 로그아웃 후 시작 페이지 이동을 위한 네비게이터 훅이다.
@@ -31,6 +35,33 @@ export default function ProfilePage() {
   const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
     if (event) setPageNum(value - 1);
   };
+
+  const handleClickAvatar = () => {
+    fileInput.current?.click();
+  };
+
+  const handleChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+    const fileData = e.target.files?.[0];
+    const fileUrl = fileData ? URL.createObjectURL(fileData) : '';
+
+    const formData = new FormData();
+
+    if (fileData) {
+      formData.append('file', fileData);
+      // Todo: 확인 콘솔 삭제
+      // Todo: api 연결
+      // 제출 URL 확인 코드
+      console.log('제출 : ', fileUrl);
+
+      // formData 확인 코드
+      for (const [key, value] of formData) {
+        console.log(key, value);
+      }
+
+      setAvatarImage(fileUrl);
+    }
+  };
+
   // 로그아웃 버튼 클릭 이벤트 핸들러 함수이다.
   const handleClickLogOut = () => {
     setAccessToken('');
@@ -50,9 +81,20 @@ export default function ProfilePage() {
       {/* 유저 정보 컨테이너 */}
       <S.UserInfoContainer>
         <S.UserAvatarContainer>
+          <S.AvatarInput
+            name="avatarImage"
+            type="file"
+            id="avatarImage"
+            ref={fileInput}
+            onChange={handleChangeAvatar}
+            accept="image/png, image/jpg, image/jpeg"
+          />
+
           <Avatar
             size="L"
             isEdit
+            onClick={handleClickAvatar}
+            src={myInfo?.profileImage || avatarImage}
           />
         </S.UserAvatarContainer>
         <S.UserInfoTextContainer>
@@ -64,8 +106,9 @@ export default function ProfilePage() {
             onClick={handleClickEditBtn}
             backgroundColor={theme.color.gray_20}
           >
-            수정
+            정보 수정
           </Button>
+          <Button>비밀번호 변경</Button>
           <Button onClick={handleClickLogOut}>로그아웃</Button>
         </S.UserInfoButtonContainer>
       </S.UserInfoContainer>
@@ -81,6 +124,7 @@ export default function ProfilePage() {
           {problemHistoryResponse[pageNum].content.map(problem => {
             return (
               <li key={problem.id}>
+                {/* TODO: 응답에 문제 링크 추가되면 변경 */}
                 <p>{problem.roomUuid}</p>
                 <Tag
                   mode="normal"
@@ -94,32 +138,32 @@ export default function ProfilePage() {
             );
           })}
         </ul>
-        <Pagination
-          count={totalPageNum} // 표시할 페이지네이션 페이지 수
-          page={pageNum + 1} // 현재 페이지 위치
-          siblingCount={1} // 현재 페이지 기준 양쪽 몇 개 표시
-          boundaryCount={0}
-          onChange={handlePageChange}
-          showFirstButton
-          showLastButton
-          size="large" //
-          color="secondary" //
-          sx={{
-            '& .MuiPaginationItem-root': {
-              color: theme.color.text_primary_color,
-              fontSize: theme.size.M,
-
-              '& .MuiSvgIcon-root': {
-                fontSize: theme.size.L,
-              },
-              '&.Mui-selected': {
-                backgroundColor: theme.color.secondary_color,
-                color: theme.color.background_primary,
-              },
-            },
-          }}
-        />
       </div>
+      <Pagination
+        count={totalPageNum} // 표시할 페이지네이션 페이지 수
+        page={pageNum + 1} // 현재 페이지 위치
+        siblingCount={1} // 현재 페이지 기준 양쪽 몇 개 표시
+        boundaryCount={0}
+        onChange={handlePageChange}
+        showFirstButton
+        showLastButton
+        size="large" //
+        color="secondary" //
+        sx={{
+          '& .MuiPaginationItem-root': {
+            color: theme.color.text_primary_color,
+            fontSize: theme.size.M,
+
+            '& .MuiSvgIcon-root': {
+              fontSize: theme.size.L,
+            },
+            '&.Mui-selected': {
+              backgroundColor: theme.color.secondary_color,
+              color: theme.color.background_primary,
+            },
+          },
+        }}
+      />
       <S.EditModal
         isOpen={isOpenModal}
         onClose={handleCloseModal}

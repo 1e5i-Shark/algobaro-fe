@@ -29,6 +29,10 @@ export const UserAvatarContainer = styled.div`
   `}
 `;
 
+export const AvatarInput = styled.input`
+  display: none;
+`;
+
 export const UserInfoTextContainer = styled(Col)``;
 
 export const UserName = styled.p``;
