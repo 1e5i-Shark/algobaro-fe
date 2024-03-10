@@ -5,6 +5,7 @@ const NavContainer = styled.nav`
   display: flex;
   align-items: end;
   justify-content: space-between;
+  width: 100%;
   height: 14rem;
   padding: 2rem 0;
 `;
@@ -19,6 +20,7 @@ const NavWrapper = styled.div`
 
 const SearchOptionsContainer = styled.div`
   display: flex;
+  gap: 1rem;
   align-items: center;
   justify-content: space-between;
   width: 50%;
@@ -29,7 +31,6 @@ const SearchInputWrapper = styled.form`
   position: relative;
   width: 28rem;
   height: 100%;
-  margin-right: 2rem;
 
   & :last-child {
     position: absolute;
@@ -41,6 +42,7 @@ const SearchInputWrapper = styled.form`
 const SearchInput = styled.input`
   ${({ theme }) => css`
     width: 100%;
+    min-width: 19.4rem;
     height: 100%;
     padding: 0 2rem;
     color: ${theme.color.text_primary_color};
