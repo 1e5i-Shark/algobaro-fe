@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 import { Col, Row } from '@/styles/GlobalStyle';
 
+import PasswordEditModal from './PasswordEditModal/PasswordEditModal';
 import ProfileEditModal from './ProfileEditModal/ProfileEditModal';
 
 export const ProfilePageWrapper = styled(Col)`
@@ -55,7 +56,11 @@ export const MySolveTextContainer = styled(Row)`
   justify-content: normal;
 `;
 
-export const EditModal = styled(ProfileEditModal)`
+export const EditInfoModal = styled(ProfileEditModal)`
+  max-width: 60rem;
+  min-height: 50rem;
+`;
+export const EditPWModal = styled(PasswordEditModal)`
   max-width: 60rem;
   min-height: 50rem;
 `;

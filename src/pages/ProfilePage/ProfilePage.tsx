@@ -24,7 +24,8 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   // 페이지네이션 상태 관리 함수이다.
   const [pageNum, setPageNum] = useState(0);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenEditInfoModal, setIsOpenEditInfoModal] = useState(false);
+  const [isOpenEditPWModal, setIsOpenEditPWModal] = useState(false);
   // 내 정보 가져오는 쿼리를 호출한다.
   const { data: myInfoData } = useMyInfo();
   const myInfo = myInfoData?.response;
@@ -68,12 +69,19 @@ export default function ProfilePage() {
     navigate(PATH.ROOT);
   };
 
-  const handleClickEditBtn = () => {
-    setIsOpenModal(true);
+  const handleClickEditInfoBtn = () => {
+    setIsOpenEditInfoModal(true);
+  };
+  const handleClickEditPWBtn = () => {
+    setIsOpenEditPWModal(true);
   };
 
-  const handleCloseModal = () => {
-    setIsOpenModal(false);
+  const handleCloseEditInfoModal = () => {
+    setIsOpenEditInfoModal(false);
+  };
+
+  const handleCloseEditPWModal = () => {
+    setIsOpenEditPWModal(false);
   };
 
   return (
@@ -103,12 +111,17 @@ export default function ProfilePage() {
         </S.UserInfoTextContainer>
         <S.UserInfoButtonContainer>
           <Button
-            onClick={handleClickEditBtn}
+            onClick={handleClickEditInfoBtn}
             backgroundColor={theme.color.gray_20}
           >
             정보 수정
           </Button>
-          <Button>비밀번호 변경</Button>
+          <Button
+            onClick={handleClickEditPWBtn}
+            backgroundColor={theme.color.gray_20}
+          >
+            암호 변경
+          </Button>
           <Button onClick={handleClickLogOut}>로그아웃</Button>
         </S.UserInfoButtonContainer>
       </S.UserInfoContainer>
@@ -164,9 +177,15 @@ export default function ProfilePage() {
           },
         }}
       />
-      <S.EditModal
-        isOpen={isOpenModal}
-        onClose={handleCloseModal}
+      <S.EditInfoModal
+        isOpen={isOpenEditInfoModal}
+        onClose={handleCloseEditInfoModal}
+        width="60%"
+        height="60%"
+      />
+      <S.EditPWModal
+        isOpen={isOpenEditPWModal}
+        onClose={handleCloseEditPWModal}
         width="60%"
         height="60%"
       />
