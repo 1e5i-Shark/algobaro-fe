@@ -5,6 +5,8 @@ const SectionWrapper = styled.section`
     position: relative;
     display: flex;
     flex-direction: column;
+    min-width: 46rem;
+    height: 28rem;
     padding: 3rem;
     background-color: ${theme.color.transparent_10};
     border-radius: 12px;
