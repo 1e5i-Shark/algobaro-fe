@@ -1,8 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { MY_INFO_KEY } from '@/constants/queryKey';
-import { myInfo } from '@/services/Member';
-import editMyInfo from '@/services/Member/editMyInfo';
+import { editMyInfo, editMyPassword, myInfo } from '@/services/Member';
 
 export const useMyInfo = () => {
   return useQuery({
@@ -18,6 +17,17 @@ export const useEditMyInfo = () => {
 
   return useMutation({
     mutationFn: editMyInfo,
+    onSuccess: () => {
+      refetch();
+    },
+  });
+};
+
+export const useEditMyPassword = () => {
+  const { refetch } = useMyInfo();
+
+  return useMutation({
+    mutationFn: editMyPassword,
     onSuccess: () => {
       refetch();
     },
