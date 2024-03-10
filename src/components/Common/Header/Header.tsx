@@ -12,9 +12,13 @@ export default function Header() {
     navigate(PATH.PROFILE);
   };
 
+  const handleLogoClick = () => {
+    navigate(PATH.ROOT);
+  };
+
   return (
     <S.HeaderWrapper>
-      <S.LogoWrapper>
+      <S.LogoWrapper onClick={handleLogoClick}>
         <S.LogoText>AlgoBaro</S.LogoText>
       </S.LogoWrapper>
       <S.IconWrapper>
