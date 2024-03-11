@@ -54,7 +54,6 @@ export default function Input<T extends FieldValues>({
 
   const inputError = formState?.errors[name];
   const inputErrorMessage = inputError && (inputError.message as string);
-  const isDirty = formState?.isDirty;
 
   return (
     <S.Wrapper>
@@ -80,7 +79,7 @@ export default function Input<T extends FieldValues>({
           })}
           {...props}
         />
-        {type === 'password' && isDirty && (
+        {type === 'password' && (
           <S.ToggleButtonWrapper
             type="button"
             tabIndex={-1}
