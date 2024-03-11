@@ -9,7 +9,7 @@ export interface RoomType {
   title: string;
   languages: LanguagesType[];
   roomAccessType: AccessType;
-  problemPlatform: 'BOJ';
+  problemPlatform: string;
   password?: string;
   roomLimit: number;
   tags: string[];
@@ -125,8 +125,7 @@ export interface ChangeHostManualResponse extends ResponseType {
 }
 
 export interface RoomMemberType {
-  // Todo: 백엔드 요청 처리 후 id string 또는 number 통일
-  id: number;
+  memberId: number; // pk키
   nickname: string;
   profileImage: string | null;
   role: RoleType;
