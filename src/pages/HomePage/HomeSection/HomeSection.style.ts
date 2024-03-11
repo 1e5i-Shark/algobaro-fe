@@ -55,10 +55,9 @@ const RoomFooter = styled.div`
   width: calc(100% - 6rem);
 `;
 
-// todo: 수영님 이미지 컴포넌트 pull 반영 후 height 사용하기
 const LanguageImgs = styled.div`
   display: flex;
-  /* height: 2.4rem; */
+  height: 2.4rem;
 
   & > * {
     margin-right: 2rem;

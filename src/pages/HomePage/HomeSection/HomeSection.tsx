@@ -61,7 +61,6 @@ export default function HomeSection({
         })}
       </S.RoomTags>
 
-      {/* // todo: 수영님 이미지 컴포넌트 pull 반영 후 width, height 제거하기 */}
       <S.RoomFooter>
         <S.LanguageImgs>
           {language.map((lang, index) => {
@@ -69,8 +68,7 @@ export default function HomeSection({
               <Image
                 key={`${lang}-${index}`}
                 src={DummyImgLink[lang]}
-                width="2.4rem"
-                height="2.4rem"
+                fill={true}
                 shape="circle"
               />
             );
