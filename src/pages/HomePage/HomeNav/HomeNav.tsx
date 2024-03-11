@@ -20,7 +20,7 @@ export default function HomeNav() {
 
   return (
     <S.NavContainer>
-      <Button>방 만들기</Button>
+      <Button style={{ minWidth: '13.3rem' }}>방 만들기</Button>
 
       <S.SearchOptionsContainer>
         <S.SearchInputWrapper>
@@ -55,7 +55,7 @@ export default function HomeNav() {
       </S.SearchOptionsContainer>
 
       <S.UpdateData>
-        {`마지막 업데이트: ${latestUpdate}`}
+        <S.UpdateText>{`마지막 업데이트: ${latestUpdate}`}</S.UpdateText>
         <Icon>
           <RefreshRoundedIcon />
         </Icon>

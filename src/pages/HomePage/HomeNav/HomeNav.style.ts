@@ -64,6 +64,10 @@ const UpdateData = styled.span`
   }
 `;
 
+const UpdateText = styled.span`
+  white-space: nowrap;
+`;
+
 export {
   NavContainer,
   NavWrapper,
@@ -71,4 +75,5 @@ export {
   SearchInputWrapper,
   SearchOptionsContainer,
   UpdateData,
+  UpdateText,
 };
