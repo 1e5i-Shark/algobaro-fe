@@ -1,14 +1,15 @@
 import Stomp from '@stomp/stompjs';
 
-import { PATH } from '@/routes/path';
-import { ChatValueUnion } from '@/types/chat';
+import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
+import { ChatValueUnion, RoomValueUnion } from '@/types/chat';
+
+import { API_ENDPOINT } from '../apiEndpoint';
 
 interface MessageProps {
   client: Stomp.Client;
-  type: ChatValueUnion;
+  type: ChatValueUnion | RoomValueUnion;
   messageToSend: {
-    roomId: number;
-    userId: string;
+    roomShortUuid: string;
     message: string;
   };
 }
@@ -19,7 +20,10 @@ export const sendMessageService = ({
   messageToSend,
 }: MessageProps) => {
   client.publish({
-    destination: `${PATH.PUBPREFIX}/chat/${type}`,
+    destination: `${API_ENDPOINT.SOCKET.PUBLICATION}/chat/${type}`,
     body: JSON.stringify(messageToSend),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem(LOCAL_ACCESSTOKEN)}`,
+    },
   });
 };
