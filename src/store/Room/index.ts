@@ -6,7 +6,7 @@ import { RoomType } from '@/types/room';
 import { RoomStateProps } from './type';
 
 const initialData: RoomType = {
-  roomId: 10,
+  roomId: 15,
   roomStatus: 'RECRUITING',
   title: '같이 푸실분~',
   languages: ['JAVA', 'PYTHON', 'JAVASCRIPT', 'C++'],
@@ -16,12 +16,12 @@ const initialData: RoomType = {
   roomLimit: 4,
   tags: ['BFS', 'Level 1'],
   timeLimit: 20,
-  roomShortUuid: '2ad2e9db',
+  roomShortUuid: 'c6574c0a',
   problemLink: 'https://www.acmicpc.net/problem/1000',
   currentMemberCount: 5,
   roomMembers: [
     {
-      id: 1,
+      memberId: 1,
       nickname: '김방장',
       profileImage: '',
       role: 'HOST',
@@ -29,7 +29,7 @@ const initialData: RoomType = {
       ready: true,
     },
     {
-      id: 2,
+      memberId: 2,
       nickname: '아무개',
       role: 'MEMBER',
       profileImage: '',
@@ -37,7 +37,7 @@ const initialData: RoomType = {
       ready: false,
     },
     {
-      id: 3,
+      memberId: 3,
       nickname: '갓코딩',
       role: 'MEMBER',
       profileImage: 'https://picsum.photos/100/100',
@@ -45,7 +45,7 @@ const initialData: RoomType = {
       ready: true,
     },
     {
-      id: 4,
+      memberId: 4,
       nickname: '헬로',
       role: 'MEMBER',
       profileImage: '',
@@ -53,7 +53,7 @@ const initialData: RoomType = {
       ready: true,
     },
     {
-      id: 5,
+      memberId: 5,
       nickname: '월드',
       role: 'MEMBER',
       profileImage: '',

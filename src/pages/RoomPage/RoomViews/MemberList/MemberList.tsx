@@ -37,11 +37,11 @@ export default function MemberList({ className, myRole }: MemberListProps) {
       // Todo: API 테스트
       const updatedMembers: RoomMemberType[] = roomMembers.map(member => {
         // Todo: 백엔드 요청: member.id와 newHostId, previousHostId 일치 필요
-        if (member.id === newHostId) {
+        if (member.memberId === newHostId) {
           return { ...member, role: ROOM_ROLE.HOST };
         }
 
-        if (member.id === previousHostId) {
+        if (member.memberId === previousHostId) {
           return { ...member, role: ROOM_ROLE.MEMBER };
         }
 
@@ -52,36 +52,36 @@ export default function MemberList({ className, myRole }: MemberListProps) {
     },
   });
 
-  const handleMenu = async (menu: string, memberId: number) => {
+  const handleMenu = async (menu: string, id: number) => {
     switch (menu) {
       case MENU_TEXT.TRANSFER_HOST:
         // 테스트용 삭제 예정 코드입니다
-        const updatedMembers = roomMembers.map(member => {
-          if (member.id === host.id) {
-            return { ...member, role: ROOM_ROLE.MEMBER };
-          }
+        // const updatedMembers = roomMembers.map(member => {
+        //   if (member.memberId === host.id) {
+        //     return { ...member, role: ROOM_ROLE.MEMBER };
+        //   }
 
-          if (member.id === memberId) {
-            return { ...member, role: ROOM_ROLE.HOST };
-          }
+        //   if (member.memberId === id) {
+        //     return { ...member, role: ROOM_ROLE.HOST };
+        //   }
 
-          return member;
-        });
+        //   return member;
+        // });
 
-        setRoomData({ roomMembers: updatedMembers });
+        // setRoomData({ roomMembers: updatedMembers });
         // Todo: 방장 수동 변경 API 테스트
-        await changeHostMutate({
-          roomId,
-          hostId: host.id,
-          organizerId: memberId,
-        });
+        // await changeHostMutate({
+        //   roomId,
+        //   hostId: host.id,
+        //   organizerId: memberId,
+        // });
         break;
       case MENU_TEXT.KICKOUT:
         const answer = confirm('정말 강제 퇴장하시겠습니까?');
 
         if (answer) {
           const newMembers = roomMembers.filter(
-            member => member.id !== memberId
+            member => member.memberId !== id
           );
           setRoomData({ roomMembers: newMembers });
         }
@@ -94,9 +94,9 @@ export default function MemberList({ className, myRole }: MemberListProps) {
   const memberCards = useMemo(() => {
     const cardList = roomMembers.map(member => (
       <MemberCard
-        key={member.id}
+        key={member.memberId}
         myRole={myRole}
-        memberId={member.id}
+        memberId={member.memberId}
         nickname={member.nickname}
         role={member.role}
         profileImage={member.profileImage}
