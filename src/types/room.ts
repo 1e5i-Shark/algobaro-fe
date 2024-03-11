@@ -81,6 +81,17 @@ export interface UpdateRoomResponse extends ResponseType {
   >;
 }
 
+export interface ValidateEnterParams {
+  password: string;
+}
+
+export interface ValidateEnterProps {
+  path: string;
+  requestBody: ValidateEnterParams;
+}
+
+export interface ValidateEnterResponse extends ResponseType {}
+
 export interface ToggleReadyResponse extends ResponseType {
   response?: RoomMemberType[];
 }
