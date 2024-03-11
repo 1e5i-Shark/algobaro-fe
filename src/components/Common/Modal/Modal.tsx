@@ -2,13 +2,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { forwardRef, HTMLAttributes, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import {
-  ModalBackground,
-  ModalCloseButton,
-  ModalContainer,
-  ModalContent,
-  ModalWrapper,
-} from './Modal.style';
+import * as S from './Modal.style';
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   mode?: 'normal' | 'confirm';
@@ -50,25 +44,27 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
 
     return createPortal(
       isOpen ? (
-        <ModalWrapper ref={ref}>
-          <ModalBackground onClick={mode === 'normal' ? onClose : undefined} />
-          <ModalContainer
+        <S.ModalWrapper ref={ref}>
+          <S.ModalBackground
+            onClick={mode === 'normal' ? onClose : undefined}
+          />
+          <S.ModalContainer
             width={width}
             height={height}
             $borderRadius={borderRadius}
             {...props}
           >
-            {mode === 'normal' ? (
-              <ModalCloseButton
+            {mode === 'normal' && (
+              <S.ModalCloseButton
                 $coordinate={borderRadius}
                 onClick={onClose}
               >
                 <CloseRoundedIcon />
-              </ModalCloseButton>
-            ) : null}
-            <ModalContent>{children}</ModalContent>
-          </ModalContainer>
-        </ModalWrapper>
+              </S.ModalCloseButton>
+            )}
+            <S.ModalContent>{children}</S.ModalContent>
+          </S.ModalContainer>
+        </S.ModalWrapper>
       ) : null,
       document.body
     );

@@ -54,7 +54,6 @@ export default function Input<T extends FieldValues>({
 
   const inputError = formState?.errors[name];
   const inputErrorMessage = inputError && (inputError.message as string);
-  const isDirty = formState?.isDirty;
 
   return (
     <S.Wrapper>
