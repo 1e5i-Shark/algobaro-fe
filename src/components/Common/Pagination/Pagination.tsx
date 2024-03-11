@@ -55,6 +55,23 @@ export default function Pagination({
               backgroundColor: selectedBgColor || theme.color.secondary_color,
               color: selectedTextColor || theme.color.background_primary,
             },
+            // 다크 모드 ) 선택된 페이지에서, 호버시 배경색(분홍색)이 사라지는 문제 해결
+            '& .MuiPaginationItem-page.Mui-selected:hover': {
+              backgroundColor: selectedBgColor || theme.color.secondary_color,
+            },
+            // // 미선택된 페이지에서, 호버시 나타나는 배경색 설정
+            '& .MuiPaginationItem-page:hover': {
+              backgroundColor:
+                theme.mode === 'light'
+                  ? theme.color.gray_10
+                  : theme.color.transparent_10,
+            },
+            '&:hover': {
+              '&:not(.MuiPaginationItem-ellipsis, .Mui-selected)': {
+                // (...)은 호버 제외
+                backgroundColor: theme.color.transparent_10, // 색상은 예시
+              },
+            },
           },
         }}
         {...props}
