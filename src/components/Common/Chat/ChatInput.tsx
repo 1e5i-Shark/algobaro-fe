@@ -3,7 +3,7 @@ import { TextareaAutosize } from '@mui/material';
 import { KeyboardEvent, useEffect } from 'react';
 
 import { Icon } from '@/components';
-import { chatType } from '@/constants/chat';
+import { SOCKET_TYPE } from '@/constants/socket';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useMessageStore from '@/store/MessageStore';
 
@@ -28,7 +28,7 @@ export default function ChatInput({ className }: ChatInputProps) {
       changeInput('');
       return;
     }
-    sendMessage(chatType.MESSAGE);
+    sendMessage(SOCKET_TYPE.CHAT.MESSAGE);
   };
 
   const onEnterPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
