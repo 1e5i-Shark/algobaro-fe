@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Avatar, Button, Tag } from '@/components';
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
-import { useMyInfo } from '@/hooks/Api/useMembers';
+import { useEditMyImage, useMyInfo } from '@/hooks/Api/useMembers';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
@@ -17,6 +17,8 @@ export default function ProfilePage() {
 
   const fileInput = useRef<HTMLInputElement>(null);
   const [avatarImage, setAvatarImage] = useState('');
+
+  const { mutate: editMyImageMutate } = useEditMyImage();
 
   // 로그아웃 버튼 기능을 위한 로컬스토리지 AccessToken set 함수를 가져온다.
   const [, setAccessToken] = useLocalStorage(LOCAL_ACCESSTOKEN);
@@ -37,49 +39,41 @@ export default function ProfilePage() {
     if (event) setPageNum(value - 1);
   };
 
+  // 프로필 아바타를 클릭할 때 수정 input 이벤트를 동작시킨다.
   const handleClickAvatar = () => {
     fileInput.current?.click();
   };
 
   const handleChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
     const fileData = e.target.files?.[0];
     const fileUrl = fileData ? URL.createObjectURL(fileData) : '';
 
-    const formData = new FormData();
-
+    // 파일 데이터가 있을 때만 요청하도록 가드를 설정한다.
     if (fileData) {
-      formData.append('file', fileData);
-      // Todo: 확인 콘솔 삭제
-      // Todo: api 연결
-      // 제출 URL 확인 코드
-      console.log('제출 : ', fileUrl);
-
-      // formData 확인 코드
-      for (const [key, value] of formData) {
-        console.log(key, value);
-      }
-
+      formData.append('image', fileData);
+      editMyImageMutate(formData);
       setAvatarImage(fileUrl);
     }
   };
 
-  // 로그아웃 버튼 클릭 이벤트 핸들러 함수이다.
+  // 로그아웃 버튼 클릭 이벤트 핸들러 함수
   const handleClickLogOut = () => {
     setAccessToken('');
     navigate(PATH.ROOT);
   };
 
+  // 정보 수정 버튼 클릭 이벤트 핸들러 함수
   const handleClickEditInfoBtn = () => {
     setIsOpenEditInfoModal(true);
   };
-  const handleClickEditPWBtn = () => {
-    setIsOpenEditPWModal(true);
-  };
-
   const handleCloseEditInfoModal = () => {
     setIsOpenEditInfoModal(false);
   };
-
+  // 암호 변경 버튼 클릭 이벤트 핸들러 함수
+  const handleClickEditPWBtn = () => {
+    setIsOpenEditPWModal(true);
+  };
   const handleCloseEditPWModal = () => {
     setIsOpenEditPWModal(false);
   };
@@ -97,7 +91,6 @@ export default function ProfilePage() {
             onChange={handleChangeAvatar}
             accept="image/png, image/jpg, image/jpeg"
           />
-
           <Avatar
             size="L"
             isEdit
@@ -131,6 +124,7 @@ export default function ProfilePage() {
         <p>{totalHistoryNum}</p>
       </S.MySolveTextContainer>
       {/* 풀이 히스토리 컨테이너 */}
+      {/* TODO: 히스토리 하나도 없는 빈 히스토리 컨테이너 추가 */}
       <div>
         <p>풀이 히스토리</p>
         <ul>
