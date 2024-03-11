@@ -1,10 +1,10 @@
 import { MouseEvent, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
 
 import { Message } from '@/components';
-import useMeStore from '@/store/Me';
 import useMessageStore from '@/store/MessageStore';
+import useMeStore from '@/store/MeStore';
+import useRoomStore from '@/store/Room';
 
 import { MenuText } from '../Menu/MenuText';
 import * as S from './Chat.style';
@@ -17,10 +17,9 @@ interface ChatProps {
 export default function Chat({ height = '100%' }: ChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { me } = useMeStore();
-  // routes/index.ts 파일의 path에 정의된 :roomId을 가져옴
-  // * 현재 테스트의 경우 profile routes에서 진행되므로
-  // * routes/index.ts 파일의 42번째 라인의 userId를 roomId로 수정 후 테스트해야 정상 작동 됨.
-  const { roomId } = useParams();
+  const {
+    roomData: { roomShortUuid },
+  } = useRoomStore();
   const { messageLogs, connected, connect, setMessageValue, disconnect } =
     useMessageStore();
 
@@ -39,20 +38,20 @@ export default function Chat({ height = '100%' }: ChatProps) {
     }
   };
 
+  const connectSocketServer = async (id: string) => {
+    if (connected) return;
+
+    setMessageValue({ userId: me.nickname });
+    connect(id);
+  };
+
   useEffect(() => {
-    const connectSocketServer = async (id: number) => {
-      if (connected) return;
-
-      setMessageValue({ userId: me.nickname });
-      connect(id);
-    };
-
-    roomId && connectSocketServer(+roomId);
+    roomShortUuid && connectSocketServer(roomShortUuid);
 
     return () => {
-      if (roomId && connected) disconnect();
+      if (roomShortUuid && connected) disconnect();
     };
-  }, [roomId, disconnect]);
+  }, [roomShortUuid, disconnect]);
 
   useEffect(() => {
     scrollToBottom();
@@ -65,8 +64,9 @@ export default function Chat({ height = '100%' }: ChatProps) {
           return (
             <S.MessageWrapper key={v4()}>
               <Message
-                userName={message.userId}
-                comment={message.value}
+                // Todo: 백엔드 message value 추가 예정
+                userName={message.memberId.toString()}
+                comment={message.value as string}
                 menuList={menuList}
                 createdAt={message.timestamp}
               />
