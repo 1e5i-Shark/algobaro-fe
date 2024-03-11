@@ -13,10 +13,10 @@ export const ProfilePageWrapper = styled(Col)`
 
 export const UserInfoContainer = styled(Row)`
   ${({ theme }) => css`
-    gap: ${theme.size.XXL};
+    gap: ${theme.size.M};
     align-items: center;
-    width: %;
-    min-width: 54rem;
+    width: 60%;
+    min-width: 60rem;
     height: 13rem;
     padding: ${theme.size.M};
     background-color: ${theme.color.background_menu};
@@ -36,13 +36,35 @@ export const AvatarInput = styled.input`
 
 export const UserInfoTextContainer = styled(Col)``;
 
-export const UserName = styled.p``;
-export const UserEmail = styled.p``;
+export const UserName = styled.p`
+  ${({ theme }) => css`
+    margin-bottom: ${theme.size.XS};
+    font-size: ${theme.size.L};
+    font-weight: ${theme.fontWeight.bold};
+  `}
+`;
+export const UserEmail = styled.p`
+  ${({ theme }) => css`
+    font-size: ${theme.size.M};
+  `}
+`;
+export const UserInfoTitle = styled.span`
+  ${({ theme }) => css`
+    margin-right: ${theme.size.XS};
+    font-weight: ${theme.fontWeight.semiBold};
+  `}
+`;
+
+export const UserBojId = styled.p`
+  ${({ theme }) => css`
+    font-size: ${theme.size.M};
+  `}
+`;
 
 export const UserInfoButtonContainer = styled(Row)`
   ${({ theme }) => css`
     gap: 1rem;
-    margin-right: ${theme.size.XL};
+    margin-right: ${theme.size.L};
     margin-left: auto;
     button {
       width: 10rem;

@@ -135,7 +135,15 @@ export default function ProfilePage() {
         {/* 닉네임, 이메일 */}
         <S.UserInfoTextContainer>
           <S.UserName>{myInfo ? myInfo.nickname : ''}</S.UserName>
-          <S.UserEmail>{myInfo ? myInfo.email : ''}</S.UserEmail>
+          <S.UserEmail>
+            <S.UserInfoTitle>Email.</S.UserInfoTitle>
+            {myInfo ? myInfo.email : ''}
+          </S.UserEmail>
+          <S.UserBojId>
+            <S.UserInfoTitle>BOJ ID.</S.UserInfoTitle>
+
+            {myInfo ? myInfo.bojId : ''}
+          </S.UserBojId>
         </S.UserInfoTextContainer>
         {/* 정보, 암호 수정 및 로그아웃 버튼 */}
         <S.UserInfoButtonContainer>
