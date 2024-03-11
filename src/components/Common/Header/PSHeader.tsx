@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
+import ProblemTimer from '@/pages/ProblemSolvePage/ProblemTimer/ProblemTimer';
 import { PATH } from '@/routes/path';
 
 import Button from '../Button/Button';
@@ -25,7 +26,9 @@ export default function PSHeader() {
 
   return (
     <S.HeaderWrapper>
-      <S.TimerWrapper>타이머</S.TimerWrapper>
+      <S.TimerWrapper>
+        <ProblemTimer seconds={5} />
+      </S.TimerWrapper>
       <S.ButtonWrapper>
         <ThemeModeToggleButton />
         <Button
