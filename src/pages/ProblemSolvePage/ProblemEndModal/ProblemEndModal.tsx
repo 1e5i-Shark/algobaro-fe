@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Modal, Timer } from '@/components';
+import { PATH } from '@/routes/path';
 
 import * as S from './ProblemEndModal.style';
 
@@ -16,6 +18,14 @@ export default function ProblemEndModal({
   closeModal,
 }: ProblemEndModalProps) {
   const [isEnd, setIsEnd] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isEnd) {
+      navigate(PATH.PROBLEMSHARE);
+    }
+  }, [isEnd]);
 
   return (
     <Modal
