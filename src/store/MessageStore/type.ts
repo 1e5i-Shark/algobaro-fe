@@ -1,12 +1,12 @@
 import * as Stomp from '@stomp/stompjs';
 
-import { ChatValueUnion } from '@/types/chat';
+import { ChatValueUnion, RoomValueUnion } from '@/types/chat';
+import { RoomType } from '@/types/room';
 
 export interface Message {
-  id: number;
-  userId: string;
+  memberId: number;
   type: string;
-  value: string;
+  value: string | null;
   timestamp: string;
 }
 
@@ -14,23 +14,23 @@ export interface MessageStoreValue {
   listeners: Set<Function>;
   userId: string;
   client: Stomp.Client;
-  roomIndices: number[];
+  roomIndices: RoomType[];
   connected: boolean;
-  currentRoomId: number;
+  currentRoomId: string;
   messageEntered: string;
-  messageLogs: Omit<Message, 'type'>[];
+  messageLogs: Message[];
   subscription: Stomp.StompSubscription | null;
 }
 export interface MessageStoreState extends MessageStoreValue {
-  connect: (roomId: number) => void;
-  subscribeMessageBroker: (roomId: number) => void;
+  connect: (roomShortUuid: string) => void;
+  subscribeMessageBroker: (roomShortUuid: string) => void;
   disconnect: () => void;
   changeInput: (value: string) => void;
-  sendMessage: (type: ChatValueUnion) => void;
+  sendMessage: (type: ChatValueUnion | RoomValueUnion) => void;
   subscribe: (listener: Function) => void;
-  unSubscribe: (listener: Function) => void;
+  unsubscribe: (listener: Function) => void;
   receiveMessage: (messageReceived: { body: string }) => void;
-  formatMessage: (message: Message) => Omit<Message, 'type'>;
+  formatMessage: (message: Message) => Message;
   publish: () => void;
   setMessageValue: (newValue: Partial<MessageStoreValue>) => void;
 }
