@@ -7,6 +7,4 @@ export const PATH = {
   ROOM: '/room',
   PROBLEMSOLVE: '/problemsolve',
   PROBLEMSHARE: '/problemshare',
-  PUBPREFIX: '/publication',
-  SUBPREFIX: '/subscription',
 };
