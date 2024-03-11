@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 const HomePageContainer = styled.div`
   display: flex;
-  height: 200rem;
+  min-width: 360px;
+  height: 100%;
   padding: 0 2rem;
   overflow: auto;
 `;
@@ -13,7 +14,6 @@ const HomePageWrapper = styled.div`
   align-items: center;
   max-width: 128rem;
   margin: 0 auto;
-  overflow-y: auto;
 `;
 
 const HomeSectionContainer = styled.main`
@@ -22,6 +22,15 @@ const HomeSectionContainer = styled.main`
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   width: 100%;
+  margin-top: 2%;
+
+  @media (${({ theme }) => theme.device.laptop}) {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    max-width: 65rem;
+  }
 `;
 
 // ####################### Footer #######################

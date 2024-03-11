@@ -1,21 +1,24 @@
 import styled, { css } from 'styled-components';
 
 const NavContainer = styled.nav`
-  position: relative;
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  width: 100%;
-  height: 14rem;
-  padding: 2rem 0;
-`;
+  @media (min-width: 1024px) {
+    position: relative;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    width: 100%;
+    height: 14rem;
+    padding: 2rem 0;
+  }
 
-const NavWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 4.3rem;
+  @media (${({ theme }) => theme.device.laptop}) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 100%;
+    height: 18rem;
+  }
 `;
 
 const SearchOptionsContainer = styled.div`
@@ -23,8 +26,16 @@ const SearchOptionsContainer = styled.div`
   gap: 1rem;
   align-items: center;
   justify-content: space-between;
-  width: 50%;
+  width: calc(50% - 1rem);
+  min-width: 46rem;
   height: 4.3rem;
+  margin-left: 2rem;
+
+  @media (${({ theme }) => theme.device.laptop}) {
+    width: 100%;
+    margin-top: 2rem;
+    margin-left: 0;
+  }
 `;
 
 const SearchInputWrapper = styled.form`
@@ -62,6 +73,10 @@ const UpdateData = styled.span`
   & :last-child {
     margin-left: 0.5rem;
   }
+
+  @media (${({ theme }) => theme.device.laptop}) {
+    transform: translate(-4%, 25%);
+  }
 `;
 
 const UpdateText = styled.span`
@@ -70,7 +85,6 @@ const UpdateText = styled.span`
 
 export {
   NavContainer,
-  NavWrapper,
   SearchInput,
   SearchInputWrapper,
   SearchOptionsContainer,
