@@ -9,6 +9,7 @@ interface CustomPaginationProps extends PaginationProps {
   arrowSize?: string;
   selectedBgColor?: string;
   selectedTextColor?: string;
+  siblingCount?: number;
 }
 
 /**
@@ -28,6 +29,7 @@ export default function Pagination({
   arrowSize,
   selectedBgColor,
   selectedTextColor,
+  siblingCount,
   ...props
 }: CustomPaginationProps) {
   const { theme } = useCustomTheme();
@@ -36,7 +38,7 @@ export default function Pagination({
       <MuiPagination
         // 설정 기본값
         defaultPage={1} // 페이지 기본 위치
-        siblingCount={1} // 현재 페이지 기준 양쪽 표시할 페이지 수
+        siblingCount={siblingCount || 1} // 현재 페이지 기준 양쪽 표시할 페이지 수
         boundaryCount={0} // 시작 끝에 표시할 페이지 수
         showFirstButton // 시작페이지 이동 버튼 표시 여부
         showLastButton // 끝페이지 이동 버튼 표시 여부
