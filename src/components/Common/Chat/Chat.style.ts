@@ -34,7 +34,10 @@ export const ChatInputContainer = styled.div`
       flex-grow: 1;
       padding: 1rem;
       margin: 1rem;
-      background-color: ${theme.color.container_color};
+      color: ${theme.color.text_primary_color};
+      background-color: ${theme.mode === 'light'
+        ? theme.color.container_color
+        : theme.color.transparent_10};
       border-radius: 0.5rem;
     }
 

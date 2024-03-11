@@ -69,10 +69,6 @@ export default function ChatInput({ className }: ChatInputProps) {
         value={messageEntered}
         onChange={handleChangeInput}
         maxRows={10}
-        style={{
-          color: `${theme.color.text_primary_color}`,
-          backgroundColor: `${theme.mode === 'light' ? theme.color.container_color : theme.color.transparent_10}`,
-        }}
       />
 
       <Icon
