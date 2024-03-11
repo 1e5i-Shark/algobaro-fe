@@ -164,8 +164,8 @@ export default function ProfilePage() {
       </S.UserInfoContainer>
       {/* 내가 푼 문제 */}
       <S.MySolveTextContainer>
-        <p>내가 푼 문제: </p>
-        <p>{totalHistoryNum}</p>
+        <S.MySolveTitle>내가 푼 문제</S.MySolveTitle>
+        <S.MySolveText>{totalHistoryNum}</S.MySolveText>
       </S.MySolveTextContainer>
       {/* 풀이 히스토리 컨테이너 */}
       <div>

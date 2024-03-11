@@ -16,7 +16,7 @@ export const UserInfoContainer = styled(Row)`
     gap: ${theme.size.M};
     align-items: center;
     width: 60%;
-    min-width: 60rem;
+    min-width: 65rem;
     height: 13rem;
     padding: ${theme.size.M};
     background-color: ${theme.color.background_menu};
@@ -75,8 +75,22 @@ export const UserInfoButtonContainer = styled(Row)`
 `;
 
 export const MySolveTextContainer = styled(Row)`
-  justify-content: normal;
+  ${({ theme }) => css`
+    justify-content: normal;
+    width: 60%;
+    min-width: 65rem;
+    margin-top: ${theme.size.XL};
+  `}
 `;
+
+export const MySolveTitle = styled.p`
+  ${({ theme }) => css`
+    margin-right: ${theme.size.XS};
+    font-weight: ${theme.fontWeight.semiBold};
+  `}
+`;
+
+export const MySolveText = styled.p``;
 
 export const EditInfoModal = styled(ProfileEditModal)`
   max-width: 60rem;
