@@ -10,7 +10,7 @@ import * as Y from 'yjs';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 import * as S from './CodeEditor.style';
-import { getEditorMode, getRandomColors } from './utils';
+import { getEditorMode, getRandomColors, LANGUAGES } from './utils';
 
 interface CodeEditorProps {
   width?: string;
@@ -68,7 +68,7 @@ export default function CodeEditor({ width, height }: CodeEditorProps) {
     <S.Wrapper>
       <CodeMirrorEditor
         options={{
-          mode: getEditorMode('javascript'),
+          mode: getEditorMode(LANGUAGES.JAVASCRIPT),
           theme: theme.mode === 'dark' ? 'material-palenight' : 'eclipse',
           lineNumbers: true,
           tabSize: 2,

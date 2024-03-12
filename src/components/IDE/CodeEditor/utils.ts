@@ -1,12 +1,21 @@
+export const LANGUAGES = {
+  JAVA: 'JAVA',
+  PYTHON: 'PYTHON',
+  JAVASCRIPT: 'JAVASCRIPT',
+  'C++': 'C++',
+} as const;
+
+export type LanguagesType = keyof typeof LANGUAGES;
+
 export const getEditorMode = (language: string) => {
   switch (language) {
-    case 'cpp':
+    case LANGUAGES['C++']:
       return 'text/x-c++src';
-    case 'java':
+    case LANGUAGES.JAVA:
       return 'text/x-java';
-    case 'python':
+    case LANGUAGES.PYTHON:
       return 'text/x-python';
-    case 'javascript':
+    case LANGUAGES.JAVASCRIPT:
       return 'text/javascript';
     default:
       return '';
