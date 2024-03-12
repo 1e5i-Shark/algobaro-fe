@@ -47,6 +47,7 @@ const defaultValues = {
   tags: [],
   problemLink: '',
   problemPlatform: 'BOJ',
+  timeLimit: 60,
 };
 
 export default function CreateRoomPage() {
