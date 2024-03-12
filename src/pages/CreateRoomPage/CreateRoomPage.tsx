@@ -68,7 +68,7 @@ export default function CreateRoomPage() {
 
   const { isValid, errors } = formState;
 
-  const { mutateAsync: createRoom } = useCreateRoom();
+  const { mutateAsync: createRoomMutate } = useCreateRoom();
 
   const onSubmit: SubmitHandler<CreateRoomData> = async data => {
     // 서버에서 정의한 date 형식으로 변환하기 위해 ISOString 사용. 예시: 2024-02-27T13:36:49.089Z
@@ -78,12 +78,7 @@ export default function CreateRoomPage() {
     const filteredTag = data.tags.map(tag => tag.value);
 
     const submitData = { ...data, startAt: currentDate, tags: filteredTag };
-
-    console.log('submit data: ', submitData);
-
-    // response를 출력해서 확인하기 위해 async-await 사용 (확인용이라 추후 제거할 예정)
-    const response = await createRoom(submitData);
-    console.log('response', response);
+    createRoomMutate(submitData);
   };
 
   const contentList = [
