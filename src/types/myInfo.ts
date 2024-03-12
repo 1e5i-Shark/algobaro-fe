@@ -1,4 +1,4 @@
-export interface MyType {
+export interface MyInfoType {
   id: number | null;
   email: string;
   nickname: string;

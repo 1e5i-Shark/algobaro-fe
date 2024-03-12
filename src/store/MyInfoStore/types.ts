@@ -1,7 +1,7 @@
-import { MyType } from '@/types/me';
+import { MyInfoType } from '@/types/myInfo';
 
 export interface MyStateProps {
-  me: MyType;
-  setMe: (state: Partial<MyType>) => void;
+  myInfo: MyInfoType;
+  setMyInfo: (state: Partial<MyInfoType>) => void;
   reset: () => void;
 }

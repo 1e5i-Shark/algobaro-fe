@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { MyType } from '@/types/me';
+import { MyInfoType } from '@/types/myInfo';
 
 import { MyStateProps } from './types';
 
@@ -10,25 +10,25 @@ const initialData = {
   email: '',
   nickname: '',
   bojId: '',
-  profileImage: '',
+  profileImage: null,
 };
 
-const useMeStore = create<MyStateProps>()(
+const useMyInfoStore = create<MyStateProps>()(
   devtools(set => ({
-    me: {
+    myInfo: {
       id: 1,
       email: '',
       nickname: '김방장',
       bojId: 'king',
       profileImage: '',
     },
-    setMe: (newMyData: Partial<MyType>) =>
-      set(state => ({ me: { ...state.me, ...newMyData } })),
+    setMyInfo: (newData: Partial<MyInfoType>) =>
+      set(state => ({ myInfo: { ...state.myInfo, ...newData } })),
     reset: () =>
       set({
-        me: initialData,
+        myInfo: initialData,
       }),
   }))
 );
 
-export default useMeStore;
+export default useMyInfoStore;
