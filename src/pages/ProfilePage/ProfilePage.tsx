@@ -49,15 +49,9 @@ export default function ProfilePage() {
   // 풀이 히스토리 리스트 데이터
   const solvedHistoryList = solvedHistoryRes?.content;
   // 전체 페이지 수 상태 관리
-  const [totalPageNum, setTotalPageNum] = useState(0);
-  const newPageNum = solvedHistoryRes?.totalPages;
-  if (newPageNum && newPageNum !== totalPageNum) setTotalPageNum(newPageNum);
-
+  const totalPageNum = solvedHistoryRes?.totalPages;
   // 전체 히스토리 데이터 수
-  const [totalHistoryNum, setTotalHistoryNum] = useState(0);
-  const newTotalHistoryNum = solvedHistoryRes?.totalElements;
-  if (newTotalHistoryNum && newTotalHistoryNum !== totalHistoryNum)
-    setTotalHistoryNum(newTotalHistoryNum);
+  const totalHistoryNum = solvedHistoryRes?.totalElements;
 
   // 프로필 이미지 변경하는 API useMutation 훅
   const { mutate: editMyImageMutate } = useEditMyImage();

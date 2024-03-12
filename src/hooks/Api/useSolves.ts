@@ -13,5 +13,6 @@ export const useSolvedHistoryList = ({
     queryKey: [SOLVED_HISTORIES, reqParams],
     queryFn: () => getSolvedHistoryList(reqParams),
     enabled: false,
+    keepPreviousData: true,
   });
 };
