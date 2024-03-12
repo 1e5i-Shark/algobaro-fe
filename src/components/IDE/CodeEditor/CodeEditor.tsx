@@ -10,9 +10,14 @@ import * as Y from 'yjs';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 import * as S from './CodeEditor.style';
-import { getEditorMode, getRandomColors } from './utils';
+import { getEditorMode, getRandomColors, LANGUAGES } from './utils';
 
-export default function CodeEditor() {
+interface CodeEditorProps {
+  width?: string;
+  height?: string;
+}
+
+export default function CodeEditor({ width, height }: CodeEditorProps) {
   const { theme } = useCustomTheme();
 
   const editorRef = useRef<Editor | null>(null);
@@ -63,17 +68,18 @@ export default function CodeEditor() {
     <S.Wrapper>
       <CodeMirrorEditor
         options={{
-          mode: getEditorMode('javascript'),
+          mode: getEditorMode(LANGUAGES.JAVASCRIPT),
           theme: theme.mode === 'dark' ? 'material-palenight' : 'eclipse',
           lineNumbers: true,
           tabSize: 2,
           extraKeys: {
             'Ctrl-Space': 'autocomplete',
           },
+          gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
         }}
         editorDidMount={editor => {
           editorRef.current = editor;
-          editor.setSize('100%', '100%');
+          editor.setSize(width ?? '100%', height ?? '100%');
         }}
         editorWillUnmount={() => {
           console.log('unmount');

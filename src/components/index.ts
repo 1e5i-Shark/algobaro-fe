@@ -11,6 +11,7 @@ export { default as Input } from './Common/Input/Input';
 export { default as Menu } from './Common/Menu/Menu';
 export { default as Message } from './Common/Message/Message';
 export { default as Modal } from './Common/Modal/Modal';
+export { default as Pagination } from './Common/Pagination/Pagination';
 export { default as ResizeHandle } from './Common/ResizeHandle/ResizeHandle';
 export { default as Spinner } from './Common/Spinner/Spinner';
 export { default as Tag } from './Common/Tag/Tag';

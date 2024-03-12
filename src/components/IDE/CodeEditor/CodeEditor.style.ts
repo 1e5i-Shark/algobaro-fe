@@ -4,8 +4,21 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 
+  .react-codemirror2 {
+    width: 100%;
+    height: 100%;
+  }
+
+  .CodeMirror-linenumber {
+    padding: 0.2rem !important;
+  }
+
   .CodeMirror-lines {
     padding: 2rem 0;
+  }
+
+  .CodeMirror-line {
+    padding: 0.2rem 0.6rem !important;
   }
 
   .remote-caret {
