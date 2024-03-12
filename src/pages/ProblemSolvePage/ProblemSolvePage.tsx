@@ -1,10 +1,12 @@
 import { Panel, PanelGroup } from 'react-resizable-panels';
 
-import { Button, ResizeHandle } from '@/components';
+import { Button, CodeEditor, ResizeHandle } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
 
 import { DIRECTION, MOCK_DATA, SIZE_PERCENTAGE } from './constants';
+import ProblemExecution from './ProblemExecution/ProblemExecution';
+import ProblemSection from './ProblemSection/ProblemSection';
 import * as S from './ProblemSolvePage.style';
 
 export default function ProblemSolvePage() {
@@ -25,22 +27,28 @@ export default function ProblemSolvePage() {
       <S.ContentsWrapper>
         <PanelGroup direction={DIRECTION.HORIZONTAL}>
           <Panel defaultSize={SIZE_PERCENTAGE.PROBLEM}>
-            <S.ProblemWrapper>문제</S.ProblemWrapper>
+            {/* 문제 영역 */}
+            <ProblemSection />
           </Panel>
           <ResizeHandle direction={DIRECTION.HORIZONTAL} />
           <Panel defaultSize={SIZE_PERCENTAGE.SOLVE}>
             <PanelGroup direction={DIRECTION.VERTICAL}>
               <Panel defaultSize={SIZE_PERCENTAGE.EDITOR}>
-                <S.EditorWrapper>에디터</S.EditorWrapper>
+                {/* 에디터 영역 */}
+                <S.EditorWrapper>
+                  <CodeEditor />
+                </S.EditorWrapper>
               </Panel>
               <ResizeHandle direction={DIRECTION.VERTICAL} />
-              <Panel defaultSize={SIZE_PERCENTAGE.EXCEUTION}>
-                <S.ExecutionWrapper>출력 및 실행 결과</S.ExecutionWrapper>
+              <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION}>
+                {/* 실행 영역 */}
+                <ProblemExecution />
               </Panel>
             </PanelGroup>
           </Panel>
         </PanelGroup>
       </S.ContentsWrapper>
+      {/* 실행 및 제출 버튼 영역 */}
       <S.ButtonWrapper>
         <Button
           backgroundColor={theme.color.gray_20}
