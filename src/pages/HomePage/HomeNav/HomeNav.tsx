@@ -23,16 +23,6 @@ export default function HomeNav() {
       <Button style={{ minWidth: '13.3rem' }}>방 만들기</Button>
 
       <S.SearchOptionsContainer>
-        <S.SearchInputWrapper>
-          <S.SearchInput
-            type="text"
-            placeholder="방 제목을 검색해 주세요."
-          />
-          <Icon>
-            <SearchRoundedIcon />
-          </Icon>
-        </S.SearchInputWrapper>
-
         <MultiDropDown
           dataId="search-code-language"
           dataSet={dataSet}
@@ -52,6 +42,16 @@ export default function HomeNav() {
           label="입장 가능"
           checked={true}
         />
+
+        <S.SearchInputWrapper>
+          <S.SearchInput
+            type="text"
+            placeholder="방 제목을 검색해 주세요."
+          />
+          <Icon onClick={() => {}}>
+            <SearchRoundedIcon />
+          </Icon>
+        </S.SearchInputWrapper>
       </S.SearchOptionsContainer>
 
       <S.UpdateData>

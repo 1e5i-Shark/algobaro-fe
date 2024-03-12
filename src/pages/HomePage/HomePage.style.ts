@@ -13,6 +13,7 @@ const HomePageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 128rem;
+  height: 100%;
   margin: 0 auto;
 `;
 
@@ -22,7 +23,6 @@ const HomeSectionContainer = styled.main`
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   width: 100%;
-  margin-top: 2%;
 
   @media (${({ theme }) => theme.device.laptop}) {
     display: flex;
