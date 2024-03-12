@@ -6,7 +6,7 @@ import { Button, CheckBox, Icon, MultiDropDown } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useRoomFilterStore from '@/store/useRoomFilterStore';
 
-import { DummyDataSet } from '../DummyData';
+import { DummyDataSet } from '../DummyData/DummyData';
 import * as S from './HomeNav.style';
 
 export default function HomeNav() {
@@ -32,7 +32,7 @@ export default function HomeNav() {
     const { value } = e.target;
 
     // Input 내부가 빈 문자열일 경우, 초기화
-    if (value === '') {
+    if (value.trim() === '') {
       setInputValue('');
       setSearchInputValue('');
       return;
@@ -46,18 +46,6 @@ export default function HomeNav() {
       <Button>방 만들기</Button>
 
       <S.SearchOptionsContainer>
-        <S.SearchInputWrapper onSubmit={handleInputSubmit}>
-          <S.SearchInput
-            type="text"
-            placeholder="방 제목을 검색해 주세요."
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-          <Icon>
-            <SearchRoundedIcon />
-          </Icon>
-        </S.SearchInputWrapper>
-
         <MultiDropDown
           dataId="search-code-language"
           dataSet={DummyDataSet}
@@ -79,6 +67,18 @@ export default function HomeNav() {
           checked={selectedStatus}
           onChange={() => setSelectedStatus(!selectedStatus)}
         />
+
+        <S.SearchInputWrapper onSubmit={handleInputSubmit}>
+          <S.SearchInput
+            type="text"
+            placeholder="방 제목을 검색해 주세요."
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+          <Icon>
+            <SearchRoundedIcon />
+          </Icon>
+        </S.SearchInputWrapper>
       </S.SearchOptionsContainer>
 
       <S.UpdateData>
