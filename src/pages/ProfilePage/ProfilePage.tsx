@@ -75,7 +75,7 @@ export default function ProfilePage() {
     const limitSize = 1024 ** 2 * 5; // 5MB 용량 제한
 
     // 용량 제한 경고를 표시한다.
-    if (fileSize >= limitSize) alert('5MB 이하 이미지만 업로드 가능합니다!');
+    if (fileSize > limitSize) alert('5MB 이하 이미지만 업로드 가능합니다!');
 
     // 5MB 이하 파일 데이터일 때만 요청하도록 가드를 설정한다.
     if (fileData && fileSize <= limitSize) {
