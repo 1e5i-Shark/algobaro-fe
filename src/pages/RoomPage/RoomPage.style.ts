@@ -4,7 +4,7 @@ import { Col, Row } from '@/styles/GlobalStyle';
 
 // RoomPage
 export const RoomContainer = styled(Row)`
-  height: 100vh;
+  height: fit-content;
   padding: 3rem 0rem 3rem 5rem;
 `;
 
@@ -61,7 +61,11 @@ export const HeaderContainer = styled(Row)`
   width: 100%;
 `;
 
-export const RoomInfoContainer = styled.div``;
+export const RoomInfoContainer = styled.div`
+  h2 {
+    user-select: none;
+  }
+`;
 
 export const ButtonsWrapper = styled(Row)`
   gap: 1rem;
@@ -168,6 +172,12 @@ export const MembersContainer = styled.div`
 export const TestInfoWrapper = styled(Row)`
   justify-content: space-between;
   margin-top: 5rem;
+
+  span,
+  h4,
+  button {
+    user-select: none;
+  }
 `;
 
 export const WaitingButtonWrapper = styled(Col)`
@@ -178,6 +188,7 @@ export const Text = styled.div<{ $color: string; $padding: string }>`
   ${({ $color, $padding }) => css`
     padding: ${$padding};
     color: ${$color};
+    user-select: none;
   `}
 `;
 
