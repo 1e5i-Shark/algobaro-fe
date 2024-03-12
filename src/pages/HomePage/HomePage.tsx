@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRoomsList } from '@/hooks/Api/useRooms';
 
 import { DUMMY_DATA, RoomDataProps } from './DummyData';
+import HomeFooter from './HomeFooter/HomeFooter';
 import HomeNav from './HomeNav/HomeNav';
 import * as S from './HomePage.style';
 import HomeSection from './HomeSection/HomeSection';
@@ -14,6 +15,7 @@ export default function HomePage() {
   const renderingData = filteredRoomData || roomData;
 
   const { data, isLoading, refetch } = useRoomsList({
+    // api에 맞춰, 1페이지의 경우 0으로 호출해야 합니다.
     page: 0,
     size: 4,
   });
@@ -48,7 +50,7 @@ export default function HomePage() {
         )}
 
         {/* 페이지네이션 파트 */}
-        <S.HomeFooter>푸터</S.HomeFooter>
+        <HomeFooter />
       </S.HomePageWrapper>
     </S.HomePageContainer>
   );

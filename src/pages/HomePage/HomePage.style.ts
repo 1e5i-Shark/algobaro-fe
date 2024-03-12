@@ -35,18 +35,4 @@ const HomeSectionContainer = styled.main`
 
 const NoRoom = styled.p``;
 
-// ####################### Footer #######################
-
-const HomeFooter = styled.footer`
-  display: flex;
-  justify-content: center;
-  padding: 4rem 0;
-`;
-
-export {
-  HomeFooter,
-  HomePageContainer,
-  HomePageWrapper,
-  HomeSectionContainer,
-  NoRoom,
-};
+export { HomePageContainer, HomePageWrapper, HomeSectionContainer, NoRoom };
