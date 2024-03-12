@@ -135,7 +135,8 @@ export interface RoomMemberType {
   ready: boolean;
 }
 
-export interface RoomsType {
+// 아래는 건호의 v1/rooms 에서 사용하는 타입입니다.
+export interface RoomsListType {
   roomId: number;
   roomStatus: RoomStatusType;
   title: string;
