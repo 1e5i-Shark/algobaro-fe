@@ -17,6 +17,7 @@ export default function Header() {
   }
 
   const myId = myInfo?.response.id;
+  const myProfileImage = myInfo?.response.profileImage;
 
   const handleMyProfileClick = () => {
     navigate(`${PATH.PROFILE}/${myId}`);
@@ -34,7 +35,10 @@ export default function Header() {
       <S.IconWrapper>
         <ThemeModeToggleButton />
         <S.AvatarWrapper>
-          <Avatar onClick={handleMyProfileClick} />
+          <Avatar
+            src={myProfileImage}
+            onClick={handleMyProfileClick}
+          />
         </S.AvatarWrapper>
       </S.IconWrapper>
     </S.HeaderWrapper>
