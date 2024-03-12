@@ -12,7 +12,12 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
 import * as S from './CodeEditor.style';
 import { getEditorMode, getRandomColors } from './utils';
 
-export default function CodeEditor() {
+interface CodeEditorProps {
+  width?: string;
+  height?: string;
+}
+
+export default function CodeEditor({ width, height }: CodeEditorProps) {
   const { theme } = useCustomTheme();
 
   const editorRef = useRef<Editor | null>(null);
@@ -74,7 +79,7 @@ export default function CodeEditor() {
         }}
         editorDidMount={editor => {
           editorRef.current = editor;
-          editor.setSize('100%', '100%');
+          editor.setSize(width ?? '100%', height ?? '100%');
         }}
         editorWillUnmount={() => {
           console.log('unmount');
