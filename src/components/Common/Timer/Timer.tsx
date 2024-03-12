@@ -6,6 +6,7 @@ interface TimerProps {
   minutes?: number;
   seconds?: number;
   padLength?: number;
+  isStop?: boolean;
   openModal?: () => void;
   setIsEnd?: Dispatch<SetStateAction<boolean>>;
 }
@@ -49,6 +50,7 @@ export default function Timer({
   minutes = 0,
   seconds = 0,
   padLength = 2,
+  isStop = false,
   openModal,
   setIsEnd,
 }: TimerProps) {
@@ -58,6 +60,8 @@ export default function Timer({
   );
 
   useEffect(() => {
+    if (isStop) return;
+
     if (timeLeft <= 0) {
       if (timer.current != null) {
         clearInterval(timer.current);
@@ -66,9 +70,11 @@ export default function Timer({
       openModal?.();
       setIsEnd?.(true);
     }
-  }, [timeLeft]);
+  }, [timeLeft, isStop]);
 
   useEffect(() => {
+    if (isStop) return;
+
     timer.current = setInterval(() => {
       setTimeLeft(prevTime => prevTime - MS);
     }, MS);
