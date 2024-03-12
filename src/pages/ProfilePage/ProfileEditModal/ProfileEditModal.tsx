@@ -67,10 +67,10 @@ export default function ProfileEditModal({
       <Modal
         isOpen={isOpen}
         onClose={handleCloseModal}
-        {...props}
         style={{
           minWidth: '45rem',
         }}
+        {...props}
       >
         <S.ModalTitle>프로필 정보 수정</S.ModalTitle>
         <S.ModalForm onSubmit={handleSubmit(onSubmitData)}>

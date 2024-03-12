@@ -11,16 +11,14 @@ export const ModalTitle = styled.p`
 `;
 
 export const ModalForm = styled.form`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.size.L};
-    align-items: center;
-    width: 30rem;
-    button {
-      width: 50%;
-    }
-  `}
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: center;
+  width: 30rem;
+  button {
+    width: 50%;
+  }
 `;
 
 export const ModalInputList = styled.ul`
