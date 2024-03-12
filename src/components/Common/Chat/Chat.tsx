@@ -3,8 +3,8 @@ import { v4 } from 'uuid';
 
 import { Message } from '@/components';
 import useMessageStore from '@/store/MessageStore';
-import useMeStore from '@/store/MeStore';
-import useRoomStore from '@/store/Room';
+import useMeStore from '@/store/MyInfoStore';
+import useRoomStore from '@/store/RoomStore';
 
 import { MenuText } from '../Menu/MenuText';
 import * as S from './Chat.style';
@@ -16,7 +16,7 @@ interface ChatProps {
 
 export default function Chat({ height = '100%' }: ChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { me } = useMeStore();
+  const { myInfo } = useMeStore();
   const {
     roomData: { roomShortUuid },
   } = useRoomStore();
@@ -41,7 +41,7 @@ export default function Chat({ height = '100%' }: ChatProps) {
   const connectSocketServer = async (id: string) => {
     if (connected) return;
 
-    setMessageValue({ userId: me.nickname });
+    setMessageValue({ userId: myInfo.nickname });
     connect(id);
   };
 
