@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { useRoomsList } from '@/hooks/Api/useRooms';
+
 import { DUMMY_DATA, RoomDataProps } from './DummyData';
 import HomeNav from './HomeNav/HomeNav';
 import * as S from './HomePage.style';
@@ -10,6 +12,13 @@ export default function HomePage() {
   const [roomData, setRoomData] = useState<RoomDataProps[]>([]);
   const filteredRoomData = useFilteredRoomData(roomData);
   const renderingData = filteredRoomData || roomData;
+
+  const { data, isLoading, refetch } = useRoomsList({
+    page: 0,
+    size: 4,
+  });
+
+  console.log('get 요청 보낸 data : ', data);
 
   useEffect(() => {
     // 아래 코드는 get 요청으로 수정될 예정입니다.
