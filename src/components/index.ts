@@ -18,4 +18,5 @@ export { default as ThemeModeToggleButton } from './Common/ThemeModeToggleButton
 export { default as Timer } from './Common/Timer/Timer';
 export { default as CreateTagInput } from './CreateRoom/CreateTagInput/CreateTagInput';
 export { default as TitleWithAsterisk } from './CreateRoom/TitleWithAsterisk/TitleWithAsterisk';
+export { default as CodeEditor } from './IDE/CodeEditor/CodeEditor';
 export { ThemeCustomProvider } from './ThemeCustomProvider';
