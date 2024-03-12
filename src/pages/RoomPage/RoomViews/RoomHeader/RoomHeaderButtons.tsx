@@ -1,15 +1,19 @@
 import { ExitToAppRounded } from '@mui/icons-material';
 
 import { Button, Icon, ThemeModeToggleButton } from '@/components';
+import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import { ButtonsWrapper } from '@/pages/RoomPage/RoomPage.style';
+import { RoleType } from '@/types/room';
 
 interface RoomButtonsProps {
+  role: RoleType;
   className: string;
   onClick: () => void;
   onExit: () => void;
 }
 
 export default function RoomHeaderButtons({
+  role,
   className,
   onClick,
   onExit,
@@ -25,13 +29,15 @@ export default function RoomHeaderButtons({
   return (
     <>
       <ButtonsWrapper className={className}>
-        <Button
-          className="changeRoomInfo"
-          fontSize="1.6rem"
-          onClick={onClick}
-        >
-          방 정보 변경
-        </Button>
+        {role === ROOM_ROLE.HOST && (
+          <Button
+            className="changeRoomInfo"
+            fontSize="1.6rem"
+            onClick={onClick}
+          >
+            방 정보 변경
+          </Button>
+        )}
         <ThemeModeToggleButton />
         <Icon
           className="exitRoom"
