@@ -46,19 +46,20 @@ export interface RoomResponse extends ResponseType {
 }
 
 export interface UpdateRoom
-  extends Pick<
-    RoomType,
-    | 'title'
-    | 'startAt'
-    | 'languages'
-    | 'roomAccessType'
-    | 'problemLink'
-    | 'problemPlatform'
-    | 'password'
-    | 'roomLimit'
-    | 'tags'
-    | 'timeLimit'
-  > {}
+  extends Required<Pick<RoomType, 'timeLimit' | 'roomLimit'>>,
+    Partial<
+      Pick<
+        RoomType,
+        | 'title'
+        | 'startAt'
+        | 'languages'
+        | 'roomAccessType'
+        | 'problemLink'
+        | 'problemPlatform'
+        | 'password'
+        | 'tags'
+      >
+    > {}
 
 export interface UpdateRoomProps {
   path: string;
