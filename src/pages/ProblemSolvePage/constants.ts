@@ -21,5 +21,5 @@ export const SIZE_PERCENTAGE = {
   PROBLEM: 40,
   SOLVE: 60,
   EDITOR: 80,
-  EXCEUTION: 20,
+  EXECUTION: 20,
 } as const;
