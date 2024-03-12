@@ -168,46 +168,62 @@ export default function ProfilePage() {
         <S.MySolveText>{totalHistoryNum}</S.MySolveText>
       </S.MySolveTextContainer>
       {/* 풀이 히스토리 컨테이너 */}
-      <div>
-        <p>풀이 히스토리</p>
-
-        {/* TODO: 히스토리 하나도 없는 빈 히스토리 컨테이너 추가 */}
-        {isLoading ? (
-          <Spinner />
-        ) : solvedHistoryList?.length !== 0 ? (
-          <ul>
-            {solvedHistoryList?.map(problem => {
-              return (
-                <li key={problem.id}>
-                  {/* TODO: 응답에 문제 링크 추가되면 변경 */}
-                  <p>{problem.problemLink}</p>
-                  <Tag
-                    mode="normal"
-                    tagId={problem.solveStatus || 'null'}
-                    backgroundColor={
-                      problem.solveStatus === 'SUCCESS'
-                        ? theme.color.green
-                        : theme.color.red
-                    }
-                    textColor={theme.color.black_primary}
-                  >
-                    {problem.solveStatus}
-                  </Tag>
-                  <Tag
-                    mode="normal"
-                    tagId={problem.language || 'null'}
-                    backgroundColor={theme.color.gray_20}
-                    textColor={theme.color.black_primary}
-                  >
-                    {problem.language}
-                  </Tag>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <div>터엉</div>
-        )}
+      <S.ProblemHistoryContainer>
+        <S.ProblemHistoryTitle>풀이 히스토리</S.ProblemHistoryTitle>
+        <S.ProblemHistoryListContainer>
+          {isLoading ? (
+            <Spinner />
+          ) : solvedHistoryList?.length !== 0 ? (
+            <>
+              {solvedHistoryList?.map(problem => {
+                return (
+                  <S.ProblemHistoryItem key={problem.id}>
+                    <S.ProblemLink>
+                      {problem.problemLink.replace(
+                        'https://www.acmicpc.net/problem/',
+                        ''
+                      )}
+                    </S.ProblemLink>
+                    <Tag
+                      mode="normal"
+                      width="7rem"
+                      height={theme.size.L}
+                      fontSize={theme.size.S}
+                      tagId={problem.solveStatus || 'null'}
+                      backgroundColor={
+                        problem.solveStatus === 'SUCCESS'
+                          ? theme.color.green
+                          : theme.color.red
+                      }
+                      textColor={theme.color.black_primary}
+                      style={{
+                        fontWeight: theme.fontWeight.semiBold,
+                      }}
+                    >
+                      {problem.solveStatus}
+                    </Tag>
+                    <Tag
+                      mode="normal"
+                      width="7rem"
+                      height={theme.size.L}
+                      fontSize={theme.size.S}
+                      tagId={problem.language || 'null'}
+                      backgroundColor={theme.color.gray_20}
+                      textColor={theme.color.black_primary}
+                      style={{
+                        fontWeight: theme.fontWeight.semiBold,
+                      }}
+                    >
+                      {problem.language}
+                    </Tag>
+                  </S.ProblemHistoryItem>
+                );
+              })}
+            </>
+          ) : (
+            <div>터엉</div>
+          )}
+        </S.ProblemHistoryListContainer>
         {/* 페이지네이션 영역 */}
         <Pagination
           count={totalPageNum} // 표시할 페이지네이션 페이지 수
@@ -219,7 +235,7 @@ export default function ProfilePage() {
           onChange={handlePageChange}
           showFirstButton
           showLastButton
-          size="large" //
+          size="medium" //
           color="secondary" //
           sx={{
             '& .MuiPaginationItem-root': {
@@ -236,7 +252,7 @@ export default function ProfilePage() {
             },
           }}
         />
-      </div>
+      </S.ProblemHistoryContainer>
       {/* 정보 수정 모달 */}
       <S.EditInfoModal
         isOpen={isOpenEditInfoModal}
