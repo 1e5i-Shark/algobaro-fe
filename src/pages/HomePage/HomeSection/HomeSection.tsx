@@ -40,7 +40,10 @@ export default function HomeSection({
               height="2.4rem"
               fontSize="1rem"
               style={{
-                backgroundColor: theme.color.gray_30,
+                backgroundColor:
+                  theme.mode === 'light'
+                    ? theme.color.gray_30
+                    : theme.color.gray_50,
                 maxWidth: '20%',
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
