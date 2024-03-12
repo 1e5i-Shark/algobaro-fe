@@ -1,10 +1,13 @@
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button, CheckBox, Input } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { ROOM_ACCESS } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import useRoomStore from '@/store/Room';
+import { updateRoom } from '@/services/Room/Room';
+import useRoomStore from '@/store/RoomStore';
 import { AccessType } from '@/types/room';
 
 interface ModalRoomProps {
@@ -19,7 +22,16 @@ interface InputProps {
 export default function ModalRoom({ onClose }: ModalRoomProps) {
   const { theme } = useCustomTheme();
   const { roomData, setRoomData } = useRoomStore();
-  const { problemLink, timeLimit, password, roomAccessType } = roomData;
+  const {
+    roomId,
+    problemLink,
+    timeLimit,
+    password,
+    roomAccessType,
+    roomLimit,
+  } = roomData;
+
+  const [newData, setNewData] = useState({});
 
   const [isPrivate, setIsPrivate] = useState(
     roomAccessType === 'PRIVATE' ? true : false
@@ -33,12 +45,13 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     },
   });
 
-  // const { mutate: updateRoomMutate } = useMutation({
-  //   mutationFn: updateRoom,
-  //   onSuccess: () => {
-  //     alert('mutation 방 수정 성공!');
-  //   },
-  // });
+  const {
+    isSuccess,
+    isError,
+    mutate: updateRoomMutate,
+  } = useMutation({
+    mutationFn: updateRoom,
+  });
 
   const onSubmit: SubmitHandler<InputProps> = data => {
     const newPassword = () => {
@@ -50,28 +63,35 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
       };
     };
 
-    const newData = {
+    setNewData({
       ...newPassword(),
       problemLink: data.problemLink,
       timeLimit: data.timeLimit,
-    };
+    });
 
+    updateRoomMutate({
+      path: `/${roomId}`,
+      requestBody: {
+        roomLimit,
+        timeLimit,
+        problemLink,
+        roomAccessType: isPrivate ? ROOM_ACCESS.PRIVATE : ROOM_ACCESS.PUBLIC,
+        ...(password && { password }),
+      },
+    });
+  };
+
+  if (isSuccess) {
     setRoomData({ ...roomData, ...newData });
-
-    // Todo: 방 수정 API 테스트
-    // updateRoomMutate({
-    //   endPoint: `/${roomId}`,
-    //   requestBody: {
-    //     roomAccessType: isPrivate ? ROOM_ACCESS.PRIVATE : ROOM_ACCESS.PUBLIC,
-    //     problemLink,
-    //     timeLimit,
-    //     ...(password && { password }),
-    //   },
-    // });
 
     alert('방 정보가 수정되었습니다');
     onClose();
-  };
+  }
+
+  if (isError) {
+    alert('서버와의 통신에 오류가 있습니다. 잠시 후 다시 시도해주세요.');
+    onClose();
+  }
 
   const validateKeys = (
     event: React.KeyboardEvent,
