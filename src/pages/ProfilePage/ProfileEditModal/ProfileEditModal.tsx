@@ -5,6 +5,8 @@ import { ModalProps } from '@/components/Common/Modal/Modal';
 import { useEditMyInfo, useMyInfo } from '@/hooks/Api/useMembers';
 import { InputListProps } from '@/types/input';
 
+import * as S from './ProfileEditModal.style';
+
 interface EditProfileInfo {
   nickname: string;
   bojId: string;
@@ -66,29 +68,32 @@ export default function ProfileEditModal({
         isOpen={isOpen}
         onClose={handleCloseModal}
         {...props}
+        style={{
+          minWidth: '45rem',
+        }}
       >
-        <p>프로필 정보 수정</p>
-        <form onSubmit={handleSubmit(onSubmitData)}>
-          <ul>
+        <S.ModalTitle>프로필 정보 수정</S.ModalTitle>
+        <S.ModalForm onSubmit={handleSubmit(onSubmitData)}>
+          <S.ModalInputList>
             {inputPropsList.map(props => {
               return (
-                <li key={props.name}>
+                <S.ModalInputItem key={props.name}>
                   <Input
                     register={register}
                     formState={formState}
                     {...props}
                   />
-                </li>
+                </S.ModalInputItem>
               );
             })}
-          </ul>
+          </S.ModalInputList>
           <Button
             type="submit"
             disabled={isValid ? false : true}
           >
             수정 완료
           </Button>
-        </form>
+        </S.ModalForm>
       </Modal>
     </>
   );
