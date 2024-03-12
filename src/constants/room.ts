@@ -1,4 +1,4 @@
-export const PS_LANGUAGES = ['Java', 'Python', 'JavaScript', 'C++'];
+export const PS_LANGUAGES = ['JAVA', 'PYTHON', 'JAVASCRIPT', 'C++'];
 export const ROOM_STATUS = {
   PUBLIC: 'PUBLIC',
   PRIVATE: 'PRIVATE',
