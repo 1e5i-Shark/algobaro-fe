@@ -6,6 +6,7 @@ import { FORM_VALIDATION } from '@/constants/formValidation';
 import { useEditMyPassword } from '@/hooks/Api/useMembers';
 import { InputListProps } from '@/types/input';
 
+import * as S from './PasswordEditModal.style';
 interface EditPWInfo {
   currentPassword: string;
   newPassword: string;
@@ -74,7 +75,6 @@ export default function PasswordEditModal({
 
     const reqBody = { currentPassword, newPassword };
 
-    console.log(reqBody, 'reqBody');
     editMyPasswordMutate(reqBody);
     handleCloseModal();
   };
@@ -89,30 +89,33 @@ export default function PasswordEditModal({
       <Modal
         isOpen={isOpen}
         onClose={handleCloseModal}
+        style={{
+          minWidth: '45rem',
+        }}
         {...props}
       >
-        <p>비밀번호 변경</p>
-        <form onSubmit={handleSubmit(onSubmitData)}>
-          <ul>
+        <S.ModalTitle>비밀번호 변경</S.ModalTitle>
+        <S.ModalForm onSubmit={handleSubmit(onSubmitData)}>
+          <S.ModalInputList>
             {inputPropsList.map(props => {
               return (
-                <li key={props.name}>
+                <S.ModalInputItem key={props.name}>
                   <Input
                     register={register}
                     formState={formState}
                     {...props}
                   />
-                </li>
+                </S.ModalInputItem>
               );
             })}
-          </ul>
+          </S.ModalInputList>
           <Button
             type="submit"
             disabled={isValid ? false : true}
           >
             수정 완료
           </Button>
-        </form>
+        </S.ModalForm>
       </Modal>
     </>
   );
