@@ -42,7 +42,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
         }
 
         if (member.memberId === previousHostId) {
-          return { ...member, role: ROOM_ROLE.MEMBER };
+          return { ...member, role: ROOM_ROLE.PARTICIPANT };
         }
 
         return member;
@@ -58,7 +58,7 @@ export default function MemberList({ className, myRole }: MemberListProps) {
         // 테스트용 삭제 예정 코드입니다
         // const updatedMembers = roomMembers.map(member => {
         //   if (member.memberId === host.id) {
-        //     return { ...member, role: ROOM_ROLE.MEMBER };
+        //     return { ...member, role: ROOM_ROLE.PARTICIPANT };
         //   }
 
         //   if (member.memberId === id) {

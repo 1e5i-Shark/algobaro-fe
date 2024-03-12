@@ -12,5 +12,5 @@ export const ROOM_ACCESS: { [key: string]: AccessType } = {
 
 export const ROOM_ROLE: { [key: string]: RoleType } = {
   HOST: 'HOST',
-  MEMBER: 'MEMBER',
+  PARTICIPANT: 'PARTICIPANT',
 };

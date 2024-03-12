@@ -5,16 +5,17 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { PATH } from '@/routes/path';
 import { startTest } from '@/services/Room/Room';
 import useMeStore from '@/store/Me';
 import useRoomStore from '@/store/Room';
-import { MemberType } from '@/types/room';
+import { RoomMemberType } from '@/types/room';
 
 interface TestInfoProps {
   className: string;
-  myRoomData: MemberType;
+  myRoomData: RoomMemberType;
 }
 
 export default function TestInfo({ className, myRoomData }: TestInfoProps) {
@@ -38,8 +39,9 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
     return { hours, minutes };
   }, [timeLimit]);
 
-  const changeMemberData = (newData: Partial<MemberType>) => {
-    const myIndex = roomMembers.findIndex(member => member.id === me.id);
+  const changeMemberData = (newData: Partial<RoomMemberType>) => {
+    console.log(newData);
+    const myIndex = roomMembers.findIndex(member => member.memberId === me.id);
 
     if (myIndex === -1) return;
 
@@ -112,7 +114,7 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
         </tbody>
       </S.TestInfoTable>
 
-      {myRoomData.role === 'HOST' ? (
+      {myRoomData.role === ROOM_ROLE.HOST ? (
         // HOST
         isTestReady ? (
           <Button onClick={handleStartTest}>테스트 시작</Button>
@@ -127,7 +129,7 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
             </S.Text>
           </S.WaitingButtonWrapper>
         )
-      ) : // MEMBER
+      ) : // PARTICIPANT
       myRoomData.ready ? (
         <Button
           onClick={() => changeMemberData({ ready: false })}

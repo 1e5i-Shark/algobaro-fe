@@ -3,5 +3,5 @@ export interface MyType {
   email: string;
   nickname: string;
   bojId: string;
-  profileImage: string;
+  profileImage: string | null;
 }

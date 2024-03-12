@@ -1,6 +1,6 @@
 export type RoomStatusType = 'RECRUITING' | 'RUNNING';
 export type AccessType = 'PUBLIC' | 'PRIVATE';
-export type RoleType = 'HOST' | 'MEMBER';
+export type RoleType = 'HOST' | 'PARTICIPANT';
 export type LanguagesType = 'JAVA' | 'PYTHON' | 'JAVASCRIPT' | 'C++';
 
 export interface RoomType {
@@ -126,6 +126,7 @@ export interface ChangeHostManualResponse extends ResponseType {
 
 export interface RoomMemberType {
   memberId: number; // pk키
+  email: string;
   nickname: string;
   profileImage: string | null;
   role: RoleType;
