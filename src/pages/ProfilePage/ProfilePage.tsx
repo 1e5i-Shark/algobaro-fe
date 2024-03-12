@@ -1,8 +1,7 @@
-import { Pagination } from '@mui/material';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Avatar, Button, Spinner, Tag } from '@/components';
+import { Avatar, Button, Pagination, Spinner, Tag } from '@/components';
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { useEditMyImage, useMyInfo } from '@/hooks/Api/useMembers';
 import { useSolvedHistoryList } from '@/hooks/Api/useSolves';
@@ -49,10 +48,17 @@ export default function ProfilePage() {
   const solvedHistoryRes = solvedHistoryData?.response;
   // 풀이 히스토리 리스트 데이터
   const solvedHistoryList = solvedHistoryRes?.content;
-  // 전체 페이지 수
-  const totalPageNum = solvedHistoryRes?.totalPages;
+  // 전체 페이지 수 상태 관리
+  const [totalPageNum, setTotalPageNum] = useState(0);
+  const newPageNum = solvedHistoryRes?.totalPages;
+  if (newPageNum && newPageNum !== totalPageNum) setTotalPageNum(newPageNum);
+
   // 전체 히스토리 데이터 수
-  const totalHistoryNum = solvedHistoryRes?.totalElements;
+  const [totalHistoryNum, setTotalHistoryNum] = useState(0);
+  const newTotalHistoryNum = solvedHistoryRes?.totalElements;
+  if (newTotalHistoryNum && newTotalHistoryNum !== totalHistoryNum)
+    setTotalHistoryNum(newTotalHistoryNum);
+
   // 프로필 이미지 변경하는 API useMutation 훅
   const { mutate: editMyImageMutate } = useEditMyImage();
 
@@ -165,7 +171,7 @@ export default function ProfilePage() {
       {/* 내가 푼 문제 */}
       <S.MySolveTextContainer>
         <S.MySolveTitle>내가 푼 문제</S.MySolveTitle>
-        <S.MySolveText>{totalHistoryNum}</S.MySolveText>
+        <S.MySolveText>{totalHistoryNum || ''}</S.MySolveText>
       </S.MySolveTextContainer>
       {/* 풀이 히스토리 컨테이너 */}
       <S.ProblemHistoryContainer>
@@ -221,14 +227,12 @@ export default function ProfilePage() {
               })}
             </>
           ) : (
-            <div>터엉</div>
+            <S.EmptyHistory>푼 문제가 없습니다!</S.EmptyHistory>
           )}
         </S.ProblemHistoryListContainer>
         {/* 페이지네이션 영역 */}
         <Pagination
           count={totalPageNum} // 표시할 페이지네이션 페이지 수
-          // TODO: Merge 시 삭제
-          // count={5} // 빈 페이지 테스트용 코드
           page={pageNum + 1} // 현재 페이지 위치
           siblingCount={1} // 현재 페이지 기준 양쪽 몇 개 표시
           boundaryCount={0}

@@ -24,6 +24,7 @@ export const UserInfoContainer = styled(Row)`
     height: 12rem;
     padding: ${theme.size.M};
     background-color: ${theme.color.background_menu};
+    border: 1px solid ${theme.color.gray_20};
     border-radius: ${theme.size.S};
   `}
 `;
@@ -74,6 +75,7 @@ export const UserInfoButtonContainer = styled(Row)`
       width: 10rem;
       height: 3rem;
       font-size: ${theme.size.M};
+      border: 1px solid ${theme.color.gray_20};
     }
   `}
 `;
@@ -141,12 +143,21 @@ export const ProblemHistoryItem = styled.li`
     padding: ${theme.size.S} ${theme.size.L};
     cursor: pointer;
     background-color: ${theme.color.background_menu};
+    border: 1px solid ${theme.color.gray_20};
     border-radius: ${theme.size.S};
   `}
 `;
 
 export const ProblemLink = styled.p`
   margin-right: auto;
+`;
+
+export const EmptyHistory = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 
 export const EditInfoModal = styled(ProfileEditModal)`
