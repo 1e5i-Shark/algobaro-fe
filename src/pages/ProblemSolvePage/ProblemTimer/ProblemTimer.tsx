@@ -11,7 +11,7 @@ interface TimerProps {
   openModal?: () => void;
 }
 
-export default function ProblemTimer({ minutes = 0, seconds = 0 }: TimerProps) {
+export default function ProblemTimer({ minutes, seconds }: TimerProps) {
   const [isEnd, setIsEnd] = useState(false);
   const { modalRef, isOpen, openModal, closeModal } = useModal();
 
@@ -24,6 +24,7 @@ export default function ProblemTimer({ minutes = 0, seconds = 0 }: TimerProps) {
           <S.TimeLeftText>남은 시간</S.TimeLeftText>
         )}
         <Timer
+          isStop
           minutes={minutes}
           seconds={seconds}
           openModal={openModal}
