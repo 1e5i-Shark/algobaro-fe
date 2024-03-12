@@ -5,10 +5,10 @@ import { Row } from '@/styles/GlobalStyle';
 const Wrapper = styled(Row)`
   ${({ theme }) => css`
     width: fit-content;
-    padding: 0.7rem 2.5rem;
+    padding: 1rem 2.5rem;
     color: ${theme.color.black_primary};
     background-color: ${theme.color.gray_20};
-    border-radius: 3rem;
+    border-radius: ${theme.shape.round};
   `}
 `;
 

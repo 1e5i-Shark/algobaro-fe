@@ -6,6 +6,7 @@ interface TimerProps {
   minutes?: number;
   seconds?: number;
   padLength?: number;
+  isStop?: boolean;
   openModal?: () => void;
   setIsEnd?: Dispatch<SetStateAction<boolean>>;
 }
@@ -41,6 +42,7 @@ const convertedTime = (time: number, padLength: number) => {
  * @param [minutes] - `옵션`
  * @param [seconds] - `옵션`
  * @param [padLength=2] - `옵션` 예시:) 01분 01초
+ * @param [isStop] - `옵션` 타이머를 멈추고 싶을 때 사용합니다.
  * @param [openModal] - `옵션` 종료 후 모달을 열 때 사용합니다.
  * @param [setIsEnd] - `옵션` 타이머 시간이 종료됨을 알려줍니다.
  */
@@ -49,6 +51,7 @@ export default function Timer({
   minutes = 0,
   seconds = 0,
   padLength = 2,
+  isStop = false,
   openModal,
   setIsEnd,
 }: TimerProps) {
@@ -58,6 +61,8 @@ export default function Timer({
   );
 
   useEffect(() => {
+    if (isStop) return;
+
     if (timeLeft <= 0) {
       if (timer.current != null) {
         clearInterval(timer.current);
@@ -66,9 +71,11 @@ export default function Timer({
       openModal?.();
       setIsEnd?.(true);
     }
-  }, [timeLeft]);
+  }, [timeLeft, isStop]);
 
   useEffect(() => {
+    if (isStop) return;
+
     timer.current = setInterval(() => {
       setTimeLeft(prevTime => prevTime - MS);
     }, MS);

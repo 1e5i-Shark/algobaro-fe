@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
 import { Timer } from '@/components';
+import useModal from '@/hooks/useModal';
 
+import ProblemEndModal from '../ProblemEndModal/ProblemEndModal';
 import * as S from './ProblemTimer.style';
 interface TimerProps {
   minutes?: number;
@@ -9,12 +11,9 @@ interface TimerProps {
   openModal?: () => void;
 }
 
-export default function ProblemTimer({
-  minutes = 0,
-  seconds = 0,
-  openModal,
-}: TimerProps) {
+export default function ProblemTimer({ minutes, seconds }: TimerProps) {
   const [isEnd, setIsEnd] = useState(false);
+  const { modalRef, isOpen, openModal, closeModal } = useModal();
 
   return (
     <S.Wrapper>
@@ -25,12 +24,18 @@ export default function ProblemTimer({
           <S.TimeLeftText>남은 시간</S.TimeLeftText>
         )}
         <Timer
+          isStop
           minutes={minutes}
           seconds={seconds}
           openModal={openModal}
           setIsEnd={setIsEnd}
         />
       </S.TimeLeftWrapper>
+      <ProblemEndModal
+        modalRef={modalRef}
+        isOpen={isOpen}
+        closeModal={closeModal}
+      />
     </S.Wrapper>
   );
 }

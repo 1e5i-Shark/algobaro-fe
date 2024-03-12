@@ -13,11 +13,23 @@ import * as S from './CodeEditor.style';
 import { getEditorMode, getRandomColors, LANGUAGES } from './utils';
 
 interface CodeEditorProps {
+  roomUuid?: string;
   width?: string;
   height?: string;
 }
 
-export default function CodeEditor({ width, height }: CodeEditorProps) {
+/**
+ * 코드 에디터
+ * roomUuid를 넘겨주는 경우, 공동 편집 코드 에디터를 사용할 수 있습니다.
+ * @param [roomUuid] - `옵션` 방에서 사용되는 shortUuid
+ * @param [width] - `옵션`
+ * @param [height] - `옵션`
+ */
+export default function CodeEditor({
+  roomUuid,
+  width,
+  height,
+}: CodeEditorProps) {
   const { theme } = useCustomTheme();
 
   const editorRef = useRef<Editor | null>(null);
@@ -30,9 +42,10 @@ export default function CodeEditor({ width, height }: CodeEditorProps) {
     if (!editorRef.current) return;
 
     try {
+      if (!roomUuid) return;
       // RoomName에 따라서 접속 환경이 달라짐
       // TODO: roomUuid에 따라서 다르게 처리해주어야 함
-      providerRef.current = new WebrtcProvider('Any Room Name', yDoc);
+      providerRef.current = new WebrtcProvider(roomUuid, yDoc);
 
       const yUndoManager = new Y.UndoManager(yText);
 
