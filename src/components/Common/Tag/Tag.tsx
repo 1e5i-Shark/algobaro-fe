@@ -80,7 +80,7 @@ export default function Tag({
           ? isTagSelect
             ? theme.color.secondary_color
             : backgroundColor
-          : theme.color.gray_50
+          : backgroundColor
       }
       $borderColor={
         mode === 'select' && !borderColor
@@ -95,6 +95,7 @@ export default function Tag({
       {children}
       {mode === 'delete' && (
         <DeleteButton
+          type="button"
           className="tag-delete-button"
           onClick={handleDeleteTag}
         >

@@ -5,10 +5,10 @@ const SectionWrapper = styled.section`
     position: relative;
     display: flex;
     flex-direction: column;
+    min-width: 46rem;
+    height: 28rem;
     padding: 3rem;
-    background-color: ${theme.mode === 'light'
-      ? theme.color.container_color
-      : theme.color.transparent_30};
+    background-color: ${theme.color.transparent_10};
     border-radius: 12px;
     box-shadow: ${theme.mode === 'light'
       ? `0px 2px 3px 1px rgba(200, 200, 200, 3)`
@@ -57,6 +57,7 @@ const RoomFooter = styled.div`
 
 const LanguageImgs = styled.div`
   display: flex;
+  height: 2.4rem;
 
   & > * {
     margin-right: 2rem;

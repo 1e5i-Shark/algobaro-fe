@@ -40,7 +40,10 @@ export default function HomeSection({
               height="2.4rem"
               fontSize="1rem"
               style={{
-                backgroundColor: theme.color.gray_30,
+                backgroundColor:
+                  theme.mode === 'light'
+                    ? theme.color.gray_30
+                    : theme.color.gray_50,
                 maxWidth: '20%',
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
@@ -61,7 +64,6 @@ export default function HomeSection({
         })}
       </S.RoomTags>
 
-      {/* // todo: 이미지 잘 나오게끔 수정하기 */}
       <S.RoomFooter>
         <S.LanguageImgs>
           {language.map((lang, index) => {
@@ -69,8 +71,7 @@ export default function HomeSection({
               <Image
                 key={`${lang}-${index}`}
                 src={DummyImgLink[lang]}
-                width="2.4rem"
-                height="2.4rem"
+                fill={true}
                 shape="circle"
               />
             );

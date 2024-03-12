@@ -1,35 +1,70 @@
 import styled, { css } from 'styled-components';
 
 const NavContainer = styled.nav`
-  position: relative;
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  height: 14rem;
-  padding: 2rem 0;
-`;
+  @media (min-width: 1024px) {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    padding: 4rem 0;
 
-const NavWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 4.3rem;
+    & :first-child {
+      grid-row: 2 / 3;
+      grid-column: 1 / 2;
+      justify-self: start;
+    }
+    & :nth-child(2) {
+      grid-row: 2 / 3;
+      grid-column: 2 / 3;
+      justify-self: end;
+    }
+    & :last-child {
+      grid-row: 1 / 2;
+      grid-column: 2 / 3;
+    }
+  }
+
+  @media (${({ theme }) => theme.device.laptop}) {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    padding: 6rem 0;
+
+    & :first-child {
+      grid-row: 1 / 2;
+      grid-column: 1 / 2;
+    }
+    & :nth-child(2) {
+      grid-row: 2 / 3;
+      grid-column: 1 / -1;
+    }
+    & :last-child {
+      grid-row: 1 / 2;
+      grid-column: 2 / 3;
+    }
+  }
 `;
 
 const SearchOptionsContainer = styled.div`
   display: flex;
+  gap: 1rem;
   align-items: center;
   justify-content: space-between;
-  width: 50%;
-  height: 4.3rem;
+  width: calc(100% - 1rem);
+  min-width: 46rem;
+
+  @media (${({ theme }) => theme.device.laptop}) {
+    width: 100%;
+    height: 100%;
+    margin-top: 1rem;
+  }
 `;
 
 const SearchInputWrapper = styled.form`
   position: relative;
   width: 28rem;
   height: 100%;
-  margin-right: 2rem;
 
   & :last-child {
     position: absolute;
@@ -41,8 +76,11 @@ const SearchInputWrapper = styled.form`
 const SearchInput = styled.input`
   ${({ theme }) => css`
     width: 100%;
+    min-width: 19.4rem;
     height: 100%;
-    padding: 0 2rem;
+    padding-right: 4rem;
+    padding-left: 2rem;
+
     color: ${theme.color.text_primary_color};
     background-color: ${theme.color.background_second};
     border-radius: 2rem;
@@ -50,23 +88,22 @@ const SearchInput = styled.input`
 `;
 
 const UpdateData = styled.span`
-  position: absolute;
-  right: 0;
-  bottom: 8rem;
   display: flex;
+  gap: 0.5rem;
   align-items: center;
+  justify-content: flex-end;
   font-size: 1.2rem;
+`;
 
-  & :last-child {
-    margin-left: 0.5rem;
-  }
+const UpdateText = styled.span`
+  white-space: nowrap;
 `;
 
 export {
   NavContainer,
-  NavWrapper,
   SearchInput,
   SearchInputWrapper,
   SearchOptionsContainer,
   UpdateData,
+  UpdateText,
 };
