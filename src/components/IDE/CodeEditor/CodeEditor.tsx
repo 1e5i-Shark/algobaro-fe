@@ -70,6 +70,7 @@ export default function CodeEditor() {
           extraKeys: {
             'Ctrl-Space': 'autocomplete',
           },
+          gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
         }}
         editorDidMount={editor => {
           editorRef.current = editor;
