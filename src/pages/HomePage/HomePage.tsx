@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { useRoomsList } from '@/hooks/Api/useRooms';
+import usePageStore from '@/store/RoomsListStore/usePageStore';
 
-import { DUMMY_DATA, RoomDataProps } from './DummyData';
+import { RoomDataProps } from './DummyData';
 import HomeFooter from './HomeFooter/HomeFooter';
 import HomeNav from './HomeNav/HomeNav';
 import * as S from './HomePage.style';
@@ -14,18 +15,25 @@ export default function HomePage() {
   const filteredRoomData = useFilteredRoomData(roomData);
   const renderingData = filteredRoomData || roomData;
 
+  // 현재 페이지
+  const { currentPage } = usePageStore();
+  console.log('currentPage', currentPage);
+
+  // Todo: 페이지를 클릭해서 변경하면 리렌더가 2번 일어남. 왜 그럴까?
+  // isSuccess 추가?
   const { data, isLoading, refetch } = useRoomsList({
-    // api에 맞춰, 1페이지의 경우 0으로 호출해야 합니다.
-    page: 0,
+    page: currentPage,
     size: 4,
   });
 
-  console.log('get 요청 보낸 data : ', data);
+  const content = data?.response.content;
+  const totalPages = data?.response.totalPages;
+  console.log('content', content);
 
   useEffect(() => {
     // 아래 코드는 get 요청으로 수정될 예정입니다.
-    setRoomData(DUMMY_DATA);
-  }, []);
+    // setRoomData(DUMMY_DATA);
+  }, [currentPage]);
 
   return (
     <S.HomePageContainer>
@@ -33,6 +41,7 @@ export default function HomePage() {
         {/* 상단 Nav */}
         <HomeNav />
 
+        {/* // Todo: isLoading이면 페이지네이션 파트까지 같이 스피너로 처리 */}
         {/* 방 목록  */}
         {renderingData.length === 0 ? (
           <S.NoRoom>검색하신 방이 존재하지 않습니다.</S.NoRoom>
@@ -50,7 +59,7 @@ export default function HomePage() {
         )}
 
         {/* 페이지네이션 파트 */}
-        <HomeFooter />
+        <HomeFooter totalPages={totalPages || 0} />
       </S.HomePageWrapper>
     </S.HomePageContainer>
   );
