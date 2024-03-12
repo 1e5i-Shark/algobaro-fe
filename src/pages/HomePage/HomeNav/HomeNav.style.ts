@@ -6,7 +6,7 @@ const NavContainer = styled.nav`
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
     width: 100%;
-    padding: 2rem 0;
+    padding: 4rem 0;
 
     & :first-child {
       grid-row: 2 / 3;
@@ -29,7 +29,7 @@ const NavContainer = styled.nav`
     grid-template-rows: 1fr auto;
     grid-template-columns: 1fr 1fr;
     width: 100%;
-    padding: 4rem 0;
+    padding: 6rem 0;
 
     & :first-child {
       grid-row: 1 / 2;
