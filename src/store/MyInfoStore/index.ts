@@ -16,8 +16,8 @@ const initialData = {
 const useMyInfoStore = create<MyStateProps>()(
   devtools(set => ({
     myInfo: { ...initialData },
-    setMe: (newMyData: Partial<MyInfoType>) =>
-      set(state => ({ myInfo: { ...state.myInfo, ...newMyData } })),
+    setMyInfo: (newData: Partial<MyInfoType>) =>
+      set(state => ({ myInfo: { ...state.myInfo, ...newData } })),
     reset: () =>
       set({
         myInfo: initialData,
