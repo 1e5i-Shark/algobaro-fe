@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 
+import { Spinner } from '@/components';
 import { useRoomsList } from '@/hooks/Api/useRooms';
 import usePageStore from '@/store/RoomsListStore/usePageStore';
 
-import { RoomDataProps } from './DummyData';
+import { DUMMY_DATA, RoomDataProps } from './DummyData';
 import HomeFooter from './HomeFooter/HomeFooter';
 import HomeNav from './HomeNav/HomeNav';
 import * as S from './HomePage.style';
@@ -32,7 +33,7 @@ export default function HomePage() {
 
   useEffect(() => {
     // 아래 코드는 get 요청으로 수정될 예정입니다.
-    // setRoomData(DUMMY_DATA);
+    setRoomData(DUMMY_DATA);
   }, [currentPage]);
 
   return (
@@ -42,24 +43,34 @@ export default function HomePage() {
         <HomeNav />
 
         {/* // Todo: isLoading이면 페이지네이션 파트까지 같이 스피너로 처리 */}
-        {/* 방 목록  */}
-        {renderingData.length === 0 ? (
-          <S.NoRoom>검색하신 방이 존재하지 않습니다.</S.NoRoom>
+        {isLoading ? (
+          <S.HomeLoadingWrapper>
+            <Spinner />
+          </S.HomeLoadingWrapper>
         ) : (
-          <S.HomeSectionContainer>
-            {renderingData.map(data => {
-              return (
-                <HomeSection
-                  key={data.id}
-                  {...data}
-                />
-              );
-            })}
-          </S.HomeSectionContainer>
-        )}
+          <>
+            {/* 방 목록  */}
+            {renderingData.length === 0 ? (
+              <S.NoRoom>😢 방이 존재하지 않습니다.</S.NoRoom>
+            ) : (
+              <>
+                <S.HomeSectionContainer>
+                  {renderingData.map(data => {
+                    return (
+                      <HomeSection
+                        key={data.id}
+                        {...data}
+                      />
+                    );
+                  })}
+                </S.HomeSectionContainer>
 
-        {/* 페이지네이션 파트 */}
-        <HomeFooter totalPages={totalPages || 0} />
+                {/* 페이지네이션 파트 */}
+                <HomeFooter totalPages={totalPages || 0} />
+              </>
+            )}
+          </>
+        )}
       </S.HomePageWrapper>
     </S.HomePageContainer>
   );
