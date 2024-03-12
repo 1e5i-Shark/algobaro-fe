@@ -35,7 +35,7 @@ export default function RoomHeaderButtons({
             fontSize="1.6rem"
             onClick={onClick}
           >
-            방 정보 변경
+            방 정보 수정
           </Button>
         )}
         <ThemeModeToggleButton />
