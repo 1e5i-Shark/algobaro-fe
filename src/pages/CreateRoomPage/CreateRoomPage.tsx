@@ -76,7 +76,7 @@ export default function CreateRoomPage() {
     // 서버의 string[] 형식과 맞추기 위해 Tag 데이터의 value만 갖도록 필터링
     const filteredTag = data.tags.map(tag => tag.value);
 
-    const submitData = { ...data, statAt: currentDate, tags: filteredTag };
+    const submitData = { ...data, startAt: currentDate, tags: filteredTag };
 
     console.log('submit data: ', submitData);
 
