@@ -4,4 +4,5 @@ export interface User {
   nickname: string;
   joinTime: string;
   ready: boolean;
+  role: string;
 }

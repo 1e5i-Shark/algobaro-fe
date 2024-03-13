@@ -4,7 +4,7 @@ import { User } from '../type';
 import * as S from './UserProfileList.style';
 
 interface UserProfileListProps {
-  selectedUser: User;
+  selectedUser?: User;
   userList: User[];
   onUserClick: (userId: string) => void;
 }
@@ -26,7 +26,7 @@ export default function UserProfileList({
               size="L"
               src={user.profileImage ?? ''}
             />
-            <S.UserName $isSelected={selectedUser.id === user.id}>
+            <S.UserName $isSelected={selectedUser?.id === user.id}>
               <EllipsisText
                 width="8rem"
                 lineClamp={2}

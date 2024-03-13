@@ -1,4 +1,6 @@
-export const MOCK_USER_DATA = [
+import { User } from './type';
+
+export const MOCK_USER_DATA: User[] = [
   {
     id: 'soopy368@test.com',
     nickname: '수박이박수',
