@@ -11,12 +11,10 @@ const ProblemWrapper = styled(Col)`
 `;
 
 const ProblemTextWrapper = styled.li`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    word-break: keep-all;
-    white-space: pre-line;
-  `}
+  display: flex;
+  flex-direction: column;
+  word-break: keep-all;
+  white-space: pre-line;
 `;
 
 const ProblemTitle = styled.span`
@@ -27,10 +25,8 @@ const ProblemTitle = styled.span`
 `;
 
 const ProblemText = styled.span`
-  ${({ theme }) => css`
-    padding: 1rem 0 2rem;
-    line-height: 3rem;
-  `}
+  padding: 1rem 0 2rem;
+  line-height: 3rem;
 `;
 
 const ProblemCode = styled.pre`
