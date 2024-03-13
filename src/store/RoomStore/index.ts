@@ -44,7 +44,7 @@ const DUMMY_DATA: RoomType = {
       role: 'PARTICIPANT',
       profileImage: '',
       joinTime: '2024-03-04T00:45:18',
-      ready: false,
+      ready: true,
     },
     {
       memberId: 3,
