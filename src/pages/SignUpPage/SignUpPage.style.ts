@@ -58,7 +58,7 @@ export const SignUpInputItem = styled.li`
     }
 
     input {
-      padding-left: 2rem;
+      padding-left: ${theme.size.L};
       color: ${theme.color.text_primary_color};
       &::placeholder {
         line-height: 4rem;
@@ -68,7 +68,7 @@ export const SignUpInputItem = styled.li`
 
     > div {
       > :nth-child(3) {
-        height: 1.5rem;
+        height: ${theme.size.M};
       }
     }
   `}

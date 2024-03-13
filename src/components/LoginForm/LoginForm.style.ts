@@ -41,6 +41,7 @@ export const LoginInputItem = styled.li`
       color: ${theme.color.text_primary_color};
     }
     input {
+      padding-left: ${theme.size.L};
       color: ${theme.color.text_primary_color};
       &::placeholder {
         color: ${theme.mode === 'light'
