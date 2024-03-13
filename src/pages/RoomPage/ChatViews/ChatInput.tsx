@@ -23,8 +23,6 @@ export default function ChatInput({ className }: ChatInputProps) {
   const onSubmit = (data: FormProps) => {
     if (!data.chatValue) return;
 
-    // Todo: 소켓 연결
-
     reset();
     alert('submit!');
   };
@@ -44,7 +42,6 @@ export default function ChatInput({ className }: ChatInputProps) {
   return (
     <S.ChatInputWrapper className={className}>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
-        {/* Todo: Input name 백엔드 데이터와 통일하기 */}
         <S.InputWrapper>
           <Input
             name="chatValue"

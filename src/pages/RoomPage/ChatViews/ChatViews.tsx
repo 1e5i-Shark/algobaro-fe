@@ -4,7 +4,7 @@ import ChatInput from './ChatInput';
 export default function ChatViews() {
   return (
     <>
-      <ChatListWrapper>ChatViews</ChatListWrapper>
+      <ChatListWrapper />
       <ChatInput className="chatinput" />
     </>
   );
