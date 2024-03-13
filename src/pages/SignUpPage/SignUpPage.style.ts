@@ -24,6 +24,7 @@ export const SignUpFormContainer = styled.form`
     justify-content: center;
     width: 100%;
     height: 100%;
+    user-select: none;
 
     > :nth-child(2) {
       ${commonWidth}
@@ -56,6 +57,7 @@ export const SignUpInputItem = styled.li`
       font-size: ${theme.size.M};
       font-weight: ${theme.fontWeight.bold};
       color: ${theme.color.text_primary_color};
+      user-select: none;
     }
 
     input {
