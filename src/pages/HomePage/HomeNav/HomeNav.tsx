@@ -4,11 +4,11 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, CheckBox, Icon, MultiDropDown } from '@/components';
+import { LANGUAGES_DATA_SET } from '@/constants/room';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { PATH } from '@/routes/path';
 import useRoomFilterStore from '@/store/RoomsListStore/useFilterStore';
 
-import { DummyDataSet } from '../DummyData/DummyData';
 import * as S from './HomeNav.style';
 
 export default function HomeNav() {
@@ -55,7 +55,7 @@ export default function HomeNav() {
       <S.SearchOptionsContainer>
         <MultiDropDown
           dataId="search-code-language"
-          dataSet={DummyDataSet}
+          dataSet={LANGUAGES_DATA_SET}
           labelId="search-code-language-label"
           labelName="언어"
           fontSize={theme.size.M}
