@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import useRoomFilterStore from '@/store/useRoomFilterStore';
+import useRoomFilterStore from '@/store/RoomsListStore/useFilterStore';
 
 import { RoomDataProps } from './DummyData';
 

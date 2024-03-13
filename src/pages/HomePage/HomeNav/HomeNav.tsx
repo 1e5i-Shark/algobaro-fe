@@ -4,7 +4,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { Button, CheckBox, Icon, MultiDropDown } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
-import useRoomFilterStore from '@/store/useRoomFilterStore';
+import useRoomFilterStore from '@/store/RoomsListStore/useFilterStore';
 
 import { DummyDataSet } from '../DummyData/DummyData';
 import * as S from './HomeNav.style';
