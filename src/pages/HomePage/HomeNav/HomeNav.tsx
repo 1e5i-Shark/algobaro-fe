@@ -1,9 +1,11 @@
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, CheckBox, Icon, MultiDropDown } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { PATH } from '@/routes/path';
 import useRoomFilterStore from '@/store/RoomsListStore/useFilterStore';
 
 import { DummyDataSet } from '../DummyData/DummyData';
@@ -12,6 +14,7 @@ import * as S from './HomeNav.style';
 export default function HomeNav() {
   const latestUpdate = '1분전';
   const { theme } = useCustomTheme();
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const {
     selectedAccess,
@@ -21,6 +24,10 @@ export default function HomeNav() {
     setSelectedAccess,
     setSelectedStatus,
   } = useRoomFilterStore();
+
+  const handleCreateRoom = () => {
+    navigate(PATH.CREATEROOM);
+  };
 
   const handleInputSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,7 +50,7 @@ export default function HomeNav() {
 
   return (
     <S.NavContainer>
-      <Button>방 만들기</Button>
+      <Button onClick={handleCreateRoom}>방 만들기</Button>
 
       <S.SearchOptionsContainer>
         <MultiDropDown

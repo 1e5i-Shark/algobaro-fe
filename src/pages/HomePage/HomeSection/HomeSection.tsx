@@ -1,5 +1,6 @@
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon, Image, Tag } from '@/components';
 import { LOGOS } from '@/constants/logos';
@@ -9,6 +10,7 @@ import { RoomsListType } from '@/types/room';
 import * as S from './HomeSection.style';
 
 export default function HomeSection({
+  roomId,
   roomStatus,
   title,
   languages,
@@ -19,6 +21,11 @@ export default function HomeSection({
   currentMemberCount,
 }: RoomsListType) {
   const { theme } = useCustomTheme();
+  const navigate = useNavigate();
+
+  const handleRoomEnter = () => {
+    navigate(`/room/${roomId}`, { state: roomShortUuid });
+  };
 
   return (
     <S.SectionWrapper>
@@ -85,7 +92,7 @@ export default function HomeSection({
         </S.LanguageImgs>
 
         {roomStatus === 'RECRUITING' ? (
-          <Button>입장</Button>
+          <Button onClick={handleRoomEnter}>입장</Button>
         ) : (
           <S.InProgress>진행중</S.InProgress>
         )}
