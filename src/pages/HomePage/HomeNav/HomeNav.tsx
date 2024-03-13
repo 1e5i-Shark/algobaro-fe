@@ -7,23 +7,28 @@ import { Button, CheckBox, Icon, MultiDropDown } from '@/components';
 import { LANGUAGES_DATA_SET } from '@/constants/room';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { PATH } from '@/routes/path';
-import useRoomFilterStore from '@/store/RoomsListStore/useFilterStore';
+import useFilterStore from '@/store/RoomsListStore/useFilterStore';
 
 import * as S from './HomeNav.style';
 
-export default function HomeNav() {
-  const latestUpdate = '1분전';
+interface HomeNavProps {
+  refetch: () => void;
+}
+
+export default function HomeNav({ refetch }: HomeNavProps) {
+  // const latestUpdate = '1분전';
+  const [latestUpdate, setLatestUpdate] = useState(1);
   const { theme } = useCustomTheme();
   const navigate = useNavigate();
-  const [searchTitle, setSearchTitle] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const {
     selectedAccess,
     selectedStatus,
-    setInputValue,
+    setTitle,
     setLanguage,
     setAccess,
     setStatus,
-  } = useRoomFilterStore();
+  } = useFilterStore();
 
   const handleCreateRoomClick = () => {
     navigate(PATH.CREATEROOM);
@@ -31,21 +36,27 @@ export default function HomeNav() {
 
   const handleInputSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!searchTitle) return;
-    setSearchTitle(searchTitle);
+    if (!inputValue.trim()) return;
+
+    setTitle(inputValue);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
 
     // Input 내부가 빈 문자열일 경우, 초기화
-    if (value.trim() === '') {
+    if (value === '') {
       setInputValue('');
-      setSearchTitle('');
+      setTitle('');
       return;
     }
 
     setInputValue(value);
+  };
+
+  const handleRefetchData = () => {
+    setLatestUpdate(prev => prev + 1);
+    refetch();
   };
 
   return (
@@ -65,21 +76,27 @@ export default function HomeNav() {
 
         <CheckBox
           label="비밀방"
-          checked={selectedAccess}
-          onChange={() => setAccess(!selectedAccess)}
+          checked={selectedAccess === 'PRIVATE'}
+          onChange={() =>
+            setAccess(selectedAccess === 'PRIVATE' ? 'PUBLIC' : 'PRIVATE')
+          }
         />
 
         <CheckBox
           label="입장 가능"
-          checked={selectedStatus}
-          onChange={() => setStatus(!selectedStatus)}
+          checked={selectedStatus === 'RECRUITING'}
+          onChange={() =>
+            setStatus(
+              selectedStatus === 'RECRUITING' ? 'RUNNING' : 'RECRUITING'
+            )
+          }
         />
 
         <S.SearchInputWrapper onSubmit={handleInputSubmit}>
           <S.SearchInput
             type="text"
             placeholder="방 제목을 검색해 주세요."
-            value={searchTitle}
+            value={inputValue}
             onChange={handleInputChange}
           />
           <Icon>
@@ -89,8 +106,8 @@ export default function HomeNav() {
       </S.SearchOptionsContainer>
 
       <S.UpdateData>
-        {`마지막 업데이트: ${latestUpdate}`}
-        <Icon>
+        {`마지막 업데이트: ${latestUpdate}분전`}
+        <Icon onClick={handleRefetchData}>
           <RefreshRoundedIcon />
         </Icon>
       </S.UpdateData>

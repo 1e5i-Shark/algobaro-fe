@@ -1,11 +1,11 @@
 import { AccessType, RoomStatusType } from '@/types/room';
 
 export interface useFilterStoreProps {
-  searchInputValue: string;
-  selectedLanguage: string[] | [];
+  searchTitle: string;
+  selectedLanguage: string[];
   selectedAccess: AccessType | null;
   selectedStatus: RoomStatusType | null;
-  setInputValue: (value: string) => void;
+  setTitle: (value: string) => void;
   setLanguage: (value: string | string[]) => void;
   setAccess: (value: AccessType) => void;
   setStatus: (value: RoomStatusType) => void;
