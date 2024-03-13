@@ -14,3 +14,8 @@ export const ROOM_LIMIT_DATASET = [1, 2, 3, 4, 5, 6].reduce(
   },
   {} as Record<number, string>
 );
+
+export const MOCK_ROOM_DATA = {
+  id: 1,
+  roomShortUuid: '2ad2e9db',
+};
