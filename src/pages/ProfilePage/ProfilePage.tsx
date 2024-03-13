@@ -31,7 +31,7 @@ export default function ProfilePage() {
   const [pageNum, setPageNum] = useState(0);
 
   // 내 정보 가져오는 useQuery 훅
-  const { data: myInfoData } = useMyInfo();
+  const { data: myInfoData, remove: removeMyInfo } = useMyInfo();
   const myInfo = myInfoData?.response;
 
   // 풀이 히스토리를 가져오는 useQuery 훅
@@ -87,6 +87,7 @@ export default function ProfilePage() {
 
   // 로그아웃 버튼 클릭 이벤트 핸들러 함수
   const handleClickLogOut = () => {
+    removeMyInfo();
     setAccessToken('');
     navigate(PATH.ROOT);
   };
