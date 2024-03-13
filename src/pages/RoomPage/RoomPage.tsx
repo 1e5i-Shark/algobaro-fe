@@ -1,42 +1,78 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import useMeStore from '@/store/Me';
-import useRoomStore from '@/store/Room';
+import { Spinner } from '@/components';
+import { useGetUuidRoom } from '@/hooks/useRooms';
+import { PATH } from '@/routes/path';
+import useMyInfoStore from '@/store/MyInfoStore';
+import useRoomStore from '@/store/RoomStore';
 
 import ChatViews from './ChatViews/ChatViews';
+import MemberList from './MemberList/MemberList';
+import RoomHeader from './RoomHeader/RoomHeader';
+import { ROOM_ROLE } from './RoomPage.consts';
 import * as S from './RoomPage.style';
-import { MemberList, RoomHeader, TestInfo } from './RoomViews';
+import TestInfo from './TestInfo/TestInfo';
 
 export default function RoomPage() {
-  const { me } = useMeStore();
-  const { roomData } = useRoomStore();
+  const { roomData, setRoomData } = useRoomStore();
   const { roomMembers } = roomData;
+  const { myInfo } = useMyInfoStore();
 
-  const myRoomData = useMemo(
-    () => roomMembers.filter(member => member.id === me.id)[0],
-    [roomMembers]
-  );
+  const navigate = useNavigate();
+  const { state: roomShortUuid } = useLocation();
 
-  // Todo: 개별 방 정보 조회 API
-  // const { data, isLoading, error, isSuccess } = useQuery({
-  //   queryKey: [QUERY_KEY.ROOM.UUID_INFO],
-  //   queryFn: async () => await getUuidRoom(`/${roomUUID}`),
-  // });
+  useEffect(() => {
+    const isExist = roomMembers.findIndex(
+      member => member.memberId === myInfo.id
+    );
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     setRoomData(data.response);
-  //     console.log(roomData);
-  //   }
-  // }, [isSuccess]);
+    if (isExist !== -1) return;
 
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
+    const date = new Date().toISOString();
 
-  // if (error) {
-  //   return <h1>RoomPage API 호출 실패</h1>;
-  // }
+    const newMembers = [
+      {
+        memberId: myInfo.id as number,
+        email: myInfo.email,
+        nickname: myInfo.nickname,
+        profileImage: myInfo.profileImage,
+        role: ROOM_ROLE.HOST,
+        joinTime: date,
+        ready: true,
+      },
+      ...roomMembers,
+    ];
+
+    setRoomData({ roomMembers: newMembers });
+  }, []);
+
+  const { isLoading, isError, error, isSuccess } =
+    useGetUuidRoom(roomShortUuid);
+
+  const myRoomData = useMemo(() => {
+    return roomMembers.filter(member => member.memberId === myInfo.id)[0];
+  }, [roomMembers]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    console.error(error);
+
+    alert('방 정보를 불러오지 못했습니다. 잠시 후 다시 입장해주세요.');
+    navigate(PATH.HOME);
+  }
+
+  if (isSuccess) {
+    // Todo: API 연결 후 전역 저장
+    // setRoomData(data.response);
+  }
+
+  if (!myRoomData) {
+    return <Spinner />;
+  }
 
   return (
     <S.RoomContainer className="roompage">
@@ -54,6 +90,7 @@ export default function RoomPage() {
           myRoomData={myRoomData}
         />
       </S.WaitingRoomContainer>
+      {/* Todo: Chat 컴포넌트 변경 */}
       <S.ChatContainer className="chat-container">
         <ChatViews />
       </S.ChatContainer>
