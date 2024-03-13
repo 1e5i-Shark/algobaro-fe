@@ -6,7 +6,7 @@ import useMessageStore from '@/store/MessageStore';
 import useMeStore from '@/store/MyInfoStore';
 import useRoomStore from '@/store/RoomStore';
 
-import { MenuText } from '../Menu/MenuText';
+import { MENU_TEXT } from '../Menu/MenuText';
 import * as S from './Chat.style';
 import ChatInput from './ChatInput';
 
@@ -26,7 +26,7 @@ export default function Chat({ height = '100%' }: ChatProps) {
   const menuList = [
     {
       id: 1,
-      text: MenuText.TransferHost,
+      text: MENU_TEXT.TRANSFER_HOST,
       onClick: (event: MouseEvent<HTMLElement>) =>
         console.log('메뉴 테스트', event),
     },
