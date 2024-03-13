@@ -18,6 +18,7 @@ export const LabelText = styled.label<StyledWrapperProps>`
     font-size: ${$fontSize};
     font-weight: ${$fontWeight};
     color: ${$textColor};
+    white-space: nowrap;
     cursor: pointer;
   `}
 `;
