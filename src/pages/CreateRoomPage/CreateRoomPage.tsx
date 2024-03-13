@@ -18,8 +18,8 @@ import {
   ROOM_LIMIT_DATASET,
   ROOM_STATUS,
 } from '@/constants/room';
+import { useCreateRoom } from '@/hooks/useCreateRoom';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
-import { useCreateRoom } from '@/hooks/useRooms';
 
 import * as S from './CreateRoomPage.style';
 
