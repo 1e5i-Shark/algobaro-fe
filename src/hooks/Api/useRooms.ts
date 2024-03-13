@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { ROOMS_KEY } from '@/constants/queryKey';
+import { QUERY_KEY, ROOMS_KEY } from '@/constants/queryKey';
 import getRoomsList from '@/services/Room/getRoomsList';
+import { getUuidRoom } from '@/services/Room/Room';
 import { RoomsRequestQuery } from '@/services/Room/type';
 
 export const useRoomsList = ({
@@ -28,5 +29,12 @@ export const useRoomsList = ({
     // 1분마다 새로고침
     refetchInterval: 1000 * 60 * 1,
     keepPreviousData: true,
+  });
+};
+
+export const useGetUuidRoom = (roomShortUuid: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEY.ROOM.UUID_INFO, roomShortUuid],
+    queryFn: async () => await getUuidRoom(`/${roomShortUuid}`),
   });
 };

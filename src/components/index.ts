@@ -20,4 +20,5 @@ export { default as Timer } from './Common/Timer/Timer';
 export { default as CreateTagInput } from './CreateRoom/CreateTagInput/CreateTagInput';
 export { default as TitleWithAsterisk } from './CreateRoom/TitleWithAsterisk/TitleWithAsterisk';
 export { default as CodeEditor } from './IDE/CodeEditor/CodeEditor';
+export { MemberCard } from './MemberCard';
 export { ThemeCustomProvider } from './ThemeCustomProvider';
