@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Avatar, ThemeModeToggleButton } from '@/components';
 import { useMyInfo } from '@/hooks/Api/useMembers';
@@ -8,11 +8,12 @@ import * as S from './Header.style';
 
 export default function Header() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   // Todo: 수영님의 MeStore에서 추출하는 것으로 이후 변경
   const { data: myInfo, refetch } = useMyInfo();
 
-  if (!myInfo) {
+  if (!myInfo && pathname !== '/signup') {
     refetch();
   }
 
@@ -34,12 +35,14 @@ export default function Header() {
       </S.LogoWrapper>
       <S.IconWrapper>
         <ThemeModeToggleButton />
-        <S.AvatarWrapper>
-          <Avatar
-            src={myProfileImage}
-            onClick={handleMyProfileClick}
-          />
-        </S.AvatarWrapper>
+        {pathname !== '/signup' ? (
+          <S.AvatarWrapper>
+            <Avatar
+              src={myProfileImage}
+              onClick={handleMyProfileClick}
+            />
+          </S.AvatarWrapper>
+        ) : null}
       </S.IconWrapper>
     </S.HeaderWrapper>
   );

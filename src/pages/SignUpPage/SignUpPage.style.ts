@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { css } from 'styled-components';
 
 import { Button } from '@/components';
+import { ButtonHoverTransition } from '@/styles/GlobalStyle';
 
 // 반복되는 너비 설정을 mixin으로 분리한다.
 const commonWidth = css`
@@ -23,6 +24,7 @@ export const SignUpFormContainer = styled.form`
     justify-content: center;
     width: 100%;
     height: 100%;
+    user-select: none;
 
     > :nth-child(2) {
       ${commonWidth}
@@ -55,10 +57,11 @@ export const SignUpInputItem = styled.li`
       font-size: ${theme.size.M};
       font-weight: ${theme.fontWeight.bold};
       color: ${theme.color.text_primary_color};
+      user-select: none;
     }
 
     input {
-      padding-left: 2rem;
+      padding-left: ${theme.size.L};
       color: ${theme.color.text_primary_color};
       &::placeholder {
         line-height: 4rem;
@@ -68,7 +71,7 @@ export const SignUpInputItem = styled.li`
 
     > div {
       > :nth-child(3) {
-        height: 1.5rem;
+        height: ${theme.size.M};
       }
     }
   `}
@@ -76,18 +79,13 @@ export const SignUpInputItem = styled.li`
 
 export const SignUpButton = styled(Button)`
   ${commonWidth}
-  transition: transform 0.2s ease;
-  &:not(:disabled):hover {
-    transform: scale(1.05);
-  }
+  ${ButtonHoverTransition}
 `;
+
 export const HomeButton = styled(Button)`
   ${({ theme }) => css`
     ${commonWidth}
+    ${ButtonHoverTransition}
     margin-top: ${theme.size.S};
-    transition: transform 0.2s ease;
-    &:hover {
-      transform: scale(1.05);
-    }
   `}
 `;

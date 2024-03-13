@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import { Row } from '@/styles/GlobalStyle';
+import { ButtonHoverTransition, Row } from '@/styles/GlobalStyle';
 import { ThemeType } from '@/styles/theme';
 
 import { Button } from '..';
@@ -23,6 +23,7 @@ export const LoginFormContainer = styled.form`
     display: flex;
     flex-direction: column;
     gap: ${theme.size.M};
+    user-select: none;
   `}
 `;
 
@@ -37,10 +38,12 @@ export const LoginInputContainer = styled.ul`
 export const LoginInputItem = styled.li`
   ${({ theme }) => css`
     label {
+      font-size: ${theme.size.M};
       font-weight: ${theme.fontWeight.semiBold};
       color: ${theme.color.text_primary_color};
     }
     input {
+      padding-left: ${theme.size.L};
       color: ${theme.color.text_primary_color};
       &::placeholder {
         color: ${theme.mode === 'light'
@@ -54,12 +57,14 @@ export const LoginInputItem = styled.li`
 
 export const LoginButton = styled(Button)`
   width: 100%;
+  ${ButtonHoverTransition}
 `;
 
 export const LoginOptionContainer = styled(Row)`
   ${({ theme }) => css`
     align-items: center;
     justify-content: space-between;
+    user-select: none;
     & {
       span {
         width: 1.2rem;

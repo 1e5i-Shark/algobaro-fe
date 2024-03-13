@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import { ButtonHoverTransition } from '@/styles/GlobalStyle';
+
 export const ModalTitle = styled.p`
   ${({ theme }) => css`
     position: absolute;
@@ -18,6 +20,7 @@ export const ModalForm = styled.form`
   width: 30rem;
   button {
     width: 50%;
+    ${ButtonHoverTransition}
   }
 `;
 
