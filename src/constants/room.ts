@@ -18,7 +18,7 @@ export const ROOM_LIMIT_DATASET = [1, 2, 3, 4, 5, 6].reduce(
 );
 
 export const LANGUAGES_DATA_SET: Record<LanguagesType, string> = {
-  JAVA: 'JAVA',
+  JAVA: 'Java',
   PYTHON: '파이썬',
   JAVASCRIPT: '자바스크립트',
   'C++': 'C++',
