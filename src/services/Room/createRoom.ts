@@ -1,4 +1,4 @@
-import { ROOMS_URL } from '../apiEndpoint';
+import { API_ENDPOINT } from '../apiEndpoint';
 import { axiosAuthInstance } from '../axiosInstance';
 
 export interface CreateRoomRequest {
@@ -26,5 +26,8 @@ export interface CreateRoomResponse {
 }
 
 export const createRoom = (request: CreateRoomRequest) => {
-  return axiosAuthInstance.post<CreateRoomResponse>(ROOMS_URL, request);
+  return axiosAuthInstance.post<CreateRoomResponse>(
+    API_ENDPOINT.ROOM.ROOMS,
+    request
+  );
 };
