@@ -24,7 +24,7 @@ const initialData: RoomType = {
 
 const useRoomStore = create<RoomStateProps>()(
   devtools(set => ({
-    roomData: { ...initialData },
+    roomData: initialData,
     setRoomData: (newRoomData: Partial<RoomType>) =>
       set(state => ({ roomData: { ...state.roomData, ...newRoomData } })),
     reset: () =>
