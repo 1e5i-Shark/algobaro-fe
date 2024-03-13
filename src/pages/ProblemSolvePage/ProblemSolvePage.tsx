@@ -3,6 +3,7 @@ import { Panel, PanelGroup } from 'react-resizable-panels';
 import { Button, CodeEditor, ResizeHandle } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
+import useTimerStore from '@/store/TimerStore';
 
 import { DIRECTION, MOCK_DATA, SIZE_PERCENTAGE } from './constants';
 import ProblemExecution from './ProblemExecution/ProblemExecution';
@@ -15,11 +16,15 @@ export default function ProblemSolvePage() {
   const { mutate: compileMutate } = useCompile();
   const { mutate: submitMutate } = useSubmission();
 
+  const setIsStop = useTimerStore(state => state.setIsStop);
+
   const handleCompileExecution = () => {
     compileMutate(MOCK_DATA.COMPILE);
   };
+
   const handleSubmit = () => {
-    submitMutate(MOCK_DATA.SUBMISSION);
+    // submitMutate(MOCK_DATA.SUBMISSION);
+    setIsStop(false);
   };
 
   return (
