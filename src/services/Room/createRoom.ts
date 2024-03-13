@@ -14,15 +14,15 @@ export interface CreateRoomRequest {
   timeLimit?: number;
 }
 
-export interface CreateRoomResponse {
+export interface CreateRoomData extends CreateRoomRequest {
   roomId: number;
-  roomStatus: string; // [RECRUTING, RUNNING]
-  title: string;
-  roomAccessType: string; // [PRIVATE, PUBLIC]
-  roomLimit: number;
-  problemPlatform: string;
-  tags?: string[];
-  timeLimit?: number;
+  roomShortUuid: string;
+  roomMembers: string[];
+}
+
+export interface CreateRoomResponse {
+  success: boolean;
+  response: CreateRoomData;
 }
 
 export const createRoom = (request: CreateRoomRequest) => {
