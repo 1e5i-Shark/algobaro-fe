@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Modal, Timer } from '@/components';
+import { MOCK_ROOM_DATA } from '@/constants/room';
 import { PATH } from '@/routes/path';
 
 import * as S from './ProblemEndModal.style';
@@ -23,7 +24,8 @@ export default function ProblemEndModal({
 
   useEffect(() => {
     if (isEnd) {
-      navigate(PATH.PROBLEMSHARE);
+      navigate(`${PATH.PROBLEMSHARE}/${MOCK_ROOM_DATA.id}`);
+      closeModal();
     }
   }, [isEnd]);
 

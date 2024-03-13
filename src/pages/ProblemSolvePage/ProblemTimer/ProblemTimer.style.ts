@@ -3,6 +3,10 @@ import styled, { css } from 'styled-components';
 import { Row } from '@/styles/GlobalStyle';
 
 const Wrapper = styled(Row)`
+  align-items: center;
+`;
+
+const TimeLeftWrapper = styled.div`
   ${({ theme }) => css`
     width: fit-content;
     padding: 1rem 2.5rem;
@@ -11,8 +15,6 @@ const Wrapper = styled(Row)`
     border-radius: ${theme.shape.round};
   `}
 `;
-
-const TimeLeftWrapper = styled.div``;
 
 const TimeLeftText = styled.span`
   margin-right: 0.6rem;
@@ -25,4 +27,18 @@ const TimeOverText = styled.span`
   `}
 `;
 
-export { TimeLeftText, TimeLeftWrapper, TimeOverText, Wrapper };
+const TimeStartButton = styled.button`
+  ${({ theme }) => css`
+    padding: 0 1rem;
+    font-size: ${theme.size.M};
+    color: ${theme.color.red};
+  `}
+`;
+
+export {
+  TimeLeftText,
+  TimeLeftWrapper,
+  TimeOverText,
+  TimeStartButton,
+  Wrapper,
+};
