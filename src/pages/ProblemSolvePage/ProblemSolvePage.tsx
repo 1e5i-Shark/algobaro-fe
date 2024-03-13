@@ -23,7 +23,7 @@ export default function ProblemSolvePage() {
   };
 
   const handleSubmit = () => {
-    // submitMutate(MOCK_DATA.SUBMISSION);
+    submitMutate(MOCK_DATA.SUBMISSION);
     setIsStop(false);
   };
 
