@@ -5,7 +5,7 @@ import { Icon, Image, Tag } from '@/components';
 import { LOGOS } from '@/constants/logos';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import useRoomStore from '@/store/Room';
+import useRoomStore from '@/store/RoomStore';
 
 interface RoomInfoProps {
   className: string;
@@ -14,11 +14,11 @@ interface RoomInfoProps {
 export default function RoomInfoContainer({ className }: RoomInfoProps) {
   const { theme } = useCustomTheme();
   const { roomData } = useRoomStore();
-  const { roomUUID, title, tags, languages, roomAccessType } = roomData;
+  const { roomShortUuid, title, tags, languages, roomAccessType } = roomData;
 
   const handleCopyRoomId = () => {
     if (window.navigator.clipboard) {
-      window.navigator.clipboard.writeText(roomUUID);
+      window.navigator.clipboard.writeText(roomShortUuid);
 
       alert('방 번호가 복사되었습니다!');
     } else {
@@ -30,7 +30,7 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
     <div className={className}>
       <S.RoomIdWrapper className="roomId">
         <S.CopyRoomIdTag onClick={handleCopyRoomId}>
-          <S.TextId>방 번호 복사</S.TextId>
+          <S.TextId className="text">방 번호 복사</S.TextId>
           <Icon
             size="XXS"
             onClick={() => {}}
@@ -75,7 +75,7 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
               shape="circle"
               alt="logo"
               fill={true}
-              src={LOGOS[language.toUpperCase()]}
+              src={LOGOS[language]}
             />
           </S.LogoWrapper>
         ))}

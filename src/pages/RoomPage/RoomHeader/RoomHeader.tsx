@@ -1,23 +1,22 @@
-import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Modal } from '@/components';
 import useModal from '@/hooks/useModal';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { PATH } from '@/routes/path';
-import { changeHostAuto } from '@/services/Room/Room';
-import useRoomStore from '@/store/Room';
-import { MemberType } from '@/types/room';
+import useRoomStore from '@/store/RoomStore';
+import { RoomMemberType } from '@/types/room';
 
+import { ROOM_ROLE } from '../RoomPage.consts';
 import { ModalRoom, RoomHeaderButtons, RoomHeaderInfo } from '.';
 
 interface HeaderProps {
   className: string;
-  myRoomData: MemberType;
+  myRoomData: RoomMemberType;
 }
 
 export default function RoomHeader({ className, myRoomData }: HeaderProps) {
-  const { id: myId, role: myRole } = myRoomData;
+  const { memberId: myId, role: myRole } = myRoomData;
 
   const { roomData, setRoomData } = useRoomStore();
   const { roomMembers } = roomData;
@@ -25,18 +24,14 @@ export default function RoomHeader({ className, myRoomData }: HeaderProps) {
   const { modalRef, isOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
 
-  const { mutate: changeHostAutoMutate } = useMutation({
-    mutationFn: changeHostAuto,
-  });
-
   const handleExitRoom = async () => {
-    const newMembers = roomMembers.filter(member => member.id !== myId);
+    const newMembers = roomMembers.filter(member => member.memberId !== myId);
     setRoomData({ roomMembers: newMembers });
 
-    if (myRole === 'HOST') {
+    if (myRole === ROOM_ROLE.HOST && roomMembers.length > 1) {
+      // Todo: 소켓 연결
+      // sendMessage(SOCKET_TYPE.ROOM.CHANGE_HOST);
       alert('방장 자동 변경!');
-      // Todo: 방장 자동 변경 API 테스트
-      // await changeHostAutoMutate();
     }
 
     navigate(PATH.HOME);
@@ -47,6 +42,7 @@ export default function RoomHeader({ className, myRoomData }: HeaderProps) {
       <S.HeaderContainer className={className}>
         <RoomHeaderInfo className="roomInfo" />
         <RoomHeaderButtons
+          role={myRole}
           className="roomButtons"
           onClick={() => openModal()}
           onExit={handleExitRoom}

@@ -1,5 +1,4 @@
 import { AttachmentRounded } from '@mui/icons-material';
-import { useMutation } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,9 +7,7 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { PATH } from '@/routes/path';
-import { startTest } from '@/services/Room/Room';
-import useMeStore from '@/store/Me';
-import useRoomStore from '@/store/Room';
+import useRoomStore from '@/store/RoomStore';
 import { RoomMemberType } from '@/types/room';
 
 interface TestInfoProps {
@@ -20,10 +17,8 @@ interface TestInfoProps {
 
 export default function TestInfo({ className, myRoomData }: TestInfoProps) {
   const { theme } = useCustomTheme();
-
   const { roomData, setRoomData } = useRoomStore();
   const { timeLimit, problemLink, roomId, roomMembers } = roomData;
-  const { me } = useMeStore();
 
   const navigate = useNavigate();
 
@@ -40,8 +35,9 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
   }, [timeLimit]);
 
   const changeMemberData = (newData: Partial<RoomMemberType>) => {
-    console.log(newData);
-    const myIndex = roomMembers.findIndex(member => member.memberId === me.id);
+    const myIndex = roomMembers.findIndex(
+      member => member.memberId === myRoomData.memberId
+    );
 
     if (myIndex === -1) return;
 
@@ -54,17 +50,18 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
     setRoomData({ ...roomData, roomMembers: updatedData });
   };
 
-  const { mutate: startTestMutate } = useMutation({
-    mutationFn: startTest,
-    onError: () => {
-      alert('서버 통신에 문제가 있습니다. 잠시 후 다시 시도해주세요.');
-
-      navigate(`${PATH.ROOM}/${roomId}`);
-    },
-  });
+  const changeReady = (ready: boolean) => {
+    changeMemberData({ ready });
+    // Todo: 소켓 연결
+    // ready
+    //   ? sendMessage(SOCKET_TYPE.ROOM.READY)
+    //   : sendMessage(SOCKET_TYPE.ROOM.UNREADY);
+  };
 
   const handleStartTest = async () => {
-    // await startTestMutate(`/${roomId}`);
+    // Todo: 소켓 연결
+    // sendMessage(SOCKET_TYPE.ROOM.START_CODING);
+
     navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
   };
 
@@ -113,9 +110,7 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
           </tr>
         </tbody>
       </S.TestInfoTable>
-
       {myRoomData.role === ROOM_ROLE.HOST ? (
-        // HOST
         isTestReady ? (
           <Button onClick={handleStartTest}>테스트 시작</Button>
         ) : (
@@ -129,19 +124,16 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
             </S.Text>
           </S.WaitingButtonWrapper>
         )
-      ) : // PARTICIPANT
-      myRoomData.ready ? (
+      ) : myRoomData.ready ? (
         <Button
-          onClick={() => changeMemberData({ ready: false })}
+          onClick={() => changeReady(false)}
           backgroundColor={theme.color.green}
         >
           준비 완료
         </Button>
       ) : (
         <S.WaitingButtonWrapper>
-          <Button onClick={() => changeMemberData({ ready: true })}>
-            테스트 준비
-          </Button>
+          <Button onClick={() => changeReady(true)}>테스트 준비</Button>
           <S.Text
             $color={theme.color.gray_50}
             $padding="1rem 0 0 0"
