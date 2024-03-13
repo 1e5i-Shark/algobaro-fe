@@ -1,6 +1,8 @@
-import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
-import PendingRoundedIcon from '@mui/icons-material/PendingRounded';
-import SportsRoundedIcon from '@mui/icons-material/SportsRounded';
+import {
+  CheckCircleRounded,
+  PendingRounded,
+  SportsRounded,
+} from '@mui/icons-material';
 
 import { Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
@@ -38,16 +40,18 @@ export default function StatusTag({ role, ready }: StatusTagProps) {
         {status}
       </S.StatusText>
       {role === ROOM_ROLE.HOST ? (
-        <Icon color={theme.color.text_primary_color}>
-          <SportsRoundedIcon />
-        </Icon>
+        <>
+          <Icon color={theme.color.text_primary_color}>
+            <SportsRounded />
+          </Icon>
+        </>
       ) : ready ? (
         <Icon color={theme.color.green}>
-          <CheckCircleRoundedIcon />
+          <CheckCircleRounded />
         </Icon>
       ) : (
         <Icon color={theme.color.red}>
-          <PendingRoundedIcon />
+          <PendingRounded />
         </Icon>
       )}
     </S.StatusWrapper>
