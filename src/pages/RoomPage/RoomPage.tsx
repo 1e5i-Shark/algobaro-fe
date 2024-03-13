@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Spinner } from '@/components';
-import { useGetUuidRoom } from '@/hooks/useRooms';
+import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { PATH } from '@/routes/path';
 import useMyInfoStore from '@/store/MyInfoStore';
 import useRoomStore from '@/store/RoomStore';
