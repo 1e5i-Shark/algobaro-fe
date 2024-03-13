@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const SectionWrapper = styled.section`
+export const SectionWrapper = styled.section`
   ${({ theme }) => css`
     position: relative;
     display: flex;
@@ -16,7 +16,7 @@ const SectionWrapper = styled.section`
   `}
 `;
 
-const RoomHeader = styled.div`
+export const RoomHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,29 +24,29 @@ const RoomHeader = styled.div`
   font-size: ${({ theme }) => theme.size.L};
 `;
 
-const TitleWrapper = styled.div`
+export const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   max-width: 80%;
 `;
 
-const RoomTitle = styled.span`
+export const RoomTitle = styled.span`
   margin-right: 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
-const RoomLimit = styled.span``;
+export const RoomLimit = styled.span``;
 
-const RoomTags = styled.div`
+export const RoomTags = styled.div`
   display: flex;
   width: 100%;
 `;
 
-const TagText = styled.span``;
+export const TagText = styled.span``;
 
-const RoomFooter = styled.div`
+export const RoomFooter = styled.div`
   position: absolute;
   bottom: 3rem;
   display: flex;
@@ -55,7 +55,7 @@ const RoomFooter = styled.div`
   width: calc(100% - 6rem);
 `;
 
-const LanguageImgs = styled.div`
+export const LanguageImgs = styled.div`
   display: flex;
   height: 2.4rem;
 
@@ -64,7 +64,7 @@ const LanguageImgs = styled.div`
   }
 `;
 
-const InProgress = styled.span`
+export const InProgress = styled.span`
   ${({ theme }) => css`
     display: flex;
     align-items: center;
@@ -77,16 +77,3 @@ const InProgress = styled.span`
     cursor: default;
   `}
 `;
-
-export {
-  InProgress,
-  LanguageImgs,
-  RoomFooter,
-  RoomHeader,
-  RoomLimit,
-  RoomTags,
-  RoomTitle,
-  SectionWrapper,
-  TagText,
-  TitleWrapper,
-};

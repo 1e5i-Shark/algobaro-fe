@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
 
-const NavContainer = styled.nav`
+export const NavContainer = styled.nav`
   @media (min-width: 1024px) {
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
     width: 100%;
-    padding: 4rem 0;
+    padding: 4rem 0 2rem 0;
 
     & :first-child {
       grid-row: 2 / 3;
@@ -29,7 +29,7 @@ const NavContainer = styled.nav`
     grid-template-rows: 1fr auto;
     grid-template-columns: 1fr 1fr;
     width: 100%;
-    padding: 6rem 0;
+    padding: 6rem 0 4rem 0;
 
     & :first-child {
       grid-row: 1 / 2;
@@ -46,7 +46,7 @@ const NavContainer = styled.nav`
   }
 `;
 
-const SearchOptionsContainer = styled.div`
+export const SearchOptionsContainer = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -61,7 +61,7 @@ const SearchOptionsContainer = styled.div`
   }
 `;
 
-const SearchInputWrapper = styled.form`
+export const SearchInputWrapper = styled.form`
   position: relative;
   width: 28rem;
   height: 100%;
@@ -73,7 +73,7 @@ const SearchInputWrapper = styled.form`
   }
 `;
 
-const SearchInput = styled.input`
+export const SearchInput = styled.input`
   ${({ theme }) => css`
     width: 100%;
     min-width: 19.4rem;
@@ -87,7 +87,7 @@ const SearchInput = styled.input`
   `}
 `;
 
-const UpdateData = styled.span`
+export const UpdateData = styled.span`
   display: flex;
   gap: 0.5rem;
   align-items: center;
@@ -95,15 +95,6 @@ const UpdateData = styled.span`
   font-size: 1.2rem;
 `;
 
-const UpdateText = styled.span`
+export const UpdateText = styled.span`
   white-space: nowrap;
 `;
-
-export {
-  NavContainer,
-  SearchInput,
-  SearchInputWrapper,
-  SearchOptionsContainer,
-  UpdateData,
-  UpdateText,
-};

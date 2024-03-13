@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 
-const HomePageContainer = styled.div`
+export const HomePageContainer = styled.div`
   display: flex;
   min-width: 360px;
-  height: 100%;
   padding: 0 2rem;
   overflow: auto;
 `;
 
-const HomePageWrapper = styled.div`
+export const HomePageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +16,7 @@ const HomePageWrapper = styled.div`
   margin: 0 auto;
 `;
 
-const HomeSectionContainer = styled.main`
+export const HomeSectionContainer = styled.main`
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
@@ -33,12 +32,10 @@ const HomeSectionContainer = styled.main`
   }
 `;
 
-// ####################### Footer #######################
-
-const HomeFooter = styled.footer`
-  display: flex;
-  justify-content: center;
-  padding: 4rem 0;
+export const HomeLoadingWrapper = styled.div`
+  margin: 8rem 0;
 `;
 
-export { HomeFooter, HomePageContainer, HomePageWrapper, HomeSectionContainer };
+export const NoRoom = styled.span`
+  margin: 8rem 0;
+`;
