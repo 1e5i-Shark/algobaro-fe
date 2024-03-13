@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import { Row } from '@/styles/GlobalStyle';
+import { ButtonHoverTransition, Row } from '@/styles/GlobalStyle';
 import { ThemeType } from '@/styles/theme';
 
 import { Button } from '..';
@@ -55,6 +55,7 @@ export const LoginInputItem = styled.li`
 
 export const LoginButton = styled(Button)`
   width: 100%;
+  ${ButtonHoverTransition}
 `;
 
 export const LoginOptionContainer = styled(Row)`

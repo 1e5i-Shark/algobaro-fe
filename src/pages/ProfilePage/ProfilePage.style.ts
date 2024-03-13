@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { Col, Row } from '@/styles/GlobalStyle';
+import { ButtonHoverTransition, Col, Row } from '@/styles/GlobalStyle';
 
 import PasswordEditModal from './PasswordEditModal/PasswordEditModal';
 import ProfileEditModal from './ProfileEditModal/ProfileEditModal';
@@ -76,6 +76,7 @@ export const UserInfoButtonContainer = styled(Row)`
       height: 3rem;
       font-size: ${theme.size.M};
       border: 1px solid ${theme.color.gray_20};
+      ${ButtonHoverTransition}
     }
   `}
 `;

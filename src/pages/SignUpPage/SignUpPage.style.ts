@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { css } from 'styled-components';
 
 import { Button } from '@/components';
+import { ButtonHoverTransition } from '@/styles/GlobalStyle';
 
 // 반복되는 너비 설정을 mixin으로 분리한다.
 const commonWidth = css`
@@ -76,18 +77,13 @@ export const SignUpInputItem = styled.li`
 
 export const SignUpButton = styled(Button)`
   ${commonWidth}
-  transition: transform 0.2s ease;
-  &:not(:disabled):hover {
-    transform: scale(1.05);
-  }
+  ${ButtonHoverTransition}
 `;
+
 export const HomeButton = styled(Button)`
   ${({ theme }) => css`
     ${commonWidth}
+    ${ButtonHoverTransition}
     margin-top: ${theme.size.S};
-    transition: transform 0.2s ease;
-    &:hover {
-      transform: scale(1.05);
-    }
   `}
 `;
