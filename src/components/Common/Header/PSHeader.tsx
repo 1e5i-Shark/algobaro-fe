@@ -1,5 +1,6 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import { MOCK_ROOM_DATA } from '@/constants/room';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
 import ProblemTimer from '@/pages/ProblemSolvePage/ProblemTimer/ProblemTimer';
@@ -13,6 +14,10 @@ import * as S from './PSHeader.style';
 export default function PSHeader() {
   const { theme } = useCustomTheme();
   const { modalRef, isOpen, openModal, closeModal } = useModal();
+  const location = useLocation();
+
+  const isProblemSolvePage =
+    location.pathname.split('/')[1] === PATH.PROBLEMSOLVE.replace('/', '');
 
   const navigate = useNavigate();
 
@@ -24,19 +29,28 @@ export default function PSHeader() {
     openModal();
   };
 
+  const handleNavigateToRoom = () => {
+    navigate(`${PATH.ROOM}/${MOCK_ROOM_DATA.id}`, {
+      state: MOCK_ROOM_DATA.roomShortUuid,
+    });
+  };
+
   return (
     <S.HeaderWrapper>
       <S.TimerWrapper>
-        <ProblemTimer seconds={5} />
+        <ProblemTimer
+          seconds={5}
+          isProblemSolvePage={isProblemSolvePage}
+        />
       </S.TimerWrapper>
       <S.ButtonWrapper>
         <ThemeModeToggleButton />
         <Button
           height="4rem"
           backgroundColor={theme.color.red}
-          onClick={handleGiveUp}
+          onClick={isProblemSolvePage ? handleGiveUp : handleNavigateToRoom}
         >
-          포기하기
+          {isProblemSolvePage ? '포기하기' : '리뷰 종료'}
         </Button>
       </S.ButtonWrapper>
       <Modal
