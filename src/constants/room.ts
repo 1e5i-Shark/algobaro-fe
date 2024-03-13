@@ -1,6 +1,6 @@
 import { LanguagesType } from '@/types/room';
 
-export const PS_LANGUAGES = ['Java', 'Python', 'JavaScript', 'C++'];
+export const PS_LANGUAGES = ['JAVA', 'PYTHON', 'JAVASCRIPT', 'C++'];
 export const ROOM_STATUS = {
   PUBLIC: 'PUBLIC',
   PRIVATE: 'PRIVATE',
@@ -22,4 +22,9 @@ export const LANGUAGES_DATA_SET: Record<LanguagesType, string> = {
   PYTHON: '파이썬',
   JAVASCRIPT: '자바스크립트',
   'C++': 'C++',
+};
+
+export const MOCK_ROOM_DATA = {
+  id: 1,
+  roomShortUuid: '2ad2e9db',
 };

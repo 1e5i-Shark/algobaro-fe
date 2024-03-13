@@ -120,7 +120,7 @@ export default function SignUpPage() {
         >
           가입하기
         </S.SignUpButton>
-        <S.HomeButton onClick={handleClickHome}>홈으로</S.HomeButton>
+        <S.HomeButton onClick={handleClickHome}>시작페이지로</S.HomeButton>
       </S.SignUpFormContainer>
     </S.SignUpPageWrapper>
   );

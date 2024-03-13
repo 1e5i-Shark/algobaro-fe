@@ -90,13 +90,14 @@ export default function CodeEditor({
           },
           gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
         }}
-        editorDidMount={editor => {
+        editorDidMount={(editor: Editor) => {
           editorRef.current = editor;
           editor.setSize(width ?? '100%', height ?? '100%');
         }}
         editorWillUnmount={() => {
           console.log('unmount');
-          const removeEditor = editorRef.current;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const removeEditor = editorRef.current as any;
           removeEditor?.display.wrapper.remove();
         }}
       />

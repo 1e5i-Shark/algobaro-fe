@@ -85,7 +85,7 @@ export default function Timer({
         clearInterval(timer.current);
       }
     };
-  }, []);
+  }, [isStop]);
 
   return <S.Wrapper>{convertedTime(timeLeft, padLength)}</S.Wrapper>;
 }
