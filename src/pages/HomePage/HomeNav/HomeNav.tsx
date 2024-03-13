@@ -15,24 +15,24 @@ export default function HomeNav() {
   const latestUpdate = '1분전';
   const { theme } = useCustomTheme();
   const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState('');
+  const [searchTitle, setSearchTitle] = useState('');
   const {
     selectedAccess,
     selectedStatus,
-    setSearchInputValue,
-    setSelectedLanguage,
-    setSelectedAccess,
-    setSelectedStatus,
+    setInputValue,
+    setLanguage,
+    setAccess,
+    setStatus,
   } = useRoomFilterStore();
 
-  const handleCreateRoom = () => {
+  const handleCreateRoomClick = () => {
     navigate(PATH.CREATEROOM);
   };
 
   const handleInputSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!inputValue) return;
-    setSearchInputValue(inputValue);
+    if (!searchTitle) return;
+    setSearchTitle(searchTitle);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +41,7 @@ export default function HomeNav() {
     // Input 내부가 빈 문자열일 경우, 초기화
     if (value.trim() === '') {
       setInputValue('');
-      setSearchInputValue('');
+      setSearchTitle('');
       return;
     }
 
@@ -50,7 +50,7 @@ export default function HomeNav() {
 
   return (
     <S.NavContainer>
-      <Button onClick={handleCreateRoom}>방 만들기</Button>
+      <Button onClick={handleCreateRoomClick}>방 만들기</Button>
 
       <S.SearchOptionsContainer>
         <MultiDropDown
@@ -60,26 +60,26 @@ export default function HomeNav() {
           labelName="언어"
           fontSize={theme.size.M}
           width="13.3rem"
-          onSelected={setSelectedLanguage}
+          onSelected={setLanguage}
         />
 
         <CheckBox
-          label="공개방"
+          label="비밀방"
           checked={selectedAccess}
-          onChange={() => setSelectedAccess(!selectedAccess)}
+          onChange={() => setAccess(!selectedAccess)}
         />
 
         <CheckBox
           label="입장 가능"
           checked={selectedStatus}
-          onChange={() => setSelectedStatus(!selectedStatus)}
+          onChange={() => setStatus(!selectedStatus)}
         />
 
         <S.SearchInputWrapper onSubmit={handleInputSubmit}>
           <S.SearchInput
             type="text"
             placeholder="방 제목을 검색해 주세요."
-            value={inputValue}
+            value={searchTitle}
             onChange={handleInputChange}
           />
           <Icon>

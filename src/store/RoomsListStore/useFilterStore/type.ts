@@ -1,10 +1,12 @@
-export interface useRoomFilterStoreProps {
+import { AccessType, RoomStatusType } from '@/types/room';
+
+export interface useFilterStoreProps {
   searchInputValue: string;
-  selectedLanguage: string[];
-  selectedAccess: boolean;
-  selectedStatus: boolean;
-  setSearchInputValue: (value: string) => void;
-  setSelectedLanguage: (value: string | string[]) => void;
-  setSelectedAccess: (value: boolean) => void;
-  setSelectedStatus: (value: boolean) => void;
+  selectedLanguage: string[] | [];
+  selectedAccess: AccessType | null;
+  selectedStatus: RoomStatusType | null;
+  setInputValue: (value: string) => void;
+  setLanguage: (value: string | string[]) => void;
+  setAccess: (value: AccessType) => void;
+  setStatus: (value: RoomStatusType) => void;
 }

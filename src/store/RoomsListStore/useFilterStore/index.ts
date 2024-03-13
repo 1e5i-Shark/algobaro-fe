@@ -1,19 +1,19 @@
 import { create } from 'zustand';
 
-import { useRoomFilterStoreProps } from './type';
+import { useFilterStoreProps } from './type';
 
-const useRoomFilterStore = create<useRoomFilterStoreProps>(set => ({
+const useFilterStore = create<useFilterStoreProps>(set => ({
   searchInputValue: '',
   selectedLanguage: [],
-  selectedAccess: false,
-  selectedStatus: false,
-  setSearchInputValue: value => set(() => ({ searchInputValue: value })),
-  setSelectedLanguage: value =>
+  selectedAccess: null,
+  selectedStatus: null,
+  setInputValue: value => set(() => ({ searchInputValue: value })),
+  setLanguage: value =>
     set(() => ({
       selectedLanguage: typeof value === 'string' ? [value] : value,
     })),
-  setSelectedAccess: value => set(() => ({ selectedAccess: value })),
-  setSelectedStatus: value => set(() => ({ selectedStatus: value })),
+  setAccess: value => set(() => ({ selectedAccess: value })),
+  setStatus: value => set(() => ({ selectedStatus: value })),
 }));
 
-export default useRoomFilterStore;
+export default useFilterStore;

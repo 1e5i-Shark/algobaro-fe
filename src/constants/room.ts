@@ -1,3 +1,5 @@
+import { LanguagesType } from '@/types/room';
+
 export const PS_LANGUAGES = ['Java', 'Python', 'JavaScript', 'C++'];
 export const ROOM_STATUS = {
   PUBLIC: 'PUBLIC',
@@ -15,7 +17,7 @@ export const ROOM_LIMIT_DATASET = [1, 2, 3, 4, 5, 6].reduce(
   {} as Record<number, string>
 );
 
-export const LANGUAGES_DATA_SET = {
+export const LANGUAGES_DATA_SET: Record<LanguagesType, string> = {
   JAVA: 'JAVA',
   PYTHON: '파이썬',
   JAVASCRIPT: '자바스크립트',
