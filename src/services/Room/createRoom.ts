@@ -15,6 +15,7 @@ export interface CreateRoomRequest {
 }
 
 export interface CreateRoomData extends CreateRoomRequest {
+  roomId: number;
   roomShortUuid: string;
   roomMembers: string[];
 }
