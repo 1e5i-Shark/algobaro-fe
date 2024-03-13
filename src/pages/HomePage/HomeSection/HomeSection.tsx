@@ -2,20 +2,22 @@ import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
 
 import { Button, Icon, Image, Tag } from '@/components';
+import { LOGOS } from '@/constants/logos';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { RoomsListType } from '@/types/room';
 
-import { DummyImgLink, RoomDataProps } from '../DummyData';
 import * as S from './HomeSection.style';
 
 export default function HomeSection({
-  title,
-  roomAccess,
-  currentRoomMember,
-  roomMemberLimit,
-  tags,
-  language,
   roomStatus,
-}: RoomDataProps) {
+  title,
+  languages,
+  roomAccessType,
+  roomLimit,
+  tags,
+  roomShortUuid,
+  currentMemberCount,
+}: RoomsListType) {
   const { theme } = useCustomTheme();
 
   return (
@@ -24,17 +26,21 @@ export default function HomeSection({
         <S.TitleWrapper>
           <S.RoomTitle title={title}>{title}</S.RoomTitle>
           <Icon>
-            {roomAccess ? <LockOpenRoundedIcon /> : <LockRoundedIcon />}
+            {roomAccessType === 'PUBLIC' ? (
+              <LockOpenRoundedIcon />
+            ) : (
+              <LockRoundedIcon />
+            )}
           </Icon>
         </S.TitleWrapper>
-        <S.RoomLimit>{`${currentRoomMember}/${roomMemberLimit}`}</S.RoomLimit>
+        <S.RoomLimit>{`${currentMemberCount}/${roomLimit}`}</S.RoomLimit>
       </S.RoomHeader>
 
       <S.RoomTags>
         {tags.map((tag, index) => {
           return (
             <Tag
-              key={`${tag}-${index}`}
+              key={`${tag}-${index}-${roomShortUuid}`}
               mode="normal"
               tagId="코딩테스트"
               height="2.4rem"
@@ -66,11 +72,11 @@ export default function HomeSection({
 
       <S.RoomFooter>
         <S.LanguageImgs>
-          {language.map((lang, index) => {
+          {languages.map((lang, index) => {
             return (
               <Image
-                key={`${lang}-${index}`}
-                src={DummyImgLink[lang]}
+                key={`${lang}-${index}-${roomShortUuid}`}
+                src={LOGOS[lang]}
                 fill={true}
                 shape="circle"
               />
@@ -78,7 +84,7 @@ export default function HomeSection({
           })}
         </S.LanguageImgs>
 
-        {roomStatus === '대기중' ? (
+        {roomStatus === 'RECRUITING' ? (
           <Button>입장</Button>
         ) : (
           <S.InProgress>진행중</S.InProgress>

@@ -1,48 +1,37 @@
-import { useEffect, useState } from 'react';
-
 import { Spinner } from '@/components';
 import { useRoomsList } from '@/hooks/Api/useRooms';
 import usePageStore from '@/store/RoomsListStore/usePageStore';
 
-import { DUMMY_DATA, RoomDataProps } from './DummyData';
 import HomeFooter from './HomeFooter/HomeFooter';
 import HomeNav from './HomeNav/HomeNav';
 import * as S from './HomePage.style';
 import HomeSection from './HomeSection/HomeSection';
-import useFilteredRoomData from './useFilterRoomData';
+// import useFilteredRoomData from './useFilterRoomData';
 
 export default function HomePage() {
-  const [roomData, setRoomData] = useState<RoomDataProps[]>([]);
-  const filteredRoomData = useFilteredRoomData(roomData);
-  const renderingData = filteredRoomData || roomData;
+  // const filteredRoomData = useFilteredRoomData(roomData);
 
   // 현재 페이지
   const { currentPage } = usePageStore();
-  console.log('currentPage', currentPage);
+  // 필터 데이터
 
   // Todo: 페이지를 클릭해서 변경하면 리렌더가 2번 일어남. 왜 그럴까?
-  // isSuccess 추가?
-  const { data, isLoading, refetch } = useRoomsList({
+  const { data, isLoading } = useRoomsList({
     page: currentPage,
     size: 4,
   });
 
   const content = data?.response.content;
   const totalPages = data?.response.totalPages;
-  console.log('content', content);
-
-  useEffect(() => {
-    // 아래 코드는 get 요청으로 수정될 예정입니다.
-    setRoomData(DUMMY_DATA);
-  }, [currentPage]);
+  // console.log('content', content);
 
   return (
     <S.HomePageContainer>
       <S.HomePageWrapper>
+        {/* // Todo: 필터 기능 손보기 */}
         {/* 상단 Nav */}
         <HomeNav />
 
-        {/* // Todo: isLoading이면 페이지네이션 파트까지 같이 스피너로 처리 */}
         {isLoading ? (
           <S.HomeLoadingWrapper>
             <Spinner />
@@ -50,15 +39,15 @@ export default function HomePage() {
         ) : (
           <>
             {/* 방 목록  */}
-            {renderingData.length === 0 ? (
+            {totalPages === 0 ? (
               <S.NoRoom>😢 방이 존재하지 않습니다.</S.NoRoom>
             ) : (
               <>
                 <S.HomeSectionContainer>
-                  {renderingData.map(data => {
+                  {content?.map(data => {
                     return (
                       <HomeSection
-                        key={data.id}
+                        key={data.roomId}
                         {...data}
                       />
                     );
