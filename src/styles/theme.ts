@@ -1,5 +1,10 @@
 const FIXED_HEIGHT = {
   HEADER: '8rem',
+  CARD: '23rem',
+};
+
+const FIXED_WIDTH = {
+  CARD: '25rem',
 };
 
 const ZINDEX = {
@@ -19,6 +24,7 @@ const size = {
   half: '50%',
   none: '0%',
   icon: {
+    XXS: '1.6rem',
     XS: '2.6rem',
     S: '3.6rem',
     M: '4.6rem',
@@ -57,7 +63,7 @@ const commonTheme = {
   gray_20: '#E3E3E3',
   gray_10: '#EFEFEF',
   red: '#FF7C60',
-  green: '#72EC5E',
+  green: '#67CF56',
   gradation: 'linear-gradient(90deg, #A5F1F6, #CFBEFF)',
   circle_gradation: 'linear-gradient(135deg, #A5F1F6, #CFBEFF)',
 };
@@ -69,6 +75,7 @@ export const lightTheme = {
     background_second: '#E9E9E9',
     background_modal: '#ffffff',
     background_menu: '#FAFAFA',
+    background_editor: '#FFFFFF',
     background_start_gradation: `linear-gradient(to bottom, #FFFFFF, #a5f1f6, #cfbeff, #FFFFFF)`,
     container_color: '#E3E3E3',
     text_primary_color: '#2C2C2C',
@@ -84,6 +91,7 @@ export const lightTheme = {
   fontWeight,
   device,
   ZINDEX,
+  FIXED_WIDTH,
   FIXED_HEIGHT,
 };
 
@@ -94,6 +102,7 @@ export const darkTheme = {
     background_second: '#131010',
     background_modal: '#1e1e1e',
     background_menu: '#131010',
+    background_editor: '#292D3E',
     background_start_gradation: `linear-gradient(to bottom, #1E1B1A, #a5f1f670, #cfbeff70, #1E1B1A)`,
     container_color: '#4D4D4D',
     text_primary_color: '#F0F0F0',
@@ -109,6 +118,7 @@ export const darkTheme = {
   fontWeight,
   device,
   ZINDEX,
+  FIXED_WIDTH,
   FIXED_HEIGHT,
 };
 

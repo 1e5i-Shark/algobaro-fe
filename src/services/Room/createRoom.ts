@@ -1,4 +1,4 @@
-import { ROOMS_URL } from '../apiEndpoint';
+import { API_ENDPOINT } from '../apiEndpoint';
 import { axiosAuthInstance } from '../axiosInstance';
 
 export interface CreateRoomRequest {
@@ -14,17 +14,20 @@ export interface CreateRoomRequest {
   timeLimit?: number;
 }
 
-export interface CreateRoomResponse {
+export interface CreateRoomData extends CreateRoomRequest {
   roomId: number;
-  roomStatus: string; // [RECRUTING, RUNNING]
-  title: string;
-  roomAccessType: string; // [PRIVATE, PUBLIC]
-  roomLimit: number;
-  problemPlatform: string;
-  tags?: string[];
-  timeLimit?: number;
+  roomShortUuid: string;
+  roomMembers: string[];
+}
+
+export interface CreateRoomResponse {
+  success: boolean;
+  response: CreateRoomData;
 }
 
 export const createRoom = (request: CreateRoomRequest) => {
-  return axiosAuthInstance.post<CreateRoomResponse>(ROOMS_URL, request);
+  return axiosAuthInstance.post<CreateRoomResponse>(
+    API_ENDPOINT.ROOM.ROOMS,
+    request
+  );
 };

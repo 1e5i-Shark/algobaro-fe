@@ -10,14 +10,16 @@ export interface RoomType {
   languages: LanguagesType[];
   roomAccessType: AccessType;
   problemPlatform: string;
+  password?: string;
   roomLimit: number;
   tags: string[];
   timeLimit: number;
   roomShortUuid: string;
-  currentMemberCount?: number;
-  roomMembers?: RoomMemberType[];
-  password?: string;
-  problemLink?: string;
+  roomMembers: RoomMemberType[];
+
+  currentMemberCount: number;
+  problemLink: string;
+  roomUUID?: string;
   startAt?: string;
 }
 
@@ -44,19 +46,20 @@ export interface RoomResponse extends ResponseType {
 }
 
 export interface UpdateRoom
-  extends Pick<
-    RoomType,
-    | 'title'
-    | 'startAt'
-    | 'languages'
-    | 'roomAccessType'
-    | 'problemLink'
-    | 'problemPlatform'
-    | 'password'
-    | 'roomLimit'
-    | 'tags'
-    | 'timeLimit'
-  > {}
+  extends Required<Pick<RoomType, 'timeLimit' | 'roomLimit'>>,
+    Partial<
+      Pick<
+        RoomType,
+        | 'title'
+        | 'startAt'
+        | 'languages'
+        | 'roomAccessType'
+        | 'problemLink'
+        | 'problemPlatform'
+        | 'password'
+        | 'tags'
+      >
+    > {}
 
 export interface UpdateRoomProps {
   path: string;
@@ -109,7 +112,7 @@ export interface ChangeHostAutoResponse extends ResponseType {
 export interface ChangeHostManualProps {
   roomId: number;
   hostId: number;
-  organizerId: number;
+  organizerId: number; // 호스트로 바뀔 멤버
 }
 
 export interface ChangeHostManualResponse extends ResponseType {
@@ -123,11 +126,25 @@ export interface ChangeHostManualResponse extends ResponseType {
 }
 
 export interface RoomMemberType {
-  memberId: number;
+  memberId: number; // pk키
   email: string;
   nickname: string;
   profileImage: string | null;
   role: RoleType;
   joinTime: string;
   ready: boolean;
+}
+
+// 아래는 건호의 v1/rooms 에서 사용하는 타입입니다.
+export interface RoomsListType {
+  roomId: number;
+  roomStatus: RoomStatusType;
+  title: string;
+  languages: LanguagesType[];
+  roomAccessType: AccessType;
+  problemPlatform: string;
+  roomLimit: number;
+  tags: string[];
+  roomShortUuid: string;
+  currentMemberCount: number;
 }

@@ -6,14 +6,8 @@ export interface MenuListProps {
   onClick: (event: MouseEvent<HTMLElement>) => void;
 }
 
-interface MenuTextProps {
-  Report: string;
-  TransferHost: string;
-  KickOut: string;
-}
-
-export const MenuText: MenuTextProps = {
-  Report: '신고하기',
-  TransferHost: '방장 위임',
-  KickOut: '강제 퇴장',
+export const MENU_TEXT = {
+  REPORT: '신고하기',
+  TRANSFER_HOST: '방장 위임',
+  KICKOUT: '강제 퇴장',
 };
