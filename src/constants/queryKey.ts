@@ -4,3 +4,5 @@ export const QUERY_KEY = {
     UUID_INFO: 'roomUuidInfo',
   },
 };
+export const SOLVED_HISTORIES = 'solvedHistoryList';
+export const ROOMS_KEY = 'roomsList';

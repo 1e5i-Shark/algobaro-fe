@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+import { css } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -73,4 +74,11 @@ export const Col = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
+`;
+// 버튼 hover 시 트랜지션 효과를 일관성있게 적용하기 위해 분리했다.
+export const ButtonHoverTransition = css`
+  transition: transform 0.2s ease;
+  &:not(:disabled):hover {
+    transform: scale(1.03);
+  }
 `;

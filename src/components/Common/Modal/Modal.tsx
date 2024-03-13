@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 
 import * as S from './Modal.style';
 
-interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   mode?: 'normal' | 'confirm';
   width?: string;
   height?: string;

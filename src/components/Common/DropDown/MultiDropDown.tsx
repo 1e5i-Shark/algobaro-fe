@@ -21,6 +21,7 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
   backgroundColor?: string;
   fontSize?: string;
   labelFontSize?: string;
+  onSelected?: (value: string | string[]) => void;
 }
 
 /**
@@ -33,6 +34,7 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
  * @param {string} backgroundColor - 배경색 `옵션`
  * @param {string} fontSize - 폰트사이즈 `옵션`, 기본값 `"2rem"`
  * @param {string} labelFontSize - 라벨폰트사이즈 `옵션`
+ * @param {(value: string | string[]) => void} onSelected - 선택 값 전달 함수 `옵션`, `(value: string) => void}`
  * @returns
  */
 export default function MultiDropDown({
@@ -44,10 +46,12 @@ export default function MultiDropDown({
   backgroundColor,
   fontSize = '2rem',
   labelFontSize,
+  onSelected,
   ...props
 }: DropDownProps) {
   const { theme } = useCustomTheme();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  // const [pracArray, setPracArray] = useState<string[]>([]);
 
   const isEmpty = selectedValues.length === 0; // 미선택 여부
 
@@ -61,6 +65,7 @@ export default function MultiDropDown({
       target: { value },
     } = event;
     setSelectedValues(typeof value === 'string' ? value.split(',') : value);
+    onSelected?.(value);
   };
 
   return (
