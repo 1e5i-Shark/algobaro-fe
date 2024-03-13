@@ -6,6 +6,23 @@ import { RoomType } from '@/types/room';
 import { RoomStateProps } from './type';
 
 const initialData: RoomType = {
+  roomId: 0,
+  roomStatus: 'RECRUITING',
+  title: '',
+  languages: [],
+  roomAccessType: 'PUBLIC',
+  problemPlatform: '',
+  password: '',
+  roomLimit: 4,
+  tags: [],
+  timeLimit: 20,
+  roomShortUuid: '',
+  problemLink: '',
+  currentMemberCount: 0,
+  roomMembers: [],
+};
+
+const DUMMY_DATA: RoomType = {
   roomId: 15,
   roomStatus: 'RECRUITING',
   title: '같이 푸실분~',
@@ -20,15 +37,6 @@ const initialData: RoomType = {
   problemLink: 'https://www.acmicpc.net/problem/1000',
   currentMemberCount: 5,
   roomMembers: [
-    {
-      memberId: 1,
-      email: 'king@test.com',
-      nickname: '김방장',
-      profileImage: '',
-      role: 'HOST',
-      joinTime: '2024-03-04T00:45:18',
-      ready: true,
-    },
     {
       memberId: 2,
       email: 'amu@test.com',
@@ -70,9 +78,13 @@ const initialData: RoomType = {
 
 const useRoomStore = create<RoomStateProps>()(
   devtools(set => ({
-    roomData: { ...initialData },
+    roomData: DUMMY_DATA,
     setRoomData: (newRoomData: Partial<RoomType>) =>
       set(state => ({ roomData: { ...state.roomData, ...newRoomData } })),
+    reset: () =>
+      set({
+        roomData: initialData,
+      }),
   }))
 );
 
