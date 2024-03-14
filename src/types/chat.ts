@@ -4,7 +4,12 @@ export type SocketType = {
 };
 export type ChatKeyUnion = 'ENTER' | 'QUIT' | 'MESSAGE';
 export type ChatValueUnion = 'enter' | 'quit' | 'message';
-export type RoomKeyUnion = 'READY' | 'UNREADY' | 'CHANGE' | 'START' | 'END';
+export type RoomKeyUnion =
+  | 'READY'
+  | 'UNREADY'
+  | 'CHANGE_HOST'
+  | 'START_CODING'
+  | 'END_CODING';
 export type RoomValueUnion =
   | 'ready'
   | 'unready'

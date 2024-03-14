@@ -9,8 +9,8 @@ export const SOCKET_TYPE: SocketType = {
   ROOM: {
     READY: 'ready',
     UNREADY: 'unready',
-    CHANGE: 'change-host',
-    START: 'start-coding',
-    END: 'end-coding',
+    CHANGE_HOST: 'change-host',
+    START_CODING: 'start-coding',
+    END_CODING: 'end-coding',
   },
 };
