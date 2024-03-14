@@ -4,7 +4,6 @@ import { KeyboardEvent, useEffect } from 'react';
 
 import { Icon } from '@/components';
 import { SOCKET_TYPE } from '@/constants/socket';
-import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useMessageStore from '@/store/MessageStore';
 
 import * as S from './Chat.style';
@@ -14,7 +13,6 @@ interface ChatInputProps {
 }
 
 export default function ChatInput({ className }: ChatInputProps) {
-  const { theme } = useCustomTheme();
   const { connected, messageEntered, disconnect, sendMessage, changeInput } =
     useMessageStore();
 
