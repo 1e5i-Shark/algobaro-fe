@@ -6,7 +6,7 @@ const Wrapper = styled(Col)`
   ${({ theme }) => css`
     gap: 2rem;
     align-items: center;
-    padding: 3rem;
+    padding: 3rem 6rem;
     color: ${theme.color.text_primary_color};
   `}
 `;
