@@ -10,6 +10,7 @@ import * as Y from 'yjs';
 import { DropDown } from '@/components/Common/DropDown';
 import { PROBLEM_LANGUAGES_DATA_SET } from '@/constants/room';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import useCodeEditorStore from '@/store/CodeEditorStore';
 
 import * as S from './CodeEditor.style';
 import { getEditorMode, getRandomColors } from './utils';
@@ -33,6 +34,10 @@ export default function CodeEditor({
   height,
 }: CodeEditorProps) {
   const { theme } = useCustomTheme();
+
+  const { language, code, setCode, setLanguage } = useCodeEditorStore(
+    state => state
+  );
 
   const editorRef = useRef<Editor | null>(null);
   const providerRef = useRef<WebrtcProvider | null>(null);
@@ -102,7 +107,7 @@ export default function CodeEditor({
       </S.DropDownWrapper>
       <CodeMirrorEditor
         options={{
-          mode: getEditorMode(LANGUAGES.JAVASCRIPT),
+          mode: getEditorMode(language),
           theme: theme.mode === 'dark' ? 'material-palenight' : 'eclipse',
           lineNumbers: true,
           tabSize: 2,
