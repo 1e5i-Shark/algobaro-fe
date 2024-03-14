@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { Spinner } from '@/components';
 import { useRoomsList } from '@/hooks/Api/useRooms';
 import useFilterStore from '@/store/RoomsListStore/useFilterStore';
@@ -11,10 +13,15 @@ import HomeSection from './HomeSection/HomeSection';
 
 export default function HomePage() {
   // 현재 페이지
-  const { currentPage } = usePageStore();
+  const { currentPage, setCurrentPage } = usePageStore();
   // 필터 데이터
   const { searchTitle, selectedLanguage, selectedAccess, selectedStatus } =
     useFilterStore();
+
+  // 필터 옵션이 변경될 때, 1페이지가 보이게끔 설정
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [searchTitle, selectedLanguage, selectedAccess, selectedStatus]);
 
   const languages = convertLanguageValueToKey(selectedLanguage).join(', ');
   const roomAccessType = selectedAccess === 'PRIVATE' ? 'PRIVATE' : undefined;
