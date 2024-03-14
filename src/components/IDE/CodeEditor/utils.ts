@@ -9,16 +9,16 @@ export type LanguagesType = keyof typeof LANGUAGES;
 
 export const getEditorMode = (language: string) => {
   switch (language) {
-    case LANGUAGES['C++']:
+    case 'c++':
       return 'text/x-c++src';
-    case LANGUAGES.JAVA:
+    case 'java':
       return 'text/x-java';
-    case LANGUAGES.PYTHON:
+    case 'python':
       return 'text/x-python';
-    case LANGUAGES.JAVASCRIPT:
+    case 'javascript':
       return 'text/javascript';
     default:
-      return '';
+      return 'text/javascript';
   }
 };
 
