@@ -35,9 +35,7 @@ export default function CodeEditor({
 }: CodeEditorProps) {
   const { theme } = useCustomTheme();
 
-  const { language, code, setCode, setLanguage } = useCodeEditorStore(
-    state => state
-  );
+  const { language, setCode, setLanguage } = useCodeEditorStore(state => state);
 
   const editorRef = useRef<Editor | null>(null);
   const providerRef = useRef<WebrtcProvider | null>(null);
@@ -48,7 +46,7 @@ export default function CodeEditor({
   const connectCodeMirror = () => {
     if (!editorRef.current) return;
 
-    providerRef.current = new WebrtcProvider('next', yDoc);
+    providerRef.current = new WebrtcProvider(roomUuid ?? 'codeEditor', yDoc);
 
     const yUndoManager = new Y.UndoManager(yText);
 
