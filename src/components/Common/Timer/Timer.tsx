@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import * as S from './Timer.style';
 
@@ -8,7 +8,7 @@ interface TimerProps {
   padLength?: number;
   isStop?: boolean;
   openModal?: () => void;
-  setIsEnd?: Dispatch<SetStateAction<boolean>>;
+  setIsEnd?: (isEnd: boolean) => void;
 }
 
 export const MS = 1000;
