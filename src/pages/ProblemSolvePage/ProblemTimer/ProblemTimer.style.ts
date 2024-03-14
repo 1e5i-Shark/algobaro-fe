@@ -35,7 +35,10 @@ const TimeStartButton = styled.button`
 `;
 
 const TestButton = styled.button`
-  margin-left: 1rem;
+  ${({ theme }) => css`
+    margin-left: 1rem;
+    color: ${theme.color.text_primary_color};
+  `}
 `;
 
 export {
