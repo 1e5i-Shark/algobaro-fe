@@ -53,17 +53,42 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   ::-webkit-scrollbar {
-    width: 1.5rem;
+    width: 1rem;
   }
 
   ::-webkit-scrollbar-track {
-    background-color: ${({ theme }) => theme.color.background_modal};
+    -webkit-appearance: none;
+    &:hover {
+      background-color: ${({ theme }) => theme.color.transparent_10};
+      border-radius: 1rem;
+    }
   }
 
   ::-webkit-scrollbar-thumb {
+    min-height: 5rem;
     background-color: ${({ theme }) => theme.color.gray_50};
     border-radius: 1rem;
+    &:hover {
+      cursor: pointer;
+      background-color: ${({ theme }) => theme.color.secondary_color};
+    }
   }
+  
+  &::-webkit-scrollbar-button:vertical:start {
+    display: block;
+    height: 0.3rem;
+  }
+
+  &::-webkit-scrollbar-button:vertical:end {
+    display: block;
+    height: 0.3rem;
+  }
+
+  textarea::-webkit-scrollbar {
+    width: 1em;
+    max-height: 2rem;
+}
+
 `;
 
 export const Col = styled.div`
