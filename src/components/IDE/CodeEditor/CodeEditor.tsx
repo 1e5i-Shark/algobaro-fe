@@ -45,32 +45,37 @@ export default function CodeEditor({
   const yDoc = new Y.Doc();
   const yText = yDoc.getText('codemirror');
 
-  useEffect(() => {
+  const connectCodeMirror = () => {
     if (!editorRef.current) return;
 
-    try {
-      if (!roomUuid) return;
-      // RoomName에 따라서 접속 환경이 달라짐
-      // TODO: roomUuid에 따라서 다르게 처리해주어야 함
-      providerRef.current = new WebrtcProvider(roomUuid, yDoc);
+    providerRef.current = new WebrtcProvider('next', yDoc);
 
-      const yUndoManager = new Y.UndoManager(yText);
+    const yUndoManager = new Y.UndoManager(yText);
 
-      // 사용자 이벤트 감지
-      const awareness = providerRef.current.awareness;
+    // 사용자 이벤트 감지
+    const awareness = providerRef.current.awareness;
 
-      const { clientID } = awareness;
+    const { clientID } = awareness;
 
+    if (roomUuid) {
       // TODO: 추후 User 닉네임으로 변경
       awareness.setLocalStateField('user', {
         name: `UserID: ${clientID}`,
         color: getRandomColors(),
       });
+    }
 
-      // yjs, editor를 연동하는 기능
-      new CodemirrorBinding(yText, editorRef.current, awareness, {
-        yUndoManager,
-      });
+    // yjs, editor를 연동하는 기능
+    new CodemirrorBinding(yText, editorRef.current, awareness, {
+      yUndoManager,
+    });
+  };
+
+  useEffect(() => {
+    try {
+      // 에디터 영역 CodeMirror, 텍스트를 관리하는 yText, 사용자 감지 awareness를 연동
+      connectCodeMirror();
+
       // text 변경 감지
       const yTextListener = () => {
         const newContent = yText.toString();
