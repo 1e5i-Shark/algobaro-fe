@@ -12,7 +12,6 @@ const TimeLeftWrapper = styled.div`
     padding: 1rem 2.5rem;
     color: ${theme.color.black_primary};
     background-color: ${theme.color.gray_20};
-    border-radius: ${theme.shape.round};
   `}
 `;
 
