@@ -35,7 +35,7 @@ interface MessageProps extends HTMLAttributes<HTMLDivElement> {
   fontSize?: string;
   iconSize?: Size;
   comment: string;
-  menuList: MenuListProps[];
+  menuList?: MenuListProps[];
   createdAt: string;
 }
 
@@ -60,6 +60,7 @@ export default function Message({
         $padding={padding}
         $fontSize={fontSize}
         $avatarSize={avatarSize}
+        {...props}
       >
         <MessageSender $fontSize={fontSize}>
           <Avatar
@@ -76,14 +77,17 @@ export default function Message({
           >
             {createdAt}
           </span>
-          <Menu menuList={menuList}>
-            <Icon
-              size={iconSize}
-              onClick={() => {}}
-            >
-              <MoreVertRoundedIcon />
-            </Icon>
-          </Menu>
+
+          {menuList && (
+            <Menu menuList={menuList}>
+              <Icon
+                size={iconSize}
+                onClick={() => {}}
+              >
+                <MoreVertRoundedIcon />
+              </Icon>
+            </Menu>
+          )}
         </MessageSender>
         <MessageText>{comment}</MessageText>
       </MessageContainer>
