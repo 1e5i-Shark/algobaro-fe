@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, CheckBox, Icon, MultiDropDown } from '@/components';
 import { LANGUAGES_DATA_SET } from '@/constants/room';
-import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { PATH } from '@/routes/path';
 import useFilterStore from '@/store/RoomsListStore/useFilterStore';
 
@@ -18,7 +17,6 @@ interface HomeNavProps {
 export default function HomeNav({ refetch }: HomeNavProps) {
   // const latestUpdate = '1분전';
   const [latestUpdate, setLatestUpdate] = useState(1);
-  const { theme } = useCustomTheme();
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const {
@@ -69,8 +67,8 @@ export default function HomeNav({ refetch }: HomeNavProps) {
           dataSet={LANGUAGES_DATA_SET}
           labelId="search-code-language-label"
           labelName="언어"
-          fontSize={theme.size.M}
-          width="13.3rem"
+          fontSize="1.3rem"
+          width="10rem"
           onSelected={setLanguage}
         />
 
@@ -105,6 +103,7 @@ export default function HomeNav({ refetch }: HomeNavProps) {
         </S.SearchInputWrapper>
       </S.SearchOptionsContainer>
 
+      {/* // Todo: 이거 처리 해야댐 */}
       <S.UpdateData>
         {`마지막 업데이트: ${latestUpdate}분전`}
         <Icon onClick={handleRefetchData}>
