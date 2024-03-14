@@ -51,9 +51,9 @@ export default function MultiDropDown({
 }: DropDownProps) {
   const { theme } = useCustomTheme();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  // const [pracArray, setPracArray] = useState<string[]>([]);
 
   const isEmpty = selectedValues.length === 0; // 미선택 여부
+  const dataSetLength = Object.keys(dataSet).length;
 
   // [키, 배열] 형태의 배열 데이터 생성
   const multiDataSet = Object.keys(dataSet).map(key => {
@@ -64,7 +64,7 @@ export default function MultiDropDown({
     const {
       target: { value },
     } = event;
-    // setSelectedValues(typeof value === 'string' ? value.split(',') : value);
+
     setSelectedValues([...value]);
     onSelected?.([...value]);
   };
@@ -103,7 +103,11 @@ export default function MultiDropDown({
           multiple
           id={dataId}
           value={selectedValues}
-          renderValue={selected => selected.join(', ')}
+          renderValue={selected =>
+            selected.length === dataSetLength
+              ? '전체 언어'
+              : `${selected.length}개 선택`
+          }
           onChange={handleChange}
           MenuProps={{
             PaperProps: {
