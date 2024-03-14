@@ -7,10 +7,12 @@ import { CodemirrorBinding } from 'y-codemirror';
 import { WebrtcProvider } from 'y-webrtc';
 import * as Y from 'yjs';
 
+import { DropDown } from '@/components/Common/DropDown';
+import { PROBLEM_LANGUAGES_DATA_SET } from '@/constants/room';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 import * as S from './CodeEditor.style';
-import { getEditorMode, getRandomColors, LANGUAGES } from './utils';
+import { getEditorMode, getRandomColors } from './utils';
 
 interface CodeEditorProps {
   roomUuid?: string;
@@ -79,6 +81,25 @@ export default function CodeEditor({
 
   return (
     <S.Wrapper>
+      <S.DropDownWrapper>
+        <S.DefaultGutter className="gutter" />
+        <DropDown
+          width="fit-content"
+          dataId="languages"
+          labelId="languages-label"
+          defaultValue={language}
+          dataSet={PROBLEM_LANGUAGES_DATA_SET}
+          onSelected={value => {
+            if (value) {
+              setLanguage(value);
+            }
+          }}
+          borderColor={theme.color.gray_50}
+          fontSize={theme.size.S}
+          backgroundColor={theme.color.background_editor}
+          isRemoveDefaultLabel
+        />
+      </S.DropDownWrapper>
       <CodeMirrorEditor
         options={{
           mode: getEditorMode(LANGUAGES.JAVASCRIPT),
