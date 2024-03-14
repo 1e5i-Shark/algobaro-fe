@@ -39,7 +39,7 @@ export default function PSHeader() {
     <S.HeaderWrapper>
       <S.TimerWrapper>
         <ProblemTimer
-          seconds={5}
+          seconds={1}
           isProblemSolvePage={isProblemSolvePage}
         />
       </S.TimerWrapper>
