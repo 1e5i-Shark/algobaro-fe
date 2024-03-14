@@ -21,12 +21,13 @@ export const useRoomsList = ({
     ...(roomAccessType && { roomAccessType }),
     ...(languages && { languages }),
   };
+
   return useQuery({
     queryKey: [ROOMS_KEY, reqParams],
     queryFn: () => getRoomsList(reqParams),
-    enabled: true,
+    enabled: false,
     // 1분마다 새로고침
-    refetchInterval: 1000 * 60 * 1,
+    // refetchInterval: 1000 * 60 * 1,
     keepPreviousData: true,
   });
 };
