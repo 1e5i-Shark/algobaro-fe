@@ -2,6 +2,7 @@ export { Avatar, EditButton } from './Common/Avatar';
 export { default as Button } from './Common/Button/Button';
 export { default as Chat } from './Common/Chat/Chat';
 export { default as CheckBox } from './Common/CheckBox/CheckBox';
+export { default as DateBaseTimer } from './Common/DateBaseTimer/DateBaseTimer';
 export { DropDown, MultiDropDown } from './Common/DropDown';
 export { default as EllipsisText } from './Common/EllipsisText/EllipsisText';
 export { default as ErrorMessage } from './Common/ErrorMessage/ErrorMessage';

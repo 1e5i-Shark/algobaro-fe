@@ -1,4 +1,4 @@
-import DateBaseTimer from '@/components/Common/DateBaseTimer/DateBaseTimer';
+import { DateBaseTimer } from '@/components';
 import useModal from '@/hooks/useModal';
 import useTimerStore from '@/store/TimerStore';
 import { MINUTES_IN_MS } from '@/utils/timer';
