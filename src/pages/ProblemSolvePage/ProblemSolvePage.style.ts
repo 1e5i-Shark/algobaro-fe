@@ -22,7 +22,7 @@ const ButtonWrapper = styled(Row)`
     align-items: center;
     justify-content: end;
     padding: 1.4rem 2.5rem;
-    background-color: ${theme.color.background_menu};
+    background-color: ${theme.color.background_primary};
   `}
 `;
 

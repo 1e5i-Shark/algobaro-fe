@@ -15,7 +15,7 @@ const ResizeHandleWrapper = styled(PanelResizeHandle)<ResizeHandleProps>`
     width: ${$direction === 'horizontal' ? '0.2rem' : '100%'};
     height: ${$direction === 'horizontal' ? '100%' : '0.2rem'};
     padding: 1rem;
-    background-color: ${theme.color.background_menu};
+    background-color: ${theme.color.background_primary};
   `}
 `;
 
