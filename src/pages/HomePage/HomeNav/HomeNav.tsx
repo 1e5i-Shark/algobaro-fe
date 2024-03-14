@@ -1,4 +1,3 @@
-import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +7,7 @@ import { LANGUAGES_DATA_SET } from '@/constants/room';
 import { PATH } from '@/routes/path';
 import useFilterStore from '@/store/RoomsListStore/useFilterStore';
 
+import AnimatedIcon from './animatedIcon';
 import * as S from './HomeNav.style';
 
 interface HomeNavProps {
@@ -16,8 +16,9 @@ interface HomeNavProps {
 
 export default function HomeNav({ refetch }: HomeNavProps) {
   // const latestUpdate = '1분전';
-  const [latestUpdate, setLatestUpdate] = useState(1);
   const navigate = useNavigate();
+  const [latestUpdate, setLatestUpdate] = useState(1);
+  const [animate, setAnimate] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const {
     selectedAccess,
@@ -54,6 +55,9 @@ export default function HomeNav({ refetch }: HomeNavProps) {
 
   const handleRefetchData = () => {
     setLatestUpdate(prev => prev + 1);
+    setAnimate(true);
+    // 애니메이션이 끝난 후 상태를 리셋하기 위해 타이머 설정
+    setTimeout(() => setAnimate(false), 500);
     refetch();
   };
 
@@ -107,7 +111,7 @@ export default function HomeNav({ refetch }: HomeNavProps) {
       <S.UpdateData>
         {`마지막 업데이트: ${latestUpdate}분전`}
         <Icon onClick={handleRefetchData}>
-          <RefreshRoundedIcon />
+          <AnimatedIcon $animate={animate} />
         </Icon>
       </S.UpdateData>
     </S.NavContainer>
