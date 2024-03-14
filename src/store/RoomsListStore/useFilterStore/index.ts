@@ -8,7 +8,7 @@ const useFilterStore = create<useFilterStoreProps>(set => ({
   selectedAccess: null,
   selectedStatus: null,
   setTitle: value => set(() => ({ searchTitle: value })),
-  setLanguage: value => set(() => ({ selectedLanguage: [...value] })),
+  setLanguage: value => set(() => ({ selectedLanguage: value })),
   setAccess: value => set(() => ({ selectedAccess: value })),
   setStatus: value => set(() => ({ selectedStatus: value })),
 }));
