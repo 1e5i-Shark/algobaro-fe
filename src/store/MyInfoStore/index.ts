@@ -3,7 +3,7 @@ import { devtools } from 'zustand/middleware';
 
 import { MyInfoType } from '@/types/myInfo';
 
-import { MyStateProps } from './types';
+import { MyStateProps } from './type';
 
 const initialData = {
   id: null,
