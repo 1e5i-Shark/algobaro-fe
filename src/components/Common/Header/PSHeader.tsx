@@ -38,10 +38,7 @@ export default function PSHeader() {
   return (
     <S.HeaderWrapper>
       <S.TimerWrapper>
-        <ProblemTimer
-          seconds={1}
-          isProblemSolvePage={isProblemSolvePage}
-        />
+        <ProblemTimer isProblemSolvePage={isProblemSolvePage} />
       </S.TimerWrapper>
       <S.ButtonWrapper>
         <ThemeModeToggleButton />

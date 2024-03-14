@@ -5,17 +5,10 @@ import useTimerStore from '@/store/TimerStore';
 import ProblemEndModal from '../ProblemEndModal/ProblemEndModal';
 import * as S from './ProblemTimer.style';
 interface TimerProps {
-  minutes?: number;
-  seconds?: number;
   isProblemSolvePage: boolean;
-  openModal?: () => void;
 }
 
-export default function ProblemTimer({
-  minutes,
-  seconds,
-  isProblemSolvePage,
-}: TimerProps) {
+export default function ProblemTimer({ isProblemSolvePage }: TimerProps) {
   const { modalRef, isOpen, openModal, closeModal } = useModal();
 
   // TODO: 삭제 예정 navigate 테스트용 코드
