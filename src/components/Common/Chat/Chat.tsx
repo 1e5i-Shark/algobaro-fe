@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { v4 } from 'uuid';
 
 import { Message } from '@/components';
@@ -6,7 +6,6 @@ import useMessageStore from '@/store/MessageStore';
 import useMeStore from '@/store/MyInfoStore';
 import useRoomStore from '@/store/RoomStore';
 
-import { MENU_TEXT } from '../Menu/MenuText';
 import * as S from './Chat.style';
 import ChatInput from './ChatInput';
 
@@ -22,15 +21,6 @@ export default function Chat({ height = '100%' }: ChatProps) {
   } = useRoomStore();
   const { messageLogs, connected, connect, setMessageValue, disconnect } =
     useMessageStore();
-
-  const menuList = [
-    {
-      id: 1,
-      text: MENU_TEXT.TRANSFER_HOST,
-      onClick: (event: MouseEvent<HTMLElement>) =>
-        console.log('메뉴 테스트', event),
-    },
-  ];
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
@@ -64,10 +54,8 @@ export default function Chat({ height = '100%' }: ChatProps) {
           return (
             <S.MessageWrapper key={v4()}>
               <Message
-                // Todo: 백엔드 message value 추가 예정
                 userName={message.memberId.toString()}
                 comment={message.value as string}
-                menuList={menuList}
                 createdAt={message.timestamp}
               />
             </S.MessageWrapper>
