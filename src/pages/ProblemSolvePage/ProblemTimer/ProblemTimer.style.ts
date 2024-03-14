@@ -34,7 +34,12 @@ const TimeStartButton = styled.button`
   `}
 `;
 
+const TestButton = styled.button`
+  margin-left: 1rem;
+`;
+
 export {
+  TestButton,
   TimeLeftText,
   TimeLeftWrapper,
   TimeOverText,
