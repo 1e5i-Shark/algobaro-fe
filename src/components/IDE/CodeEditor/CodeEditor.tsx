@@ -71,6 +71,14 @@ export default function CodeEditor({
       new CodemirrorBinding(yText, editorRef.current, awareness, {
         yUndoManager,
       });
+      // text 변경 감지
+      const yTextListener = () => {
+        const newContent = yText.toString();
+        // 전역 Store의 code 변경
+        setCode(newContent);
+      };
+
+      yText.observe(yTextListener);
     } catch (err) {
       // TODO: 연결이 끊어진 경우 처리 필요
       console.error('webrtc 연결이 끊어졌습니다.');
