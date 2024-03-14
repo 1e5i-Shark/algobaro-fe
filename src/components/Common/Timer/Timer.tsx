@@ -21,7 +21,7 @@ interface TimerProps {
  * @param [minutes] - `옵션`
  * @param [seconds] - `옵션`
  * @param [padLength=2] - `옵션` 예시:) 01분 01초
- * @param [endText=시험 종료] - `옵션` 타이머가 끝났을 때 보여줄 문구
+ * @param [endText] - `옵션` 타이머가 끝났을 때 보여줄 문구
  * @param [isStop] - `옵션` 타이머를 멈추고 싶을 때 사용합니다.
  * @param [openModal] - `옵션` 종료 후 모달을 열 때 사용합니다.
  * @param [setIsEnd] - `옵션` 타이머 시간이 종료됨을 알려줍니다.
