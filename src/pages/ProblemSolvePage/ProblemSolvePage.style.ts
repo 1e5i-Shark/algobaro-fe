@@ -23,7 +23,7 @@ const ButtonWrapper = styled(Row)`
     justify-content: end;
     height: ${theme.FIXED_HEIGHT.HEADER};
     padding: 1.4rem 2.5rem;
-    background-color: ${theme.color.background_menu};
+    background-color: ${theme.color.background_problem_solve};
   `}
 `;
 

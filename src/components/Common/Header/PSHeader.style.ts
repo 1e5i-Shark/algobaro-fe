@@ -14,7 +14,7 @@ const HeaderWrapper = styled.header`
     width: 100%;
     height: ${theme.FIXED_HEIGHT.HEADER};
     padding: 0 2rem;
-    background-color: ${theme.color.background_menu};
+    background-color: ${theme.color.background_problem_solve};
     border-bottom: 1px solid
       ${theme.mode === 'light' ? theme.color.gray_20 : 'none'};
   `}
