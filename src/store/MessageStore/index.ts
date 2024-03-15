@@ -129,17 +129,17 @@ const useMessageStore = create<MessageStoreState>()(
       const message = JSON.parse(messageReceived.body);
       const formatData = formatMessage(message);
 
-      if (
-        formatData.type ===
-        (SOCKET_TYPE.CHAT.ENTER ||
-          SOCKET_TYPE.CHAT.MESSAGE ||
-          SOCKET_TYPE.CHAT.QUIT)
-      ) {
+      const messageLogsType = [
+        SOCKET_TYPE.CHAT.ENTER,
+        SOCKET_TYPE.CHAT.MESSAGE,
+        SOCKET_TYPE.CHAT.QUIT,
+      ];
+
+      if (messageLogsType.includes(formatData.type)) {
         set(state => ({
           messageLogs: [...state.messageLogs, formatData],
         }));
       }
-
       publish();
     },
     formatMessage: message => {
@@ -151,14 +151,14 @@ const useMessageStore = create<MessageStoreState>()(
           return {
             memberId,
             type,
-            value: value && `${value}님이 입장하였습니다`,
+            value: value || `${memberId}님이 입장하였습니다`,
             timestamp: formattedTime,
           };
         case SOCKET_TYPE.CHAT.QUIT:
           return {
             memberId,
             type,
-            value: value && `${value}님이 퇴장하였습니다.`,
+            value: value || `${memberId}님이 퇴장하였습니다.`,
             timestamp: formattedTime,
           };
         case SOCKET_TYPE.CHAT.MESSAGE:

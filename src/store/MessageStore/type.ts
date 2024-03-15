@@ -5,7 +5,7 @@ import { RoomType } from '@/types/room';
 
 export interface Message {
   memberId: number;
-  type: string;
+  type: ChatValueUnion;
   value: string | null;
   timestamp: string;
 }
