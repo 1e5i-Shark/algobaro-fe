@@ -105,7 +105,7 @@ export default function MultiDropDown({
           value={selectedValues}
           renderValue={selected =>
             selected.length === dataSetLength
-              ? '전체 언어'
+              ? '모든 언어'
               : `${selected.length}개 선택`
           }
           onChange={handleChange}
