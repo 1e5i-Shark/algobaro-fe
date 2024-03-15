@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { ROOM_DETAIL, ROOMS_KEY } from '@/constants/queryKey';
+import { QUERY_KEY, ROOM_DETAIL, ROOMS_KEY } from '@/constants/queryKey';
 import getRoomDetail from '@/services/Room/getRoomDetail';
 import getRoomsList from '@/services/Room/getRoomsList';
+import { getUuidRoom } from '@/services/Room/Room';
 import { RoomsRequestQuery } from '@/services/Room/type';
 
 // 방 전체 리스트를 가져오는 hook
@@ -37,5 +38,12 @@ export const useRoomDetail = (roomShortUuid: string) => {
   return useQuery({
     queryKey: [ROOM_DETAIL, roomShortUuid],
     queryFn: () => getRoomDetail(roomShortUuid),
+  });
+};
+
+export const useGetUuidRoom = (roomShortUuid: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEY.ROOM.UUID_INFO, roomShortUuid],
+    queryFn: async () => await getUuidRoom(`/${roomShortUuid}`),
   });
 };

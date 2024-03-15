@@ -1,5 +1,6 @@
 export { Avatar, EditButton } from './Common/Avatar';
 export { default as Button } from './Common/Button/Button';
+export { default as Chat } from './Common/Chat/Chat';
 export { default as CheckBox } from './Common/CheckBox/CheckBox';
 export { DropDown, MultiDropDown } from './Common/DropDown';
 export { default as EllipsisText } from './Common/EllipsisText/EllipsisText';
@@ -20,4 +21,5 @@ export { default as Timer } from './Common/Timer/Timer';
 export { default as CreateTagInput } from './CreateRoom/CreateTagInput/CreateTagInput';
 export { default as TitleWithAsterisk } from './CreateRoom/TitleWithAsterisk/TitleWithAsterisk';
 export { default as CodeEditor } from './IDE/CodeEditor/CodeEditor';
+export { MemberCard } from './MemberCard';
 export { ThemeCustomProvider } from './ThemeCustomProvider';

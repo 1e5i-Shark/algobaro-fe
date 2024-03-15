@@ -22,6 +22,7 @@ import {
  * @param [ fontSize = '1.6rem' ] - 작성자 및 메시지 내용의 폰트 크기
  * @param [ iconSize = 'XS' ] - icon의 크기
  * @param [ comment ] - required, 메시지 내용
+ * @param [ createdAt ] - required, 메시지 작성 시간
  */
 
 interface MessageProps extends HTMLAttributes<HTMLDivElement> {
@@ -34,7 +35,8 @@ interface MessageProps extends HTMLAttributes<HTMLDivElement> {
   fontSize?: string;
   iconSize?: Size;
   comment: string;
-  menuList: MenuListProps[];
+  menuList?: MenuListProps[];
+  createdAt: string;
 }
 
 export default function Message({
@@ -48,7 +50,8 @@ export default function Message({
   iconSize = 'XS',
   comment,
   menuList,
-  // ...props
+  createdAt,
+  ...props
 }: MessageProps) {
   return (
     <>
@@ -57,6 +60,7 @@ export default function Message({
         $padding={padding}
         $fontSize={fontSize}
         $avatarSize={avatarSize}
+        {...props}
       >
         <MessageSender $fontSize={fontSize}>
           <Avatar
@@ -65,11 +69,25 @@ export default function Message({
             isShadow={avatarShadow}
           />
           <UserName>{userName}</UserName>
-          <Menu menuList={menuList}>
-            <Icon size={iconSize}>
-              <MoreVertRoundedIcon />
-            </Icon>
-          </Menu>
+          <span
+            style={{
+              fontSize: '1rem',
+              marginLeft: '8px',
+            }}
+          >
+            {createdAt}
+          </span>
+
+          {menuList && (
+            <Menu menuList={menuList}>
+              <Icon
+                size={iconSize}
+                onClick={() => {}}
+              >
+                <MoreVertRoundedIcon />
+              </Icon>
+            </Menu>
+          )}
         </MessageSender>
         <MessageText>{comment}</MessageText>
       </MessageContainer>

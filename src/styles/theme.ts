@@ -1,5 +1,10 @@
 const FIXED_HEIGHT = {
   HEADER: '8rem',
+  CARD: '23rem',
+};
+
+const FIXED_WIDTH = {
+  CARD: '25rem',
 };
 
 const ZINDEX = {
@@ -19,6 +24,7 @@ const size = {
   half: '50%',
   none: '0%',
   icon: {
+    XXS: '1.6rem',
     XS: '2.6rem',
     S: '3.6rem',
     M: '4.6rem',
@@ -57,7 +63,7 @@ const commonTheme = {
   gray_20: '#E3E3E3',
   gray_10: '#EFEFEF',
   red: '#FF7C60',
-  green: '#72EC5E',
+  green: '#67CF56',
   gradation: 'linear-gradient(90deg, #A5F1F6, #CFBEFF)',
   circle_gradation: 'linear-gradient(135deg, #A5F1F6, #CFBEFF)',
 };
@@ -85,6 +91,7 @@ export const lightTheme = {
   fontWeight,
   device,
   ZINDEX,
+  FIXED_WIDTH,
   FIXED_HEIGHT,
 };
 
@@ -111,6 +118,7 @@ export const darkTheme = {
   fontWeight,
   device,
   ZINDEX,
+  FIXED_WIDTH,
   FIXED_HEIGHT,
 };
 

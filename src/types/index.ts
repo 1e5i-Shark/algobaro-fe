@@ -1,2 +1,2 @@
 export type Shape = 'circle' | 'round' | 'square';
-export type Size = 'XS' | 'S' | 'M' | 'L' | 'XL';
+export type Size = 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL';
