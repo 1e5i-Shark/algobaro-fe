@@ -32,7 +32,7 @@ export default function ProblemSolvePage() {
   const handleClickProblemLink = () => {
     if (!roomData.problemLink) return;
 
-    window.open(roomData.problemLink, '_blank', 'noopener');
+    window.open(roomData.problemLink, '_blank', 'noopener,noreferrer');
   };
 
   return (
