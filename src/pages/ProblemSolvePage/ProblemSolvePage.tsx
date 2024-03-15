@@ -3,6 +3,7 @@ import { Panel, PanelGroup } from 'react-resizable-panels';
 import { Button, CodeEditor, ResizeHandle } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
+import useRoomStore from '@/store/RoomStore';
 import useTimerStore from '@/store/TimerStore';
 
 import { DIRECTION, MOCK_DATA, SIZE_PERCENTAGE } from './constants';
@@ -13,6 +14,7 @@ import * as S from './ProblemSolvePage.style';
 export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
 
+  const { roomData } = useRoomStore();
   const { mutate: compileMutate } = useCompile();
   const { mutate: submitMutate } = useSubmission();
 
@@ -27,12 +29,26 @@ export default function ProblemSolvePage() {
     setIsStop(false);
   };
 
+  const handleClickProblemLink = () => {
+    if (!roomData.problemLink) return;
+
+    window.open(roomData.problemLink, '_blank', 'noopener');
+  };
+
   return (
     <S.Wrapper>
       <S.ContentsWrapper>
         <PanelGroup direction={DIRECTION.HORIZONTAL}>
           <Panel defaultSize={SIZE_PERCENTAGE.PROBLEM}>
             {/* 문제 영역 */}
+            <S.ProblemLinkContainer>
+              <S.ProblemLinkText>
+                문제 출처 :{' '}
+                <S.ProblemLink onClick={handleClickProblemLink}>
+                  {roomData.problemLink}
+                </S.ProblemLink>
+              </S.ProblemLinkText>
+            </S.ProblemLinkContainer>
             <ProblemSection />
           </Panel>
           <ResizeHandle direction={DIRECTION.HORIZONTAL} />
