@@ -9,17 +9,17 @@ import useFilterStore from '@/store/RoomsListStore/useFilterStore';
 
 import AnimatedIcon from './animatedIcon';
 import * as S from './HomeNav.style';
+import useStopWatch from './useStopWatch';
 
 interface HomeNavProps {
   refetch: () => void;
 }
 
 export default function HomeNav({ refetch }: HomeNavProps) {
-  // const latestUpdate = '1분전';
   const navigate = useNavigate();
-  const [latestUpdate, setLatestUpdate] = useState(1);
   const [animate, setAnimate] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const { elapsedTime, startStopWatch } = useStopWatch();
   const {
     selectedAccess,
     selectedStatus,
@@ -43,7 +43,7 @@ export default function HomeNav({ refetch }: HomeNavProps) {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
 
-    // Input 내부가 빈 문자열일 경우, 초기화
+    // Input 내부에 값을 입력한 후, 모두 지울 경우 초기화된 상태로 다시 api 요청
     if (value === '') {
       setInputValue('');
       setTitle('');
@@ -54,10 +54,19 @@ export default function HomeNav({ refetch }: HomeNavProps) {
   };
 
   const handleRefetchData = () => {
-    setLatestUpdate(prev => prev + 1);
-    setAnimate(true);
+    if (elapsedTime === 1) {
+      alert('잠시 후 다시 시도해주세요.');
+      return;
+    }
+
+    // 타이머 실행
+    startStopWatch();
+
     // 애니메이션이 끝난 후 상태를 리셋하기 위해 타이머 설정
-    setTimeout(() => setAnimate(false), 500);
+    setAnimate(true);
+    setTimeout(() => setAnimate(false), 350);
+
+    // api 재요청
     refetch();
   };
 
@@ -107,10 +116,13 @@ export default function HomeNav({ refetch }: HomeNavProps) {
         </S.SearchInputWrapper>
       </S.SearchOptionsContainer>
 
-      {/* // Todo: 이거 처리 해야댐 */}
-      <S.UpdateData>
-        {`마지막 업데이트: ${latestUpdate}분전`}
-        <Icon onClick={handleRefetchData}>
+      <S.UpdateData onClick={handleRefetchData}>
+        <span>
+          {!elapsedTime
+            ? '방 정보 업데이트'
+            : `마지막 업데이트: ${elapsedTime}분 전`}
+        </span>
+        <Icon onClick={() => {}}>
           <AnimatedIcon $animate={animate} />
         </Icon>
       </S.UpdateData>
