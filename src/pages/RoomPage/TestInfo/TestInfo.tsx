@@ -1,8 +1,8 @@
 import { AttachmentRounded } from '@mui/icons-material';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Icon } from '@/components';
+import { Button, Icon, Spinner } from '@/components';
 import { SOCKET_TYPE } from '@/constants/socket';
 import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
@@ -10,11 +10,7 @@ import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { PATH } from '@/routes/path';
 import useMessageStore from '@/store/MessageStore';
-import useMyInfoStore from '@/store/MyInfoStore';
 import useRoomStore from '@/store/RoomStore';
-import { RoomMemberType } from '@/types/room';
-
-import { findMyRoomData } from '../findMyRoomData';
 
 interface TestInfoProps {
   className: string;
@@ -23,18 +19,19 @@ interface TestInfoProps {
 export default function TestInfo({ className }: TestInfoProps) {
   const { theme } = useCustomTheme();
   const { sendMessage } = useMessageStore();
-  const { myInfo } = useMyInfoStore();
-  const { roomData, myRoomData, setMyRoomData, setRoomData } = useRoomStore();
+  const { roomData, myRoomData } = useRoomStore();
   const { timeLimit, problemLink, roomId, roomMembers } = roomData;
 
   const [isReady, setIsReady] = useState(myRoomData.ready);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const { data, isSuccess, refetch } = useGetUuidRoom(roomData.roomShortUuid);
+  const { refetch } = useGetUuidRoom(roomData.roomShortUuid);
 
   const isTestReady = useMemo(() => {
     const result = roomMembers.findIndex(member => member.ready === false);
+
     return result === -1 ? true : false;
   }, [roomMembers]);
 
@@ -45,44 +42,24 @@ export default function TestInfo({ className }: TestInfoProps) {
     return { hours, minutes };
   }, [timeLimit]);
 
-  const changeMemberData = (newData: Partial<RoomMemberType>) => {
-    const myIndex = roomMembers.findIndex(
-      member => member.email === myInfo.email
-    );
-
-    if (myIndex === -1) return;
-
-    const updatedData = [...roomMembers];
-    updatedData[myIndex] = {
-      ...updatedData[myIndex],
-      ...newData,
-    };
-
-    setRoomData({ ...roomData, roomMembers: updatedData });
-  };
-
+  // 중복 클릭을 막기 위한 스로틀링
+  let timer = 0;
   const changeReady = (ready: boolean) => {
-    ready
-      ? sendMessage(SOCKET_TYPE.ROOM.READY)
-      : sendMessage(SOCKET_TYPE.ROOM.UNREADY);
+    setIsLoading(true);
+    if (!timer) {
+      timer = window.setTimeout(() => {
+        ready
+          ? sendMessage(SOCKET_TYPE.ROOM.READY)
+          : sendMessage(SOCKET_TYPE.ROOM.UNREADY);
 
-    setIsReady(ready);
-    refetch();
-  };
+        refetch();
+        setIsReady(ready);
+        setIsLoading(false);
 
-  useEffect(() => {
-    changeMemberData({ ready: isReady });
-  }, [isReady]);
-
-  useEffect(() => {
-    if (isSuccess && data.response) {
-      setRoomData(data.response);
-      const myData = myInfo.email && findMyRoomData(roomMembers, myInfo.email);
-      if (myData) {
-        setMyRoomData(myData);
-      }
+        timer = 0;
+      }, 200);
     }
-  }, [data]);
+  };
 
   const handleStartTest = () => {
     // Todo: problemSolve에서 해줄지 여기서 할지
@@ -153,12 +130,26 @@ export default function TestInfo({ className }: TestInfoProps) {
         <Button
           onClick={() => changeReady(false)}
           backgroundColor={theme.color.secondary_color}
+          disabled={isLoading}
         >
-          준비 취소
+          {isLoading ? (
+            <Spinner color={theme.color.white_primary} />
+          ) : (
+            '준비 취소'
+          )}
         </Button>
       ) : (
         <S.WaitingButtonWrapper>
-          <Button onClick={() => changeReady(true)}>테스트 준비</Button>
+          <Button
+            onClick={() => changeReady(true)}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <Spinner color={theme.color.white_primary} />
+            ) : (
+              '테스트 준비'
+            )}
+          </Button>
           <S.Text
             $color={theme.color.gray_50}
             $padding="1rem 0 0 0"
