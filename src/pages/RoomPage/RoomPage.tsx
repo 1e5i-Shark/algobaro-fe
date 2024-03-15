@@ -41,6 +41,7 @@ export default function RoomPage() {
   useEffect(() => {
     refetch();
   }, [listeners]);
+
   // Todo: 새로고침했을 때 다시 connect하는 대응
   // const reconnectSocketServer = (id: string) => {
   //   connect(id);
@@ -92,11 +93,6 @@ export default function RoomPage() {
       window.removeEventListener('beforeunload', beforeUnloadListener);
     };
   }, []);
-
-  // 삭제 예정: myRoomData 디버깅 코드
-  if (!myRoomData) {
-    return <div>myRoomData가 없습니다.</div>;
-  }
 
   if (isLoading) {
     return <Spinner />;

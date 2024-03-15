@@ -3,8 +3,6 @@ import { v4 } from 'uuid';
 
 import { Message } from '@/components';
 import useMessageStore from '@/store/MessageStore';
-import useMeStore from '@/store/MyInfoStore';
-import useRoomStore from '@/store/RoomStore';
 
 import * as S from './Chat.style';
 import ChatInput from './ChatInput';
@@ -15,12 +13,7 @@ interface ChatProps {
 
 export default function Chat({ height = '100%' }: ChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { myInfo } = useMeStore();
-  const {
-    roomData: { roomShortUuid },
-  } = useRoomStore();
-  const { messageLogs, connected, connect, setMessageValue, disconnect } =
-    useMessageStore();
+  const { messageLogs } = useMessageStore();
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
