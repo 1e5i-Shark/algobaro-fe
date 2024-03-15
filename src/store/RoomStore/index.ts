@@ -34,25 +34,28 @@ const initialMyData: RoomMemberType = {
 };
 
 const useRoomStore = create<RoomStateProps>()(
-  devtools(set => ({
-    roomData: initialData,
-    myRoomData: initialMyData,
-    setRoomData: (newRoomData: Partial<RoomType>) =>
-      set(state => ({ roomData: { ...state.roomData, ...newRoomData } })),
-    setMyRoomData: (newRoomData: Partial<RoomMemberType>) =>
-      set(state => ({ myRoomData: { ...state.myRoomData, ...newRoomData } })),
-    addRoomMembers: newMembers =>
-      set(state => ({
-        roomData: {
-          ...state.roomData,
-          roomMembers: [...state.roomData.roomMembers, ...newMembers],
-        },
-      })),
-    reset: () =>
-      set({
-        roomData: initialData,
-      }),
-  }))
+  devtools(
+    set => ({
+      roomData: initialData,
+      myRoomData: initialMyData,
+      setRoomData: (newRoomData: Partial<RoomType>) =>
+        set(state => ({ roomData: { ...state.roomData, ...newRoomData } })),
+      setMyRoomData: (newRoomData: Partial<RoomMemberType>) =>
+        set(state => ({ myRoomData: { ...state.myRoomData, ...newRoomData } })),
+      addRoomMembers: newMembers =>
+        set(state => ({
+          roomData: {
+            ...state.roomData,
+            roomMembers: [...state.roomData.roomMembers, ...newMembers],
+          },
+        })),
+      reset: () =>
+        set({
+          roomData: initialData,
+        }),
+    }),
+    { store: 'RoomStore ' }
+  )
 );
 
 export default useRoomStore;
