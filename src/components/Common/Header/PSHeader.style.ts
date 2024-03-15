@@ -14,7 +14,7 @@ const HeaderWrapper = styled.header`
     width: 100%;
     height: ${theme.FIXED_HEIGHT.HEADER};
     padding: 0 2rem;
-    background-color: ${theme.color.background_primary};
+    background-color: ${theme.color.background_menu};
     border-bottom: 1px solid
       ${theme.mode === 'light' ? theme.color.gray_20 : 'none'};
   `}
@@ -23,7 +23,7 @@ const HeaderWrapper = styled.header`
 const TimerWrapper = styled.div``;
 
 const ButtonWrapper = styled(Row)`
-  gap: 2rem;
+  gap: 1.6rem;
   align-items: center;
 `;
 
@@ -31,7 +31,7 @@ const ConfirmModalWrapper = styled(Col)`
   gap: 2rem;
   align-items: center;
   justify-content: center;
-  padding: 2rem 4rem;
+  padding: 2rem 6rem 1rem;
 `;
 
 const ConfirmText = styled.span`

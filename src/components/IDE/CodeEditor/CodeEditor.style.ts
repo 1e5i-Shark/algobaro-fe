@@ -52,7 +52,6 @@ const DefaultGutter = styled.div`
     align-items: center;
     justify-content: center;
     width: 3.72rem;
-    height: 3.3rem;
     padding: 0 0.5rem;
     background-color: ${theme.mode === 'light'
       ? '#F7F7F7'
@@ -65,7 +64,6 @@ const DropDownWrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
     justify-content: space-between;
-    height: 3.3rem;
     background-color: ${theme.color.background_editor};
   `}
 `;

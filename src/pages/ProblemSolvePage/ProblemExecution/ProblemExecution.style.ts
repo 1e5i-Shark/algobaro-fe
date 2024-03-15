@@ -34,7 +34,7 @@ const ResultWrapper = styled(Col)`
 const ResultText = styled.span`
   ${({ theme }) => css`
     height: 100%;
-    font-size: 1.8rem;
+    font-size: ${theme.size.L};
     line-height: ${theme.size.XXL};
   `}
 `;
@@ -45,7 +45,7 @@ const GuideText = styled.span`
     align-items: center;
     justify-content: center;
     height: 100%;
-    font-size: ${theme.size.M};
+    font-size: 1.6rem;
     color: ${theme.color.gray_50};
   `}
 `;
