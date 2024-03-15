@@ -30,8 +30,8 @@ export default function RoomHeader({ className }: HeaderProps) {
     setRoomData({ roomMembers: newMembers });
 
     // disconnect 시 서버에서 방장 자동 변경
-    disconnect();
     navigate(PATH.HOME);
+    disconnect();
   };
 
   return (
