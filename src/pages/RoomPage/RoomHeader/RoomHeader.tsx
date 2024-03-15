@@ -4,36 +4,33 @@ import { Modal } from '@/components';
 import useModal from '@/hooks/useModal';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { PATH } from '@/routes/path';
+import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
-import { RoomMemberType } from '@/types/room';
 
-import { ROOM_ROLE } from '../RoomPage.consts';
 import { ModalRoom, RoomHeaderButtons, RoomHeaderInfo } from '.';
 
 interface HeaderProps {
   className: string;
-  myRoomData: RoomMemberType;
 }
 
-export default function RoomHeader({ className, myRoomData }: HeaderProps) {
-  const { memberId: myId, role: myRole } = myRoomData;
-
-  const { roomData, setRoomData } = useRoomStore();
+export default function RoomHeader({ className }: HeaderProps) {
+  const {
+    roomData,
+    myRoomData: { email: myEmail, role: myRole },
+    setRoomData,
+  } = useRoomStore();
   const { roomMembers } = roomData;
 
   const { modalRef, isOpen, openModal, closeModal } = useModal();
+  const { disconnect } = useMessageStore();
   const navigate = useNavigate();
 
   const handleExitRoom = async () => {
-    const newMembers = roomMembers.filter(member => member.memberId !== myId);
+    const newMembers = roomMembers.filter(member => member.email !== myEmail);
     setRoomData({ roomMembers: newMembers });
 
-    if (myRole === ROOM_ROLE.HOST && roomMembers.length > 1) {
-      // Todo: 소켓 연결
-      // sendMessage(SOCKET_TYPE.ROOM.CHANGE_HOST);
-      alert('방장 자동 변경!');
-    }
-
+    // disconnect 시 서버에서 방장 자동 변경
+    await disconnect();
     navigate(PATH.HOME);
   };
 

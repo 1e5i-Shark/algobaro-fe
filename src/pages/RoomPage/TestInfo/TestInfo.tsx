@@ -1,26 +1,37 @@
 import { AttachmentRounded } from '@mui/icons-material';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon } from '@/components';
+import { SOCKET_TYPE } from '@/constants/socket';
+import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { PATH } from '@/routes/path';
+import useMessageStore from '@/store/MessageStore';
+import useMyInfoStore from '@/store/MyInfoStore';
 import useRoomStore from '@/store/RoomStore';
 import { RoomMemberType } from '@/types/room';
 
+import { findMyRoomData } from '../findMyRoomData';
+
 interface TestInfoProps {
   className: string;
-  myRoomData: RoomMemberType;
 }
 
-export default function TestInfo({ className, myRoomData }: TestInfoProps) {
+export default function TestInfo({ className }: TestInfoProps) {
   const { theme } = useCustomTheme();
-  const { roomData, setRoomData } = useRoomStore();
+  const { sendMessage } = useMessageStore();
+  const { myInfo } = useMyInfoStore();
+  const { roomData, myRoomData, setMyRoomData, setRoomData } = useRoomStore();
   const { timeLimit, problemLink, roomId, roomMembers } = roomData;
 
+  const [isReady, setIsReady] = useState(myRoomData.ready);
+
   const navigate = useNavigate();
+
+  const { data, isSuccess, refetch } = useGetUuidRoom(roomData.roomShortUuid);
 
   const isTestReady = useMemo(() => {
     const result = roomMembers.findIndex(member => member.ready === false);
@@ -36,7 +47,7 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
 
   const changeMemberData = (newData: Partial<RoomMemberType>) => {
     const myIndex = roomMembers.findIndex(
-      member => member.memberId === myRoomData.memberId
+      member => member.email === myInfo.email
     );
 
     if (myIndex === -1) return;
@@ -51,17 +62,31 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
   };
 
   const changeReady = (ready: boolean) => {
-    changeMemberData({ ready });
-    // Todo: 소켓 연결
-    // ready
-    //   ? sendMessage(SOCKET_TYPE.ROOM.READY)
-    //   : sendMessage(SOCKET_TYPE.ROOM.UNREADY);
+    ready
+      ? sendMessage(SOCKET_TYPE.ROOM.READY)
+      : sendMessage(SOCKET_TYPE.ROOM.UNREADY);
+
+    setIsReady(ready);
+    refetch();
   };
 
-  const handleStartTest = async () => {
-    // Todo: 소켓 연결
-    // sendMessage(SOCKET_TYPE.ROOM.START_CODING);
+  useEffect(() => {
+    changeMemberData({ ready: isReady });
+  }, [isReady]);
 
+  useEffect(() => {
+    if (isSuccess && data.response) {
+      setRoomData(data.response);
+      const myData = myInfo.email && findMyRoomData(roomMembers, myInfo.email);
+      if (myData) {
+        setMyRoomData(myData);
+      }
+    }
+  }, [data]);
+
+  const handleStartTest = () => {
+    // Todo: problemSolve에서 해줄지 여기서 할지
+    // sendMessage(SOCKET_TYPE.ROOM.START_CODING);
     navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
   };
 
@@ -87,7 +112,7 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
                 <h4>문제링크</h4>
                 <Icon
                   className="icon"
-                  onClick={() => {}}
+                  onClick={problemLink ? () => {} : undefined}
                 >
                   <AttachmentRounded />
                 </Icon>
@@ -124,12 +149,12 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
             </S.Text>
           </S.WaitingButtonWrapper>
         )
-      ) : myRoomData.ready ? (
+      ) : isReady ? (
         <Button
           onClick={() => changeReady(false)}
-          backgroundColor={theme.color.green}
+          backgroundColor={theme.color.secondary_color}
         >
-          준비 완료
+          준비 취소
         </Button>
       ) : (
         <S.WaitingButtonWrapper>
