@@ -14,11 +14,11 @@ const rotate = keyframes`
 
 // 애니메이션을 적용할 스타일드 컴포넌트 생성
 const AnimatedIcon = styled(RefreshRoundedIcon)<{ $animate: boolean }>`
-  transition: transform 0.5s;
+  transition: transform 0.35s;
   ${props =>
     props.$animate &&
     css`
-      animation: ${rotate} 0.5s ease-in-out;
+      animation: ${rotate} 0.35s ease-in-out;
     `};
 `;
 
