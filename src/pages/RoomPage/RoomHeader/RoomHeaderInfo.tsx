@@ -70,7 +70,7 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
           ))}
         </S.TagsWrapper>
       )}
-      {languages.length > 0 && (
+      {
         <S.LogosWrapper className="logosGroup">
           {languages.map(language => (
             <S.LogoWrapper key={language}>
@@ -83,7 +83,7 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
             </S.LogoWrapper>
           ))}
         </S.LogosWrapper>
-      )}
+      }
     </div>
   );
 }
