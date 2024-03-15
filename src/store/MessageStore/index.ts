@@ -33,7 +33,7 @@ const useMessageStore = create<MessageStoreState>()(
         const stompClient = new Stomp.Client({
           webSocketFactory: () => socket,
           debug: debugMessage => {
-            // console.log('stompClient debug string : ', debugMessage);
+            console.log('stompClient debug string : ', debugMessage);
           },
           connectHeaders: {
             Authorization: `Bearer ${localStorage.getItem(LOCAL_ACCESSTOKEN)}`,
