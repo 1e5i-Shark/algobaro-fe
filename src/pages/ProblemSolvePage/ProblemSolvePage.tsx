@@ -25,11 +25,22 @@ export default function ProblemSolvePage() {
 
   const { input, code, language } = useCodeEditorStore(state => state);
 
+  const checkEmptyCode = () => {
+    if (code.trim() === '') {
+      alert('내용을 입력해주세요.');
+      return;
+    }
+  };
+
   const handleCompileExecution = async () => {
+    checkEmptyCode();
+
     compileMutate({ code, input, language });
   };
 
   const handleSubmit = () => {
+    checkEmptyCode();
+
     submitMutate({
       roomShortUuid,
       language,
