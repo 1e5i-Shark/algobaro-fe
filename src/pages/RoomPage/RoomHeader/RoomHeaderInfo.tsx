@@ -53,33 +53,37 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
         )}
         <h2>{title}</h2>
       </S.TitleWrapper>
-      <S.TagsWrapper className="tagsGroup">
-        {tags.map((tag, index) => (
-          <S.TagWrapper key={v4()}>
-            <Tag
-              height="2.6rem"
-              fontSize="1.4rem"
-              mode="normal"
-              backgroundColor={theme.color.transparent_50}
-              tagId={tag + index}
-            >
-              {tag}
-            </Tag>
-          </S.TagWrapper>
-        ))}
-      </S.TagsWrapper>
-      <S.LogosWrapper className="logosGroup">
-        {languages.map(language => (
-          <S.LogoWrapper key={language}>
-            <Image
-              shape="circle"
-              alt="logo"
-              fill={true}
-              src={LOGOS[language]}
-            />
-          </S.LogoWrapper>
-        ))}
-      </S.LogosWrapper>
+      {tags.length > 0 && (
+        <S.TagsWrapper className="tagsGroup">
+          {tags.map((tag, index) => (
+            <S.TagWrapper key={v4()}>
+              <Tag
+                height="2.6rem"
+                fontSize="1.4rem"
+                mode="normal"
+                backgroundColor={theme.color.transparent_50}
+                tagId={tag + index}
+              >
+                {tag}
+              </Tag>
+            </S.TagWrapper>
+          ))}
+        </S.TagsWrapper>
+      )}
+      {languages.length > 0 && (
+        <S.LogosWrapper className="logosGroup">
+          {languages.map(language => (
+            <S.LogoWrapper key={language}>
+              <Image
+                shape="circle"
+                alt="logo"
+                fill={true}
+                src={LOGOS[language]}
+              />
+            </S.LogoWrapper>
+          ))}
+        </S.LogosWrapper>
+      )}
     </div>
   );
 }
