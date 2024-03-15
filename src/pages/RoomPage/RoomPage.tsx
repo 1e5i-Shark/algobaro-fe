@@ -87,6 +87,11 @@ export default function RoomPage() {
     }
   }, [data]);
 
+  /**
+   * 웹소켓은 새로고침, 페이지 이동 시 연결이 끊긴다.
+   * 그러나 비정상적인 네트워크 종료 등으로 브라우저가 갑작스럽게 연결이 끊기면 서버 측에서 이를 감지하기 어려울 수 있다.
+   * 따라서 beforeUnloadListener로 명시적으로 웹소켓 연결을 끊어준다.
+   */
   const beforeUnloadListener = async () => {
     if (connected) {
       await disconnect();
