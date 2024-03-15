@@ -25,12 +25,12 @@ export default function RoomHeader({ className }: HeaderProps) {
   const { disconnect } = useMessageStore();
   const navigate = useNavigate();
 
-  const handleExitRoom = async () => {
+  const handleExitRoom = () => {
     const newMembers = roomMembers.filter(member => member.email !== myEmail);
     setRoomData({ roomMembers: newMembers });
 
     // disconnect 시 서버에서 방장 자동 변경
-    await disconnect();
+    disconnect();
     navigate(PATH.HOME);
   };
 
