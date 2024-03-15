@@ -1,5 +1,5 @@
 const FIXED_HEIGHT = {
-  HEADER: '8rem',
+  HEADER: '6.5rem',
   CARD: '23rem',
 };
 
