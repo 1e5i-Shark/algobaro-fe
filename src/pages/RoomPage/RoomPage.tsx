@@ -15,7 +15,7 @@ import * as S from './RoomPage.style';
 import TestInfo from './TestInfo/TestInfo';
 
 export default function RoomPage() {
-  const { myRoomData, setMyRoomData, setRoomData } = useRoomStore();
+  const { setMyRoomData, setRoomData } = useRoomStore();
   const { myInfo } = useMyInfoStore();
   const { connected, listeners, connect, disconnect } = useMessageStore();
 
