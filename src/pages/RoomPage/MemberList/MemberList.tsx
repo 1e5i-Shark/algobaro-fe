@@ -4,46 +4,45 @@ import { v4 } from 'uuid';
 import { MemberCard } from '@/components';
 import { MENU_TEXT } from '@/components/Common/Menu/MenuText';
 import { CardWrapper } from '@/components/MemberCard/MemberCard.style';
-import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
+import { SOCKET_TYPE } from '@/constants/socket';
 import * as S from '@/pages/RoomPage/RoomPage.style';
+import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
-import { RoleType } from '@/types/room';
 
 interface MemberListProps {
   className: string;
-  myRole: RoleType;
 }
 
 const MAX_MEMBERS = 6;
 
-export default function MemberList({
-  className,
-  myRole = ROOM_ROLE.PARTICIPANT,
-}: MemberListProps) {
-  const { roomData, setRoomData } = useRoomStore();
+export default function MemberList({ className }: MemberListProps) {
+  const {
+    roomData,
+    myRoomData: { role: myRole },
+  } = useRoomStore();
   const { roomMembers } = roomData;
+
+  const { sendMessage, setMessageValue } = useMessageStore();
 
   const handleMenu = async (menu: string, id: number) => {
     switch (menu) {
       case MENU_TEXT.TRANSFER_HOST:
-        alert('방장 변경!');
+        alert('방장 수동 변경!');
 
-        // Todo: 소켓 연결
-        // setMessageValue({ userId: id });
-        // sendMessage(SOCKET_TYPE.ROOM.CHANGE_HOST, id);
+        setMessageValue({ userId: id.toString() });
+        sendMessage(SOCKET_TYPE.ROOM.CHANGE_HOST);
         break;
-      case MENU_TEXT.KICKOUT:
-        const answer = confirm('정말 강제 퇴장하시겠습니까?');
+      // 소켓 미구현으로 보류
+      // case MENU_TEXT.KICKOUT:
+      //   const answer = confirm('정말 강제 퇴장하시겠습니까?');
 
-        if (answer) {
-          const newMembers = roomMembers.filter(
-            member => member.memberId !== id
-          );
-          setRoomData({ roomMembers: newMembers });
-          // Todo: 소켓 연결
-          // await disconnect();
-        }
-        break;
+      //   if (answer) {
+      //     const newMembers = roomMembers.filter(
+      //       member => member.memberId !== id
+      //     );
+      //     setRoomData({ roomMembers: newMembers });
+      //   }
+      //   break;
       default:
         break;
     }
