@@ -4,21 +4,24 @@ import { Col, Row } from '@/styles/GlobalStyle';
 
 // RoomPage
 export const RoomContainer = styled(Row)`
-  height: fit-content;
+  height: 100vh;
   padding: 3rem 0rem 3rem 5rem;
+  overflow: hidden;
 `;
 
 export const WaitingRoomContainer = styled(Col)`
   flex-grow: 2;
-  min-width: 50rem;
+  min-width: 65rem;
   padding-right: 3rem;
+  overflow: auto;
 `;
 
 export const ChatContainer = styled(Col)<{ className: string }>`
   ${({ theme }) => css`
     flex-grow: 1;
-    min-width: 25rem;
+    min-width: 26rem;
     padding: 0 1rem;
+    overflow: auto;
     border-left: 1px solid ${theme.color.transparent_30};
   `}
 `;
