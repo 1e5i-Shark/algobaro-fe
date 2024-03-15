@@ -67,12 +67,22 @@ export default function ProblemSolvePage() {
       {/* 실행 및 제출 버튼 영역 */}
       <S.ButtonWrapper>
         <Button
+          width="12rem"
+          height="4rem"
+          fontSize="1.6rem"
           backgroundColor={theme.color.gray_20}
           onClick={handleCompileExecution}
         >
           실행
         </Button>
-        <Button onClick={handleSubmit}>제출</Button>
+        <Button
+          width="12rem"
+          height="4rem"
+          fontSize="1.6rem"
+          onClick={handleSubmit}
+        >
+          제출
+        </Button>
       </S.ButtonWrapper>
     </S.Wrapper>
   );

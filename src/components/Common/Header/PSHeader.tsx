@@ -43,8 +43,11 @@ export default function PSHeader() {
       <S.ButtonWrapper>
         <ThemeModeToggleButton />
         <Button
-          height="4rem"
-          backgroundColor={theme.color.red}
+          width="10rem"
+          height="3.5rem"
+          fontSize="1.4rem"
+          backgroundColor={theme.color.gray_10}
+          textColor={theme.color.gray_50}
           onClick={isProblemSolvePage ? handleGiveUp : handleNavigateToRoom}
         >
           {isProblemSolvePage ? '포기하기' : '리뷰 종료'}
@@ -64,6 +67,7 @@ export default function PSHeader() {
               width="8rem"
               height="4rem"
               fontSize={theme.size.M}
+              textColor={theme.color.white_primary}
               backgroundColor={theme.color.red}
               onClick={navigateToHome}
             >
