@@ -2,15 +2,17 @@ import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Icon, Image, Tag } from '@/components';
+import { Button, Icon, Image, Modal, Tag } from '@/components';
 import { LOGOS } from '@/constants/logos';
+import { useRoomDetail } from '@/hooks/Api/useRooms';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import useModal from '@/hooks/useModal';
 import { RoomsListType } from '@/types/room';
 
+import CheckRoomPassword from './CheckRoomPassword';
 import * as S from './HomeSection.style';
 
 export default function HomeSection({
-  roomId,
   roomStatus,
   title,
   languages,
@@ -22,9 +24,17 @@ export default function HomeSection({
 }: RoomsListType) {
   const { theme } = useCustomTheme();
   const navigate = useNavigate();
+  const { data, isLoading } = useRoomDetail(roomShortUuid);
+  const { modalRef, isOpen, openModal, closeModal } = useModal();
 
-  const handleRoomEnter = () => {
-    navigate(`/room/${roomId}`, { state: roomShortUuid });
+  const handleClickEnter = () => {
+    if (isLoading) return;
+    // 방에 걸려있는 비번 없으면 바로 입장되어야 함.
+    if (!data?.response.password) {
+      navigate(`/room/${roomShortUuid}`);
+      return;
+    }
+    openModal();
   };
 
   return (
@@ -42,7 +52,6 @@ export default function HomeSection({
         </S.TitleWrapper>
         <S.RoomLimit>{`${currentMemberCount}/${roomLimit}`}</S.RoomLimit>
       </S.RoomHeader>
-
       <S.RoomTags>
         {tags.map((tag, index) => {
           return (
@@ -76,7 +85,6 @@ export default function HomeSection({
           );
         })}
       </S.RoomTags>
-
       <S.RoomFooter>
         <S.LanguageImgs>
           {languages.map((lang, index) => {
@@ -92,11 +100,26 @@ export default function HomeSection({
         </S.LanguageImgs>
 
         {roomStatus === 'RECRUITING' ? (
-          <Button onClick={handleRoomEnter}>입장</Button>
+          <Button onClick={handleClickEnter}>입장</Button>
         ) : (
           <S.InProgress>진행중</S.InProgress>
         )}
       </S.RoomFooter>
+      <Modal
+        ref={modalRef}
+        isOpen={isOpen}
+        onClose={closeModal}
+        width="40%"
+        style={{
+          minWidth: '45rem',
+          minHeight: '50rem',
+        }}
+      >
+        <CheckRoomPassword
+          roomPassword={data?.response.password}
+          roomShortUuid={roomShortUuid}
+        />
+      </Modal>
     </S.SectionWrapper>
   );
 }
