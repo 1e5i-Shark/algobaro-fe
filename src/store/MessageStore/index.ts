@@ -7,7 +7,6 @@ import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { SOCKET_TYPE } from '@/constants/socket';
 import { API_ENDPOINT } from '@/services/apiEndpoint';
 import { sendMessageService } from '@/services/Message/sendMessageService';
-import { ChatValueUnion, RoomValueUnion } from '@/types/chat';
 import { ukToKoreaTime } from '@/utils/convertDate';
 
 import { MessageStoreState, MessageStoreValue } from './type';
@@ -41,12 +40,16 @@ const useMessageStore = create<MessageStoreState>()(
       });
 
       stompClient.onConnect = () => {
-        const { subscribeMessageBroker, publish } = get();
+        const { subscribeMessageBroker, publish, connected } = get();
+
+        if (connected) return;
+
         set({ client: stompClient, currentRoomId: roomShortUuid });
         subscribeMessageBroker(roomShortUuid);
         set({ connected: true });
         publish();
       };
+
       stompClient.activate();
     },
     subscribeMessageBroker: roomShortUuid => {
@@ -87,15 +90,27 @@ const useMessageStore = create<MessageStoreState>()(
       set({ messageEntered: value });
       get().publish();
     },
-    sendMessage: (type: ChatValueUnion | RoomValueUnion) => {
+    sendMessage: type => {
       const {
         client,
         currentRoomId,
         messageEntered,
+        userId,
         publish,
         setMessageValue,
       } = get();
-      const message = type === SOCKET_TYPE.CHAT.MESSAGE ? messageEntered : '';
+
+      let message = '';
+      switch (type) {
+        case SOCKET_TYPE.CHAT.MESSAGE:
+          message = messageEntered || '';
+          break;
+        case SOCKET_TYPE.ROOM.CHANGE_HOST:
+          message = userId;
+          break;
+        default:
+          break;
+      }
 
       sendMessageService({
         client,
@@ -112,9 +127,19 @@ const useMessageStore = create<MessageStoreState>()(
     receiveMessage: messageReceived => {
       const { formatMessage, publish } = get();
       const message = JSON.parse(messageReceived.body);
-      set(state => ({
-        messageLogs: [...state.messageLogs, formatMessage(message)],
-      }));
+      const formatData = formatMessage(message);
+
+      if (
+        formatData.type ===
+        (SOCKET_TYPE.CHAT.ENTER ||
+          SOCKET_TYPE.CHAT.MESSAGE ||
+          SOCKET_TYPE.CHAT.QUIT)
+      ) {
+        set(state => ({
+          messageLogs: [...state.messageLogs, formatData],
+        }));
+      }
+
       publish();
     },
     formatMessage: message => {
@@ -126,14 +151,14 @@ const useMessageStore = create<MessageStoreState>()(
           return {
             memberId,
             type,
-            value: value && `${memberId}님이 입장하였습니다`,
+            value: value && `${value}님이 입장하였습니다`,
             timestamp: formattedTime,
           };
         case SOCKET_TYPE.CHAT.QUIT:
           return {
             memberId,
             type,
-            value: value && `${memberId}님이 퇴장하였습니다.`,
+            value: value && `${value}님이 퇴장하였습니다.`,
             timestamp: formattedTime,
           };
         case SOCKET_TYPE.CHAT.MESSAGE:
