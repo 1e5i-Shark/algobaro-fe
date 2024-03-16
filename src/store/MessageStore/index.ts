@@ -40,10 +40,14 @@ const useMessageStore = create<MessageStoreState>()(
           },
         });
 
+        console.log('socket connect');
+
         stompClient.onConnect = () => {
           const { subscribeMessageBroker, publish, connected } = get();
 
           if (connected) return;
+
+          console.log('socket onConnect');
 
           set({ client: stompClient, currentRoomId: roomShortUuid });
           subscribeMessageBroker(roomShortUuid);
@@ -57,9 +61,12 @@ const useMessageStore = create<MessageStoreState>()(
         const { client, receiveMessage, sendMessage } = get();
         if (!client) return;
 
+        console.log('socket MessageBroker');
+
         const subscription = client.subscribe(
           `${API_ENDPOINT.SOCKET.SUBSCRIPTION}/chat/room/${roomShortUuid}`,
           messageReceived => {
+            console.log('messageReceived', messageReceived);
             receiveMessage(messageReceived);
           },
           {
