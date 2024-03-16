@@ -31,6 +31,8 @@ export default function RoomPage() {
   useEffect(() => {
     // 방에 들어오면 무조건 connect
     connect(roomShortUuid);
+    console.log('RoomPage: Socket connect', connected);
+
     // RoomPage가 unmount 된다면 disconnect
     return () => {
       disconnect();
@@ -40,6 +42,7 @@ export default function RoomPage() {
   // 참여인원이 추가되었으므로 다시 refetch
   useEffect(() => {
     refetch();
+    console.log('RoomPage: refetch', listeners);
   }, [listeners]);
 
   if (isError) {
@@ -60,6 +63,7 @@ export default function RoomPage() {
       if (myData) {
         setMyRoomData(myData);
       }
+      console.log('RoomPage: unmount');
     }
   }, [data]);
 
