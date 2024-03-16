@@ -5,6 +5,7 @@ import { MOCK_ROOM_DATA } from '@/constants/room';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
 import useCodeEditorStore from '@/store/CodeEditorStore';
+import useRoomStore from '@/store/RoomStore';
 
 import { DIRECTION, SIZE_PERCENTAGE } from './constants';
 import ProblemExecution from './ProblemExecution/ProblemExecution';
@@ -21,6 +22,7 @@ export default function ProblemSolvePage() {
   const MOCK_PROBLEM_LINK = 'https://www.acmicpc.net/problem/1000';
 
   const { mutate: compileMutate, isLoading: isCompileLoading } = useCompile();
+  const { roomData } = useRoomStore();
   const { mutate: submitMutate } = useSubmission();
 
   const { input, code, language } = useCodeEditorStore(state => state);
@@ -49,12 +51,26 @@ export default function ProblemSolvePage() {
     });
   };
 
+  const handleClickProblemLink = () => {
+    if (!roomData.problemLink) return;
+
+    window.open(roomData.problemLink, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <S.Wrapper>
       <S.ContentsWrapper>
         <PanelGroup direction={DIRECTION.HORIZONTAL}>
           <Panel defaultSize={SIZE_PERCENTAGE.PROBLEM}>
             {/* 문제 영역 */}
+            <S.ProblemLinkContainer>
+              <S.ProblemLinkText>
+                문제 출처 :{' '}
+                <S.ProblemLink onClick={handleClickProblemLink}>
+                  {roomData.problemLink}
+                </S.ProblemLink>
+              </S.ProblemLinkText>
+            </S.ProblemLinkContainer>
             <ProblemSection />
           </Panel>
           <ResizeHandle direction={DIRECTION.HORIZONTAL} />

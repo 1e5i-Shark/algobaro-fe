@@ -12,6 +12,31 @@ const ContentsWrapper = styled(Row)`
   overflow: hidden;
 `;
 
+const ProblemLinkContainer = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    justify-content: end;
+    padding: 0.5rem;
+    background-color: ${theme.color.background_editor};
+  `}
+`;
+
+const ProblemLinkText = styled.span`
+  ${({ theme }) => css`
+    font-weight: ${theme.fontWeight.semiBold};
+  `}
+`;
+
+const ProblemLink = styled.a`
+  ${({ theme }) => css`
+    font-weight: ${theme.fontWeight.medium};
+    cursor: pointer;
+    &:hover {
+      color: ${theme.color.gray_30};
+    }
+  `}
+`;
+
 const EditorWrapper = styled(Col)`
   height: 100%;
 `;
@@ -27,4 +52,12 @@ const ButtonWrapper = styled(Row)`
   `}
 `;
 
-export { ButtonWrapper, ContentsWrapper, EditorWrapper, Wrapper };
+export {
+  ButtonWrapper,
+  ContentsWrapper,
+  EditorWrapper,
+  ProblemLink,
+  ProblemLinkContainer,
+  ProblemLinkText,
+  Wrapper,
+};

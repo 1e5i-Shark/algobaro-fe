@@ -68,7 +68,7 @@ export default function TestInfo({ className, myRoomData }: TestInfoProps) {
   const handleClickLink = () => {
     if (!problemLink) return;
 
-    window.open(problemLink, '_blank', 'noopener');
+    window.open(problemLink, '_blank', 'noopener,noreferrer');
   };
 
   return (
