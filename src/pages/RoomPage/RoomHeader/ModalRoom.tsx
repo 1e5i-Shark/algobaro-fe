@@ -8,7 +8,6 @@ import { ROOM_ACCESS } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { updateRoom } from '@/services/Room/Room';
 import useRoomStore from '@/store/RoomStore';
-import { AccessType } from '@/types/room';
 
 interface ModalRoomProps {
   onClose: () => void;
@@ -29,7 +28,6 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     password,
     roomAccessType,
     roomLimit,
-    roomShortUuid,
   } = roomData;
   const [newData, setNewData] = useState({});
 
@@ -55,29 +53,20 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
   });
 
   const onSubmit: SubmitHandler<InputProps> = data => {
-    const newPassword = () => {
-      const newAccessType: AccessType = isPrivate ? 'PRIVATE' : 'PUBLIC';
-
-      return {
-        password: isPrivate ? data.password : '',
-        roomAccessType: newAccessType,
-      };
+    const updateData = {
+      timeLimit: data.timeLimit,
+      problemLink: data.problemLink,
+      roomAccessType: isPrivate ? ROOM_ACCESS.PRIVATE : ROOM_ACCESS.PUBLIC,
+      ...(isPrivate === true && { password: data.password }),
     };
 
-    setNewData({
-      ...newPassword(),
-      problemLink: data.problemLink,
-      timeLimit: data.timeLimit,
-    });
+    setNewData(updateData);
 
     updateRoomMutate({
       path: `/${roomId}`,
       requestBody: {
         roomLimit,
-        timeLimit,
-        problemLink,
-        roomAccessType: isPrivate ? ROOM_ACCESS.PRIVATE : ROOM_ACCESS.PUBLIC,
-        ...(password && { password }),
+        ...updateData,
       },
     });
   };
