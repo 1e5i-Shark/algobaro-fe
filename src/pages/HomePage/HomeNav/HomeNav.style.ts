@@ -29,6 +29,7 @@ export const NavContainer = styled.nav`
     grid-template-rows: 1fr auto;
     grid-template-columns: 1fr 1fr;
     width: 100%;
+    min-width: 48rem;
     padding: 6rem 0 4rem 0;
 
     & :first-child {

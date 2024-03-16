@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { QUERY_KEY, ROOMS_KEY } from '@/constants/queryKey';
+import { QUERY_KEY, ROOM_DETAIL, ROOMS_KEY } from '@/constants/queryKey';
+import getRoomDetail from '@/services/Room/getRoomDetail';
 import getRoomsList from '@/services/Room/getRoomsList';
 import { getUuidRoom } from '@/services/Room/Room';
 import { RoomsRequestQuery } from '@/services/Room/type';
 
+// 방 전체 리스트를 가져오는 hook
 export const useRoomsList = ({
   page,
   size = 4,
@@ -22,13 +24,20 @@ export const useRoomsList = ({
     ...(roomAccessType && { roomAccessType }),
     ...(languages && { languages }),
   };
+
   return useQuery({
     queryKey: [ROOMS_KEY, reqParams],
     queryFn: () => getRoomsList(reqParams),
-    enabled: true,
-    // 1분마다 새로고침
-    refetchInterval: 1000 * 60 * 1,
+    enabled: false,
     keepPreviousData: true,
+  });
+};
+
+// 방 상세 정보를 가져오는 hook
+export const useRoomDetail = (roomShortUuid: string) => {
+  return useQuery({
+    queryKey: [ROOM_DETAIL, roomShortUuid],
+    queryFn: () => getRoomDetail(roomShortUuid),
   });
 };
 
