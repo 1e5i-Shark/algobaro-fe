@@ -10,7 +10,6 @@ import { RoomsListType } from '@/types/room';
 import * as S from './HomeSection.style';
 
 export default function HomeSection({
-  roomId,
   roomStatus,
   title,
   languages,
@@ -24,7 +23,7 @@ export default function HomeSection({
   const navigate = useNavigate();
 
   const handleRoomEnter = () => {
-    navigate(`/room/${roomId}`, { state: roomShortUuid });
+    navigate(`/room/${roomShortUuid}`);
   };
 
   return (
