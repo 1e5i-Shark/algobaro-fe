@@ -46,7 +46,7 @@ export default function PSHeader() {
           width="10rem"
           height="3.5rem"
           fontSize="1.4rem"
-          backgroundColor={theme.color.gray_10}
+          backgroundColor={theme.color.gray_20}
           textColor={theme.color.gray_50}
           onClick={isProblemSolvePage ? handleGiveUp : handleNavigateToRoom}
         >
