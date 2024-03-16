@@ -22,7 +22,7 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
   backgroundColor?: string;
   fontSize?: string;
   labelFontSize?: string;
-  isRemoveDefaultLabel?: boolean;
+  hasDefaultLabel?: boolean;
   onSelected?: (value: string) => void;
 }
 
@@ -38,7 +38,7 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
  * @param {string} backgroundColor - 배경색 `옵션`
  * @param {string} fontSize - 폰트사이즈 `옵션`, 기본값 `"2rem"`
  * @param {string} labelFontSize - 라벨폰트사이즈 `옵션`
- * @param {boolean} isRemoveDefaultLabel - "선택 없음" 라벨 제거 `옵션`
+ * @param {boolean} hasDefaultLabel - "선택 없음" 라벨 제거 `옵션`
  * @param {(value: string) => void} onSelected - 선택 값 전달 함수 `옵션`, `(value: string) => void}`
  * @returns
  */
@@ -53,7 +53,7 @@ export default function DropDown({
   backgroundColor,
   fontSize = '2rem',
   labelFontSize,
-  isRemoveDefaultLabel = false,
+  hasDefaultLabel = true,
   onSelected,
   ...props
 }: DropDownProps) {
@@ -148,7 +148,7 @@ export default function DropDown({
           }}
         >
           {/* 선택 메뉴 영역 */}
-          {!isRemoveDefaultLabel && <MenuItem value="">선택 없음</MenuItem>}
+          {!hasDefaultLabel && <MenuItem value="">선택 없음</MenuItem>}
           {dataKeys.map(dataKey => {
             return (
               <MenuItem
