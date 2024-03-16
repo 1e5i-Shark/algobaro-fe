@@ -29,31 +29,18 @@ export default function RoomPage() {
     useGetUuidRoom(roomShortUuid);
 
   useEffect(() => {
-    // 소켓 초기 연결
-    if (!connected) {
-      connect(roomShortUuid);
-    } else {
+    // 방에 들어오면 무조건 connect
+    connect(roomShortUuid);
+    // RoomPage가 unmount 된다면 disconnect
+    return () => {
       disconnect();
-    }
+    };
   }, []);
 
   // 참여인원이 추가되었으므로 다시 refetch
   useEffect(() => {
     refetch();
   }, [listeners]);
-
-  // Todo: 새로고침했을 때 다시 connect하는 대응
-  // const reconnectSocketServer = (id: string) => {
-  //   connect(id);
-  // };
-
-  // useEffect(() => {
-  //   if (!connected) {
-  //     reconnectSocketServer(roomShortUuid);
-  //   } else {
-  //     disconnect();
-  //   }
-  // }, []);
 
   if (isError) {
     console.error(error);
@@ -82,9 +69,7 @@ export default function RoomPage() {
    * 따라서 beforeUnloadListener로 명시적으로 웹소켓 연결을 끊어준다.
    */
   const beforeUnloadListener = () => {
-    if (connected) {
-      disconnect();
-    }
+    disconnect();
   };
 
   useEffect(() => {
