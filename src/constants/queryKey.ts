@@ -6,3 +6,4 @@ export const QUERY_KEY = {
 };
 export const SOLVED_HISTORIES = 'solvedHistoryList';
 export const ROOMS_KEY = 'roomsList';
+export const ROOM_DETAIL = 'roomDetail';

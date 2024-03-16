@@ -6,7 +6,7 @@ export interface useFilterStoreProps {
   selectedAccess: AccessType | null;
   selectedStatus: RoomStatusType | null;
   setTitle: (value: string) => void;
-  setLanguage: (value: string | string[]) => void;
+  setLanguage: (value: string[]) => void;
   setAccess: (value: AccessType) => void;
   setStatus: (value: RoomStatusType) => void;
 }
