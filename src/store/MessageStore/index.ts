@@ -85,11 +85,14 @@ const useMessageStore = create<MessageStoreState>()(
         subscription?.unsubscribe();
         client.deactivate();
 
+        // 연결이 해제 되면 listeners, client를 null로 설정하여 null 값을 통한 예외처리를 할 수 있게 한다.
         set({
           connected: false,
           currentRoomId: '',
           messageEntered: '',
           messageLogs: [],
+          listeners: null,
+          client: null,
         });
 
         publish();
