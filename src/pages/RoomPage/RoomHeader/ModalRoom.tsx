@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button, CheckBox, Input } from '@/components';
@@ -29,8 +29,8 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     password,
     roomAccessType,
     roomLimit,
+    roomShortUuid,
   } = roomData;
-
   const [newData, setNewData] = useState({});
 
   const [isPrivate, setIsPrivate] = useState(
@@ -46,6 +46,7 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
   });
 
   const {
+    data,
     isSuccess,
     isError,
     mutate: updateRoomMutate,
@@ -81,12 +82,14 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     });
   };
 
-  if (isSuccess) {
-    setRoomData({ ...roomData, ...newData });
+  useEffect(() => {
+    if (isSuccess) {
+      setRoomData({ ...roomData, ...newData });
 
-    alert('방 정보가 수정되었습니다');
-    onClose();
-  }
+      alert('방 정보가 수정되었습니다');
+      onClose();
+    }
+  }, [data]);
 
   if (isError) {
     alert('서버와의 통신에 오류가 있습니다. 잠시 후 다시 시도해주세요.');
