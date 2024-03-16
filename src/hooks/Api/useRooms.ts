@@ -28,7 +28,9 @@ export const useRoomsList = ({
   return useQuery({
     queryKey: [ROOMS_KEY, reqParams],
     queryFn: () => getRoomsList(reqParams),
-    enabled: false,
+    enabled: true,
+    // 1분마다 새로고침
+    refetchInterval: 1000 * 60 * 1,
     keepPreviousData: true,
   });
 };
@@ -45,5 +47,6 @@ export const useGetUuidRoom = (roomShortUuid: string) => {
   return useQuery({
     queryKey: [QUERY_KEY.ROOM.UUID_INFO, roomShortUuid],
     queryFn: async () => await getUuidRoom(`/${roomShortUuid}`),
+    enabled: !!roomShortUuid,
   });
 };
