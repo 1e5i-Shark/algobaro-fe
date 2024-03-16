@@ -80,9 +80,11 @@ const useMessageStore = create<MessageStoreState>()(
       disconnect: () => {
         const { client, subscription, sendMessage, publish } = get();
 
+        if (!client || !subscription) return;
+
         sendMessage(SOCKET_TYPE.CHAT.QUIT);
 
-        subscription?.unsubscribe();
+        subscription.unsubscribe();
         client.deactivate();
 
         // 연결이 해제 되면 listeners, client를 null로 설정하여 null 값을 통한 예외처리를 할 수 있게 한다.
@@ -110,6 +112,8 @@ const useMessageStore = create<MessageStoreState>()(
           publish,
           setMessageValue,
         } = get();
+
+        if (!client) return;
 
         let message = '';
         switch (type) {
@@ -201,7 +205,11 @@ const useMessageStore = create<MessageStoreState>()(
         }));
       },
       publish() {
-        get().listeners.forEach(listener => listener());
+        const { listeners } = get();
+
+        if (!listeners) return;
+
+        listeners.forEach(listener => listener());
       },
       setMessageValue: (newValue: Partial<MessageStoreValue>) =>
         set(state => ({
