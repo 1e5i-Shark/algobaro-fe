@@ -36,5 +36,6 @@ export const useGetUuidRoom = (roomShortUuid: string) => {
   return useQuery({
     queryKey: [QUERY_KEY.ROOM.UUID_INFO, roomShortUuid],
     queryFn: async () => await getUuidRoom(`/${roomShortUuid}`),
+    enabled: !!roomShortUuid,
   });
 };
