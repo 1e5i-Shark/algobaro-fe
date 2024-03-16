@@ -6,6 +6,7 @@ const ProblemWrapper = styled(Col)`
   ${({ theme }) => css`
     height: 100%;
     padding: 2rem;
+    overflow-y: scroll;
     background-color: ${theme.color.background_editor};
   `}
 `;
@@ -15,6 +16,17 @@ const ProblemTextWrapper = styled.li`
   flex-direction: column;
   word-break: keep-all;
   white-space: pre-line;
+`;
+
+const ProblemContent = styled.div`
+  padding: 1rem 0 2rem;
+  line-height: 2.5rem;
+  ul {
+    line-height: 1.5rem;
+  }
+  li {
+    list-style: inside;
+  }
 `;
 
 const ProblemTitle = styled.span`
@@ -43,6 +55,7 @@ const ProblemCode = styled.pre`
 
 export {
   ProblemCode,
+  ProblemContent,
   ProblemText,
   ProblemTextWrapper,
   ProblemTitle,
