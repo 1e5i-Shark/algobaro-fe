@@ -106,14 +106,12 @@ export default function CodeEditor({
           defaultValue={language}
           dataSet={PROBLEM_LANGUAGES_DATA_SET}
           onSelected={value => {
-            if (value) {
-              setLanguage(value);
-            }
+            setLanguage(value);
           }}
           borderColor={theme.color.gray_50}
           fontSize={theme.size.S}
           backgroundColor={theme.color.background_editor}
-          isRemoveDefaultLabel
+          hasDefaultLabel={false}
         />
       </S.DropDownWrapper>
       <CodeMirrorEditor
