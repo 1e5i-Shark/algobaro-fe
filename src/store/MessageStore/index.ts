@@ -194,13 +194,17 @@ const useMessageStore = create<MessageStoreState>()(
       },
       subscribe: listener => {
         set(state => ({
-          listeners: new Set([...state.listeners, listener]),
+          listeners: new Set(
+            state.listeners ? [...state.listeners, listener] : [listener]
+          ),
         }));
       },
       unsubscribe: listener => {
         set(state => ({
           listeners: new Set(
-            [...state.listeners].filter(li => li !== listener)
+            state.listeners
+              ? [...state.listeners].filter(li => li !== listener)
+              : []
           ),
         }));
       },
