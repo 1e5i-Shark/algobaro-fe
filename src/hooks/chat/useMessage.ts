@@ -6,12 +6,12 @@ import useForceUpdate from './useForceUpdate';
 
 export default function useMessage() {
   const forceUpdate = useForceUpdate();
-  const { subscribe, unSubscribe } = useMessageStore();
+  const { subscribe, unsubscribe } = useMessageStore();
 
   useEffect(() => {
     subscribe(forceUpdate);
 
-    return () => unSubscribe(forceUpdate);
+    return () => unsubscribe(forceUpdate);
   }, [forceUpdate]);
 
   return useMessage;
