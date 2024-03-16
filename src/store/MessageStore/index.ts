@@ -143,6 +143,31 @@ const useMessageStore = create<MessageStoreState>()(
         const { formatMessage, publish } = get();
         const message = JSON.parse(messageReceived.body);
         const formatData = formatMessage(message);
+        const type = formatData.type;
+
+        // 방에 들어오고 나간 경우 listeners를 업데이트
+        // 내부 Type이 function이어서 임시로 빈 함수를 할당
+
+        // 방에 들어온 경우 size를 늘리기 위해 배열 업데이트
+        if (type === 'enter') {
+          set(state => ({
+            listeners: new Set(
+              state.listeners ? [...state.listeners, () => {}] : [() => {}]
+            ),
+          }));
+          return;
+        }
+
+        // 방에서 나간 경우 size 1 감소
+        if (type === 'quit') {
+          set(state => ({
+            listeners: new Set(
+              state.listeners ? [...state.listeners].slice(0, 1) : []
+            ),
+          }));
+          return;
+        }
+
         // Todo: quit은 message가 오지 않는지 백엔드 확인
         const messageLogsType = [
           SOCKET_TYPE.CHAT.ENTER,
