@@ -18,16 +18,17 @@ export default function ProblemEndModal({
   isOpen,
   closeModal,
 }: ProblemEndModalProps) {
-  const [isEnd, setIsEnd] = useState(false);
+  const [isTimerEnd, setIsTimerEnd] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isEnd) {
+    if (isTimerEnd) {
       navigate(`${PATH.PROBLEMSHARE}/${MOCK_ROOM_DATA.id}`);
       closeModal();
+      setIsTimerEnd(false);
     }
-  }, [isEnd]);
+  }, [isTimerEnd]);
 
   return (
     <Modal
@@ -40,13 +41,13 @@ export default function ProblemEndModal({
     >
       <S.Wrapper>
         <S.ModalTitle>시험이 종료 되었습니다.</S.ModalTitle>
-        {!isEnd && (
+        {!isTimerEnd && (
           <S.InfoTitle>
             <span>{`풀이 공유 페이지로 `}</span>
             <Timer
               seconds={5}
               padLength={0}
-              setIsEnd={setIsEnd}
+              setIsEnd={setIsTimerEnd}
             />
             <span>{` 뒤에 이동합니다..`}</span>
           </S.InfoTitle>

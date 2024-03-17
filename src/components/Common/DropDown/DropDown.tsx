@@ -15,12 +15,14 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
   dataId: string;
   dataSet: DropDownData;
   labelId: string;
+  defaultValue?: string;
   labelName?: string;
   width?: string;
   borderColor?: string;
   backgroundColor?: string;
   fontSize?: string;
   labelFontSize?: string;
+  hasDefaultLabel?: boolean;
   onSelected?: (value: string) => void;
 }
 
@@ -29,12 +31,14 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
  * @param {string} dataId - 데이터 id `필수`, Select 컴포넌트 식별용
  * @param {DropDownData} dataSet - 데이터셋 `필수`, `{[dataKey: string | number]: string}`
  * @param {string} labelId - 라벨 id `필수`
+ * @param {string} defaultValue - 기본 값 `옵션`
  * @param {string} labelName - 라벨명 `옵션`
  * @param {string} width - 너비`옵션`
  * @param {string} borderColor - border색 `옵션`
  * @param {string} backgroundColor - 배경색 `옵션`
  * @param {string} fontSize - 폰트사이즈 `옵션`, 기본값 `"2rem"`
  * @param {string} labelFontSize - 라벨폰트사이즈 `옵션`
+ * @param {boolean} hasDefaultLabel - "선택 없음" 라벨 제거 `옵션`
  * @param {(value: string) => void} onSelected - 선택 값 전달 함수 `옵션`, `(value: string) => void}`
  * @returns
  */
@@ -42,17 +46,19 @@ export default function DropDown({
   dataId,
   dataSet,
   labelId,
+  defaultValue,
   labelName,
   width,
   borderColor,
   backgroundColor,
   fontSize = '2rem',
   labelFontSize,
+  hasDefaultLabel = true,
   onSelected,
   ...props
 }: DropDownProps) {
   const { theme } = useCustomTheme();
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState(defaultValue ?? '');
 
   // 데이터 키 배열
   const dataKeys = Object.keys(dataSet);
@@ -103,6 +109,7 @@ export default function DropDown({
           label={selectedValue ? '' : labelName}
           labelId={!selectedValue ? labelId : ''}
           id={dataId}
+          defaultValue={defaultValue}
           value={selectedValue}
           onChange={handleChange}
           MenuProps={{
@@ -141,7 +148,7 @@ export default function DropDown({
           }}
         >
           {/* 선택 메뉴 영역 */}
-          <MenuItem value="">선택 없음</MenuItem>
+          {!hasDefaultLabel && <MenuItem value="">선택 없음</MenuItem>}
           {dataKeys.map(dataKey => {
             return (
               <MenuItem

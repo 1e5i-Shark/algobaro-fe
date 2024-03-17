@@ -25,6 +25,13 @@ export const LANGUAGES_DATA_SET: Record<LanguagesType, string> = {
 };
 
 export const MOCK_ROOM_DATA = {
-  id: 1,
-  roomShortUuid: '2ad2e9db',
+  id: 33,
+  roomShortUuid: '6ab92c74',
+};
+
+export const PROBLEM_LANGUAGES_DATA_SET: Record<string, string> = {
+  java: 'Java',
+  python3: 'Python',
+  nodejs: 'JavaScript',
+  cpp: 'C++',
 };

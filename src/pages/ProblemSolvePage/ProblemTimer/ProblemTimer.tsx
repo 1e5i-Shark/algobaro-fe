@@ -1,47 +1,49 @@
-import { useState } from 'react';
-
-import { Timer } from '@/components';
+import { DateBaseTimer } from '@/components';
 import useModal from '@/hooks/useModal';
 import useTimerStore from '@/store/TimerStore';
+import { MINUTES_IN_MS } from '@/utils/timer';
 
 import ProblemEndModal from '../ProblemEndModal/ProblemEndModal';
 import * as S from './ProblemTimer.style';
 interface TimerProps {
-  minutes?: number;
-  seconds?: number;
   isProblemSolvePage: boolean;
-  openModal?: () => void;
 }
 
-export default function ProblemTimer({
-  minutes,
-  seconds,
-  isProblemSolvePage,
-}: TimerProps) {
-  const [isEnd, setIsEnd] = useState(false);
+export default function ProblemTimer({ isProblemSolvePage }: TimerProps) {
   const { modalRef, isOpen, openModal, closeModal } = useModal();
 
-  // navigate 테스트용 코드 (삭제 예정)
-  const isStop = useTimerStore(state => state.isStop);
+  // TODO: 삭제 예정 navigate 테스트용 코드
+  const { isEnd, setIsEnd } = useTimerStore(state => state);
+
+  // TODO: 서버 timestamp로 교체 필요, 1시간 기준으로 테스트 중
+  const now = new Date();
+  const endDateISOString = new Date(
+    now.getTime() + 60 * MINUTES_IN_MS
+  ).toISOString();
 
   return (
     <S.Wrapper>
       <S.TimeLeftWrapper>
-        {isEnd || !isProblemSolvePage ? (
+        {!isProblemSolvePage && <S.TimeOverText>시험 종료</S.TimeOverText>}
+        {isProblemSolvePage && isEnd && (
           <S.TimeOverText>시험 종료</S.TimeOverText>
-        ) : (
-          <S.TimeLeftText>남은 시간</S.TimeLeftText>
         )}
-        {isProblemSolvePage && (
-          <Timer
-            isStop={isStop}
-            minutes={minutes}
-            seconds={seconds}
-            openModal={openModal}
-            setIsEnd={setIsEnd}
-          />
+        {isProblemSolvePage && !isEnd && (
+          <>
+            <S.TimeLeftText>남은 시간</S.TimeLeftText>
+            <DateBaseTimer
+              endDateISOString={endDateISOString}
+              setIsEnd={setIsEnd}
+            />
+          </>
         )}
       </S.TimeLeftWrapper>
+      {/* TODO: 삭제 예정 navigate 테스트용 코드 */}
+      {isProblemSolvePage && (
+        <S.TestButton onClick={() => openModal()}>
+          시험 종료 후 풀이 공유 페이지로 이동
+        </S.TestButton>
+      )}
       <ProblemEndModal
         modalRef={modalRef}
         isOpen={isOpen}

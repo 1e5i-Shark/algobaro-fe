@@ -20,6 +20,6 @@ export const DIRECTION = {
 export const SIZE_PERCENTAGE = {
   PROBLEM: 40,
   SOLVE: 60,
-  EDITOR: 80,
-  EXECUTION: 20,
+  EDITOR: 70,
+  EXECUTION: 30,
 } as const;

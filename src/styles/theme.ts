@@ -1,5 +1,5 @@
 const FIXED_HEIGHT = {
-  HEADER: '8rem',
+  HEADER: '6.5rem',
   CARD: '23rem',
 };
 
@@ -75,6 +75,7 @@ export const lightTheme = {
     background_second: '#E9E9E9',
     background_modal: '#ffffff',
     background_menu: '#FAFAFA',
+    background_problem_solve: '#FAFAFA',
     background_editor: '#FFFFFF',
     background_start_gradation: `linear-gradient(to bottom, #FFFFFF, #a5f1f6, #cfbeff, #FFFFFF)`,
     container_color: '#E3E3E3',
@@ -101,7 +102,8 @@ export const darkTheme = {
     background_primary: '#1E1B1A',
     background_second: '#131010',
     background_modal: '#1e1e1e',
-    background_menu: '#131010',
+    background_menu: '#1E1B1A',
+    background_problem_solve: '#202431',
     background_editor: '#292D3E',
     background_start_gradation: `linear-gradient(to bottom, #1E1B1A, #a5f1f670, #cfbeff70, #1E1B1A)`,
     container_color: '#4D4D4D',

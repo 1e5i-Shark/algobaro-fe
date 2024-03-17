@@ -2,7 +2,7 @@ import { SUBMISSION_URL } from '../apiEndpoint';
 import { axiosAuthInstance } from '../axiosInstance';
 
 interface SubmissionRequest {
-  roomUuid: string;
+  roomShortUuid: string;
   language: string;
   code: string;
   problemLink: string;
@@ -17,7 +17,10 @@ interface TestCaseResultType {
 }
 
 interface SubmissionResponse {
-  testCaseResults: TestCaseResultType[];
+  success: boolean;
+  response: {
+    testCaseResults: TestCaseResultType[];
+  };
 }
 
 export const submission = async (request: SubmissionRequest) => {

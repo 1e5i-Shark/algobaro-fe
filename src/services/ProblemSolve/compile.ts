@@ -8,7 +8,10 @@ interface CompileRequest {
 }
 
 interface CompileResponse {
-  result: string;
+  success: boolean;
+  response: {
+    result: string;
+  };
 }
 
 export const compile = async (request: CompileRequest) => {
