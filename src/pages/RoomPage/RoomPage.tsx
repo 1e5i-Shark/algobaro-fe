@@ -42,6 +42,7 @@ export default function RoomPage() {
   // 참여인원이 추가되었으므로 다시 refetch
   useEffect(() => {
     refetch();
+    console.log('RoomPage: refetch', listeners);
   }, [listeners]);
 
   if (isError) {
@@ -62,6 +63,7 @@ export default function RoomPage() {
       if (myData) {
         setMyRoomData(myData);
       }
+      console.log('RoomPage: unmount');
     }
   }, [data]);
 

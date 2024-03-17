@@ -21,7 +21,9 @@ export default function RoomHeader({ className }: HeaderProps) {
     setRoomData,
   } = useRoomStore();
   const { roomMembers } = roomData;
+
   const { refetch } = useGetUuidRoom(roomData.roomShortUuid);
+
   const { modalRef, isOpen, openModal, closeModal } = useModal();
   const { disconnect } = useMessageStore();
   const navigate = useNavigate();
