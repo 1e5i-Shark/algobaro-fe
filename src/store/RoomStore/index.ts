@@ -16,7 +16,7 @@ const initialData: RoomType = {
   password: '',
   roomLimit: 4,
   tags: [],
-  timeLimit: 20,
+  timeLimit: 60,
   roomShortUuid: '',
   problemLink: '',
   currentMemberCount: 0,
@@ -24,7 +24,7 @@ const initialData: RoomType = {
 };
 
 const initialMyData: RoomMemberType = {
-  memberId: 2,
+  memberId: 0,
   email: '',
   nickname: '',
   role: ROOM_ROLE.PARTICIPANT,
