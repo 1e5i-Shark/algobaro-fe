@@ -19,7 +19,7 @@ export interface MessageStoreValue {
   currentRoomId: string;
   messageEntered: string;
   messageLogs: Message[];
-  receiveLogs: any[];
+  receiveLogs: RoomValueUnion[];
   subscription: Stomp.StompSubscription | null;
   testEndTime: string;
 }

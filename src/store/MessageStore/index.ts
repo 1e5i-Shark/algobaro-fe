@@ -7,7 +7,7 @@ import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { SOCKET_TYPE } from '@/constants/socket';
 import { API_ENDPOINT } from '@/services/apiEndpoint';
 import { sendMessageService } from '@/services/Message/sendMessageService';
-import { ChatValueUnion } from '@/types/chat';
+import { ChatValueUnion, RoomValueUnion } from '@/types/chat';
 import { ukToKoreaTime } from '@/utils/convertDate';
 
 import { MessageStoreState, MessageStoreValue } from './type';
@@ -36,8 +36,7 @@ const useMessageStore = create<MessageStoreState>()(
         const stompClient = new Stomp.Client({
           webSocketFactory: () => socket,
           debug: debugMessage => {
-            // Todo: 아래 코드 주석 해제
-            // console.log('stompClient debug string : ', debugMessage);
+            console.log('stompClient debug string : ', debugMessage);
           },
           connectHeaders: {
             Authorization: `Bearer ${localStorage.getItem(LOCAL_ACCESSTOKEN)}`,
@@ -197,9 +196,12 @@ const useMessageStore = create<MessageStoreState>()(
           }));
         }
 
-        if (receiveLogsType.includes(formatData.type as any)) {
+        if (receiveLogsType.includes(formatData.type as RoomValueUnion)) {
           set(state => ({
-            receiveLogs: [...state.receiveLogs, formatData.type],
+            receiveLogs: [
+              ...state.receiveLogs,
+              formatData.type as RoomValueUnion,
+            ],
           }));
         }
 
