@@ -21,6 +21,7 @@ export interface MessageStoreValue {
   messageLogs: Message[];
   receiveLogs: any[];
   subscription: Stomp.StompSubscription | null;
+  testEndTime: string;
 }
 export interface MessageStoreState extends MessageStoreValue {
   connect: (roomShortUuid: string) => void;

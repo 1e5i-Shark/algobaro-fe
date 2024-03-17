@@ -23,6 +23,7 @@ const initialValue: MessageStoreValue = {
   messageLogs: [],
   receiveLogs: [],
   subscription: null,
+  testEndTime: '',
 };
 
 const useMessageStore = create<MessageStoreState>()(
@@ -96,6 +97,7 @@ const useMessageStore = create<MessageStoreState>()(
           currentRoomId: '',
           messageEntered: '',
           messageLogs: [],
+          receiveLogs: [],
           listeners: null,
           client: null,
         });
@@ -143,10 +145,13 @@ const useMessageStore = create<MessageStoreState>()(
         publish();
       },
       receiveMessage: messageReceived => {
+        console.log('messageReceived');
         const { formatMessage, publish } = get();
         const message = JSON.parse(messageReceived.body);
         const formatData = formatMessage(message);
         const type = formatData.type;
+
+        console.log(formatData);
 
         // 방에 들어오고 나간 경우 listeners를 업데이트
         // 내부 Type이 function이어서 임시로 빈 함수를 할당
@@ -169,6 +174,10 @@ const useMessageStore = create<MessageStoreState>()(
             ),
           }));
           return;
+        }
+
+        if (type === SOCKET_TYPE.ROOM.START_CODING && formatData.value) {
+          set({ testEndTime: formatData.value });
         }
 
         const receiveLogsType = [
@@ -234,6 +243,7 @@ const useMessageStore = create<MessageStoreState>()(
         }
       },
       subscribe: listener => {
+        console.log('listener : user subscribe', listener);
         set(state => ({
           listeners: new Set(
             state.listeners ? [...state.listeners, listener] : [listener]
