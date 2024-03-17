@@ -4,11 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon, Spinner } from '@/components';
 import { SOCKET_TYPE } from '@/constants/socket';
-import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import { PATH } from '@/routes/path';
 import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
 
@@ -20,14 +18,12 @@ export default function TestInfo({ className }: TestInfoProps) {
   const { theme } = useCustomTheme();
   const { sendMessage } = useMessageStore();
   const { roomData, myRoomData } = useRoomStore();
-  const { timeLimit, problemLink, roomId, roomMembers } = roomData;
+  const { timeLimit, problemLink, roomMembers } = roomData;
 
   const [isReady, setIsReady] = useState(myRoomData.ready);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  const { refetch } = useGetUuidRoom(roomData.roomShortUuid);
 
   const isTestReady = useMemo(() => {
     const result = roomMembers.findIndex(member => member.ready === false);
@@ -52,7 +48,6 @@ export default function TestInfo({ className }: TestInfoProps) {
           ? sendMessage(SOCKET_TYPE.ROOM.READY)
           : sendMessage(SOCKET_TYPE.ROOM.UNREADY);
 
-        refetch();
         setIsReady(ready);
         setIsLoading(false);
 
@@ -62,9 +57,8 @@ export default function TestInfo({ className }: TestInfoProps) {
   };
 
   const handleStartTest = () => {
-    // Todo: problemSolve에서 해줄지 여기서 할지
-    // sendMessage(SOCKET_TYPE.ROOM.START_CODING);
-    navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
+    sendMessage(SOCKET_TYPE.ROOM.START_CODING);
+    // navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
   };
 
   const handleClickLink = () => {

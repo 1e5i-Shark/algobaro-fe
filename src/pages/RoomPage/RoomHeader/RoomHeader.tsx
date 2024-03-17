@@ -17,10 +17,8 @@ interface HeaderProps {
 export default function RoomHeader({ className }: HeaderProps) {
   const {
     roomData,
-    myRoomData: { email: myEmail, role: myRole },
-    setRoomData,
+    myRoomData: { role: myRole },
   } = useRoomStore();
-  const { roomMembers } = roomData;
 
   const { refetch } = useGetUuidRoom(roomData.roomShortUuid);
 
@@ -29,9 +27,6 @@ export default function RoomHeader({ className }: HeaderProps) {
   const navigate = useNavigate();
 
   const handleExitRoom = () => {
-    const newMembers = roomMembers.filter(member => member.email !== myEmail);
-    setRoomData({ roomMembers: newMembers });
-
     // disconnect 시 서버에서 방장 자동 변경
     navigate(PATH.HOME);
 

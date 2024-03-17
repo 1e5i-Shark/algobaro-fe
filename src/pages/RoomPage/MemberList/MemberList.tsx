@@ -27,8 +27,6 @@ export default function MemberList({ className }: MemberListProps) {
   const handleMenu = async (menu: string, id: number) => {
     switch (menu) {
       case MENU_TEXT.TRANSFER_HOST:
-        alert('방장 수동 변경!');
-
         setMessageValue({ userId: id.toString() });
         sendMessage(SOCKET_TYPE.ROOM.CHANGE_HOST);
         break;
