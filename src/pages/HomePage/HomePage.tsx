@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
+
 import { Spinner } from '@/components';
 import { useRoomsList } from '@/hooks/Api/useRooms';
 import useFilterStore from '@/store/RoomsListStore/useFilterStore';
 import usePageStore from '@/store/RoomsListStore/usePageStore';
-import { LanguagesType } from '@/types/room';
 
+import { convertLanguageValueToKey } from './convertValueTokey';
 import HomeFooter from './HomeFooter/HomeFooter';
 import HomeNav from './HomeNav/HomeNav';
 import * as S from './HomePage.style';
@@ -11,23 +13,16 @@ import HomeSection from './HomeSection/HomeSection';
 
 export default function HomePage() {
   // 현재 페이지
-  const { currentPage } = usePageStore();
+  const { currentPage, setCurrentPage } = usePageStore();
   // 필터 데이터
   const { searchTitle, selectedLanguage, selectedAccess, selectedStatus } =
     useFilterStore();
 
-  const convertLanguageValueToKey = (value: string[]) => {
-    const languageKey: { [key: string]: LanguagesType } = {
-      Java: 'JAVA',
-      파이썬: 'PYTHON',
-      자바스크립트: 'JAVASCRIPT',
-      'C++': 'C++',
-    };
+  // 필터 옵션이 변경될 때, 1페이지가 보이게끔 설정
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [searchTitle, selectedLanguage, selectedAccess, selectedStatus]);
 
-    return value.map(v => languageKey[v]);
-  };
-
-  // Todo: 언어 제대로 필터 안되는 현상 수정
   const languages = convertLanguageValueToKey(selectedLanguage).join(', ');
   const roomAccessType = selectedAccess === 'PRIVATE' ? 'PRIVATE' : undefined;
   const roomStatus = selectedStatus === 'RECRUITING' ? 'RECRUITING' : undefined;
@@ -48,7 +43,6 @@ export default function HomePage() {
   return (
     <S.HomePageContainer>
       <S.HomePageWrapper>
-        {/* // Todo: refetch 함수 넘기는 방법 */}
         {/* 상단 Nav */}
         <HomeNav refetch={refetch} />
 
