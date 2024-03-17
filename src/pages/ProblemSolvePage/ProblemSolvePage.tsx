@@ -25,26 +25,12 @@ export default function ProblemSolvePage() {
   const { mutate: submitMutate } = useSubmission();
 
   const { input, code, language } = useCodeEditorStore(state => state);
-  // 코드 에디터에 내용 미작성 여부 체크하는 로직이다.
-  const checkEmptyCode = () => {
-    if (code.trim() === '') {
-      alert('내용을 입력해주세요.');
-      return true;
-    }
-
-    return false;
-  };
 
   const handleCompileExecution = async () => {
-    checkEmptyCode();
-
     compileMutate({ code, input, language });
   };
 
   const handleSubmit = () => {
-    // 코드 에디터 미작성 여부 체크
-    const isEmptyCode = checkEmptyCode();
-    if (isEmptyCode) return;
     // TODO: 코드 제출 시 백준 submit 링크 직접 제출 확인 모달 추가
 
     navigate(`/problemshare/${roomShortUuid}`);
