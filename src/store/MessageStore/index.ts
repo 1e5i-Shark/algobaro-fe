@@ -40,14 +40,10 @@ const useMessageStore = create<MessageStoreState>()(
           },
         });
 
-        console.log('socket connect');
-
         stompClient.onConnect = () => {
           const { subscribeMessageBroker, publish, connected } = get();
 
           if (connected) return;
-
-          console.log('socket onConnect');
 
           set({ client: stompClient, currentRoomId: roomShortUuid });
           subscribeMessageBroker(roomShortUuid);
@@ -60,8 +56,6 @@ const useMessageStore = create<MessageStoreState>()(
       subscribeMessageBroker: roomShortUuid => {
         const { client, receiveMessage, sendMessage } = get();
         if (!client) return;
-
-        console.log('socket MessageBroker');
 
         const subscription = client.subscribe(
           `${API_ENDPOINT.SOCKET.SUBSCRIPTION}/chat/room/${roomShortUuid}`,
@@ -88,6 +82,7 @@ const useMessageStore = create<MessageStoreState>()(
         client.deactivate();
 
         // 연결이 해제 되면 listeners, client를 null로 설정하여 null 값을 통한 예외처리를 할 수 있게 한다.
+
         set({
           connected: false,
           currentRoomId: '',
