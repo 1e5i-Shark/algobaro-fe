@@ -1,6 +1,5 @@
 import { AttachmentRounded } from '@mui/icons-material';
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon, Spinner } from '@/components';
 import { SOCKET_TYPE } from '@/constants/socket';
@@ -22,8 +21,6 @@ export default function TestInfo({ className }: TestInfoProps) {
 
   const [isReady, setIsReady] = useState(myRoomData.ready);
   const [isLoading, setIsLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   const isTestReady = useMemo(() => {
     const result = roomMembers.findIndex(member => member.ready === false);
