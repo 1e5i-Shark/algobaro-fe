@@ -5,7 +5,7 @@ import { RoomType } from '@/types/room';
 
 export interface Message {
   memberId: number;
-  type: ChatValueUnion;
+  type: ChatValueUnion | RoomValueUnion;
   value: string | null;
   timestamp: string;
 }
@@ -19,6 +19,7 @@ export interface MessageStoreValue {
   currentRoomId: string;
   messageEntered: string;
   messageLogs: Message[];
+  receiveLogs: any[];
   subscription: Stomp.StompSubscription | null;
 }
 export interface MessageStoreState extends MessageStoreValue {

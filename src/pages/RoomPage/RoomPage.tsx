@@ -15,9 +15,10 @@ import * as S from './RoomPage.style';
 import TestInfo from './TestInfo/TestInfo';
 
 export default function RoomPage() {
-  const { setMyRoomData, setRoomData } = useRoomStore();
+  const { roomData, myRoomData, setMyRoomData, setRoomData } = useRoomStore();
   const { myInfo } = useMyInfoStore();
-  const { connected, listeners, connect, disconnect } = useMessageStore();
+  const { receiveLogs, connected, listeners, connect, disconnect } =
+    useMessageStore();
 
   const { roomShortUuid } = useParams();
 
@@ -31,7 +32,7 @@ export default function RoomPage() {
   useEffect(() => {
     // 방에 들어오면 무조건 connect
     connect(roomShortUuid);
-    console.log('RoomPage: Socket connect', connected);
+    // console.log('RoomPage: Socket connect', connected);
 
     // RoomPage가 unmount 된다면 disconnect
     return () => {
@@ -42,8 +43,9 @@ export default function RoomPage() {
   // 참여인원이 추가되었으므로 다시 refetch
   useEffect(() => {
     refetch();
+    console.log(myRoomData);
     console.log('RoomPage: refetch', listeners);
-  }, [listeners]);
+  }, [listeners, receiveLogs]);
 
   if (isError) {
     console.error(error);
@@ -54,16 +56,16 @@ export default function RoomPage() {
 
   useEffect(() => {
     if (isSuccess && data.response) {
-      const { roomMembers: roomMembersData } = data.response;
+      // const { roomMembers: roomMembersData } = data.response;
+
       setRoomData(data.response);
 
-      if (!myInfo.id) return;
+      if (!myInfo.email) return;
+      const myData = findMyRoomData(roomData.roomMembers, myInfo.email);
 
-      const myData = findMyRoomData(roomMembersData, myInfo.email);
       if (myData) {
         setMyRoomData(myData);
       }
-      console.log('RoomPage: unmount');
     }
   }, [data]);
 

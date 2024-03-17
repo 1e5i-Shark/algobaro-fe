@@ -7,6 +7,7 @@ import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { SOCKET_TYPE } from '@/constants/socket';
 import { API_ENDPOINT } from '@/services/apiEndpoint';
 import { sendMessageService } from '@/services/Message/sendMessageService';
+import { ChatValueUnion } from '@/types/chat';
 import { ukToKoreaTime } from '@/utils/convertDate';
 
 import { MessageStoreState, MessageStoreValue } from './type';
@@ -20,6 +21,7 @@ const initialValue: MessageStoreValue = {
   currentRoomId: '',
   messageEntered: '',
   messageLogs: [],
+  receiveLogs: [],
   subscription: null,
 };
 
@@ -33,21 +35,22 @@ const useMessageStore = create<MessageStoreState>()(
         const stompClient = new Stomp.Client({
           webSocketFactory: () => socket,
           debug: debugMessage => {
-            console.log('stompClient debug string : ', debugMessage);
+            // Todo: 아래 코드 주석 해제
+            // console.log('stompClient debug string : ', debugMessage);
           },
           connectHeaders: {
             Authorization: `Bearer ${localStorage.getItem(LOCAL_ACCESSTOKEN)}`,
           },
         });
 
-        console.log('socket connect');
+        // console.log('socket connect');
 
         stompClient.onConnect = () => {
           const { subscribeMessageBroker, publish, connected } = get();
 
           if (connected) return;
 
-          console.log('socket onConnect');
+          // console.log('socket onConnect');
 
           set({ client: stompClient, currentRoomId: roomShortUuid });
           subscribeMessageBroker(roomShortUuid);
@@ -61,12 +64,12 @@ const useMessageStore = create<MessageStoreState>()(
         const { client, receiveMessage, sendMessage } = get();
         if (!client) return;
 
-        console.log('socket MessageBroker');
+        // console.log('socket MessageBroker');
 
         const subscription = client.subscribe(
           `${API_ENDPOINT.SOCKET.SUBSCRIPTION}/chat/room/${roomShortUuid}`,
           messageReceived => {
-            console.log('messageReceived', messageReceived);
+            // console.log('messageReceived', messageReceived);
             receiveMessage(messageReceived);
           },
           {
@@ -168,6 +171,12 @@ const useMessageStore = create<MessageStoreState>()(
           return;
         }
 
+        const receiveLogsType = [
+          SOCKET_TYPE.ROOM.CHANGE_HOST,
+          SOCKET_TYPE.ROOM.READY,
+          SOCKET_TYPE.ROOM.UNREADY,
+        ];
+
         // Todo: quit은 message가 오지 않는지 백엔드 확인
         const messageLogsType = [
           SOCKET_TYPE.CHAT.ENTER,
@@ -175,11 +184,18 @@ const useMessageStore = create<MessageStoreState>()(
           SOCKET_TYPE.CHAT.QUIT,
         ];
 
-        if (messageLogsType.includes(formatData.type)) {
+        if (messageLogsType.includes(formatData.type as ChatValueUnion)) {
           set(state => ({
             messageLogs: [...state.messageLogs, formatData],
           }));
         }
+
+        if (receiveLogsType.includes(formatData.type as any)) {
+          set(state => ({
+            receiveLogs: [...state.receiveLogs, formatData.type],
+          }));
+        }
+
         publish();
       },
       formatMessage: message => {
