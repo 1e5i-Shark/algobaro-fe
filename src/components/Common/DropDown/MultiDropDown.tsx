@@ -21,7 +21,7 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
   backgroundColor?: string;
   fontSize?: string;
   labelFontSize?: string;
-  onSelected?: (value: string | string[]) => void;
+  onSelected?: (value: string[]) => void;
 }
 
 /**
@@ -34,7 +34,7 @@ interface DropDownProps extends HTMLAttributes<HTMLDivElement> {
  * @param {string} backgroundColor - 배경색 `옵션`
  * @param {string} fontSize - 폰트사이즈 `옵션`, 기본값 `"2rem"`
  * @param {string} labelFontSize - 라벨폰트사이즈 `옵션`
- * @param {(value: string | string[]) => void} onSelected - 선택 값 전달 함수 `옵션`, `(value: string) => void}`
+ * @param {(value: string[]) => void} onSelected - 선택 값 전달 함수 `옵션`, `(value: string) => void}`
  * @returns
  */
 export default function MultiDropDown({
@@ -51,9 +51,9 @@ export default function MultiDropDown({
 }: DropDownProps) {
   const { theme } = useCustomTheme();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  // const [pracArray, setPracArray] = useState<string[]>([]);
 
   const isEmpty = selectedValues.length === 0; // 미선택 여부
+  const dataSetLength = Object.keys(dataSet).length;
 
   // [키, 배열] 형태의 배열 데이터 생성
   const multiDataSet = Object.keys(dataSet).map(key => {
@@ -64,8 +64,9 @@ export default function MultiDropDown({
     const {
       target: { value },
     } = event;
-    setSelectedValues(typeof value === 'string' ? value.split(',') : value);
-    onSelected?.(value);
+
+    setSelectedValues([...value]);
+    onSelected?.([...value]);
   };
 
   return (
@@ -102,7 +103,11 @@ export default function MultiDropDown({
           multiple
           id={dataId}
           value={selectedValues}
-          renderValue={selected => selected.join(', ')}
+          renderValue={selected =>
+            selected.length === dataSetLength
+              ? '모든 언어'
+              : `${selected.length}개 선택`
+          }
           onChange={handleChange}
           MenuProps={{
             PaperProps: {
