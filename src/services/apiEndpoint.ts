@@ -21,6 +21,9 @@ export const API_ENDPOINT = {
   PROBLEM: {
     PROBLEM_INFO: '/v1/problems/html',
   },
+  SOVLE: {
+    RESULT: '/v1/solves/result',
+  },
 };
 export const EDIT_MY_INFO_URL = '/v1/members/my/general';
 export const EDIT_MY_PASSWORD = '/v1/members/my/password';
