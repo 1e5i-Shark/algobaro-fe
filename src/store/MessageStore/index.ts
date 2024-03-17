@@ -157,23 +157,21 @@ const useMessageStore = create<MessageStoreState>()(
         // 내부 Type이 function이어서 임시로 빈 함수를 할당
 
         // 방에 들어온 경우 size를 늘리기 위해 배열 업데이트
-        if (type === 'enter') {
+        if (type === SOCKET_TYPE.CHAT.ENTER) {
           set(state => ({
             listeners: new Set(
               state.listeners ? [...state.listeners, () => {}] : [() => {}]
             ),
           }));
-          return;
         }
 
         // 방에서 나간 경우 size 1 감소
-        if (type === 'quit') {
+        if (type === SOCKET_TYPE.CHAT.QUIT) {
           set(state => ({
             listeners: new Set(
               state.listeners ? [...state.listeners].slice(0, 1) : []
             ),
           }));
-          return;
         }
 
         if (type === SOCKET_TYPE.ROOM.START_CODING && formatData.value) {
@@ -243,7 +241,6 @@ const useMessageStore = create<MessageStoreState>()(
         }
       },
       subscribe: listener => {
-        console.log('listener : user subscribe', listener);
         set(state => ({
           listeners: new Set(
             state.listeners ? [...state.listeners, listener] : [listener]
