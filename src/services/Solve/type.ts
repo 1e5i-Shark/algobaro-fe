@@ -20,3 +20,17 @@ export interface SolvedHistoryListResponse {
     totalElements: number;
   };
 }
+
+export interface SolveResult {
+  memberId: number;
+  language: string;
+  code: string;
+  solveStatus: string;
+}
+
+export interface SolvedResultResponse {
+  success: boolean;
+  response: {
+    solveResults: SolveResult[];
+  };
+}
