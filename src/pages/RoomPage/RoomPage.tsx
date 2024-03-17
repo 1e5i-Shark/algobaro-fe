@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
 import { Chat, Spinner } from '@/components';
+import { useMyInfo } from '@/hooks/Api/useMembers';
 import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { PATH } from '@/routes/path';
 import useMessageStore from '@/store/MessageStore';
-import useMyInfoStore from '@/store/MyInfoStore';
 import useRoomStore from '@/store/RoomStore';
 
 import { findMyRoomData } from './findMyRoomData';
@@ -15,10 +15,10 @@ import * as S from './RoomPage.style';
 import TestInfo from './TestInfo/TestInfo';
 
 export default function RoomPage() {
-  const { roomData, myRoomData, setMyRoomData, setRoomData } = useRoomStore();
-  const { myInfo } = useMyInfoStore();
-  const { receiveLogs, connected, listeners, connect, disconnect } =
+  const { roomData, setMyRoomData, setRoomData } = useRoomStore();
+  const { receiveLogs, testEndTime, listeners, connect, disconnect } =
     useMessageStore();
+  const { data: myInfo, refetch: refetchMyInfo } = useMyInfo();
 
   const { roomShortUuid } = useParams();
 
@@ -26,13 +26,19 @@ export default function RoomPage() {
     return <Navigate to={PATH.HOME} />;
   }
 
-  const { data, isLoading, isError, error, isSuccess, refetch } =
-    useGetUuidRoom(roomShortUuid);
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    refetch: refetchRoom,
+  } = useGetUuidRoom(roomShortUuid);
 
   useEffect(() => {
     // 방에 들어오면 무조건 connect
     connect(roomShortUuid);
     // console.log('RoomPage: Socket connect', connected);
+    refetchMyInfo();
 
     // RoomPage가 unmount 된다면 disconnect
     return () => {
@@ -40,12 +46,27 @@ export default function RoomPage() {
     };
   }, []);
 
-  // 참여인원이 추가되었으므로 다시 refetch
   useEffect(() => {
-    refetch();
-    console.log(myRoomData);
-    console.log('RoomPage: refetch', listeners);
-  }, [listeners, receiveLogs]);
+    refetchRoom();
+
+    if (myInfo && data?.response) {
+      setRoomData(data.response);
+    }
+  }, [myInfo, data, listeners, receiveLogs]);
+
+  useEffect(() => {
+    if (!myInfo) return;
+
+    const myData = findMyRoomData(roomData.roomMembers, myInfo.response.email);
+
+    if (myData) {
+      setMyRoomData(myData);
+    }
+  }, [roomData]);
+
+  useEffect(() => {
+    console.log(testEndTime, 'testEndTime');
+  }, [testEndTime]);
 
   if (isError) {
     console.error(error);
@@ -53,21 +74,6 @@ export default function RoomPage() {
     alert('방 정보를 불러오지 못했습니다. 잠시 후 다시 입장해주세요.');
     return <Navigate to={PATH.HOME} />;
   }
-
-  useEffect(() => {
-    if (isSuccess && data.response) {
-      // const { roomMembers: roomMembersData } = data.response;
-
-      setRoomData(data.response);
-
-      if (!myInfo.email) return;
-      const myData = findMyRoomData(roomData.roomMembers, myInfo.email);
-
-      if (myData) {
-        setMyRoomData(myData);
-      }
-    }
-  }, [data]);
 
   /**
    * 웹소켓은 새로고침, 페이지 이동 시 연결이 끊긴다.
