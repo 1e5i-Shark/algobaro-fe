@@ -148,7 +148,7 @@ export default function DropDown({
           }}
         >
           {/* 선택 메뉴 영역 */}
-          {!hasDefaultLabel && <MenuItem value="">선택 없음</MenuItem>}
+          {hasDefaultLabel && <MenuItem value="">선택 없음</MenuItem>}
           {dataKeys.map(dataKey => {
             return (
               <MenuItem
