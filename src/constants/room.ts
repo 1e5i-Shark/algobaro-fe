@@ -30,8 +30,8 @@ export const MOCK_ROOM_DATA = {
 };
 
 export const PROBLEM_LANGUAGES_DATA_SET: Record<string, string> = {
-  java: 'Java',
-  python3: 'Python',
   nodejs: 'JavaScript',
+  python3: 'Python',
+  java: 'Java',
   cpp: 'C++',
 };

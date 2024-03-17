@@ -1,6 +1,6 @@
 import './CodeEditorLibs';
 
-import { Editor } from 'codemirror';
+import { Editor, EditorChange } from 'codemirror';
 import { useEffect, useRef } from 'react';
 import { UnControlled as CodeMirrorEditor } from 'react-codemirror2';
 import { CodemirrorBinding } from 'y-codemirror';
@@ -13,12 +13,18 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 
 import * as S from './CodeEditor.style';
-import { getEditorMode, getRandomColors } from './utils';
+import {
+  codeEditorDefaultValue,
+  getEditorMode,
+  getRandomColors,
+} from './utils';
 
 interface CodeEditorProps {
+  mode?: 'normal' | 'codeShare' | 'readonly';
   roomUuid?: string;
   width?: string;
   height?: string;
+  defaultValue?: string;
 }
 
 /**
@@ -29,9 +35,11 @@ interface CodeEditorProps {
  * @param [height] - `옵션`
  */
 export default function CodeEditor({
+  mode = 'normal',
   roomUuid,
   width,
   height,
+  defaultValue = '',
 }: CodeEditorProps) {
   const { theme } = useCustomTheme();
 
@@ -69,53 +77,74 @@ export default function CodeEditor({
     });
   };
 
-  useEffect(() => {
-    try {
-      // 에디터 영역 CodeMirror, 텍스트를 관리하는 yText, 사용자 감지 awareness를 연동
-      connectCodeMirror();
+  // 코드 share 모드 일 때만 yjs와 codeMirror를 연결
+  if (mode === 'codeShare') {
+    useEffect(() => {
+      try {
+        // 에디터 영역 CodeMirror, 텍스트를 관리하는 yText, 사용자 감지 awareness를 연동
+        connectCodeMirror();
 
-      // text 변경 감지
-      const yTextListener = () => {
-        const newContent = yText.toString();
-        // 전역 Store의 code 변경
-        setCode(newContent);
+        // text 변경 감지
+        const yTextListener = () => {
+          const newContent = yText.toString();
+          // 전역 Store의 code 변경
+          setCode(newContent);
+        };
+
+        yText.observe(yTextListener);
+      } catch (err) {
+        // TODO: 연결이 끊어진 경우 처리 필요
+        console.error('webrtc 연결이 끊어졌습니다.');
+      }
+
+      return () => {
+        if (!providerRef.current) return;
+
+        providerRef.current.disconnect();
+        yDoc.destroy();
       };
+    }, []);
+  }
 
-      yText.observe(yTextListener);
-    } catch (err) {
-      // TODO: 연결이 끊어진 경우 처리 필요
-      console.error('webrtc 연결이 끊어졌습니다.');
-    }
-
-    return () => {
-      if (!providerRef.current) return;
-
-      providerRef.current.disconnect();
-      yDoc.destroy();
+  // 코드 에디터 코드 변화 감지 이벤트 핸들러 함수
+  const handleChangeCode = (
+    editor: Editor,
+    data: EditorChange,
+    value: string
+  ) => {
+    const changeEditorParams = {
+      editor,
+      data,
+      value,
     };
-  }, []);
+    setCode(changeEditorParams.value);
+  };
 
   return (
     <S.Wrapper>
-      <S.DropDownWrapper>
-        <S.DefaultGutter className="gutter" />
-        <DropDown
-          width="fit-content"
-          dataId="languages"
-          labelId="languages-label"
-          defaultValue={language}
-          dataSet={PROBLEM_LANGUAGES_DATA_SET}
-          onSelected={value => {
-            setLanguage(value);
-          }}
-          borderColor={theme.color.gray_50}
-          fontSize={theme.size.S}
-          backgroundColor={theme.color.background_editor}
-          hasDefaultLabel={false}
-        />
-      </S.DropDownWrapper>
+      {mode !== 'readonly' && (
+        <S.DropDownWrapper>
+          <S.DefaultGutter className="gutter" />
+          <DropDown
+            width="fit-content"
+            dataId="languages"
+            labelId="languages-label"
+            defaultValue={language}
+            dataSet={PROBLEM_LANGUAGES_DATA_SET}
+            onSelected={value => {
+              setLanguage(value);
+            }}
+            borderColor={theme.color.gray_50}
+            fontSize={theme.size.S}
+            backgroundColor={theme.color.background_editor}
+            hasDefaultLabel={false}
+          />
+        </S.DropDownWrapper>
+      )}
       <CodeMirrorEditor
+        onChange={handleChangeCode}
         options={{
+          value: defaultValue || codeEditorDefaultValue[language],
           mode: getEditorMode(language),
           theme: theme.mode === 'dark' ? 'material-palenight' : 'eclipse',
           lineNumbers: true,
@@ -124,6 +153,7 @@ export default function CodeEditor({
             'Ctrl-Space': 'autocomplete',
           },
           gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+          readOnly: mode === 'readonly' ? 'nocursor' : false,
         }}
         editorDidMount={(editor: Editor) => {
           editorRef.current = editor;
