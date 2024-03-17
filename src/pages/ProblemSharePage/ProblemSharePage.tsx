@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { CodeEditor } from '@/components';
 import { MOCK_ROOM_DATA } from '@/constants/room';
+import useCodeEditorStore from '@/store/CodeEditorStore';
 import useTimerStore from '@/store/TimerStore';
 
 import { MOCK_USER_DATA } from './constants';
@@ -15,6 +16,7 @@ const myInfo = MOCK_USER_DATA.find(user => user.id === myId);
 export default function ProblemSharePage() {
   const [selectedUser, setSelectedUser] = useState(myInfo);
   const { setIsStop, setIsEnd } = useTimerStore(state => state);
+  const { code } = useCodeEditorStore();
 
   const handleUserClick = (userId: string) => {
     const filteredUser = userData.find(user => user.id === userId);
@@ -35,7 +37,11 @@ export default function ProblemSharePage() {
         onUserClick={handleUserClick}
       />
       <S.CodeEditorWrapper>
-        <CodeEditor roomUuid={MOCK_ROOM_DATA.roomShortUuid} />
+        <CodeEditor
+          defaultValue={code}
+          mode="readonly"
+          roomUuid={MOCK_ROOM_DATA.roomShortUuid}
+        />
       </S.CodeEditorWrapper>
     </S.Wrapper>
   );
