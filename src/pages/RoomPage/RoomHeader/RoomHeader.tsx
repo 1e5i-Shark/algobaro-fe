@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { Modal } from '@/components';
+import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import useModal from '@/hooks/useModal';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { PATH } from '@/routes/path';
@@ -20,7 +21,7 @@ export default function RoomHeader({ className }: HeaderProps) {
     setRoomData,
   } = useRoomStore();
   const { roomMembers } = roomData;
-
+  const { refetch } = useGetUuidRoom(roomData.roomShortUuid);
   const { modalRef, isOpen, openModal, closeModal } = useModal();
   const { disconnect } = useMessageStore();
   const navigate = useNavigate();
@@ -31,7 +32,9 @@ export default function RoomHeader({ className }: HeaderProps) {
 
     // disconnect 시 서버에서 방장 자동 변경
     navigate(PATH.HOME);
+
     disconnect();
+    refetch();
   };
 
   return (

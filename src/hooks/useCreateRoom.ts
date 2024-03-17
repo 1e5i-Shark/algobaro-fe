@@ -11,8 +11,8 @@ export const useCreateRoom = () => {
     mutationFn: createRoom,
     onSuccess: result => {
       if (result.response) {
-        const { roomShortUuid, roomId } = result.response;
-        navigate(`${PATH.ROOM}/${roomId}`, { state: { roomShortUuid } });
+        const { roomShortUuid } = result.response;
+        navigate(`${PATH.ROOM}/${roomShortUuid}`);
       }
     },
   });

@@ -60,6 +60,7 @@ const useMessageStore = create<MessageStoreState>()(
         const subscription = client.subscribe(
           `${API_ENDPOINT.SOCKET.SUBSCRIPTION}/chat/room/${roomShortUuid}`,
           messageReceived => {
+            console.log('messageReceived', messageReceived);
             receiveMessage(messageReceived);
           },
           {
@@ -73,16 +74,22 @@ const useMessageStore = create<MessageStoreState>()(
       disconnect: () => {
         const { client, subscription, sendMessage, publish } = get();
 
+        if (!client || !subscription) return;
+
         sendMessage(SOCKET_TYPE.CHAT.QUIT);
 
-        subscription?.unsubscribe();
+        subscription.unsubscribe();
         client.deactivate();
+
+        // 연결이 해제 되면 listeners, client를 null로 설정하여 null 값을 통한 예외처리를 할 수 있게 한다.
 
         set({
           connected: false,
           currentRoomId: '',
           messageEntered: '',
           messageLogs: [],
+          listeners: null,
+          client: null,
         });
 
         publish();
@@ -100,6 +107,8 @@ const useMessageStore = create<MessageStoreState>()(
           publish,
           setMessageValue,
         } = get();
+
+        if (!client) return;
 
         let message = '';
         switch (type) {
@@ -129,6 +138,31 @@ const useMessageStore = create<MessageStoreState>()(
         const { formatMessage, publish } = get();
         const message = JSON.parse(messageReceived.body);
         const formatData = formatMessage(message);
+        const type = formatData.type;
+
+        // 방에 들어오고 나간 경우 listeners를 업데이트
+        // 내부 Type이 function이어서 임시로 빈 함수를 할당
+
+        // 방에 들어온 경우 size를 늘리기 위해 배열 업데이트
+        if (type === 'enter') {
+          set(state => ({
+            listeners: new Set(
+              state.listeners ? [...state.listeners, () => {}] : [() => {}]
+            ),
+          }));
+          return;
+        }
+
+        // 방에서 나간 경우 size 1 감소
+        if (type === 'quit') {
+          set(state => ({
+            listeners: new Set(
+              state.listeners ? [...state.listeners].slice(0, 1) : []
+            ),
+          }));
+          return;
+        }
+
         // Todo: quit은 message가 오지 않는지 백엔드 확인
         const messageLogsType = [
           SOCKET_TYPE.CHAT.ENTER,
@@ -180,18 +214,26 @@ const useMessageStore = create<MessageStoreState>()(
       },
       subscribe: listener => {
         set(state => ({
-          listeners: new Set([...state.listeners, listener]),
+          listeners: new Set(
+            state.listeners ? [...state.listeners, listener] : [listener]
+          ),
         }));
       },
       unsubscribe: listener => {
         set(state => ({
           listeners: new Set(
-            [...state.listeners].filter(li => li !== listener)
+            state.listeners
+              ? [...state.listeners].filter(li => li !== listener)
+              : []
           ),
         }));
       },
       publish() {
-        get().listeners.forEach(listener => listener());
+        const { listeners } = get();
+
+        if (!listeners) return;
+
+        listeners.forEach(listener => listener());
       },
       setMessageValue: (newValue: Partial<MessageStoreValue>) =>
         set(state => ({

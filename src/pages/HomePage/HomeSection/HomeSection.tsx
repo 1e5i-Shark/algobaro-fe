@@ -27,13 +27,15 @@ export default function HomeSection({
   const { data, isLoading } = useRoomDetail(roomShortUuid);
   const { modalRef, isOpen, openModal, closeModal } = useModal();
 
-  const handleClickEnter = () => {
+  const handleRoomEnter = () => {
     if (isLoading) return;
+
     // 방에 걸려있는 비번 없으면 바로 입장되어야 함.
     if (!data?.response.password) {
       navigate(`/room/${roomShortUuid}`);
       return;
     }
+
     openModal();
   };
 
@@ -100,7 +102,7 @@ export default function HomeSection({
         </S.LanguageImgs>
 
         {roomStatus === 'RECRUITING' ? (
-          <Button onClick={handleClickEnter}>입장</Button>
+          <Button onClick={handleRoomEnter}>입장</Button>
         ) : (
           <S.InProgress>진행중</S.InProgress>
         )}

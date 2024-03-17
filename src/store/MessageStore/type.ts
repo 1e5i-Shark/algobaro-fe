@@ -11,9 +11,9 @@ export interface Message {
 }
 
 export interface MessageStoreValue {
-  listeners: Set<Function>;
+  listeners: Set<Function> | null;
   userId: string;
-  client: Stomp.Client;
+  client: Stomp.Client | null;
   roomIndices: RoomType[];
   connected: boolean;
   currentRoomId: string;

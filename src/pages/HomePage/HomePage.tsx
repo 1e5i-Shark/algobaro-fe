@@ -40,16 +40,6 @@ export default function HomePage() {
   const content = data?.response.content;
   const totalPages = data?.response.totalPages;
 
-  useEffect(() => {
-    refetch();
-  }, [
-    currentPage,
-    searchTitle,
-    selectedLanguage,
-    selectedAccess,
-    selectedStatus,
-  ]);
-
   return (
     <S.HomePageContainer>
       <S.HomePageWrapper>
