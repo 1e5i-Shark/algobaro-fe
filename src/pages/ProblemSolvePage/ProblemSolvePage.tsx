@@ -1,7 +1,7 @@
 import { Panel, PanelGroup } from 'react-resizable-panels';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, CodeEditor, ResizeHandle } from '@/components';
-import { MOCK_ROOM_DATA } from '@/constants/room';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
 import useCodeEditorStore from '@/store/CodeEditorStore';
@@ -15,23 +15,24 @@ import * as S from './ProblemSolvePage.style';
 export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
 
-  // TODO: roomStore에서 가져오도록 수정
-  const roomShortUuid = MOCK_ROOM_DATA.roomShortUuid;
+  const navigate = useNavigate();
 
-  // TODO: 문제 링크를 가져오도록 수정
-  const MOCK_PROBLEM_LINK = 'https://www.acmicpc.net/problem/1000';
+  const { roomData } = useRoomStore();
+  const roomShortUuid = roomData.roomShortUuid;
+  const problemLink = roomData.problemLink;
 
   const { mutate: compileMutate, isLoading: isCompileLoading } = useCompile();
-  const { roomData } = useRoomStore();
   const { mutate: submitMutate } = useSubmission();
 
   const { input, code, language } = useCodeEditorStore(state => state);
-
+  // 코드 에디터에 내용 미작성 여부 체크하는 로직이다.
   const checkEmptyCode = () => {
     if (code.trim() === '') {
       alert('내용을 입력해주세요.');
-      return;
+      return true;
     }
+
+    return false;
   };
 
   const handleCompileExecution = async () => {
@@ -41,20 +42,25 @@ export default function ProblemSolvePage() {
   };
 
   const handleSubmit = () => {
-    checkEmptyCode();
+    // 코드 에디터 미작성 여부 체크
+    const isEmptyCode = checkEmptyCode();
+    if (isEmptyCode) return;
+    // TODO: 코드 제출 시 백준 submit 링크 직접 제출 확인 모달 추가
+
+    navigate(`/problemshare/${roomShortUuid}`);
 
     submitMutate({
       roomShortUuid,
       language,
       code,
-      problemLink: MOCK_PROBLEM_LINK,
+      problemLink,
     });
   };
 
   const handleClickProblemLink = () => {
-    if (!roomData.problemLink) return;
+    if (!problemLink) return;
 
-    window.open(roomData.problemLink, '_blank', 'noopener,noreferrer');
+    window.open(problemLink, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -67,7 +73,7 @@ export default function ProblemSolvePage() {
               <S.ProblemLinkText>
                 문제 출처 :{' '}
                 <S.ProblemLink onClick={handleClickProblemLink}>
-                  {roomData.problemLink}
+                  {problemLink}
                 </S.ProblemLink>
               </S.ProblemLinkText>
             </S.ProblemLinkContainer>
