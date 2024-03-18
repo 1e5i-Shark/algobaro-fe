@@ -22,7 +22,6 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
   const { theme } = useCustomTheme();
   const { roomData, setRoomData } = useRoomStore();
   const {
-    roomId,
     roomShortUuid,
     problemLink,
     timeLimit,
