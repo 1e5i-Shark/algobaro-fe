@@ -33,6 +33,7 @@ export default function HomeSection({
     // 방에 걸려있는 비번 없으면 바로 입장되어야 함.
     if (!data?.response.password) {
       navigate(`/room/${roomShortUuid}`);
+      // navigate(`${PATH.ROOM}/${roomShortUuid}`);
       return;
     }
 
