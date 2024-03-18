@@ -36,7 +36,7 @@ const useMessageStore = create<MessageStoreState>()(
         const stompClient = new Stomp.Client({
           webSocketFactory: () => socket,
           debug: debugMessage => {
-            console.log('stompClient debug string : ', debugMessage);
+            // console.log('stompClient debug string : ', debugMessage);
           },
           connectHeaders: {
             Authorization: `Bearer ${localStorage.getItem(LOCAL_ACCESSTOKEN)}`,
@@ -231,6 +231,13 @@ const useMessageStore = create<MessageStoreState>()(
               memberId,
               type,
               value: value && `${value}`,
+              timestamp: formattedTime,
+            };
+          case SOCKET_TYPE.ROOM.START_CODING:
+            return {
+              memberId,
+              type,
+              value: value && `${ukToKoreaTime(value)}`,
               timestamp: formattedTime,
             };
           default:
