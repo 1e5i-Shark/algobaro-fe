@@ -1,4 +1,5 @@
 import { Avatar, EllipsisText } from '@/components';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { RoomMemberType } from '@/types/room';
 
 import * as S from './UserProfileList.style';
@@ -14,6 +15,7 @@ export default function UserProfileList({
   userList,
   onUserClick,
 }: UserProfileListProps) {
+  const { theme } = useCustomTheme();
   const selectedUser = userList.find(user => user.memberId === selectedUserId);
 
   return (
@@ -32,6 +34,11 @@ export default function UserProfileList({
               <EllipsisText
                 width="8rem"
                 lineClamp={2}
+                fontWeight={
+                  selectedUser?.memberId === user.memberId
+                    ? theme.fontWeight.medium
+                    : theme.fontWeight.regular
+                }
               >
                 {user.nickname}
               </EllipsisText>
