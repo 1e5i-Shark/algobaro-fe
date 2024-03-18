@@ -19,7 +19,7 @@ export default function TestInfo({ className }: TestInfoProps) {
   const { theme } = useCustomTheme();
   const { sendMessage } = useMessageStore();
   const { roomData, myRoomData } = useRoomStore();
-  const { roomId, timeLimit, problemLink, roomMembers } = roomData;
+  const { roomShortUuid, timeLimit, problemLink, roomMembers } = roomData;
 
   const navigate = useNavigate();
 
@@ -58,9 +58,8 @@ export default function TestInfo({ className }: TestInfoProps) {
   };
 
   const handleStartTest = () => {
-    // Todo: 백엔드 해결중
-    // sendMessage(SOCKET_TYPE.ROOM.START_CODING);
-    navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
+    sendMessage(SOCKET_TYPE.ROOM.START_CODING);
+    navigate(`${PATH.PROBLEMSOLVE}/${roomShortUuid}`);
   };
 
   const handleClickLink = () => {
@@ -108,6 +107,7 @@ export default function TestInfo({ className }: TestInfoProps) {
           </tr>
         </tbody>
       </S.TestInfoTable>
+
       {myRoomData.role === ROOM_ROLE.HOST ? (
         isTestReady ? (
           <Button onClick={handleStartTest}>테스트 시작</Button>
