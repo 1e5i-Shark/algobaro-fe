@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { Chat, Spinner } from '@/components';
+import { SOCKET_TYPE } from '@/constants/socket';
 import { useMyInfo } from '@/hooks/Api/useMembers';
 import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { PATH } from '@/routes/path';
@@ -15,20 +16,26 @@ import * as S from './RoomPage.style';
 import TestInfo from './TestInfo/TestInfo';
 
 export default function RoomPage() {
-  const { roomData, setMyRoomData, setRoomData } = useRoomStore();
+  const {
+    roomData,
+    setMyRoomData,
+    setRoomData,
+    reset: resetRoom,
+  } = useRoomStore();
   const {
     client,
     subscription,
     receiveLogs,
-    testEndTime,
     listeners,
     connect,
     disconnect,
-    setMessageValue,
+    sendMessage,
+    reset: resetMessage,
   } = useMessageStore();
   const { data: myInfo, refetch: refetchMyInfo } = useMyInfo();
 
   const { roomShortUuid } = useParams();
+  const navigate = useNavigate();
 
   if (!roomShortUuid) {
     return <Navigate to={PATH.HOME} />;
@@ -55,19 +62,19 @@ export default function RoomPage() {
       subscription.unsubscribe();
       client.deactivate();
 
-      setMessageValue({
-        connected: false,
-        currentRoomId: '',
-        messageEntered: '',
-        messageLogs: [],
-        receiveLogs: [],
-        listeners: null,
-        client: null,
-      });
+      sendMessage(SOCKET_TYPE.ROOM.UNREADY);
+      resetMessage();
+      resetRoom();
     };
   }, []);
 
   useEffect(() => {
+    if (receiveLogs.at(-1) === SOCKET_TYPE.ROOM.START_CODING) {
+      // Test를 위한 Share 페이지로의 이동. 추후 ProblemSolve로 변경
+      navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`, { replace: true });
+      // navigate(`${PATH.PROBLEMSOLVE}/${roomShortUuid}`, { replace: true });
+    }
+
     refetchRoom();
 
     if (myInfo && data?.response) {
@@ -85,10 +92,6 @@ export default function RoomPage() {
     }
   }, [roomData]);
 
-  useEffect(() => {
-    console.log(testEndTime, 'testEndTime');
-  }, [testEndTime]);
-
   if (isError) {
     console.error(error);
 
@@ -103,6 +106,7 @@ export default function RoomPage() {
    */
   const beforeUnloadListener = () => {
     disconnect();
+    resetRoom();
   };
 
   useEffect(() => {
