@@ -7,4 +7,5 @@ export const PATH = {
   ROOM: '/room',
   PROBLEMSOLVE: '/problemsolve',
   PROBLEMSHARE: '/problemshare',
+  NOTFOUND: '/notfound',
 };
