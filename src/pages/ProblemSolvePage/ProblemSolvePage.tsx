@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, CodeEditor, ResizeHandle } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
-import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
+import useModal from '@/hooks/useModal';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
 
@@ -11,9 +11,11 @@ import { DIRECTION, SIZE_PERCENTAGE } from './constants';
 import ProblemExecution from './ProblemExecution/ProblemExecution';
 import ProblemSection from './ProblemSection/ProblemSection';
 import * as S from './ProblemSolvePage.style';
+import ProblemSubmitModal from './ProblemSubmitModal/ProblemSubmitModal';
 
 export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
+  const { modalRef, isOpen, openModal, closeModal } = useModal();
 
   const navigate = useNavigate();
 
@@ -30,17 +32,8 @@ export default function ProblemSolvePage() {
     compileMutate({ code, input, language });
   };
 
-  const handleSubmit = () => {
-    // TODO: 코드 제출 시 백준 submit 링크 직접 제출 확인 모달 추가
-
-    navigate(`/problemshare/${roomShortUuid}`);
-
-    submitMutate({
-      roomShortUuid,
-      language,
-      code,
-      problemLink,
-    });
+  const handleSubmit = async () => {
+    openModal();
   };
 
   const handleClickProblemLink = () => {
@@ -103,6 +96,11 @@ export default function ProblemSolvePage() {
           제출
         </Button>
       </S.ButtonWrapper>
+      <ProblemSubmitModal
+        modalRef={modalRef}
+        isOpen={isOpen}
+        closeModal={closeModal}
+      />
     </S.Wrapper>
   );
 }
