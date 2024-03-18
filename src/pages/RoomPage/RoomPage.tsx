@@ -16,8 +16,16 @@ import TestInfo from './TestInfo/TestInfo';
 
 export default function RoomPage() {
   const { roomData, setMyRoomData, setRoomData } = useRoomStore();
-  const { receiveLogs, testEndTime, listeners, connect, disconnect } =
-    useMessageStore();
+  const {
+    client,
+    subscription,
+    receiveLogs,
+    testEndTime,
+    listeners,
+    connect,
+    disconnect,
+    setMessageValue,
+  } = useMessageStore();
   const { data: myInfo, refetch: refetchMyInfo } = useMyInfo();
 
   const { roomShortUuid } = useParams();
@@ -37,12 +45,25 @@ export default function RoomPage() {
   useEffect(() => {
     // 방에 들어오면 무조건 connect
     connect(roomShortUuid);
-    // console.log('RoomPage: Socket connect', connected);
     refetchMyInfo();
 
     // RoomPage가 unmount 된다면 disconnect
+    // ! Page 이동시에도 연결을 다시 하기위해서 disconnect가 아닌 내부 몇개의 함수만 가져와서 사용
     return () => {
-      disconnect();
+      if (!client || !subscription) return;
+
+      subscription.unsubscribe();
+      client.deactivate();
+
+      setMessageValue({
+        connected: false,
+        currentRoomId: '',
+        messageEntered: '',
+        messageLogs: [],
+        receiveLogs: [],
+        listeners: null,
+        client: null,
+      });
     };
   }, []);
 
