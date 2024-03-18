@@ -1,6 +1,6 @@
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import { TextareaAutosize } from '@mui/material';
-import { KeyboardEvent, useEffect } from 'react';
+import { KeyboardEvent } from 'react';
 
 import { Icon } from '@/components';
 import { SOCKET_TYPE } from '@/constants/socket';
@@ -13,7 +13,7 @@ interface ChatInputProps {
 }
 
 export default function ChatInput({ className }: ChatInputProps) {
-  const { connected, messageEntered, disconnect, sendMessage, changeInput } =
+  const { connected, messageEntered, sendMessage, changeInput } =
     useMessageStore();
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -42,19 +42,6 @@ export default function ChatInput({ className }: ChatInputProps) {
       handleMessageSend();
     }
   };
-
-  const beforeUnloadListener = () => {
-    if (connected) {
-      disconnect();
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('beforeunload', beforeUnloadListener);
-    return () => {
-      window.removeEventListener('beforeunload', beforeUnloadListener);
-    };
-  }, []);
 
   if (!connected) {
     return null;

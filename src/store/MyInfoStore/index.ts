@@ -13,24 +13,19 @@ const initialData = {
   profileImage: null,
 };
 
-const DUMMY_DATA = {
-  id: 1,
-  email: 'king@test.com',
-  nickname: '김방장',
-  bojId: 'king',
-  profileImage: null,
-};
-
 const useMyInfoStore = create<MyStateProps>()(
-  devtools(set => ({
-    myInfo: DUMMY_DATA,
-    setMyInfo: (newData: Partial<MyInfoType>) =>
-      set(state => ({ myInfo: { ...state.myInfo, ...newData } })),
-    reset: () =>
-      set({
-        myInfo: initialData,
-      }),
-  }))
+  devtools(
+    set => ({
+      myInfo: initialData,
+      setMyInfo: (newData: Partial<MyInfoType>) =>
+        set(state => ({ myInfo: { ...state.myInfo, ...newData } })),
+      reset: () =>
+        set({
+          myInfo: initialData,
+        }),
+    }),
+    { store: 'MyInfoStore ' }
+  )
 );
 
 export default useMyInfoStore;

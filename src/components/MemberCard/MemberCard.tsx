@@ -33,11 +33,12 @@ export default function MemberCard({
       text: MENU_TEXT.TRANSFER_HOST,
       onClick: () => onMenuClick(MENU_TEXT.TRANSFER_HOST, memberId),
     },
-    {
-      id: 2,
-      text: MENU_TEXT.KICKOUT,
-      onClick: () => onMenuClick(MENU_TEXT.KICKOUT, memberId),
-    },
+    // 소켓 미구현으로 보류
+    // {
+    //   id: 2,
+    //   text: MENU_TEXT.KICKOUT,
+    //   onClick: () => onMenuClick(MENU_TEXT.KICKOUT, memberId),
+    // },
   ];
 
   return (

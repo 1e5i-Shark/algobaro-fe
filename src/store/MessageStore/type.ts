@@ -5,21 +5,23 @@ import { RoomType } from '@/types/room';
 
 export interface Message {
   memberId: number;
-  type: string;
+  type: ChatValueUnion | RoomValueUnion;
   value: string | null;
   timestamp: string;
 }
 
 export interface MessageStoreValue {
-  listeners: Set<Function>;
+  listeners: Set<Function> | null;
   userId: string;
-  client: Stomp.Client;
+  client: Stomp.Client | null;
   roomIndices: RoomType[];
   connected: boolean;
   currentRoomId: string;
   messageEntered: string;
   messageLogs: Message[];
+  receiveLogs: RoomValueUnion[];
   subscription: Stomp.StompSubscription | null;
+  testEndTime: string;
 }
 export interface MessageStoreState extends MessageStoreValue {
   connect: (roomShortUuid: string) => void;

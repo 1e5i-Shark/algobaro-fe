@@ -3,8 +3,6 @@ import { v4 } from 'uuid';
 
 import { Message } from '@/components';
 import useMessageStore from '@/store/MessageStore';
-import useMeStore from '@/store/MyInfoStore';
-import useRoomStore from '@/store/RoomStore';
 
 import * as S from './Chat.style';
 import ChatInput from './ChatInput';
@@ -15,12 +13,7 @@ interface ChatProps {
 
 export default function Chat({ height = '100%' }: ChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { myInfo } = useMeStore();
-  const {
-    roomData: { roomShortUuid },
-  } = useRoomStore();
-  const { messageLogs, connected, connect, setMessageValue, disconnect } =
-    useMessageStore();
+  const { messageLogs } = useMessageStore();
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
@@ -28,28 +21,16 @@ export default function Chat({ height = '100%' }: ChatProps) {
     }
   };
 
-  const connectSocketServer = async (id: string) => {
-    if (connected) return;
-
-    setMessageValue({ userId: myInfo.nickname });
-    connect(id);
-  };
-
-  useEffect(() => {
-    roomShortUuid && connectSocketServer(roomShortUuid);
-
-    return () => {
-      if (roomShortUuid && connected) disconnect();
-    };
-  }, [roomShortUuid, disconnect]);
-
   useEffect(() => {
     scrollToBottom();
   }, [messageLogs]);
 
   return (
     <S.ChatContainer $height={height}>
-      <S.MessagesContainer ref={scrollRef}>
+      <S.MessagesContainer
+        ref={scrollRef}
+        className="message-container"
+      >
         {messageLogs.map(message => {
           return (
             <S.MessageWrapper key={v4()}>
@@ -62,7 +43,7 @@ export default function Chat({ height = '100%' }: ChatProps) {
           );
         })}
       </S.MessagesContainer>
-      <ChatInput className={'chatinput'} />
+      <ChatInput className="chatinput" />
     </S.ChatContainer>
   );
 }

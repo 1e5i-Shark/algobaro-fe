@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
     element: <WelcomePage />,
   },
   {
-    path: `${PATH.ROOM}/:roomId`,
+    path: `${PATH.ROOM}/:roomShortUuid`,
     element: <PrivateRoute component={<RoomPage />} />,
   },
   {
