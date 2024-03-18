@@ -2,7 +2,6 @@ import { ExitToAppRounded } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon, Modal, ThemeModeToggleButton } from '@/components';
-import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
@@ -24,18 +23,19 @@ export default function RoomHeaderButtons({
   onClick,
 }: RoomButtonsProps) {
   const { theme } = useCustomTheme();
-  const { roomData } = useRoomStore();
+  const { reset } = useRoomStore();
 
   const { closeModal, openModal, isOpen } = useModal();
   const { disconnect } = useMessageStore();
   const navigate = useNavigate();
 
-  const { refetch } = useGetUuidRoom(roomData.roomShortUuid);
+  // const { refetch } = useGetUuidRoom(roomData.roomShortUuid);
 
   const handleExitRoom = () => {
     // disconnect 시 서버에서 방장 자동 변경
     disconnect();
-    refetch();
+    reset();
+    // refetch();
 
     navigate(PATH.HOME);
   };
