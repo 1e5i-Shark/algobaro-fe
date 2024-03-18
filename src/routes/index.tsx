@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
     element: <WelcomePage />,
   },
   {
-    path: `${PATH.ROOM}/:roomId`,
+    path: `${PATH.ROOM}/:roomShortUuid`,
     element: <PrivateRoute component={<RoomPage />} />,
   },
   {
@@ -52,11 +52,11 @@ export const router = createBrowserRouter([
     element: <Layout header={<PSHeader />} />,
     children: [
       {
-        path: `${PATH.PROBLEMSOLVE}/:roomId`,
+        path: `${PATH.PROBLEMSOLVE}/:roomShortUuid`,
         element: <PrivateRoute component={<ProblemSolvePage />} />,
       },
       {
-        path: `${PATH.PROBLEMSHARE}/:roomId`,
+        path: `${PATH.PROBLEMSHARE}/:roomShortUuid`,
         element: <PrivateRoute component={<ProblemSharePage />} />,
       },
     ],

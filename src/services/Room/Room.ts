@@ -16,10 +16,3 @@ export const updateRoom = async ({ path, requestBody }: T.UpdateRoomProps) => {
     requestBody
   );
 };
-
-// 문제 풀이 시작
-export const startTest = async (path: string) => {
-  return await axiosAuthInstance.post<T.RoomResponse>(
-    `${API_ENDPOINT.ROOM.CODES}${path}`
-  );
-};

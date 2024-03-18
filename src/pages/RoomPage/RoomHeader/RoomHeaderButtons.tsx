@@ -1,29 +1,43 @@
 import { ExitToAppRounded } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
-import { Button, Icon, ThemeModeToggleButton } from '@/components';
+import { Button, Icon, Modal, ThemeModeToggleButton } from '@/components';
+import { useGetUuidRoom } from '@/hooks/Api/useRooms';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
+import useModal from '@/hooks/useModal';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
-import { ButtonsWrapper } from '@/pages/RoomPage/RoomPage.style';
+import { ButtonsWrapper, Title } from '@/pages/RoomPage/RoomPage.style';
+import { PATH } from '@/routes/path';
+import useMessageStore from '@/store/MessageStore';
+import useRoomStore from '@/store/RoomStore';
 import { RoleType } from '@/types/room';
 
 interface RoomButtonsProps {
   role: RoleType;
   className: string;
   onClick: () => void;
-  onExit: () => void;
 }
 
 export default function RoomHeaderButtons({
   role,
   className,
   onClick,
-  onExit,
 }: RoomButtonsProps) {
-  const handleClickExit = () => {
-    const confirmed = confirm('정말로 나가시겠습니까?');
+  const { theme } = useCustomTheme();
+  const { roomData } = useRoomStore();
 
-    if (confirmed) {
-      onExit();
-    }
+  const { closeModal, openModal, isOpen } = useModal();
+  const { disconnect } = useMessageStore();
+  const navigate = useNavigate();
+
+  const { refetch } = useGetUuidRoom(roomData.roomShortUuid);
+
+  const handleExitRoom = () => {
+    // disconnect 시 서버에서 방장 자동 변경
+    disconnect();
+    refetch();
+
+    navigate(PATH.HOME);
   };
 
   return (
@@ -42,11 +56,29 @@ export default function RoomHeaderButtons({
         <Icon
           className="exitRoom"
           background={true}
-          onClick={handleClickExit}
+          onClick={openModal}
         >
           <ExitToAppRounded fontSize="large" />
         </Icon>
       </ButtonsWrapper>
+      <Modal
+        mode="confirm"
+        isOpen={isOpen}
+        onClose={closeModal}
+        width="40rem"
+        height="20rem"
+      >
+        <Title>정말로 나가시겠습니까?</Title>
+        <ButtonsWrapper>
+          <Button onClick={handleExitRoom}>확인</Button>
+          <Button
+            onClick={closeModal}
+            backgroundColor={theme.color.gray_20}
+          >
+            취소
+          </Button>
+        </ButtonsWrapper>
+      </Modal>
     </>
   );
 }
