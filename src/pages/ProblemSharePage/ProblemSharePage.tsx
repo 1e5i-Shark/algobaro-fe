@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { CodeEditor } from '@/components';
 import { MOCK_ROOM_DATA } from '@/constants/room';
+import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import useCodeEditorStore from '@/store/CodeEditorStore';
+import useRoomStore from '@/store/RoomStore';
 import useTimerStore from '@/store/TimerStore';
 
 import { MOCK_USER_DATA } from './constants';
@@ -16,7 +19,15 @@ const myInfo = MOCK_USER_DATA.find(user => user.id === myId);
 export default function ProblemSharePage() {
   const [selectedUser, setSelectedUser] = useState(myInfo);
   const { setIsStop, setIsEnd } = useTimerStore(state => state);
+
+  const params = useParams();
+  const { roomShortUuid } = params;
+
+  if (!roomShortUuid) return;
+
+  const { data: roomDetail, refetch } = useGetUuidRoom(roomShortUuid);
   const { code } = useCodeEditorStore();
+  const { setRoomData } = useRoomStore(state => state);
 
   const handleUserClick = (userId: string) => {
     const filteredUser = userData.find(user => user.id === userId);
@@ -27,6 +38,16 @@ export default function ProblemSharePage() {
   useEffect(() => {
     setIsStop(true);
     setIsEnd(false);
+  }, []);
+
+  useEffect(() => {
+    if (roomDetail?.response) {
+      setRoomData(roomDetail.response);
+    }
+  }, [roomDetail]);
+
+  useEffect(() => {
+    refetch();
   }, []);
 
   return (
