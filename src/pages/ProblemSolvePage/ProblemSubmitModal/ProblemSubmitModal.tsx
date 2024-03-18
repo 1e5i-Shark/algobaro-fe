@@ -127,21 +127,6 @@ export default function ProblemSubmitModal({
                   </S.LottieWrapper>
                 </S.TestCaseItem>
               ))}
-              <S.TestCaseItem>
-                <S.TestCaseTitle>{`TestCase 3:`}</S.TestCaseTitle>
-                <S.LottieWrapper>
-                  <Lottie
-                    width={true ? 100 : 21}
-                    height={true ? 100 : 21}
-                    options={{
-                      loop: false,
-                      autoplay: true,
-                      animationData: true ? successLottie : failLottie,
-                    }}
-                    style={{ margin: '0' }}
-                  />
-                </S.LottieWrapper>
-              </S.TestCaseItem>
             </S.TestCaseList>
           )}
         </S.TestCaseWrapper>
