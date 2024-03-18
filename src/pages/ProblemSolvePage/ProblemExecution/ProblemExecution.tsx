@@ -19,8 +19,11 @@ export default function ProblemExecution({ isLoading }: Props) {
         {isLoading && <Spinner color={theme.color.gray_30} />}
         {!isLoading && (
           <S.ResultText>
-            {result === '' ? (
+            {result === '' && (
               <S.GuideText>실행 버튼을 누르면 결과가 표시됩니다.</S.GuideText>
+            )}
+            {result === null ? (
+              <S.GuideText>출력할 결과가 없습니다.</S.GuideText>
             ) : (
               result
             )}
