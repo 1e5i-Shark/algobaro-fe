@@ -1,11 +1,13 @@
 import { AttachmentRounded } from '@mui/icons-material';
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon, Spinner } from '@/components';
 import { SOCKET_TYPE } from '@/constants/socket';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
+import { PATH } from '@/routes/path';
 import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
 
@@ -17,7 +19,9 @@ export default function TestInfo({ className }: TestInfoProps) {
   const { theme } = useCustomTheme();
   const { sendMessage } = useMessageStore();
   const { roomData, myRoomData } = useRoomStore();
-  const { timeLimit, problemLink, roomMembers } = roomData;
+  const { roomId, timeLimit, problemLink, roomMembers } = roomData;
+
+  const navigate = useNavigate();
 
   const [isReady, setIsReady] = useState(myRoomData.ready);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,8 +58,9 @@ export default function TestInfo({ className }: TestInfoProps) {
   };
 
   const handleStartTest = () => {
-    sendMessage(SOCKET_TYPE.ROOM.START_CODING);
-    // navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
+    // Todo: 백엔드 해결중
+    // sendMessage(SOCKET_TYPE.ROOM.START_CODING);
+    navigate(`${PATH.PROBLEMSOLVE}/${roomId}`);
   };
 
   const handleClickLink = () => {
