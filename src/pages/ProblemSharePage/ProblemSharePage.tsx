@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { CodeEditor } from '@/components';
+import { Chat, CodeEditor } from '@/components';
 import { MOCK_ROOM_DATA } from '@/constants/room';
 import { useGetRoomMembers } from '@/hooks/Api/useRooms';
 import { useSolvedResult } from '@/hooks/Api/useSolves';
@@ -21,8 +21,6 @@ export default function ProblemSharePage() {
   const { data: solvedResults = [] } = useSolvedResult(roomShortUuid);
   const { data: userList = [] } = useGetRoomMembers(roomShortUuid);
 
-  if (solvedResults.length === 0 || userList.length === 0) return;
-
   const handleUserClick = (userId: number) => {
     setSelectedMemberId(userId);
   };
@@ -31,33 +29,40 @@ export default function ProblemSharePage() {
     result => result.memberId === selectedMemberId
   );
 
+  if (solvedResults.length === 0 || userList.length === 0) return;
+
   return (
     <S.Wrapper>
-      <UserProfileList
-        selectedUserId={selectedMemberId}
-        userList={userList}
-        onUserClick={handleUserClick}
-      />
-      <S.CodeEditorWrapper>
-        {selectedResult?.code && (
-          <S.SolveStatusWrapper>
-            {selectedResult?.solveStatus === 'SUCCESS' ? (
-              <S.SolveSuccessText>SUCCESS 🎉</S.SolveSuccessText>
-            ) : (
-              <S.SolveFailText>FAIL 🥲</S.SolveFailText>
-            )}
-          </S.SolveStatusWrapper>
-        )}
-        {selectedResult?.code ? (
-          <CodeEditor
-            defaultValue={selectedResult?.code}
-            mode="readonly"
-            roomUuid={MOCK_ROOM_DATA.roomShortUuid}
-          />
-        ) : (
-          <S.NoResultText>풀이 내역이 존재하지 않습니다</S.NoResultText>
-        )}
-      </S.CodeEditorWrapper>
+      <S.CodeEditorContainer>
+        <UserProfileList
+          selectedUserId={selectedMemberId}
+          userList={userList}
+          onUserClick={handleUserClick}
+        />
+        <S.CodeEditorWrapper>
+          {selectedResult?.code && (
+            <S.SolveStatusWrapper>
+              {selectedResult?.solveStatus === 'SUCCESS' ? (
+                <S.SolveSuccessText>SUCCESS 🎉</S.SolveSuccessText>
+              ) : (
+                <S.SolveFailText>FAIL 🥲</S.SolveFailText>
+              )}
+            </S.SolveStatusWrapper>
+          )}
+          {selectedResult?.code ? (
+            <CodeEditor
+              defaultValue={selectedResult?.code}
+              mode="readonly"
+              roomUuid={MOCK_ROOM_DATA.roomShortUuid}
+            />
+          ) : (
+            <S.NoResultText>풀이 내역이 존재하지 않습니다</S.NoResultText>
+          )}
+        </S.CodeEditorWrapper>
+      </S.CodeEditorContainer>
+      <S.ChatContainer>
+        <Chat />
+      </S.ChatContainer>
     </S.Wrapper>
   );
 }

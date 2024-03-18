@@ -4,18 +4,27 @@ import { css } from 'styled-components';
 const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 100%;
     padding: 4rem 2rem;
     background-color: ${theme.color.background_editor};
   `}
 `;
 
+const CodeEditorContainer = styled.div`
+  width: 150rem;
+`;
+
+const ChatContainer = styled.div`
+  flex-grow: 1;
+  max-width: 40rem;
+`;
+
 const CodeEditorWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 12rem);
   margin-top: 2rem;
 `;
 
@@ -55,6 +64,8 @@ const NoResultText = styled.span`
 `;
 
 export {
+  ChatContainer,
+  CodeEditorContainer,
   CodeEditorWrapper,
   NoResultText,
   SolveFailText,

@@ -26,7 +26,12 @@ export default function Chat({ height = '100%' }: ChatProps) {
   }, [messageLogs]);
 
   return (
-    <S.ChatContainer $height={height}>
+    <S.ChatContainer
+      $height={height}
+      style={{
+        border: '2px solid olive',
+      }}
+    >
       <S.MessagesContainer
         ref={scrollRef}
         className="message-container"
