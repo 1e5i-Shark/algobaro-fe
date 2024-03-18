@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
 
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
   }
 
   .CodeMirror-lines {
-    padding: 2rem 0;
+    padding: 1rem 0;
   }
 
   .CodeMirror-line {
@@ -45,4 +46,25 @@ const Wrapper = styled.div`
   }
 `;
 
-export { Wrapper };
+const DefaultGutter = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.72rem;
+    padding: 0 0.5rem;
+    background-color: ${theme.mode === 'light'
+      ? '#F7F7F7'
+      : theme.color.background_editor};
+    border-right: ${theme.mode === 'light' ? '1px solid #ddd' : ''};
+  `}
+`;
+
+const DropDownWrapper = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    justify-content: space-between;
+    background-color: ${theme.color.background_editor};
+  `}
+`;
+export { DefaultGutter, DropDownWrapper, Wrapper };

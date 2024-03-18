@@ -8,16 +8,20 @@ const Wrapper = styled(Row)`
 
 const TimeLeftWrapper = styled.div`
   ${({ theme }) => css`
-    width: fit-content;
-    padding: 1rem 2.5rem;
-    color: ${theme.color.black_primary};
-    background-color: ${theme.color.gray_20};
-    border-radius: ${theme.shape.round};
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0 1rem;
+    color: ${theme.color.gray_50};
+    white-space: nowrap;
   `}
 `;
 
 const TimeLeftText = styled.span`
-  margin-right: 0.6rem;
+  ${({ theme }) => css`
+    margin-right: 0.6rem;
+    font-weight: ${theme.fontWeight.semiBold};
+    color: ${theme.color.red};
+  `}
 `;
 
 const TimeOverText = styled.span`
@@ -35,7 +39,15 @@ const TimeStartButton = styled.button`
   `}
 `;
 
+const TestButton = styled.button`
+  ${({ theme }) => css`
+    margin-left: 1rem;
+    color: ${theme.color.text_primary_color};
+  `}
+`;
+
 export {
+  TestButton,
   TimeLeftText,
   TimeLeftWrapper,
   TimeOverText,

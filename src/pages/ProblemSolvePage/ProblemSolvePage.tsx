@@ -1,12 +1,13 @@
 import { Panel, PanelGroup } from 'react-resizable-panels';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, CodeEditor, ResizeHandle } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
+import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
-import useTimerStore from '@/store/TimerStore';
 
-import { DIRECTION, MOCK_DATA, SIZE_PERCENTAGE } from './constants';
+import { DIRECTION, SIZE_PERCENTAGE } from './constants';
 import ProblemExecution from './ProblemExecution/ProblemExecution';
 import ProblemSection from './ProblemSection/ProblemSection';
 import * as S from './ProblemSolvePage.style';
@@ -14,25 +15,38 @@ import * as S from './ProblemSolvePage.style';
 export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
 
+  const navigate = useNavigate();
+
   const { roomData } = useRoomStore();
-  const { mutate: compileMutate } = useCompile();
+  const roomShortUuid = roomData.roomShortUuid;
+  const problemLink = roomData.problemLink;
+
+  const { mutate: compileMutate, isLoading: isCompileLoading } = useCompile();
   const { mutate: submitMutate } = useSubmission();
 
-  const setIsStop = useTimerStore(state => state.setIsStop);
+  const { input, code, language } = useCodeEditorStore(state => state);
 
-  const handleCompileExecution = () => {
-    compileMutate(MOCK_DATA.COMPILE);
+  const handleCompileExecution = async () => {
+    compileMutate({ code, input, language });
   };
 
   const handleSubmit = () => {
-    submitMutate(MOCK_DATA.SUBMISSION);
-    setIsStop(false);
+    // TODO: 코드 제출 시 백준 submit 링크 직접 제출 확인 모달 추가
+
+    navigate(`/problemshare/${roomShortUuid}`);
+
+    submitMutate({
+      roomShortUuid,
+      language,
+      code,
+      problemLink,
+    });
   };
 
   const handleClickProblemLink = () => {
-    if (!roomData.problemLink) return;
+    if (!problemLink) return;
 
-    window.open(roomData.problemLink, '_blank', 'noopener,noreferrer');
+    window.open(problemLink, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -45,7 +59,7 @@ export default function ProblemSolvePage() {
               <S.ProblemLinkText>
                 문제 출처 :{' '}
                 <S.ProblemLink onClick={handleClickProblemLink}>
-                  {roomData.problemLink}
+                  {problemLink}
                 </S.ProblemLink>
               </S.ProblemLinkText>
             </S.ProblemLinkContainer>
@@ -63,7 +77,7 @@ export default function ProblemSolvePage() {
               <ResizeHandle direction={DIRECTION.VERTICAL} />
               <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION}>
                 {/* 실행 영역 */}
-                <ProblemExecution />
+                <ProblemExecution isLoading={isCompileLoading} />
               </Panel>
             </PanelGroup>
           </Panel>
@@ -72,12 +86,22 @@ export default function ProblemSolvePage() {
       {/* 실행 및 제출 버튼 영역 */}
       <S.ButtonWrapper>
         <Button
+          width="12rem"
+          height="4rem"
+          fontSize="1.6rem"
           backgroundColor={theme.color.gray_20}
           onClick={handleCompileExecution}
         >
           실행
         </Button>
-        <Button onClick={handleSubmit}>제출</Button>
+        <Button
+          width="12rem"
+          height="4rem"
+          fontSize="1.6rem"
+          onClick={handleSubmit}
+        >
+          제출
+        </Button>
       </S.ButtonWrapper>
     </S.Wrapper>
   );
