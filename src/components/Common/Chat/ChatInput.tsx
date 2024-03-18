@@ -1,11 +1,9 @@
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import { TextareaAutosize } from '@mui/material';
 import { KeyboardEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { Icon } from '@/components';
 import { SOCKET_TYPE } from '@/constants/socket';
-import { PATH } from '@/routes/path';
 import useMessageStore from '@/store/MessageStore';
 
 import * as S from './Chat.style';
@@ -17,8 +15,6 @@ interface ChatInputProps {
 export default function ChatInput({ className }: ChatInputProps) {
   const { connected, messageEntered, sendMessage, changeInput } =
     useMessageStore();
-
-  const navigate = useNavigate();
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;
@@ -48,7 +44,7 @@ export default function ChatInput({ className }: ChatInputProps) {
   };
 
   if (!connected) {
-    navigate(PATH.NOTFOUND);
+    return null;
   }
 
   return (
