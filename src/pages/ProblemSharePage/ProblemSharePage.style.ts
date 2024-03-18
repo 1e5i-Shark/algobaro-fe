@@ -1,23 +1,31 @@
 import styled from 'styled-components';
 import { css } from 'styled-components';
 
+import { Col } from '@/styles/GlobalStyle';
+
 const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-direction: row;
     height: 100%;
-    padding: 4rem 2rem;
+    padding: 0 0 0 2rem;
     background-color: ${theme.color.background_editor};
   `}
 `;
 
 const CodeEditorContainer = styled.div`
   width: 150rem;
+  padding-top: 4rem;
 `;
 
-const ChatContainer = styled.div`
-  flex-grow: 1;
-  max-width: 40rem;
+const ChatContainer = styled(Col)`
+  ${({ theme }) => css`
+    flex-grow: 1;
+    max-width: 40rem;
+    padding: 0 1rem 2rem 1rem;
+    overflow: auto;
+    border-left: 1px solid ${theme.color.transparent_30};
+  `}
 `;
 
 const CodeEditorWrapper = styled.div`
