@@ -148,7 +148,7 @@ export default function ProblemSubmitModal({
         <S.BOJWrapper>
           <S.Title>백준 제출하기</S.Title>
           <S.BOJGuideText>{`백준 사이트에 제출하여 채점 결과를 확인해 보세요!
-          제출이 완료되어야 최종 정답 상태가 연동됩니다`}</S.BOJGuideText>
+          제출이 완료되어야 서비스를 정상적으로 이용할 수 있어요`}</S.BOJGuideText>
           <S.BOJButtonWrapper>
             <Button
               width="16rem"
