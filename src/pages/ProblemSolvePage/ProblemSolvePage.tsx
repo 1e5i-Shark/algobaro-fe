@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import { Panel, PanelGroup } from 'react-resizable-panels';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Button, CodeEditor, ResizeHandle } from '@/components';
+import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
-import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
+import useModal from '@/hooks/useModal';
+import { useCompile } from '@/hooks/useProblemSolve';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
 
@@ -11,43 +14,53 @@ import { DIRECTION, SIZE_PERCENTAGE } from './constants';
 import ProblemExecution from './ProblemExecution/ProblemExecution';
 import ProblemSection from './ProblemSection/ProblemSection';
 import * as S from './ProblemSolvePage.style';
+import ProblemSubmitModal from './ProblemSubmitModal/ProblemSubmitModal';
 
 export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
+  const { modalRef, isOpen, openModal, closeModal } = useModal();
 
-  const navigate = useNavigate();
+  const params = useParams();
+  const { roomShortUuid } = params;
 
-  const { roomData } = useRoomStore();
-  const roomShortUuid = roomData.roomShortUuid;
-  const problemLink = roomData.problemLink;
+  if (!roomShortUuid) return;
 
-  const { mutate: compileMutate, isLoading: isCompileLoading } = useCompile();
-  const { mutate: submitMutate } = useSubmission();
+  const {
+    mutate: compileMutate,
+    isLoading: isCompileLoading,
+    isError: isCompileError,
+  } = useCompile();
+  const { data: roomDetail, refetch } = useGetUuidRoom(roomShortUuid);
 
   const { input, code, language } = useCodeEditorStore(state => state);
-
-  const handleCompileExecution = async () => {
-    compileMutate({ code, input, language });
-  };
-
-  const handleSubmit = () => {
-    // TODO: 코드 제출 시 백준 submit 링크 직접 제출 확인 모달 추가
-
-    navigate(`/problemshare/${roomShortUuid}`);
-
-    submitMutate({
-      roomShortUuid,
-      language,
-      code,
-      problemLink,
-    });
-  };
+  const {
+    roomData: { problemLink },
+    setRoomData,
+  } = useRoomStore(state => state);
 
   const handleClickProblemLink = () => {
     if (!problemLink) return;
 
     window.open(problemLink, '_blank', 'noopener,noreferrer');
   };
+
+  const handleCompileExecution = async () => {
+    compileMutate({ code, input, language });
+  };
+
+  const handleSubmit = async () => {
+    openModal();
+  };
+
+  useEffect(() => {
+    if (roomDetail?.response) {
+      setRoomData(roomDetail.response);
+    }
+  }, [roomDetail]);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <S.Wrapper>
@@ -77,7 +90,10 @@ export default function ProblemSolvePage() {
               <ResizeHandle direction={DIRECTION.VERTICAL} />
               <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION}>
                 {/* 실행 영역 */}
-                <ProblemExecution isLoading={isCompileLoading} />
+                <ProblemExecution
+                  isLoading={isCompileLoading}
+                  isError={isCompileError}
+                />
               </Panel>
             </PanelGroup>
           </Panel>
@@ -103,6 +119,11 @@ export default function ProblemSolvePage() {
           제출
         </Button>
       </S.ButtonWrapper>
+      <ProblemSubmitModal
+        modalRef={modalRef}
+        isOpen={isOpen}
+        closeModal={closeModal}
+      />
     </S.Wrapper>
   );
 }

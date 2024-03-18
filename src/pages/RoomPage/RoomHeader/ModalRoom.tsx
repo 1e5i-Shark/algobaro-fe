@@ -22,7 +22,7 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
   const { theme } = useCustomTheme();
   const { roomData, setRoomData } = useRoomStore();
   const {
-    roomId,
+    roomShortUuid,
     problemLink,
     timeLimit,
     password,
@@ -63,7 +63,7 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     setNewData(updateData);
 
     updateRoomMutate({
-      path: `/${roomId}`,
+      path: `/${roomShortUuid}`,
       requestBody: {
         roomLimit,
         ...updateData,

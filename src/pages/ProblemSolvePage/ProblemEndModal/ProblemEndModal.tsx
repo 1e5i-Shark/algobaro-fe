@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Modal, Timer } from '@/components';
-import { MOCK_ROOM_DATA } from '@/constants/room';
 import { PATH } from '@/routes/path';
+import useRoomStore from '@/store/RoomStore';
 
 import * as S from './ProblemEndModal.style';
 
@@ -22,9 +22,11 @@ export default function ProblemEndModal({
 
   const navigate = useNavigate();
 
+  const { roomShortUuid } = useRoomStore(state => state.roomData);
+
   useEffect(() => {
     if (isTimerEnd) {
-      navigate(`${PATH.PROBLEMSHARE}/${MOCK_ROOM_DATA.id}`);
+      navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`);
       closeModal();
       setIsTimerEnd(false);
     }

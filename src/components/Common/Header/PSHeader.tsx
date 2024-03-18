@@ -4,6 +4,7 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
 import ProblemTimer from '@/pages/ProblemSolvePage/ProblemTimer/ProblemTimer';
 import { PATH } from '@/routes/path';
+import useRoomStore from '@/store/RoomStore';
 
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
@@ -13,6 +14,8 @@ import * as S from './PSHeader.style';
 export default function PSHeader() {
   const { theme } = useCustomTheme();
   const { modalRef, isOpen, openModal, closeModal } = useModal();
+  const { roomShortUuid } = useRoomStore(state => state.roomData);
+
   const location = useLocation();
   const params = useParams();
   const { roomShortUuid } = params;

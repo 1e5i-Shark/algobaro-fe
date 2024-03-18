@@ -8,7 +8,7 @@ interface SubmissionRequest {
   problemLink: string;
 }
 
-interface TestCaseResultType {
+export interface TestCaseResultType {
   caseNumber: number;
   input: string;
   output: string;

@@ -13,7 +13,6 @@ export const useCompile = () => {
       if (response.success) {
         setResult(response.response.result);
       }
-      console.log('compile response', response);
     },
   });
 };
@@ -21,8 +20,11 @@ export const useCompile = () => {
 export const useSubmission = () => {
   return useMutation({
     mutationFn: submission,
-    onSuccess: response => {
-      console.log('submission response', response);
+    onSuccess: data => {
+      if (data.response.testCaseResults) {
+        return data.response.testCaseResults;
+      }
+      return data;
     },
   });
 };

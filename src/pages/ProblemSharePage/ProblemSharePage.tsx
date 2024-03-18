@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { CodeEditor } from '@/components';
 import { MOCK_ROOM_DATA } from '@/constants/room';
 import { useGetRoomMembers } from '@/hooks/Api/useRooms';
+import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { useSolvedResult } from '@/hooks/Api/useSolves';
+import useRoomStore from '@/store/RoomStore';
 
 import { MOCK_MY_ID } from './constants';
 import * as S from './ProblemSharePage.style';
@@ -16,7 +18,10 @@ export default function ProblemSharePage() {
   const params = useParams();
   const { roomShortUuid } = params;
 
-  if (roomShortUuid == null) return;
+  if (!roomShortUuid) return;
+
+  const { data: roomDetail, refetch } = useGetUuidRoom(roomShortUuid);
+  const { setRoomData } = useRoomStore(state => state);
 
   const { data: solvedResults = [] } = useSolvedResult(roomShortUuid);
   const { data: userList = [] } = useGetRoomMembers(roomShortUuid);
@@ -30,6 +35,16 @@ export default function ProblemSharePage() {
   const selectedResult = solvedResults.find(
     result => result.memberId === selectedMemberId
   );
+
+  useEffect(() => {
+    if (roomDetail?.response) {
+      setRoomData(roomDetail.response);
+    }
+  }, [roomDetail]);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <S.Wrapper>
