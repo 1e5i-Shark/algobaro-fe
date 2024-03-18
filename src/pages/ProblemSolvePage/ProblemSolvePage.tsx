@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
 import { Panel, PanelGroup } from 'react-resizable-panels';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Button, CodeEditor, ResizeHandle } from '@/components';
+import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
+import { useCompile } from '@/hooks/useProblemSolve';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
 
@@ -17,16 +20,29 @@ export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
   const { modalRef, isOpen, openModal, closeModal } = useModal();
 
-  const navigate = useNavigate();
+  const params = useParams();
+  const { roomShortUuid } = params;
 
-  const { roomData } = useRoomStore();
-  const roomShortUuid = roomData.roomShortUuid;
-  const problemLink = roomData.problemLink;
+  if (!roomShortUuid) return;
 
-  const { mutate: compileMutate, isLoading: isCompileLoading } = useCompile();
-  const { mutate: submitMutate } = useSubmission();
+  const {
+    mutate: compileMutate,
+    isLoading: isCompileLoading,
+    isError: isCompileError,
+  } = useCompile();
+  const { data: roomDetail, refetch } = useGetUuidRoom(roomShortUuid);
 
   const { input, code, language } = useCodeEditorStore(state => state);
+  const {
+    roomData: { problemLink },
+    setRoomData,
+  } = useRoomStore(state => state);
+
+  const handleClickProblemLink = () => {
+    if (!problemLink) return;
+
+    window.open(problemLink, '_blank', 'noopener,noreferrer');
+  };
 
   const handleCompileExecution = async () => {
     compileMutate({ code, input, language });
@@ -36,11 +52,15 @@ export default function ProblemSolvePage() {
     openModal();
   };
 
-  const handleClickProblemLink = () => {
-    if (!problemLink) return;
+  useEffect(() => {
+    if (roomDetail?.response) {
+      setRoomData(roomDetail.response);
+    }
+  }, [roomDetail]);
 
-    window.open(problemLink, '_blank', 'noopener,noreferrer');
-  };
+  useEffect(() => {
+    refetch();
+  }, []);
 
   return (
     <S.Wrapper>
@@ -70,7 +90,10 @@ export default function ProblemSolvePage() {
               <ResizeHandle direction={DIRECTION.VERTICAL} />
               <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION}>
                 {/* 실행 영역 */}
-                <ProblemExecution isLoading={isCompileLoading} />
+                <ProblemExecution
+                  isLoading={isCompileLoading}
+                  isError={isCompileError}
+                />
               </Panel>
             </PanelGroup>
           </Panel>
