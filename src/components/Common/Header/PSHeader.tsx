@@ -1,6 +1,5 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { MOCK_ROOM_DATA } from '@/constants/room';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
 import ProblemTimer from '@/pages/ProblemSolvePage/ProblemTimer/ProblemTimer';
@@ -15,6 +14,8 @@ export default function PSHeader() {
   const { theme } = useCustomTheme();
   const { modalRef, isOpen, openModal, closeModal } = useModal();
   const location = useLocation();
+  const params = useParams();
+  const { roomShortUuid } = params;
 
   const isProblemSolvePage =
     location.pathname.split('/')[1] === PATH.PROBLEMSOLVE.replace('/', '');
@@ -30,9 +31,7 @@ export default function PSHeader() {
   };
 
   const handleNavigateToRoom = () => {
-    navigate(`${PATH.ROOM}/${MOCK_ROOM_DATA.id}`, {
-      state: MOCK_ROOM_DATA.roomShortUuid,
-    });
+    navigate(`${PATH.ROOM}/${roomShortUuid}`);
   };
 
   return (
