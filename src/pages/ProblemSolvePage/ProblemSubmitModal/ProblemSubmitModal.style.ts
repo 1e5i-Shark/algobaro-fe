@@ -45,7 +45,7 @@ const TestCaseItem = styled.li`
 
 const LottieWrapper = styled(Row)`
   justify-content: center;
-  width: 3rem;
+  width: 5rem;
 `;
 
 const TestCaseTitle = styled.p`
