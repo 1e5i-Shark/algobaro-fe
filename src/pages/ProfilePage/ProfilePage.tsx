@@ -28,6 +28,10 @@ export default function ProfilePage() {
   const [isOpenEditInfoModal, setIsOpenEditInfoModal] = useState(false);
   const [isOpenEditPWModal, setIsOpenEditPWModal] = useState(false);
 
+  // 히스토리 상세 모달 state
+  const [isOpenHistoryModal, setIsOpenHistoryModal] = useState(false);
+  const [selectedSolveId, setSelectedSolveId] = useState(0);
+
   // 페이지네이션 상태 관리 함수
   const [pageNum, setPageNum] = useState(0);
 
@@ -159,6 +163,14 @@ export default function ProfilePage() {
   const handleCloseEditPWModal = () => {
     setIsOpenEditPWModal(false);
   };
+  // 히스토리 리스트 아이템 클릭 이벤트 핸들러 함수
+  const handleClickHistoryItem = (solveId: number) => {
+    setSelectedSolveId(solveId);
+    setIsOpenHistoryModal(true);
+  };
+  const handleCloseHistoryModal = () => {
+    setIsOpenHistoryModal(false);
+  };
 
   // 페이지 번호가 바뀌면 문제 히스토리를 refetch 한다.
   useEffect(() => {
@@ -235,7 +247,10 @@ export default function ProfilePage() {
               {/* {solvedHistoryList?.map(problem => { */}
               {solvedHistoryList[pageNum]?.map(problem => {
                 return (
-                  <S.ProblemHistoryItem key={problem.id}>
+                  <S.ProblemHistoryItem
+                    key={problem.id}
+                    onClick={() => handleClickHistoryItem(problem.id)}
+                  >
                     <S.ProblemLink>
                       {problem.problemLink.replace(
                         'https://www.acmicpc.net/problem/',
@@ -322,6 +337,11 @@ export default function ProfilePage() {
         onClose={handleCloseEditPWModal}
         width="60%"
         height="60%"
+      />
+      <S.HistoryModal
+        isOpen={isOpenHistoryModal}
+        onClose={handleCloseHistoryModal}
+        solveId={selectedSolveId}
       />
     </S.ProfilePageWrapper>
   );

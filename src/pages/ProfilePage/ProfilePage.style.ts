@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 import { ButtonHoverTransition, Col, Row } from '@/styles/GlobalStyle';
 
+import HistoryDetailModal from './HistoryDetailModal/HistoryDetailModal';
 import PasswordEditModal from './PasswordEditModal/PasswordEditModal';
 import ProfileEditModal from './ProfileEditModal/ProfileEditModal';
 
@@ -169,3 +170,4 @@ export const EditPWModal = styled(PasswordEditModal)`
   max-width: 60rem;
   min-height: 50rem;
 `;
+export const HistoryModal = styled(HistoryDetailModal)``;
