@@ -50,3 +50,12 @@ export const useGetUuidRoom = (roomShortUuid: string) => {
     enabled: !!roomShortUuid,
   });
 };
+
+export const useGetRoomMembers = (roomShortUuid: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEY.ROOM.UUID_INFO, roomShortUuid],
+    queryFn: () => getUuidRoom(`/${roomShortUuid}`),
+    enabled: !!roomShortUuid,
+    select: data => data?.response?.roomMembers,
+  });
+};

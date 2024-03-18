@@ -3,42 +3,40 @@ import { useParams } from 'react-router-dom';
 
 import { CodeEditor } from '@/components';
 import { MOCK_ROOM_DATA } from '@/constants/room';
+import { useMyInfo } from '@/hooks/Api/useMembers';
+import { useGetRoomMembers } from '@/hooks/Api/useRooms';
 import { useGetUuidRoom } from '@/hooks/Api/useRooms';
-import useCodeEditorStore from '@/store/CodeEditorStore';
+import { useSolvedResult } from '@/hooks/Api/useSolves';
 import useRoomStore from '@/store/RoomStore';
-import useTimerStore from '@/store/TimerStore';
 
-import { MOCK_USER_DATA } from './constants';
 import * as S from './ProblemSharePage.style';
 import UserProfileList from './UserProfileList/UserProfileList';
 
-const userData = MOCK_USER_DATA;
-const myId = 'soopy368@test.com';
-const myInfo = MOCK_USER_DATA.find(user => user.id === myId);
-
 export default function ProblemSharePage() {
-  const [selectedUser, setSelectedUser] = useState(myInfo);
-  const { setIsStop, setIsEnd } = useTimerStore(state => state);
+  const { data: myInfo, refetch: refetchMyInfo } = useMyInfo();
+  const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
+  const { setRoomData } = useRoomStore(state => state);
 
   const params = useParams();
   const { roomShortUuid } = params;
 
   if (!roomShortUuid) return;
 
-  const { data: roomDetail, refetch } = useGetUuidRoom(roomShortUuid);
-  const { code } = useCodeEditorStore();
-  const { setRoomData } = useRoomStore(state => state);
+  const { data: roomDetail, refetch: refetchRoomDetail } =
+    useGetUuidRoom(roomShortUuid);
 
-  const handleUserClick = (userId: string) => {
-    const filteredUser = userData.find(user => user.id === userId);
-    setSelectedUser(filteredUser ?? myInfo);
+  const { data: solvedResults = [], isLoading: isResultLoading } =
+    useSolvedResult(roomShortUuid);
+  const { data: userList = [], isLoading: isUserListLoading } =
+    useGetRoomMembers(roomShortUuid);
+
+  const handleUserClick = (userId: number) => {
+    setSelectedMemberId(userId);
   };
 
-  // TODO: 서버로부터 종료 timestamp 받으면 제거 예정
-  useEffect(() => {
-    setIsStop(true);
-    setIsEnd(false);
-  }, []);
+  const selectedResult = solvedResults.find(
+    result => result.memberId === selectedMemberId
+  );
 
   useEffect(() => {
     if (roomDetail?.response) {
@@ -47,22 +45,48 @@ export default function ProblemSharePage() {
   }, [roomDetail]);
 
   useEffect(() => {
-    refetch();
+    if (myInfo?.response) {
+      setSelectedMemberId(myInfo.response.id);
+    }
+  }, [myInfo]);
+
+  useEffect(() => {
+    refetchRoomDetail();
+    refetchMyInfo();
   }, []);
+
+  if (isResultLoading || isUserListLoading) return;
+
+  if (solvedResults.length === 0 || userList.length === 0) {
+    return <S.NoResultText>풀이 내역이 존재하지 않습니다</S.NoResultText>;
+  }
 
   return (
     <S.Wrapper>
       <UserProfileList
-        selectedUser={selectedUser}
-        userList={MOCK_USER_DATA}
+        selectedUserId={selectedMemberId}
+        userList={userList}
         onUserClick={handleUserClick}
       />
       <S.CodeEditorWrapper>
-        <CodeEditor
-          defaultValue={code}
-          mode="readonly"
-          roomUuid={MOCK_ROOM_DATA.roomShortUuid}
-        />
+        {selectedResult?.code && (
+          <S.SolveStatusWrapper>
+            {selectedResult?.solveStatus === 'SUCCESS' ? (
+              <S.SolveSuccessText>SUCCESS 🎉</S.SolveSuccessText>
+            ) : (
+              <S.SolveFailText>FAIL 🥲</S.SolveFailText>
+            )}
+          </S.SolveStatusWrapper>
+        )}
+        {selectedResult?.code ? (
+          <CodeEditor
+            defaultValue={selectedResult?.code}
+            mode="readonly"
+            roomUuid={MOCK_ROOM_DATA.roomShortUuid}
+          />
+        ) : (
+          <S.NoResultText>풀이 내역이 존재하지 않습니다</S.NoResultText>
+        )}
       </S.CodeEditorWrapper>
     </S.Wrapper>
   );

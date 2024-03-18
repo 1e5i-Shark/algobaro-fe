@@ -6,6 +6,9 @@ export const QUERY_KEY = {
   PROBLEM: {
     PROBLEM_INFO: 'problemInfo',
   },
+  SOLVE: {
+    RESULT: '/solveResult',
+  },
 };
 export const SOLVED_HISTORIES = 'solvedHistoryList';
 export const ROOMS_KEY = 'roomsList';
