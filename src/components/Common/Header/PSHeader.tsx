@@ -1,9 +1,11 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import { SOCKET_TYPE } from '@/constants/socket';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
 import ProblemTimer from '@/pages/ProblemSolvePage/ProblemTimer/ProblemTimer';
 import { PATH } from '@/routes/path';
+import useMessageStore from '@/store/MessageStore';
 
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
@@ -16,6 +18,7 @@ export default function PSHeader() {
   const location = useLocation();
   const params = useParams();
   const { roomShortUuid } = params;
+  const { sendMessage } = useMessageStore();
 
   const isProblemSolvePage =
     location.pathname.split('/')[1] === PATH.PROBLEMSOLVE.replace('/', '');
@@ -31,6 +34,7 @@ export default function PSHeader() {
   };
 
   const handleNavigateToRoom = () => {
+    sendMessage(SOCKET_TYPE.ROOM.END_CODING);
     navigate(`${PATH.ROOM}/${roomShortUuid}`);
   };
 
