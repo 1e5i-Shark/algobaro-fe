@@ -17,7 +17,6 @@ const initialValue: MessageStoreValue = {
   userId: '',
   client: new Stomp.Client(),
   connected: false,
-  roomIndices: [],
   currentRoomId: '',
   messageEntered: '',
   messageLogs: [],
@@ -82,24 +81,15 @@ const useMessageStore = create<MessageStoreState>()(
       },
       disconnect: () => {
         const { client, subscription, sendMessage, publish } = get();
-
         if (!client || !subscription) return;
 
+        sendMessage(SOCKET_TYPE.ROOM.UNREADY);
         sendMessage(SOCKET_TYPE.CHAT.QUIT);
 
         subscription.unsubscribe();
         client.deactivate();
-
         // 연결이 해제 되면 listeners, client를 null로 설정하여 null 값을 통한 예외처리를 할 수 있게 한다.
-        set({
-          connected: false,
-          currentRoomId: '',
-          messageEntered: '',
-          messageLogs: [],
-          receiveLogs: [],
-          listeners: null,
-          client: null,
-        });
+        get().reset();
 
         publish();
       },
@@ -174,13 +164,17 @@ const useMessageStore = create<MessageStoreState>()(
         }
 
         if (type === SOCKET_TYPE.ROOM.START_CODING && formatData.value) {
-          set({ testEndTime: formatData.value });
+          set({
+            testEndTime: formatData.value,
+          });
         }
 
         const receiveLogsType = [
           SOCKET_TYPE.ROOM.CHANGE_HOST,
           SOCKET_TYPE.ROOM.READY,
           SOCKET_TYPE.ROOM.UNREADY,
+          SOCKET_TYPE.ROOM.START_CODING,
+          SOCKET_TYPE.ROOM.END_CODING,
         ];
 
         // Todo: quit은 message가 오지 않는지 백엔드 확인
@@ -277,6 +271,9 @@ const useMessageStore = create<MessageStoreState>()(
           ...state,
           ...newValue,
         })),
+      reset: () => {
+        set({ ...initialValue });
+      },
     }),
     { store: 'MessageStore' }
   )

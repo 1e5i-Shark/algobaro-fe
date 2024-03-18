@@ -1,7 +1,6 @@
 import * as Stomp from '@stomp/stompjs';
 
 import { ChatValueUnion, RoomValueUnion } from '@/types/chat';
-import { RoomType } from '@/types/room';
 
 export interface Message {
   memberId: number;
@@ -14,7 +13,6 @@ export interface MessageStoreValue {
   listeners: Set<Function> | null;
   userId: string;
   client: Stomp.Client | null;
-  roomIndices: RoomType[];
   connected: boolean;
   currentRoomId: string;
   messageEntered: string;
@@ -35,4 +33,5 @@ export interface MessageStoreState extends MessageStoreValue {
   formatMessage: (message: Message) => Message;
   publish: () => void;
   setMessageValue: (newValue: Partial<MessageStoreValue>) => void;
+  reset: () => void;
 }
