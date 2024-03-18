@@ -11,6 +11,7 @@ export const RoomContainer = styled(Row)`
 
 export const WaitingRoomContainer = styled(Col)`
   flex-grow: 2;
+  justify-content: space-between;
   min-width: 65rem;
   padding-right: 3rem;
   overflow: auto;
@@ -19,7 +20,7 @@ export const WaitingRoomContainer = styled(Col)`
 export const ChatContainer = styled(Col)<{ className: string }>`
   ${({ theme }) => css`
     flex-grow: 1;
-    min-width: 26rem;
+    min-width: 30rem;
     padding: 0 1rem;
     overflow: auto;
     border-left: 1px solid ${theme.color.transparent_30};
@@ -169,6 +170,7 @@ export const MembersContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(3, ${theme.FIXED_WIDTH.CARD});
     gap: 2rem;
+    align-items: center;
     justify-content: center;
     margin-top: 5rem;
 
