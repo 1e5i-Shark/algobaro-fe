@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
@@ -17,8 +17,6 @@ export default function PSHeader() {
   const { roomShortUuid } = useRoomStore(state => state.roomData);
 
   const location = useLocation();
-  const params = useParams();
-  const { roomShortUuid } = params;
 
   const isProblemSolvePage =
     location.pathname.split('/')[1] === PATH.PROBLEMSOLVE.replace('/', '');
