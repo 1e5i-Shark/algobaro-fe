@@ -1,11 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-
 import { Modal } from '@/components';
-import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import useModal from '@/hooks/useModal';
 import * as S from '@/pages/RoomPage/RoomPage.style';
-import { PATH } from '@/routes/path';
-import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
 
 import { ModalRoom, RoomHeaderButtons, RoomHeaderInfo } from '.';
@@ -16,23 +11,10 @@ interface HeaderProps {
 
 export default function RoomHeader({ className }: HeaderProps) {
   const {
-    roomData,
     myRoomData: { role: myRole },
   } = useRoomStore();
 
-  const { refetch } = useGetUuidRoom(roomData.roomShortUuid);
-
   const { modalRef, isOpen, openModal, closeModal } = useModal();
-  const { disconnect } = useMessageStore();
-  const navigate = useNavigate();
-
-  const handleExitRoom = () => {
-    // disconnect 시 서버에서 방장 자동 변경
-    navigate(PATH.HOME);
-
-    disconnect();
-    refetch();
-  };
 
   return (
     <>
@@ -41,8 +23,7 @@ export default function RoomHeader({ className }: HeaderProps) {
         <RoomHeaderButtons
           role={myRole}
           className="roomButtons"
-          onClick={() => openModal()}
-          onExit={handleExitRoom}
+          onClick={openModal}
         />
       </S.HeaderContainer>
       <Modal
@@ -52,11 +33,7 @@ export default function RoomHeader({ className }: HeaderProps) {
         onClose={closeModal}
         ref={modalRef}
       >
-        <ModalRoom
-          onClose={() => {
-            closeModal();
-          }}
-        />
+        <ModalRoom onClose={closeModal} />
       </Modal>
     </>
   );

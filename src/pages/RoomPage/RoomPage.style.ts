@@ -74,6 +74,13 @@ export const ButtonsWrapper = styled(Row)`
   gap: 1rem;
 `;
 
+export const Title = styled.h4`
+  ${({ theme, color }) => css`
+    padding-bottom: 2rem;
+    color: ${color || theme.color.text_primary_color};
+  `}
+`;
+
 export const RoomIdWrapper = styled(Row)`
   padding-bottom: 1rem;
 
