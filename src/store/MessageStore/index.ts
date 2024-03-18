@@ -216,14 +216,14 @@ const useMessageStore = create<MessageStoreState>()(
             return {
               memberId,
               type,
-              value: value || `${memberId}님이 입장하였습니다`,
+              value: value && `${value}님이 입장하였습니다`,
               timestamp: formattedTime,
             };
           case SOCKET_TYPE.CHAT.QUIT:
             return {
               memberId,
               type,
-              value: value || `${memberId}님이 퇴장하였습니다.`,
+              value: value && `${value}님이 퇴장하였습니다.`,
               timestamp: formattedTime,
             };
           case SOCKET_TYPE.CHAT.MESSAGE:
