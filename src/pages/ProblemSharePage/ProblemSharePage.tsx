@@ -1,47 +1,62 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { CodeEditor } from '@/components';
 import { MOCK_ROOM_DATA } from '@/constants/room';
-import useCodeEditorStore from '@/store/CodeEditorStore';
-import useTimerStore from '@/store/TimerStore';
+import { useGetRoomMembers } from '@/hooks/Api/useRooms';
+import { useSolvedResult } from '@/hooks/Api/useSolves';
 
-import { MOCK_USER_DATA } from './constants';
+import { MOCK_MY_ID } from './constants';
 import * as S from './ProblemSharePage.style';
 import UserProfileList from './UserProfileList/UserProfileList';
 
-const userData = MOCK_USER_DATA;
-const myId = 'soopy368@test.com';
-const myInfo = MOCK_USER_DATA.find(user => user.id === myId);
-
 export default function ProblemSharePage() {
-  const [selectedUser, setSelectedUser] = useState(myInfo);
-  const { setIsStop, setIsEnd } = useTimerStore(state => state);
-  const { code } = useCodeEditorStore();
+  const [selectedMemberId, setSelectedMemberId] = useState(MOCK_MY_ID);
 
-  const handleUserClick = (userId: string) => {
-    const filteredUser = userData.find(user => user.id === userId);
-    setSelectedUser(filteredUser ?? myInfo);
+  const params = useParams();
+  const { roomShortUuid } = params;
+
+  if (roomShortUuid == null) return;
+
+  const { data: solvedResults = [] } = useSolvedResult(roomShortUuid);
+  const { data: userList = [] } = useGetRoomMembers(roomShortUuid);
+
+  if (solvedResults.length === 0 || userList.length === 0) return;
+
+  const handleUserClick = (userId: number) => {
+    setSelectedMemberId(userId);
   };
 
-  // TODO: 서버로부터 종료 timestamp 받으면 제거 예정
-  useEffect(() => {
-    setIsStop(true);
-    setIsEnd(false);
-  }, []);
+  const selectedResult = solvedResults.find(
+    result => result.memberId === selectedMemberId
+  );
 
   return (
     <S.Wrapper>
       <UserProfileList
-        selectedUser={selectedUser}
-        userList={MOCK_USER_DATA}
+        selectedUserId={selectedMemberId}
+        userList={userList}
         onUserClick={handleUserClick}
       />
       <S.CodeEditorWrapper>
-        <CodeEditor
-          defaultValue={code}
-          mode="readonly"
-          roomUuid={MOCK_ROOM_DATA.roomShortUuid}
-        />
+        {selectedResult?.code && (
+          <S.SolveStatusWrapper>
+            {selectedResult?.solveStatus === 'SUCCESS' ? (
+              <S.SolveSuccessText>SUCCESS 🎉</S.SolveSuccessText>
+            ) : (
+              <S.SolveFailText>FAIL 🥲</S.SolveFailText>
+            )}
+          </S.SolveStatusWrapper>
+        )}
+        {selectedResult?.code ? (
+          <CodeEditor
+            defaultValue={selectedResult?.code}
+            mode="readonly"
+            roomUuid={MOCK_ROOM_DATA.roomShortUuid}
+          />
+        ) : (
+          <S.NoResultText>풀이 내역이 존재하지 않습니다</S.NoResultText>
+        )}
       </S.CodeEditorWrapper>
     </S.Wrapper>
   );
