@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, CodeEditor, ResizeHandle } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
+import { PATH } from '@/routes/path';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
 
@@ -33,7 +34,7 @@ export default function ProblemSolvePage() {
   const handleSubmit = () => {
     // TODO: 코드 제출 시 백준 submit 링크 직접 제출 확인 모달 추가
 
-    navigate(`/problemshare/${roomShortUuid}`);
+    navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`, { replace: true });
 
     submitMutate({
       roomShortUuid,

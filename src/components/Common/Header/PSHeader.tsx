@@ -35,7 +35,7 @@ export default function PSHeader() {
 
   const handleNavigateToRoom = () => {
     sendMessage(SOCKET_TYPE.ROOM.END_CODING);
-    navigate(`${PATH.ROOM}/${roomShortUuid}`);
+    navigate(`${PATH.ROOM}/${roomShortUuid}`, { replace: true });
   };
 
   return (

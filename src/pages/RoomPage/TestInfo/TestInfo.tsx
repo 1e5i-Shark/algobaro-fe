@@ -59,7 +59,7 @@ export default function TestInfo({ className }: TestInfoProps) {
 
   const handleStartTest = () => {
     sendMessage(SOCKET_TYPE.ROOM.START_CODING);
-    navigate(`${PATH.PROBLEMSOLVE}/${roomShortUuid}`);
+    navigate(`${PATH.PROBLEMSOLVE}/${roomShortUuid}`, { replace: true });
   };
 
   const handleClickLink = () => {
