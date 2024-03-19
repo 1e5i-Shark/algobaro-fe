@@ -29,9 +29,9 @@ export default function RoomPage() {
     listeners,
     connect,
     disconnect,
-    sendMessage,
     reset: resetMessage,
   } = useMessageStore();
+
   const { data: myInfo, refetch: refetchMyInfo } = useMyInfo();
 
   const { roomShortUuid } = useParams();
@@ -45,37 +45,29 @@ export default function RoomPage() {
     data,
     isLoading,
     isError,
-    error,
     refetch: refetchRoom,
   } = useGetUuidRoom(roomShortUuid);
 
   useEffect(() => {
-    // 방에 들어오면 무조건 connect
     connect(roomShortUuid);
     refetchMyInfo();
 
-    // RoomPage가 unmount 된다면 disconnect
-    // ! Page 이동시에도 연결을 다시 하기위해서 disconnect가 아닌 내부 몇개의 함수만 가져와서 사용
     return () => {
       if (!client || !subscription) return;
 
       subscription.unsubscribe();
       client.deactivate();
 
-      sendMessage(SOCKET_TYPE.ROOM.UNREADY);
       resetMessage();
       resetRoom();
     };
   }, []);
 
   useEffect(() => {
-    if (receiveLogs.at(-1) === SOCKET_TYPE.ROOM.START_CODING) {
-      // Test를 위한 Share 페이지로의 이동. 추후 ProblemSolve로 변경
-      navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`, { replace: true });
-      // navigate(`${PATH.PROBLEMSOLVE}/${roomShortUuid}`, { replace: true });
-    }
-
     refetchRoom();
+    if (receiveLogs.at(-1) === SOCKET_TYPE.ROOM.START_CODING) {
+      navigate(`${PATH.PROBLEMSOLVE}/${roomShortUuid}`, { replace: true });
+    }
 
     if (myInfo && data?.response) {
       setRoomData(data.response);
@@ -93,18 +85,13 @@ export default function RoomPage() {
   }, [roomData]);
 
   if (isError) {
-    console.error(error);
-
     alert('방 정보를 불러오지 못했습니다. 잠시 후 다시 입장해주세요.');
     return <Navigate to={PATH.HOME} />;
   }
 
-  /**
-   * 웹소켓은 새로고침, 페이지 이동 시 연결이 끊긴다.
-   * 그러나 비정상적인 네트워크 종료 등으로 브라우저가 갑작스럽게 연결이 끊기면 서버 측에서 이를 감지하기 어려울 수 있다.
-   * 따라서 beforeUnloadListener로 명시적으로 웹소켓 연결을 끊어준다.
-   */
-  const beforeUnloadListener = () => {
+  const beforeUnloadListener = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+
     disconnect();
     resetRoom();
   };
