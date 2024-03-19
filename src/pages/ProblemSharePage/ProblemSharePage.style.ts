@@ -41,7 +41,9 @@ const SolveStatusWrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
     justify-content: start;
+    margin-bottom: 1rem;
     font-weight: ${theme.fontWeight.semiBold};
+    color: ${theme.color.white_primary};
   `}
 `;
 
