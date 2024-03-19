@@ -19,6 +19,7 @@ export const API_ENDPOINT = {
   SOLVE: {
     SOLVED_HISTORY_LIST: '/v1/solves/history',
     SOVLED_HISTORY_DETAIL: '/api/v1/solves/history/',
+    RESULT: '/v1/solves/result',
   },
   MEMBER: {
     EDIT_MY_INFO_URL: '/v1/members/my/general',

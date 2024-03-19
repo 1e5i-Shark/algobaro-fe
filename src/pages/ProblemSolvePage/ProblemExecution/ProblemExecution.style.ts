@@ -50,4 +50,24 @@ const GuideText = styled.span`
   `}
 `;
 
-export { GuideText, ResultText, ResultTitle, ResultWrapper, Wrapper };
+const ErrorText = styled.span`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 1.6rem;
+    line-height: ${theme.size.XXL};
+    color: ${theme.color.red};
+    text-align: center;
+  `}
+`;
+
+export {
+  ErrorText,
+  GuideText,
+  ResultText,
+  ResultTitle,
+  ResultWrapper,
+  Wrapper,
+};

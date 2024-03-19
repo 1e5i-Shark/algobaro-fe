@@ -9,6 +9,7 @@ export const QUERY_KEY = {
   SOLVE: {
     SOLVED_HISTORIES: 'solvedHistoryList',
     SOLVED_DETAIL: 'sovledDetail',
+    RESULT: '/solveResult',
   },
 };
 export const ROOMS_KEY = 'roomsList';

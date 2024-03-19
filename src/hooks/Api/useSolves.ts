@@ -26,3 +26,12 @@ export const useGetSolvedDetail = (solveId: number) => {
     retry: 0,
   });
 };
+
+export const useSolvedResult = (roomShortUuid: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEY.SOLVE.RESULT, roomShortUuid],
+    queryFn: () => getSolvedResult(roomShortUuid),
+    select: data => data?.response.solveResults,
+    enabled: !!roomShortUuid,
+  });
+};
