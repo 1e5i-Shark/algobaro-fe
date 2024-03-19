@@ -6,12 +6,9 @@ import { Button, Modal, Spinner } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useSubmission } from '@/hooks/useProblemSolve';
 import { PATH } from '@/routes/path';
-import { TestCaseResultType } from '@/services/ProblemSolve/submission';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
 
-import failLottie from './lottie/fail-lottie.json';
-import successLottie from './lottie/success-lottie.json';
 import * as S from './ProblemSubmitModal.style';
 
 interface ProblemSubmitModalProps {
@@ -30,9 +27,6 @@ export default function ProblemSubmitModal({
   const { roomShortUuid, problemLink } = useRoomStore(state => state.roomData);
   const { code, language } = useCodeEditorStore(state => state);
 
-  const [testCaseResult, setTestCaseResult] = useState<TestCaseResultType[]>(
-    []
-  );
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
   const { mutateAsync: submitMutateAsync, isLoading } = useSubmission();
@@ -95,41 +89,6 @@ export default function ProblemSubmitModal({
       onClose={closeModal}
     >
       <S.Wrapper>
-        <S.TestCaseWrapper>
-          <S.Title>채점 결과</S.Title>
-          {testCaseResult.length === 0 && (
-            <S.TestResultWrapper>
-              {isLoading ? (
-                <Spinner />
-              ) : (
-                <S.TestErrorText>{`실행 중 오류가 발생했습니다 \n 잠시 후 다시 시도해주세요`}</S.TestErrorText>
-              )}
-            </S.TestResultWrapper>
-          )}
-          {testCaseResult.length > 0 && (
-            <S.TestCaseList>
-              {testCaseResult.map((result, index) => (
-                <S.TestCaseItem key={index}>
-                  <S.TestCaseTitle>{`TestCase ${index + 1}:`}</S.TestCaseTitle>
-                  <S.LottieWrapper>
-                    <Lottie
-                      width={result.success ? 100 : 21}
-                      height={result.success ? 100 : 21}
-                      options={{
-                        loop: false,
-                        autoplay: true,
-                        animationData: result.success
-                          ? successLottie
-                          : failLottie,
-                      }}
-                      style={{ margin: '0' }}
-                    />
-                  </S.LottieWrapper>
-                </S.TestCaseItem>
-              ))}
-            </S.TestCaseList>
-          )}
-        </S.TestCaseWrapper>
         <S.BOJWrapper>
           <S.Title>백준 제출하기</S.Title>
           <S.BOJGuideText>{`백준 사이트에 제출하여 채점 결과를 확인해 보세요!
