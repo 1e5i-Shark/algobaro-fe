@@ -43,7 +43,7 @@ export default function CodeEditor({
   roomUuid,
   width,
   height,
-  defaultValue,
+  defaultValue = '',
 }: CodeEditorProps) {
   const { theme } = useCustomTheme();
 
@@ -112,20 +112,6 @@ export default function CodeEditor({
     }, []);
   }
 
-  // 코드 에디터 코드 변화 감지 이벤트 핸들러 함수
-  const handleChangeCode = (
-    editor: Editor,
-    data: EditorChange,
-    value: string
-  ) => {
-    const changeEditorParams = {
-      editor,
-      data,
-      value,
-    };
-    setCode(changeEditorParams.value);
-  };
-
   // 코드 에디터 붙여넣기 방지 함수
   const handlePreventCopy = (
     editor: Editor,
@@ -144,6 +130,11 @@ export default function CodeEditor({
     if (changeData.origin === 'paste' && mode === 'normal') {
       changeData.cancel?.();
       alert('풀이 중 코드 붙여넣기는 금지합니다.');
+      return;
+    }
+
+    if (changeData.origin === '+input' && mode !== 'readonly') {
+      setCode(`${value}${data.text[0]}`);
     }
   };
 
@@ -169,11 +160,8 @@ export default function CodeEditor({
         </S.DropDownWrapper>
       )}
       <CodeMirrorEditor
-        onChange={handleChangeCode}
         onBeforeChange={handlePreventCopy}
         options={{
-          value:
-            mode !== 'normal' ? defaultValue : codeEditorDefaultValue[language],
           mode: getEditorMode(language),
           theme: theme.mode === 'dark' ? 'material-palenight' : 'eclipse',
           lineNumbers: true,
@@ -187,6 +175,9 @@ export default function CodeEditor({
         editorDidMount={(editor: Editor) => {
           editorRef.current = editor;
           editor.setSize(width ?? '100%', height ?? '100%');
+          editor.setValue(
+            mode !== 'normal' ? defaultValue : codeEditorDefaultValue[language]
+          );
         }}
         editorWillUnmount={() => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
