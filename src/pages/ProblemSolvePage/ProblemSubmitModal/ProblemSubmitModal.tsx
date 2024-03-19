@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import Lottie from 'react-lottie';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Modal, Spinner } from '@/components';
+import { Button, DropDown, Modal } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useSubmission } from '@/hooks/useProblemSolve';
 import { PATH } from '@/routes/path';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
 
+import { STATUS_DATA_SET } from '../constants';
 import * as S from './ProblemSubmitModal.style';
 
 interface ProblemSubmitModalProps {
@@ -28,8 +28,9 @@ export default function ProblemSubmitModal({
   const { code, language } = useCodeEditorStore(state => state);
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [solveStatus, setSolveStatus] = useState('SUCCESS');
 
-  const { mutateAsync: submitMutateAsync, isLoading } = useSubmission();
+  const { mutateAsync: submitMutateAsync } = useSubmission();
 
   const navigate = useNavigate();
 
@@ -54,35 +55,26 @@ export default function ProblemSubmitModal({
     }, 800);
   };
 
-  const handleEndCoding = () => {
-    navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`);
-  };
-
-  const handleSubmit = async () => {
-    const result = await submitMutateAsync({
+  const handleEndCoding = async () => {
+    await submitMutateAsync({
       roomShortUuid,
       language,
       code,
       problemLink,
+      solveStatus,
     });
-
-    if (result.response?.testCaseResults) {
-      setTestCaseResult(result.response.testCaseResults);
-    }
+    navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`);
   };
 
   useEffect(() => {
     if (isOpen) {
-      handleSubmit();
       setIsSubmitDisabled(true);
-    } else {
-      setTestCaseResult([]);
     }
   }, [isOpen]);
 
   return (
     <Modal
-      width="60rem"
+      width="65rem"
       height="fit-content"
       ref={modalRef}
       isOpen={isOpen}
@@ -90,9 +82,8 @@ export default function ProblemSubmitModal({
     >
       <S.Wrapper>
         <S.BOJWrapper>
-          <S.Title>백준 제출하기</S.Title>
-          <S.BOJGuideText>{`백준 사이트에 제출하여 채점 결과를 확인해 보세요!
-          제출이 완료되어야 서비스를 정상적으로 이용할 수 있어요`}</S.BOJGuideText>
+          <S.Title>제출하기</S.Title>
+          <S.BOJGuideText>{`백준 사이트에 제출하여 채점 결과를 확인해 보세요!`}</S.BOJGuideText>
           <S.BOJButtonWrapper>
             <Button
               width="16rem"
@@ -102,6 +93,24 @@ export default function ProblemSubmitModal({
             >
               백준 제출하러 가기
             </Button>
+          </S.BOJButtonWrapper>
+          <S.Title>결과 공유하기</S.Title>
+          <S.BOJGuideText>{`팀원들에게 백준 채점 결과를 공유해 주세요 🤗`}</S.BOJGuideText>
+          <S.BOJButtonWrapper>
+            <DropDown
+              width="16rem"
+              dataId="submitStatus"
+              labelId="status-label"
+              defaultValue={'SUCCESS'}
+              dataSet={STATUS_DATA_SET}
+              onSelected={value => {
+                setSolveStatus(value);
+              }}
+              borderColor={theme.color.gray_50}
+              fontSize={theme.size.M}
+              backgroundColor={theme.color.background_editor}
+              hasDefaultLabel={false}
+            />
           </S.BOJButtonWrapper>
           <S.EndButtonWrapper>
             <Button
