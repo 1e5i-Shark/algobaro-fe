@@ -7,6 +7,7 @@ import { useSubmission } from '@/hooks/useProblemSolve';
 import { PATH } from '@/routes/path';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
+import useTimerStore from '@/store/TimerStore';
 
 import { STATUS_DATA_SET } from '../constants';
 import * as S from './ProblemSubmitModal.style';
@@ -26,6 +27,7 @@ export default function ProblemSubmitModal({
 
   const { roomShortUuid, problemLink } = useRoomStore(state => state.roomData);
   const { code, language } = useCodeEditorStore(state => state);
+  const { isEnd } = useTimerStore(state => state);
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [solveStatus, setSolveStatus] = useState('SUCCESS');
@@ -74,6 +76,7 @@ export default function ProblemSubmitModal({
 
   return (
     <Modal
+      mode={isEnd ? 'confirm' : 'normal'}
       width="65rem"
       height="fit-content"
       ref={modalRef}
