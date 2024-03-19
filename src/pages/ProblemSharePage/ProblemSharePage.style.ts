@@ -14,6 +14,7 @@ const Wrapper = styled.div`
 `;
 
 const CodeEditorContainer = styled.div`
+  flex-grow: 2;
   width: 150rem;
   padding-top: 4rem;
 `;
@@ -21,7 +22,7 @@ const CodeEditorContainer = styled.div`
 const ChatContainer = styled(Col)`
   ${({ theme }) => css`
     flex-grow: 1;
-    max-width: 40rem;
+    min-width: 40rem;
     padding: 0 1rem 2rem 1rem;
     overflow: auto;
     border-left: 1px solid ${theme.color.transparent_30};
