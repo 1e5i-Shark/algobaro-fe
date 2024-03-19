@@ -23,21 +23,20 @@ export default function RoomHeaderButtons({
   onClick,
 }: RoomButtonsProps) {
   const { theme } = useCustomTheme();
-  const { reset } = useRoomStore();
+  const { reset: resetRoom } = useRoomStore();
 
   const { closeModal, openModal, isOpen } = useModal();
-  const { disconnect } = useMessageStore();
+  const { connected, disconnect } = useMessageStore();
   const navigate = useNavigate();
 
-  // const { refetch } = useGetUuidRoom(roomData.roomShortUuid);
-
   const handleExitRoom = () => {
-    // disconnect 시 서버에서 방장 자동 변경
-    disconnect();
-    reset();
-    // refetch();
+    if (connected) {
+      disconnect();
+    }
 
-    navigate(PATH.HOME);
+    resetRoom();
+
+    navigate(`${PATH.HOME}`, { replace: true });
   };
 
   return (
