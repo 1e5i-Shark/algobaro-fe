@@ -6,7 +6,8 @@ import { Col, Row } from '@/styles/GlobalStyle';
 export const RoomContainer = styled(Row)`
   height: 100vh;
   padding: 3rem 0rem 3rem 5rem;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 `;
 
 export const WaitingRoomContainer = styled(Col)`
