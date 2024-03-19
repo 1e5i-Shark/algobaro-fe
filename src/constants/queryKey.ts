@@ -6,7 +6,10 @@ export const QUERY_KEY = {
   PROBLEM: {
     PROBLEM_INFO: 'problemInfo',
   },
+  SOLVE: {
+    SOLVED_HISTORIES: 'solvedHistoryList',
+    SOLVED_DETAIL: 'sovledDetail',
+  },
 };
-export const SOLVED_HISTORIES = 'solvedHistoryList';
 export const ROOMS_KEY = 'roomsList';
 export const ROOM_DETAIL = 'roomDetail';
