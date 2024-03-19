@@ -13,14 +13,12 @@ interface MemberListProps {
   className: string;
 }
 
-const MAX_MEMBERS = 6;
-
 export default function MemberList({ className }: MemberListProps) {
   const {
     roomData,
     myRoomData: { role: myRole },
   } = useRoomStore();
-  const { roomMembers } = roomData;
+  const { roomLimit, roomMembers } = roomData;
 
   const { sendMessage, setMessageValue } = useMessageStore();
 
@@ -60,7 +58,7 @@ export default function MemberList({ className }: MemberListProps) {
       />
     ));
 
-    const emptyCount = MAX_MEMBERS - roomMembers.length;
+    const emptyCount = roomLimit - roomMembers.length;
 
     for (let i = 0; i < emptyCount; i++) {
       cardList.push(
@@ -72,7 +70,7 @@ export default function MemberList({ className }: MemberListProps) {
     }
 
     return cardList;
-  }, [roomMembers]);
+  }, [roomMembers, myRole]);
 
   return (
     <S.MembersContainer className={className}>{memberCards}</S.MembersContainer>

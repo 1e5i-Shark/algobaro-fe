@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  height: 10rem;
 `;
 
 const UserList = styled.ul`

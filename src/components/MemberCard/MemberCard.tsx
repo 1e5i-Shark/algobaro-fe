@@ -23,7 +23,7 @@ export default function MemberCard({
   memberId,
   nickname,
   profileImage,
-  role,
+  role: memberRole,
   ready,
   onMenuClick,
 }: MemberProps) {
@@ -43,7 +43,7 @@ export default function MemberCard({
 
   return (
     <S.CardWrapper>
-      {myRole === ROOM_ROLE.HOST && role === ROOM_ROLE.PARTICIPANT && (
+      {myRole === ROOM_ROLE.HOST && memberRole === ROOM_ROLE.PARTICIPANT && (
         <S.MenuWrapper>
           <Menu
             menuList={menuList}
@@ -61,7 +61,7 @@ export default function MemberCard({
       />
       <S.NameWrapper>{nickname}</S.NameWrapper>
       <StatusTag
-        role={role ?? ROOM_ROLE.PARTICIPANT}
+        role={memberRole ?? ROOM_ROLE.PARTICIPANT}
         ready={ready ?? false}
       />
     </S.CardWrapper>

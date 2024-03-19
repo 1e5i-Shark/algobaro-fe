@@ -52,6 +52,7 @@ const useRoomStore = create<RoomStateProps>()(
       reset: () =>
         set({
           roomData: initialData,
+          myRoomData: initialMyData,
         }),
     }),
     { store: 'RoomStore ' }
