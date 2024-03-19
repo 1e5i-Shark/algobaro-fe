@@ -8,6 +8,7 @@ import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { PATH } from '@/routes/path';
 import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
+import useTimerStore from '@/store/TimerStore';
 
 import { findMyRoomData } from './findMyRoomData';
 import MemberList from './MemberList/MemberList';
@@ -31,6 +32,7 @@ export default function RoomPage() {
     disconnect,
     reset: resetMessage,
   } = useMessageStore();
+  const { setEndDateIOSString } = useTimerStore(state => state);
 
   const { data: myInfo, refetch: refetchMyInfo } = useMyInfo();
 
@@ -66,6 +68,7 @@ export default function RoomPage() {
   useEffect(() => {
     refetchRoom();
     if (receiveLogs.at(-1) === SOCKET_TYPE.ROOM.START_CODING) {
+      console.log(receiveLogs);
       navigate(`${PATH.PROBLEMSOLVE}/${roomShortUuid}`, { replace: true });
     }
 

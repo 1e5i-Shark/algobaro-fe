@@ -4,8 +4,9 @@ import { Col } from '@/styles/GlobalStyle';
 
 const ProblemWrapper = styled(Col)`
   ${({ theme }) => css`
-    height: 100%;
+    height: calc(100% - 3rem);
     padding: 2rem;
+    overflow-x: hidden;
     overflow-y: scroll;
     background-color: ${theme.color.background_editor};
   `}

@@ -43,11 +43,13 @@ export default function CodeEditor({
   roomUuid,
   width,
   height,
-  defaultValue = '',
+  defaultValue,
 }: CodeEditorProps) {
   const { theme } = useCustomTheme();
 
-  const { language, setCode, setLanguage } = useCodeEditorStore(state => state);
+  const { language, code, setCode, setLanguage } = useCodeEditorStore(
+    state => state
+  );
 
   const editorRef = useRef<Editor | null>(null);
   const providerRef = useRef<WebrtcProvider | null>(null);
@@ -170,7 +172,8 @@ export default function CodeEditor({
         onChange={handleChangeCode}
         onBeforeChange={handlePreventCopy}
         options={{
-          value: defaultValue || codeEditorDefaultValue[language],
+          value:
+            mode !== 'normal' ? defaultValue : codeEditorDefaultValue[language],
           mode: getEditorMode(language),
           theme: theme.mode === 'dark' ? 'material-palenight' : 'eclipse',
           lineNumbers: true,

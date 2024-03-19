@@ -47,7 +47,8 @@ export default function ProblemSolvePage() {
   };
 
   const handleCompileExecution = async () => {
-    compileMutate({ code, input, language });
+    console.log({ code, input, language });
+    // compileMutate({ code, input, language });
   };
 
   const handleSubmit = async () => {
@@ -94,7 +95,7 @@ export default function ProblemSolvePage() {
               <Panel defaultSize={SIZE_PERCENTAGE.EDITOR}>
                 {/* 에디터 영역 */}
                 <S.EditorWrapper>
-                  <CodeEditor />
+                  <CodeEditor defaultValue={code} />
                 </S.EditorWrapper>
               </Panel>
               <ResizeHandle direction={DIRECTION.VERTICAL} />

@@ -19,7 +19,7 @@ const MOCK_INPUT = '1 2';
 
 const useCodeEditorStore = create<Props>()(
   devtools(set => ({
-    code: codeEditorDefaultValue.nodejs,
+    code: codeEditorDefaultValue['nodejs'],
     language: 'nodejs',
     input: MOCK_INPUT,
     result: '',
