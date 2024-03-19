@@ -144,7 +144,10 @@ export default function CodeEditor({
       <CodeMirrorEditor
         onChange={handleChangeCode}
         options={{
-          value: defaultValue || codeEditorDefaultValue[language],
+          value:
+            mode !== 'normal'
+              ? defaultValue
+              : defaultValue || codeEditorDefaultValue[language],
           mode: getEditorMode(language),
           theme: theme.mode === 'dark' ? 'material-palenight' : 'eclipse',
           lineNumbers: true,
