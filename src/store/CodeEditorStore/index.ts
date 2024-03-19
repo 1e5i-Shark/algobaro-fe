@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
+import { codeEditorDefaultValue } from '@/components/IDE/CodeEditor/utils';
+
 interface Props {
   code: string;
   language: string;
@@ -13,13 +15,12 @@ interface Props {
 }
 
 // TODO: 서버로부터 데이터 받아와서 교체 필요
-const MOCK_LANGUAGE = 'nodejs';
 const MOCK_INPUT = '1 2';
 
 const useCodeEditorStore = create<Props>()(
   devtools(set => ({
-    code: '',
-    language: MOCK_LANGUAGE,
+    code: codeEditorDefaultValue.nodejs,
+    language: 'nodejs',
     input: MOCK_INPUT,
     result: '',
     setCode: (code: string) => set({ code }),
