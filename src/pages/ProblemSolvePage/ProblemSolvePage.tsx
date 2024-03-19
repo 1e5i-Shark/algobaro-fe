@@ -9,6 +9,7 @@ import useModal from '@/hooks/useModal';
 import { useCompile } from '@/hooks/useProblemSolve';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
+import useTimerStore from '@/store/TimerStore';
 
 import { DIRECTION, SIZE_PERCENTAGE } from './constants';
 import ProblemExecution from './ProblemExecution/ProblemExecution';
@@ -37,6 +38,7 @@ export default function ProblemSolvePage() {
     roomData: { problemLink },
     setRoomData,
   } = useRoomStore(state => state);
+  const { isEnd } = useTimerStore(state => state);
 
   const handleClickProblemLink = () => {
     if (!problemLink) return;
@@ -57,6 +59,14 @@ export default function ProblemSolvePage() {
       setRoomData(roomDetail.response);
     }
   }, [roomDetail]);
+
+  useEffect(() => {
+    if (isEnd) {
+      openModal();
+    } else {
+      closeModal();
+    }
+  }, [isEnd]);
 
   useEffect(() => {
     refetch();
