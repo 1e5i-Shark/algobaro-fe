@@ -29,6 +29,7 @@
     "react-codemirror2": "^7.2.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
+    "react-lottie": "^1.2.4",
     "react-resizable-panels": "^2.0.12",
     "react-router-dom": "^6.22.0",
     "sockjs-client": "^1.6.1",
@@ -45,6 +46,7 @@
     "@types/node": "^20.11.17",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@types/react-lottie": "^1.2.10",
     "@types/react-router-dom": "^5.3.3",
     "@types/sockjs-client": "^1.5.4",
     "@types/stompjs": "^2.3.9",
@@ -66,10 +68,10 @@
     "postcss": "^8.4.35",
     "postcss-styled-syntax": "^0.6.4",
     "prettier": "^3.2.5",
+    "react-textarea-autosize": "^8.5.3",
     "stylelint": "^16.2.1",
     "stylelint-config-recess-order": "^4.6.0",
     "typescript": "^5.2.2",
-    "react-textarea-autosize": "^8.5.3",
     "vite": "^5.0.8"
   }
 }

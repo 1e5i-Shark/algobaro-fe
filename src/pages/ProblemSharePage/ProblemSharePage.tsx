@@ -3,25 +3,34 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Chat, CodeEditor } from '@/components';
 import { MOCK_ROOM_DATA } from '@/constants/room';
+import { useMyInfo } from '@/hooks/Api/useMembers';
 import { useGetRoomMembers } from '@/hooks/Api/useRooms';
+import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { useSolvedResult } from '@/hooks/Api/useSolves';
 import { PATH } from '@/routes/path';
+import useRoomStore from '@/store/RoomStore';
 
-import { MOCK_MY_ID } from './constants';
 import * as S from './ProblemSharePage.style';
 import UserProfileList from './UserProfileList/UserProfileList';
 
 export default function ProblemSharePage() {
-  const [selectedMemberId, setSelectedMemberId] = useState(MOCK_MY_ID);
+  const { data: myInfo, refetch: refetchMyInfo } = useMyInfo();
+  const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
+  const { setRoomData } = useRoomStore(state => state);
 
   const navigate = useNavigate();
   const params = useParams();
   const { roomShortUuid } = params;
 
-  if (roomShortUuid == null) return;
+  if (!roomShortUuid) return;
 
-  const { data: solvedResults = [] } = useSolvedResult(roomShortUuid);
-  const { data: userList = [] } = useGetRoomMembers(roomShortUuid);
+  const { data: roomDetail, refetch: refetchRoomDetail } =
+    useGetUuidRoom(roomShortUuid);
+
+  const { data: solvedResults = [], isLoading: isResultLoading } =
+    useSolvedResult(roomShortUuid);
+  const { data: userList = [], isLoading: isUserListLoading } =
+    useGetRoomMembers(roomShortUuid);
 
   const handleUserClick = (userId: number) => {
     setSelectedMemberId(userId);
@@ -42,7 +51,28 @@ export default function ProblemSharePage() {
     };
   }, []);
 
-  if (solvedResults.length === 0 || userList.length === 0) return;
+  useEffect(() => {
+    if (roomDetail?.response) {
+      setRoomData(roomDetail.response);
+    }
+  }, [roomDetail]);
+
+  useEffect(() => {
+    if (myInfo?.response) {
+      setSelectedMemberId(myInfo.response.id);
+    }
+  }, [myInfo]);
+
+  useEffect(() => {
+    refetchRoomDetail();
+    refetchMyInfo();
+  }, []);
+
+  if (isResultLoading || isUserListLoading) return;
+
+  if (solvedResults.length === 0 || userList.length === 0) {
+    return <S.NoResultText>풀이 내역이 존재하지 않습니다</S.NoResultText>;
+  }
 
   return (
     <S.Wrapper>

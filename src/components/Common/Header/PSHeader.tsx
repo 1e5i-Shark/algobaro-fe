@@ -16,6 +16,8 @@ import * as S from './PSHeader.style';
 export default function PSHeader() {
   const { theme } = useCustomTheme();
   const { modalRef, isOpen, openModal, closeModal } = useModal();
+  const { roomShortUuid } = useRoomStore(state => state.roomData);
+
   const location = useLocation();
   const { reset: resetRoom } = useRoomStore();
 

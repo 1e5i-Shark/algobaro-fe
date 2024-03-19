@@ -18,7 +18,6 @@ export const useCompile = () => {
       if (response.success) {
         setResult(response.response.result);
       }
-      console.log('compile response', response);
     },
   });
 };
