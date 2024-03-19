@@ -28,5 +28,6 @@ export const STATUS_DATA_SET: Record<string, string> = {
   SUCCESS: '성공',
   FAIL: '실패',
   TIMEOUT: '시간 초과',
+  MEMORY: '메모리 초과',
   ERROR: '기타 에러',
 };
