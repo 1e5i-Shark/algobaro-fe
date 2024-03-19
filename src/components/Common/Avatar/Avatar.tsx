@@ -11,7 +11,7 @@ export interface AvatarProps {
   size?: Size;
   shape?: Shape;
   src?: string;
-  isBorder?: boolean;
+  isSelect?: boolean;
   isShadow?: boolean;
   isEdit?: boolean;
   onClick?: (event: React.MouseEventHandler<HTMLElement>) => void;
@@ -21,7 +21,7 @@ export interface AvatarProps {
  * @param [size='S'] - XS, S, M, L, XL
  * @param [shape='circle'] - circle은 원형, square는 사각형, round는 둥근 사각형
  * @param src - 이미지 소스
- * @param [isBorder=true] - true는 보더(solid) 적용
+ * @param [isSelect=false] - true는 굵은 border 적용
  * @param [isShadow=true] - true는 그림자 적용
  * @param [isEdit=false] - true는 편집 아이콘 적용
  * @param onClick - 마우스 클릭 핸들러 함수
@@ -30,7 +30,7 @@ export default function Avatar({
   size = 'S',
   shape = 'circle',
   src,
-  isBorder = true,
+  isSelect = false,
   isShadow = true,
   isEdit = false,
   onClick,
@@ -47,7 +47,7 @@ export default function Avatar({
         $size={size}
         $shape={shape}
         $src={src}
-        $isBorder={isBorder}
+        $isSelect={isSelect}
         $isShadow={isShadow}
         {...props}
       />

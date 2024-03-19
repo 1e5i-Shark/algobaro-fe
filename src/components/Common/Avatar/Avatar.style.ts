@@ -6,21 +6,23 @@ interface AvatarStyledProps {
   $size: Size;
   $shape: Shape;
   $src?: string;
-  $isBorder: boolean;
+  $isSelect?: boolean;
   $isShadow: boolean;
   $isPointer?: boolean;
   onClick?: (event: React.MouseEventHandler<HTMLElement>) => void;
 }
 
 export const AvatarWrapper = styled.div<AvatarStyledProps>`
-  ${({ theme, $size, $isBorder, $shape, $isShadow, $src }) => css`
+  ${({ theme, $size, $isSelect, $shape, $isShadow, $src }) => css`
     position: relative;
     box-sizing: border-box;
     display: inline-block;
     width: ${theme.size.icon[$size]};
     height: ${theme.size.icon[$size]};
     overflow: hidden;
-    border: ${$isBorder ? `1px solid ${theme.color.transparent_30}` : 'none'};
+    border: ${$isSelect
+      ? `3px solid ${theme.color.primary_color}`
+      : `1px solid ${theme.color.transparent_30}`};
     border-radius: ${theme.shape[$shape]};
     box-shadow: ${$isShadow &&
     (theme.mode === 'light'
