@@ -21,7 +21,8 @@ export const WaitingRoomContainer = styled(Col)`
 export const ChatContainer = styled(Col)<{ className: string }>`
   ${({ theme }) => css`
     flex-grow: 1;
-    min-width: 30rem;
+    min-width: 40rem;
+    max-width: 50rem;
     padding: 0 1rem;
     overflow: auto;
     border-left: 1px solid ${theme.color.transparent_30};
