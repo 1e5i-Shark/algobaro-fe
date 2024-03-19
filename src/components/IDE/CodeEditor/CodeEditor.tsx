@@ -160,7 +160,6 @@ export default function CodeEditor({
           editor.setSize(width ?? '100%', height ?? '100%');
         }}
         editorWillUnmount={() => {
-          console.log('unmount');
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const removeEditor = editorRef.current as any;
           removeEditor?.display.wrapper.remove();

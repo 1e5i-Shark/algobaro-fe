@@ -7,6 +7,7 @@ import { LOGOS } from '@/constants/logos';
 import { useRoomDetail } from '@/hooks/Api/useRooms';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
+import { PATH } from '@/routes/path';
 import { RoomsListType } from '@/types/room';
 
 import CheckRoomPassword from './CheckRoomPassword';
@@ -32,8 +33,7 @@ export default function HomeSection({
 
     // 방에 걸려있는 비번 없으면 바로 입장되어야 함.
     if (!data?.response.password) {
-      navigate(`/room/${roomShortUuid}`);
-      // navigate(`${PATH.ROOM}/${roomShortUuid}`);
+      navigate(`${PATH.ROOM}/${roomShortUuid}`);
       return;
     }
 
