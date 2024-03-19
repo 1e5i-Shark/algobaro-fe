@@ -6,6 +6,7 @@ interface SubmissionRequest {
   language: string;
   code: string;
   problemLink: string;
+  solveStatus: string;
 }
 
 export interface TestCaseResultType {
