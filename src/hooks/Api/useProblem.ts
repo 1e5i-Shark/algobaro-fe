@@ -5,8 +5,9 @@ import getProblemInfo from '@/services/Problem/getProblemInfo';
 
 export const useProblemInfo = (problemLink: string) => {
   return useQuery({
-    queryKey: [QUERY_KEY.PROBLEM.PROBLEM_INFO, problemLink],
+    queryKey: [QUERY_KEY.PROBLEM.PROBLEM_INFO],
     queryFn: () => getProblemInfo(problemLink),
     enabled: !!problemLink,
+    retry: 0,
   });
 };
