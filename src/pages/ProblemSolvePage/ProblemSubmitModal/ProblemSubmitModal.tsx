@@ -95,7 +95,7 @@ export default function ProblemSubmitModal({
             </Button>
           </S.BOJButtonWrapper>
           <S.Title>결과 공유하기</S.Title>
-          <S.BOJGuideText>{`팀원들에게 백준 채점 결과를 공유해 주세요 🤗`}</S.BOJGuideText>
+          <S.BOJGuideText>{`팀원들에게 채점 결과를 공유해 주세요 🤗`}</S.BOJGuideText>
           <S.BOJButtonWrapper>
             <DropDown
               width="16rem"
