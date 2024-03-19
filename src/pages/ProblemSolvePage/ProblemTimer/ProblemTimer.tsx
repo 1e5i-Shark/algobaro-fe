@@ -1,19 +1,13 @@
-import { useEffect } from 'react';
-
 import { DateBaseTimer } from '@/components';
-import useModal from '@/hooks/useModal';
 import useTimerStore from '@/store/TimerStore';
 import { MINUTES_IN_MS } from '@/utils/timer';
 
-import ProblemEndModal from '../ProblemEndModal/ProblemEndModal';
 import * as S from './ProblemTimer.style';
 interface TimerProps {
   isProblemSolvePage: boolean;
 }
 
 export default function ProblemTimer({ isProblemSolvePage }: TimerProps) {
-  const { modalRef, isOpen, openModal, closeModal } = useModal();
-
   const { isEnd, setIsEnd } = useTimerStore(state => state);
 
   // TODO: 서버 timestamp로 교체 필요, 1시간 기준으로 테스트 중
@@ -21,14 +15,6 @@ export default function ProblemTimer({ isProblemSolvePage }: TimerProps) {
   const endDateISOString = new Date(
     now.getTime() + 60 * MINUTES_IN_MS
   ).toISOString();
-
-  useEffect(() => {
-    if (isEnd) {
-      openModal();
-    } else {
-      closeModal();
-    }
-  }, [isEnd]);
 
   return (
     <S.Wrapper>
@@ -47,17 +33,6 @@ export default function ProblemTimer({ isProblemSolvePage }: TimerProps) {
           </>
         )}
       </S.TimeLeftWrapper>
-      {/* TODO: 삭제 예정 navigate 테스트용 코드 */}
-      {isProblemSolvePage && (
-        <S.TestButton onClick={() => openModal()}>
-          시험 종료 후 풀이 공유 페이지로 이동
-        </S.TestButton>
-      )}
-      <ProblemEndModal
-        modalRef={modalRef}
-        isOpen={isOpen}
-        closeModal={closeModal}
-      />
     </S.Wrapper>
   );
 }
