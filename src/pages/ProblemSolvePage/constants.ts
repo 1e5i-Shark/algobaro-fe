@@ -23,3 +23,10 @@ export const SIZE_PERCENTAGE = {
   EDITOR: 70,
   EXECUTION: 30,
 } as const;
+
+export const STATUS_DATA_SET: Record<string, string> = {
+  SUCCESS: '성공',
+  FAIL: '실패',
+  TIMEOUT: '시간 초과',
+  ERROR: '기타 에러',
+};
