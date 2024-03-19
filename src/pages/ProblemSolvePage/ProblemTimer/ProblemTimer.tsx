@@ -1,6 +1,6 @@
 import { DateBaseTimer } from '@/components';
+import useMessageStore from '@/store/MessageStore';
 import useTimerStore from '@/store/TimerStore';
-import { MINUTES_IN_MS } from '@/utils/timer';
 
 import * as S from './ProblemTimer.style';
 interface TimerProps {
@@ -10,11 +10,7 @@ interface TimerProps {
 export default function ProblemTimer({ isProblemSolvePage }: TimerProps) {
   const { isEnd, setIsEnd } = useTimerStore(state => state);
 
-  // TODO: 서버 timestamp로 교체 필요, 1시간 기준으로 테스트 중
-  const now = new Date();
-  const endDateISOString = new Date(
-    now.getTime() + 60 * MINUTES_IN_MS
-  ).toISOString();
+  const { testEndTime } = useMessageStore(state => state);
 
   return (
     <S.Wrapper>
@@ -27,7 +23,7 @@ export default function ProblemTimer({ isProblemSolvePage }: TimerProps) {
           <>
             <S.TimeLeftText>남은 시간</S.TimeLeftText>
             <DateBaseTimer
-              endDateISOString={endDateISOString}
+              endDateISOString={testEndTime}
               setIsEnd={setIsEnd}
             />
           </>
