@@ -1,10 +1,8 @@
 import { Panel, PanelGroup } from 'react-resizable-panels';
-import { useNavigate } from 'react-router-dom';
 
 import { Button, CodeEditor, ResizeHandle } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useCompile, useSubmission } from '@/hooks/useProblemSolve';
-import { PATH } from '@/routes/path';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
 
@@ -15,8 +13,6 @@ import * as S from './ProblemSolvePage.style';
 
 export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
-
-  const navigate = useNavigate();
 
   const { roomData } = useRoomStore();
   const roomShortUuid = roomData.roomShortUuid;
@@ -33,9 +29,6 @@ export default function ProblemSolvePage() {
 
   const handleSubmit = () => {
     // TODO: 코드 제출 시 백준 submit 링크 직접 제출 확인 모달 추가
-
-    navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`, { replace: true });
-
     submitMutate({
       roomShortUuid,
       language,
