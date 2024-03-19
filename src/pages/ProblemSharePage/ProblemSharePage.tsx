@@ -85,7 +85,7 @@ export default function ProblemSharePage() {
             roomUuid={MOCK_ROOM_DATA.roomShortUuid}
           />
         ) : (
-          <S.NoResultText>풀이 내역이 존재하지 않습니다</S.NoResultText>
+          <S.NoResultText>아직 문제를 풀고 있어요 📝</S.NoResultText>
         )}
       </S.CodeEditorWrapper>
     </S.Wrapper>
