@@ -1,4 +1,4 @@
-import { EDIT_MY_INFO_URL } from '../apiEndpoint';
+import { API_ENDPOINT } from '../apiEndpoint';
 import { axiosAuthInstance } from '../axiosInstance';
 import { EditMyInfoProps } from './type';
 
@@ -7,7 +7,10 @@ const editMyInfo = async ({ nickname, bojId }: EditMyInfoProps) => {
     nickname,
     bojId,
   };
-  return await axiosAuthInstance.patch(`${EDIT_MY_INFO_URL}`, reqBody);
+  return await axiosAuthInstance.patch(
+    `${API_ENDPOINT.MEMBER.EDIT_MY_INFO_URL}`,
+    reqBody
+  );
 };
 
 export default editMyInfo;

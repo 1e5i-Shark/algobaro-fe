@@ -20,3 +20,17 @@ export interface SolvedHistoryListResponse {
     totalElements: number;
   };
 }
+
+export interface SolvedDetailResponse {
+  success: boolean;
+  response: {
+    id: number;
+    roomUuid: string;
+    language: string;
+    code: string;
+    solveStatus: string;
+    solvedAt: string;
+    platform: 'BOJ';
+    problemLink: string;
+  };
+}
