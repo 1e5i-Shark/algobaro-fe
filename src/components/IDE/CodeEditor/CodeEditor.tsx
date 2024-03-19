@@ -27,6 +27,10 @@ interface CodeEditorProps {
   defaultValue?: string;
 }
 
+interface CustomEditorChange extends EditorChange {
+  cancel?: () => void;
+}
+
 /**
  * 코드 에디터
  * roomUuid를 넘겨주는 경우, 공동 편집 코드 에디터를 사용할 수 있습니다.
@@ -120,6 +124,27 @@ export default function CodeEditor({
     setCode(changeEditorParams.value);
   };
 
+  // 코드 에디터 붙여넣기 방지 함수
+  const handlePreventCopy = (
+    editor: Editor,
+    data: CustomEditorChange,
+    value: string,
+    next: () => void
+  ) => {
+    const beforeChangeEventProps = {
+      editor,
+      data,
+      value,
+      next,
+    };
+
+    const changeData = beforeChangeEventProps.data;
+    if (changeData.origin === 'paste' && mode === 'normal') {
+      changeData.cancel?.();
+      alert('풀이 중 코드 붙여넣기는 금지합니다.');
+    }
+  };
+
   return (
     <S.Wrapper>
       {mode !== 'readonly' && (
@@ -143,6 +168,7 @@ export default function CodeEditor({
       )}
       <CodeMirrorEditor
         onChange={handleChangeCode}
+        onBeforeChange={handlePreventCopy}
         options={{
           value: defaultValue || codeEditorDefaultValue[language],
           mode: getEditorMode(language),
@@ -160,7 +186,6 @@ export default function CodeEditor({
           editor.setSize(width ?? '100%', height ?? '100%');
         }}
         editorWillUnmount={() => {
-          console.log('unmount');
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const removeEditor = editorRef.current as any;
           removeEditor?.display.wrapper.remove();

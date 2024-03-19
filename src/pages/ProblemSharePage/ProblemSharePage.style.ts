@@ -1,13 +1,31 @@
 import styled from 'styled-components';
 import { css } from 'styled-components';
 
+import { Col } from '@/styles/GlobalStyle';
+
 const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 100%;
-    padding: 4rem 2rem;
+    padding: 0 0 0 2rem;
     background-color: ${theme.color.background_editor};
+  `}
+`;
+
+const CodeEditorContainer = styled.div`
+  flex-grow: 2;
+  width: 150rem;
+  padding-top: 4rem;
+`;
+
+const ChatContainer = styled(Col)`
+  ${({ theme }) => css`
+    flex-grow: 1;
+    min-width: 40rem;
+    padding: 0 1rem 2rem 1rem;
+    overflow: auto;
+    border-left: 1px solid ${theme.color.transparent_30};
   `}
 `;
 
@@ -15,7 +33,7 @@ const CodeEditorWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 12rem);
   margin-top: 2rem;
 `;
 
@@ -57,6 +75,8 @@ const NoResultText = styled.span`
 `;
 
 export {
+  ChatContainer,
+  CodeEditorContainer,
   CodeEditorWrapper,
   NoResultText,
   SolveFailText,

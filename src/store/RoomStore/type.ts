@@ -6,4 +6,5 @@ export interface RoomStateProps {
   setRoomData: (state: Partial<RoomType>) => void;
   setMyRoomData: (state: Partial<RoomMemberType>) => void;
   addRoomMembers: (newMembers: RoomMemberType[]) => void;
+  reset: () => void;
 }
