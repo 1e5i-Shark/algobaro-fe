@@ -341,6 +341,8 @@ export default function ProfilePage() {
       <S.HistoryModal
         isOpen={isOpenHistoryModal}
         onClose={handleCloseHistoryModal}
+        width="60%"
+        height="80%"
         solveId={selectedSolveId}
       />
     </S.ProfilePageWrapper>
