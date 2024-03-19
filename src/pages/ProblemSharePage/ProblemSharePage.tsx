@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Chat, CodeEditor } from '@/components';
 import { MOCK_ROOM_DATA } from '@/constants/room';
 import { useGetRoomMembers } from '@/hooks/Api/useRooms';
 import { useSolvedResult } from '@/hooks/Api/useSolves';
+import { PATH } from '@/routes/path';
 
 import { MOCK_MY_ID } from './constants';
 import * as S from './ProblemSharePage.style';
@@ -13,6 +14,7 @@ import UserProfileList from './UserProfileList/UserProfileList';
 export default function ProblemSharePage() {
   const [selectedMemberId, setSelectedMemberId] = useState(MOCK_MY_ID);
 
+  const navigate = useNavigate();
   const params = useParams();
   const { roomShortUuid } = params;
 
@@ -28,6 +30,17 @@ export default function ProblemSharePage() {
   const selectedResult = solvedResults.find(
     result => result.memberId === selectedMemberId
   );
+
+  const beforeUnloadListener = () => {
+    navigate(`${PATH.HOME}`, { replace: true });
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', beforeUnloadListener);
+    return () => {
+      window.removeEventListener('beforeunload', beforeUnloadListener);
+    };
+  }, []);
 
   if (solvedResults.length === 0 || userList.length === 0) return;
 
