@@ -63,7 +63,7 @@ export default function ProblemSubmitModal({
       problemLink,
       solveStatus,
     });
-    navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`);
+    navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`, { replace: true });
   };
 
   useEffect(() => {
