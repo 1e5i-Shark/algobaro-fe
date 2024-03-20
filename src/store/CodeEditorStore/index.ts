@@ -12,6 +12,7 @@ interface Props {
   setLanguage: (language: string) => void;
   setInput: (input: string) => void;
   setResult: (result: string) => void;
+  reset: () => void;
 }
 
 // TODO: 서버로부터 데이터 받아와서 교체 필요
@@ -19,7 +20,7 @@ const MOCK_INPUT = '1 2';
 
 const useCodeEditorStore = create<Props>()(
   devtools(set => ({
-    code: codeEditorDefaultValue.nodejs,
+    code: codeEditorDefaultValue['nodejs'],
     language: 'nodejs',
     input: MOCK_INPUT,
     result: '',
@@ -27,6 +28,14 @@ const useCodeEditorStore = create<Props>()(
     setInput: (input: string) => set({ input }),
     setLanguage: (language: string) => set({ language }),
     setResult: (result: string) => set({ result }),
+    reset: () => {
+      set({
+        code: codeEditorDefaultValue['nodejs'],
+        language: 'nodejs',
+        input: MOCK_INPUT,
+        result: '',
+      });
+    },
   }))
 );
 

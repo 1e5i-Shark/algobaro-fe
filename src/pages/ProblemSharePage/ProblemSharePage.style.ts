@@ -7,6 +7,7 @@ const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-direction: row;
+    width: 100%;
     height: 100%;
     padding: 0 0 0 2rem;
     background-color: ${theme.color.background_editor};
@@ -55,6 +56,11 @@ const SolveSuccessText = styled.span`
   `}
 `;
 
+const SolveFailWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
 const SolveFailText = styled.span`
   ${({ theme }) => css`
     padding: 1rem 1.2rem;
@@ -80,6 +86,7 @@ export {
   CodeEditorWrapper,
   NoResultText,
   SolveFailText,
+  SolveFailWrapper,
   SolveStatusWrapper,
   SolveSuccessText,
   Wrapper,

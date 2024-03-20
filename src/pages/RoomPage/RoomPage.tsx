@@ -66,6 +66,7 @@ export default function RoomPage() {
   useEffect(() => {
     refetchRoom();
     if (receiveLogs.at(-1) === SOCKET_TYPE.ROOM.START_CODING) {
+      console.log(receiveLogs);
       navigate(`${PATH.PROBLEMSOLVE}/${roomShortUuid}`, { replace: true });
     }
 
