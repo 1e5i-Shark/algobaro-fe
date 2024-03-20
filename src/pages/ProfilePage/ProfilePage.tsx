@@ -225,20 +225,22 @@ export default function ProfilePage() {
                         ? problem.solveStatus
                         : problem.failureReason || 'FAIL'}
                     </Tag>
-                    <Tag
-                      mode="normal"
-                      width="7rem"
-                      height={theme.size.L}
-                      fontSize={theme.size.S}
-                      tagId={problem.language || 'null'}
-                      backgroundColor={theme.color.gray_20}
-                      textColor={theme.color.black_primary}
-                      style={{
-                        fontWeight: theme.fontWeight.semiBold,
-                      }}
-                    >
-                      {problem.language}
-                    </Tag>
+                    {problem.language && (
+                      <Tag
+                        mode="normal"
+                        width="7rem"
+                        height={theme.size.L}
+                        fontSize={theme.size.S}
+                        tagId={problem.language || 'null'}
+                        backgroundColor={theme.color.gray_20}
+                        textColor={theme.color.black_primary}
+                        style={{
+                          fontWeight: theme.fontWeight.semiBold,
+                        }}
+                      >
+                        {problem.language}
+                      </Tag>
+                    )}
                   </S.ProblemHistoryItem>
                 );
               })}
