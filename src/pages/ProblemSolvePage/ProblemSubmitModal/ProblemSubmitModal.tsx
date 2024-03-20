@@ -78,7 +78,7 @@ export default function ProblemSubmitModal({
 
   return (
     <Modal
-      // mode={isEnd ? 'confirm' : 'normal'}
+      mode={isEnd ? 'confirm' : 'normal'}
       width="65rem"
       height="fit-content"
       ref={modalRef}
