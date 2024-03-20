@@ -116,13 +116,13 @@ export default function HomeNav({ refetch }: HomeNavProps) {
         </S.SearchInputWrapper>
       </S.SearchOptionsContainer>
 
-      <S.UpdateData onClick={handleRefetchData}>
+      <S.UpdateData>
         <span>
           {!elapsedTime
             ? '방 정보 업데이트'
             : `마지막 업데이트: ${elapsedTime}분 전`}
         </span>
-        <Icon onClick={() => {}}>
+        <Icon onClick={handleRefetchData}>
           <AnimatedIcon $animate={animate} />
         </Icon>
       </S.UpdateData>
