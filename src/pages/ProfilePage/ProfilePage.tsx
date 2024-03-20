@@ -275,26 +275,32 @@ export default function ProfilePage() {
         />
       </S.ProblemHistoryContainer>
       {/* 정보 수정 모달 */}
-      <S.EditInfoModal
-        isOpen={isOpenEditInfoModal}
-        onClose={handleCloseEditInfoModal}
-        width="60%"
-        height="60%"
-      />
+      {isOpenEditInfoModal && (
+        <S.EditInfoModal
+          isOpen={isOpenEditInfoModal}
+          onClose={handleCloseEditInfoModal}
+          width="60%"
+          height="60%"
+        />
+      )}
       {/* 암호 변경 모달 */}
-      <S.EditPWModal
-        isOpen={isOpenEditPWModal}
-        onClose={handleCloseEditPWModal}
-        width="60%"
-        height="60%"
-      />
-      <S.HistoryModal
-        isOpen={isOpenHistoryModal}
-        onClose={handleCloseHistoryModal}
-        width="60%"
-        height="80%"
-        solveId={selectedSolveId}
-      />
+      {isOpenEditPWModal && (
+        <S.EditPWModal
+          isOpen={isOpenEditPWModal}
+          onClose={handleCloseEditPWModal}
+          width="60%"
+          height="60%"
+        />
+      )}
+      {selectedSolveId !== 0 && (
+        <S.HistoryModal
+          isOpen={isOpenHistoryModal}
+          onClose={handleCloseHistoryModal}
+          width="60%"
+          height="80%"
+          solveId={selectedSolveId}
+        />
+      )}
     </S.ProfilePageWrapper>
   );
 }
