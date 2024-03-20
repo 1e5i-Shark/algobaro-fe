@@ -48,6 +48,7 @@ export const useGetUuidRoom = (roomShortUuid: string) => {
     queryKey: [QUERY_KEY.ROOM.UUID_INFO, roomShortUuid],
     queryFn: async () => await getUuidRoom(`/${roomShortUuid}`),
     enabled: !!roomShortUuid,
+    refetchInterval: 2000,
   });
 };
 
