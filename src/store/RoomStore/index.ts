@@ -21,6 +21,7 @@ const initialData: RoomType = {
   problemLink: '',
   currentMemberCount: 0,
   roomMembers: [],
+  endTime: '',
 };
 
 const initialMyData: RoomMemberType = {

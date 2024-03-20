@@ -1,5 +1,5 @@
 import { DateBaseTimer } from '@/components';
-import useMessageStore from '@/store/MessageStore';
+import useRoomStore from '@/store/RoomStore';
 import useTimerStore from '@/store/TimerStore';
 
 import * as S from './ProblemTimer.style';
@@ -10,8 +10,11 @@ interface TimerProps {
 export default function ProblemTimer({ isProblemSolvePage }: TimerProps) {
   const { isEnd, setIsEnd } = useTimerStore(state => state);
 
-  const { testEndTime } = useMessageStore(state => state);
+  const {
+    roomData: { endTime },
+  } = useRoomStore(state => state);
 
+  console.log('endTime', endTime);
   return (
     <S.Wrapper>
       <S.TimeLeftWrapper>
@@ -23,7 +26,7 @@ export default function ProblemTimer({ isProblemSolvePage }: TimerProps) {
           <>
             <S.TimeLeftText>남은 시간</S.TimeLeftText>
             <DateBaseTimer
-              endDateISOString={testEndTime}
+              endDateISOString={endTime}
               setIsEnd={setIsEnd}
             />
           </>
