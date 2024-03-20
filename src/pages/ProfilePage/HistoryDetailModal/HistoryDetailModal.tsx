@@ -2,6 +2,7 @@ import { CodeEditor, Image, Modal, Spinner } from '@/components';
 import { ModalProps } from '@/components/Common/Modal/Modal';
 import { LOGOS } from '@/constants/logos';
 import { useGetSolvedDetail } from '@/hooks/Api/useSolves';
+import { convertKoreaTimestamp } from '@/utils/convertDate';
 
 import * as S from './HistoryDetailModal.style';
 import { languageConvert } from './languageConstant';
@@ -21,7 +22,9 @@ export default function HistoryDetailModal({
   const language = detailData?.language;
   const convertedLang = language && languageConvert[language];
   const solveStatus = detailData?.solveStatus;
+  const failureReason = detailData?.failureReason;
   const solvedTime = detailData?.solvedAt;
+  const convertKoreaTIme = convertKoreaTimestamp(solvedTime || '');
   const problemLink = detailData?.problemLink;
   const codeData = detailData?.code;
 
@@ -51,29 +54,31 @@ export default function HistoryDetailModal({
                   {problemLink}
                 </S.ProblemLink>
               </S.ModalTextContainer>
-              <S.ModalTextContainer>
-                <S.ModalTitle>언어 :</S.ModalTitle>
-                <S.ImageContainer>
-                  <Image
-                    src={(convertedLang && LOGOS[convertedLang]) || ''}
-                    fill={true}
-                    shape="circle"
-                  />
-                </S.ImageContainer>
-                <S.ModalText>{convertedLang}</S.ModalText>
-              </S.ModalTextContainer>
+              {failureReason !== 'UNSUBMITTED' && (
+                <S.ModalTextContainer>
+                  <S.ModalTitle>언어 :</S.ModalTitle>
+                  <S.ImageContainer>
+                    <Image
+                      src={(convertedLang && LOGOS[convertedLang]) || ''}
+                      fill={true}
+                      shape="circle"
+                    />
+                  </S.ImageContainer>
+                  <S.ModalText>{convertedLang}</S.ModalText>
+                </S.ModalTextContainer>
+              )}
               <S.ModalTextContainer>
                 <S.ModalTitle>채점 상태 :</S.ModalTitle>
                 {solveStatus &&
                   (solveStatus === 'SUCCESS' ? (
                     <S.SolveSuccessText>{solveStatus}</S.SolveSuccessText>
                   ) : (
-                    <S.SolveFailText>{solveStatus}</S.SolveFailText>
+                    <S.SolveFailText>{failureReason || 'FAIL'}</S.SolveFailText>
                   ))}
               </S.ModalTextContainer>
               <S.ModalTextContainer>
-                <S.ModalTitle>문제 푼 시간 :</S.ModalTitle>
-                <S.ModalText>{solvedTime?.replace('T', ' ')}</S.ModalText>
+                <S.ModalTitle>제출 시간 :</S.ModalTitle>
+                <S.ModalText>{convertKoreaTIme}</S.ModalText>
               </S.ModalTextContainer>
               {codeData ? (
                 <CodeEditor

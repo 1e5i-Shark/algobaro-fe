@@ -33,6 +33,7 @@ export interface SolvedDetailResponse {
     solvedAt: string;
     platform: 'BOJ';
     problemLink: string;
+    failureReason: string;
   };
 }
 
