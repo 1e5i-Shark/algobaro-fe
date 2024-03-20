@@ -51,7 +51,6 @@ export default function ProblemSolvePage() {
 
   const handleCompileExecution = async () => {
     if (confirm('하루 실행 제한이 있습니다. 정말 실행하시겠습니까?')) {
-      console.log({ code, input, language });
       compileMutate({ code, input, language });
     }
   };
@@ -110,14 +109,23 @@ export default function ProblemSolvePage() {
               </Panel>
               <ResizeHandle direction={DIRECTION.VERTICAL} />
               <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION}>
+                <PanelGroup direction={DIRECTION.HORIZONTAL}>
+                  <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION_INPUT}>
+                    <S.ExecutionWrapper>
+                      <TestCaseInput onChange={handleChangeTestCase} />
+                    </S.ExecutionWrapper>
+                  </Panel>
+                  <ResizeHandle direction={DIRECTION.HORIZONTAL} />
+                  <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION_RESULT}>
+                    <S.ExecutionWrapper>
+                      <ProblemExecution
+                        isLoading={isCompileLoading}
+                        isError={isCompileError}
+                      />
+                    </S.ExecutionWrapper>
+                  </Panel>
+                </PanelGroup>
                 {/* 실행 영역 */}
-                <S.ExecutionWrapper>
-                  <TestCaseInput onChange={handleChangeTestCase} />
-                  <ProblemExecution
-                    isLoading={isCompileLoading}
-                    isError={isCompileError}
-                  />
-                </S.ExecutionWrapper>
               </Panel>
             </PanelGroup>
           </Panel>

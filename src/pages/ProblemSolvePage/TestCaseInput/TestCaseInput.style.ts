@@ -35,6 +35,7 @@ const TestInputWrapper = styled(Col)`
 const TestInput = styled.textarea`
   ${({ theme }) => css`
     height: 2.2rem;
+    padding: 0 ${theme.size.L};
     overflow: auto;
     font: inherit;
     color: ${theme.color.black_primary};
