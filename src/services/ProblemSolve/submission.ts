@@ -7,6 +7,7 @@ interface SubmissionRequest {
   code: string;
   problemLink: string;
   solveStatus: string;
+  failureReason: string;
 }
 
 export interface TestCaseResultType {

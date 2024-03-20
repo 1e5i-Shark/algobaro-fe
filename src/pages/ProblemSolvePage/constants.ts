@@ -25,9 +25,9 @@ export const SIZE_PERCENTAGE = {
 } as const;
 
 export const STATUS_DATA_SET: Record<string, string> = {
-  SUCCESS: '성공',
-  FAIL: '실패',
-  TIMEOUT: '시간 초과',
-  MEMORY: '메모리 초과',
-  ERROR: '기타 에러',
+  SUCCESS: '맞았습니다',
+  FAIL: '틀렸습니다',
+  TIME_LIMIT: '시간 초과',
+  MEMORY_LIMIT: '메모리 초과',
+  ETC: '기타 에러',
 };

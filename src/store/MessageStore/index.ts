@@ -8,7 +8,7 @@ import { SOCKET_TYPE } from '@/constants/socket';
 import { API_ENDPOINT } from '@/services/apiEndpoint';
 import { sendMessageService } from '@/services/Message/sendMessageService';
 import { ChatValueUnion, RoomValueUnion } from '@/types/chat';
-import { ukToKoreaTime } from '@/utils/convertDate';
+import { convertKoreaTime } from '@/utils/convertDate';
 
 import { MessageStoreState, MessageStoreValue } from './type';
 
@@ -187,7 +187,7 @@ const useMessageStore = create<MessageStoreState>()(
       },
       formatMessage: message => {
         const { type, memberId, value, timestamp } = message;
-        const formattedTime = ukToKoreaTime(timestamp);
+        const formattedTime = convertKoreaTime(timestamp);
 
         switch (type) {
           case SOCKET_TYPE.CHAT.ENTER:
@@ -215,7 +215,7 @@ const useMessageStore = create<MessageStoreState>()(
             return {
               memberId,
               type,
-              value: value && `${ukToKoreaTime(value)}`,
+              value: value && `${value}`,
               timestamp: formattedTime,
             };
           default:
