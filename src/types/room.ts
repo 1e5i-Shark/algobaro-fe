@@ -19,6 +19,7 @@ export interface RoomType {
 
   currentMemberCount: number;
   problemLink: string;
+  endTime: string;
   roomUUID?: string;
   startAt?: string;
 }

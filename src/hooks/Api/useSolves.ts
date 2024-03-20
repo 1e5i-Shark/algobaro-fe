@@ -29,7 +29,7 @@ export const useGetSolvedDetail = (solveId: number) => {
 
 export const useSolvedResult = (roomShortUuid: string) => {
   return useQuery({
-    queryKey: [QUERY_KEY.SOLVE.RESULT, roomShortUuid],
+    queryKey: [QUERY_KEY.SOLVE.RESULT],
     queryFn: () => getSolvedResult(roomShortUuid),
     select: data => data?.response.solveResults,
     enabled: !!roomShortUuid,

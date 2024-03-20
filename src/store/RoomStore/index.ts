@@ -21,6 +21,7 @@ const initialData: RoomType = {
   problemLink: '',
   currentMemberCount: 0,
   roomMembers: [],
+  endTime: '',
 };
 
 const initialMyData: RoomMemberType = {
@@ -52,6 +53,7 @@ const useRoomStore = create<RoomStateProps>()(
       reset: () =>
         set({
           roomData: initialData,
+          myRoomData: initialMyData,
         }),
     }),
     { store: 'RoomStore ' }

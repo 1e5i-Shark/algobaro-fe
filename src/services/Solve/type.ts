@@ -40,6 +40,7 @@ export interface SolveResult {
   language: string;
   code: string;
   solveStatus: string;
+  failureReason: string;
 }
 
 export interface SolvedResultResponse {

@@ -5,7 +5,7 @@ import { Col, Row } from '@/styles/GlobalStyle';
 
 const Wrapper = styled(Col)`
   gap: 4rem;
-  min-width: 60rem;
+  min-width: 65rem;
   padding: 4rem 4rem 0rem;
 `;
 
@@ -17,45 +17,6 @@ const Title = styled.p`
   `};
 `;
 
-const TestResultWrapper = styled.div`
-  height: 4rem;
-  text-align: center;
-  white-space: pre-line;
-`;
-
-const TestErrorText = styled.span`
-  ${({ theme }) => css`
-    line-height: ${theme.size.XXL};
-    color: ${theme.color.red};
-  `};
-`;
-
-const TestCaseWrapper = styled.div``;
-
-const TestCaseList = styled.ul`
-  display: flex;
-  flex-direction: column;
-`;
-
-const TestCaseItem = styled.li`
-  display: flex;
-  align-items: center;
-  height: 3rem;
-`;
-
-const LottieWrapper = styled(Row)`
-  justify-content: center;
-  width: 5rem;
-`;
-
-const TestCaseTitle = styled.p`
-  ${({ theme }) => css`
-    width: 8rem;
-    font-size: 1.6rem;
-    font-weight: ${theme.fontWeight.medium};
-  `};
-`;
-
 const BOJWrapper = styled.div`
   white-space: pre-line;
 `;
@@ -64,6 +25,7 @@ const BOJGuideText = styled.p`
   ${({ theme }) => css`
     margin-top: 2.2rem;
     line-height: ${theme.size.XXL};
+    color: ${theme.color.text_primary_color};
     text-align: center;
   `};
 `;
@@ -87,13 +49,6 @@ export {
   BOJGuideText,
   BOJWrapper,
   EndButtonWrapper,
-  LottieWrapper,
-  TestCaseItem,
-  TestCaseList,
-  TestCaseTitle,
-  TestCaseWrapper,
-  TestErrorText,
-  TestResultWrapper,
   Title,
   Wrapper,
 };

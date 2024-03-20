@@ -9,6 +9,7 @@ import useModal from '@/hooks/useModal';
 import { useCompile } from '@/hooks/useProblemSolve';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
+import useTimerStore from '@/store/TimerStore';
 
 import { DIRECTION, SIZE_PERCENTAGE } from './constants';
 import ProblemExecution from './ProblemExecution/ProblemExecution';
@@ -32,11 +33,12 @@ export default function ProblemSolvePage() {
   } = useCompile();
   const { data: roomDetail, refetch } = useGetUuidRoom(roomShortUuid);
 
-  const { input, code, language } = useCodeEditorStore(state => state);
+  const { input, code, language, reset } = useCodeEditorStore(state => state);
   const {
     roomData: { problemLink },
     setRoomData,
   } = useRoomStore(state => state);
+  const { isEnd } = useTimerStore(state => state);
 
   const handleClickProblemLink = () => {
     if (!problemLink) return;
@@ -45,7 +47,8 @@ export default function ProblemSolvePage() {
   };
 
   const handleCompileExecution = async () => {
-    compileMutate({ code, input, language });
+    if (confirm('하루 실행 제한이 있습니다. 정말 실행하시겠습니까?'))
+      compileMutate({ code, input, language });
   };
 
   const handleSubmit = async () => {
@@ -59,6 +62,15 @@ export default function ProblemSolvePage() {
   }, [roomDetail]);
 
   useEffect(() => {
+    if (isEnd) {
+      openModal();
+    } else {
+      closeModal();
+    }
+  }, [isEnd]);
+
+  useEffect(() => {
+    reset();
     refetch();
   }, []);
 
@@ -84,7 +96,7 @@ export default function ProblemSolvePage() {
               <Panel defaultSize={SIZE_PERCENTAGE.EDITOR}>
                 {/* 에디터 영역 */}
                 <S.EditorWrapper>
-                  <CodeEditor />
+                  <CodeEditor defaultValue={code} />
                 </S.EditorWrapper>
               </Panel>
               <ResizeHandle direction={DIRECTION.VERTICAL} />

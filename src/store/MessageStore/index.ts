@@ -8,7 +8,7 @@ import { SOCKET_TYPE } from '@/constants/socket';
 import { API_ENDPOINT } from '@/services/apiEndpoint';
 import { sendMessageService } from '@/services/Message/sendMessageService';
 import { ChatValueUnion, RoomValueUnion } from '@/types/chat';
-import { ukToKoreaTime } from '@/utils/convertDate';
+import { convertKoreaTime } from '@/utils/convertDate';
 
 import { MessageStoreState, MessageStoreValue } from './type';
 
@@ -17,7 +17,6 @@ const initialValue: MessageStoreValue = {
   userId: '',
   client: new Stomp.Client(),
   connected: false,
-  roomIndices: [],
   currentRoomId: '',
   messageEntered: '',
   messageLogs: [],
@@ -35,22 +34,15 @@ const useMessageStore = create<MessageStoreState>()(
         const socket = new SockJS(BASE_SOCKET_URL);
         const stompClient = new Stomp.Client({
           webSocketFactory: () => socket,
-          debug: debugMessage => {
-            console.log('stompClient debug string : ', debugMessage);
-          },
           connectHeaders: {
             Authorization: `Bearer ${localStorage.getItem(LOCAL_ACCESSTOKEN)}`,
           },
         });
 
-        // console.log('socket connect');
-
         stompClient.onConnect = () => {
           const { subscribeMessageBroker, publish, connected } = get();
 
           if (connected) return;
-
-          // console.log('socket onConnect');
 
           set({ client: stompClient, currentRoomId: roomShortUuid });
           subscribeMessageBroker(roomShortUuid);
@@ -64,12 +56,9 @@ const useMessageStore = create<MessageStoreState>()(
         const { client, receiveMessage, sendMessage } = get();
         if (!client) return;
 
-        // console.log('socket MessageBroker');
-
         const subscription = client.subscribe(
           `${API_ENDPOINT.SOCKET.SUBSCRIPTION}/chat/room/${roomShortUuid}`,
           messageReceived => {
-            // console.log('messageReceived', messageReceived);
             receiveMessage(messageReceived);
           },
           {
@@ -81,25 +70,14 @@ const useMessageStore = create<MessageStoreState>()(
         sendMessage(SOCKET_TYPE.CHAT.ENTER);
       },
       disconnect: () => {
-        const { client, subscription, sendMessage, publish } = get();
-
+        const { client, subscription, sendMessage, publish, reset } = get();
         if (!client || !subscription) return;
 
         sendMessage(SOCKET_TYPE.CHAT.QUIT);
 
         subscription.unsubscribe();
         client.deactivate();
-
-        // 연결이 해제 되면 listeners, client를 null로 설정하여 null 값을 통한 예외처리를 할 수 있게 한다.
-        set({
-          connected: false,
-          currentRoomId: '',
-          messageEntered: '',
-          messageLogs: [],
-          receiveLogs: [],
-          listeners: null,
-          client: null,
-        });
+        reset();
 
         publish();
       },
@@ -144,13 +122,10 @@ const useMessageStore = create<MessageStoreState>()(
         publish();
       },
       receiveMessage: messageReceived => {
-        console.log('messageReceived');
         const { formatMessage, publish } = get();
         const message = JSON.parse(messageReceived.body);
         const formatData = formatMessage(message);
         const type = formatData.type;
-
-        console.log(formatData);
 
         // 방에 들어오고 나간 경우 listeners를 업데이트
         // 내부 Type이 function이어서 임시로 빈 함수를 할당
@@ -174,16 +149,19 @@ const useMessageStore = create<MessageStoreState>()(
         }
 
         if (type === SOCKET_TYPE.ROOM.START_CODING && formatData.value) {
-          set({ testEndTime: formatData.value });
+          set({
+            testEndTime: formatData.value,
+          });
         }
 
         const receiveLogsType = [
           SOCKET_TYPE.ROOM.CHANGE_HOST,
           SOCKET_TYPE.ROOM.READY,
           SOCKET_TYPE.ROOM.UNREADY,
+          SOCKET_TYPE.ROOM.START_CODING,
+          SOCKET_TYPE.ROOM.END_CODING,
         ];
 
-        // Todo: quit은 message가 오지 않는지 백엔드 확인
         const messageLogsType = [
           SOCKET_TYPE.CHAT.ENTER,
           SOCKET_TYPE.CHAT.MESSAGE,
@@ -209,24 +187,31 @@ const useMessageStore = create<MessageStoreState>()(
       },
       formatMessage: message => {
         const { type, memberId, value, timestamp } = message;
-        const formattedTime = ukToKoreaTime(timestamp);
+        const formattedTime = convertKoreaTime(timestamp);
 
         switch (type) {
           case SOCKET_TYPE.CHAT.ENTER:
             return {
               memberId,
               type,
-              value: value || `${memberId}님이 입장하였습니다`,
+              value: value && `${value}님이 입장하였습니다`,
               timestamp: formattedTime,
             };
           case SOCKET_TYPE.CHAT.QUIT:
             return {
               memberId,
               type,
-              value: value || `${memberId}님이 퇴장하였습니다.`,
+              value: value && `${value}님이 퇴장하였습니다.`,
               timestamp: formattedTime,
             };
           case SOCKET_TYPE.CHAT.MESSAGE:
+            return {
+              memberId,
+              type,
+              value: value && `${value}`,
+              timestamp: formattedTime,
+            };
+          case SOCKET_TYPE.ROOM.START_CODING:
             return {
               memberId,
               type,
@@ -270,6 +255,9 @@ const useMessageStore = create<MessageStoreState>()(
           ...state,
           ...newValue,
         })),
+      reset: () => {
+        set({ ...initialValue });
+      },
     }),
     { store: 'MessageStore' }
   )

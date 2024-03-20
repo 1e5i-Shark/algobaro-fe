@@ -53,6 +53,7 @@ const ProblemLinkWrapper = styled(Col)`
 
 const ProblemLinkGuideText = styled.a`
   ${({ theme }) => css`
+    width: fit-content;
     padding-left: 0.2rem;
     color: ${theme.color.gray_30};
   `}

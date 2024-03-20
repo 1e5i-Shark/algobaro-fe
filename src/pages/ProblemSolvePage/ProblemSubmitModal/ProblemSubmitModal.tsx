@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
-import Lottie from 'react-lottie';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Modal, Spinner } from '@/components';
+import { Button, DropDown, Modal } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useSubmission } from '@/hooks/useProblemSolve';
 import { PATH } from '@/routes/path';
-import { TestCaseResultType } from '@/services/ProblemSolve/submission';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
+import useTimerStore from '@/store/TimerStore';
 
-import failLottie from './lottie/fail-lottie.json';
-import successLottie from './lottie/success-lottie.json';
+import { STATUS_DATA_SET } from '../constants';
 import * as S from './ProblemSubmitModal.style';
 
 interface ProblemSubmitModalProps {
@@ -29,13 +27,13 @@ export default function ProblemSubmitModal({
 
   const { roomShortUuid, problemLink } = useRoomStore(state => state.roomData);
   const { code, language } = useCodeEditorStore(state => state);
+  const { isEnd } = useTimerStore(state => state);
 
-  const [testCaseResult, setTestCaseResult] = useState<TestCaseResultType[]>(
-    []
-  );
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [solveStatus, setSolveStatus] = useState('SUCCESS');
+  const [failureReason, setFailureReason] = useState('');
 
-  const { mutateAsync: submitMutateAsync, isLoading } = useSubmission();
+  const { mutateAsync: submitMutateAsync } = useSubmission();
 
   const navigate = useNavigate();
 
@@ -60,80 +58,37 @@ export default function ProblemSubmitModal({
     }, 800);
   };
 
-  const handleEndCoding = () => {
-    navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`);
-  };
-
-  const handleSubmit = async () => {
-    const result = await submitMutateAsync({
+  const handleEndCoding = async () => {
+    await submitMutateAsync({
       roomShortUuid,
       language,
       code,
       problemLink,
+      solveStatus,
+      failureReason,
     });
-
-    if (result.response?.testCaseResults) {
-      setTestCaseResult(result.response.testCaseResults);
-    }
+    navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`, { replace: true });
   };
 
   useEffect(() => {
     if (isOpen) {
-      handleSubmit();
       setIsSubmitDisabled(true);
-    } else {
-      setTestCaseResult([]);
     }
   }, [isOpen]);
 
   return (
     <Modal
-      width="60rem"
+      mode={isEnd ? 'confirm' : 'normal'}
+      width="65rem"
       height="fit-content"
       ref={modalRef}
       isOpen={isOpen}
       onClose={closeModal}
     >
       <S.Wrapper>
-        <S.TestCaseWrapper>
-          <S.Title>채점 결과</S.Title>
-          {testCaseResult.length === 0 && (
-            <S.TestResultWrapper>
-              {isLoading ? (
-                <Spinner />
-              ) : (
-                <S.TestErrorText>{`실행 중 오류가 발생했습니다 \n 잠시 후 다시 시도해주세요`}</S.TestErrorText>
-              )}
-            </S.TestResultWrapper>
-          )}
-          {testCaseResult.length > 0 && (
-            <S.TestCaseList>
-              {testCaseResult.map((result, index) => (
-                <S.TestCaseItem key={index}>
-                  <S.TestCaseTitle>{`TestCase ${index + 1}:`}</S.TestCaseTitle>
-                  <S.LottieWrapper>
-                    <Lottie
-                      width={result.success ? 100 : 21}
-                      height={result.success ? 100 : 21}
-                      options={{
-                        loop: false,
-                        autoplay: true,
-                        animationData: result.success
-                          ? successLottie
-                          : failLottie,
-                      }}
-                      style={{ margin: '0' }}
-                    />
-                  </S.LottieWrapper>
-                </S.TestCaseItem>
-              ))}
-            </S.TestCaseList>
-          )}
-        </S.TestCaseWrapper>
         <S.BOJWrapper>
-          <S.Title>백준 제출하기</S.Title>
-          <S.BOJGuideText>{`백준 사이트에 제출하여 채점 결과를 확인해 보세요!
-          제출이 완료되어야 서비스를 정상적으로 이용할 수 있어요`}</S.BOJGuideText>
+          <S.Title>제출하기</S.Title>
+          <S.BOJGuideText>{`백준 사이트에 제출하여 채점 결과를 확인해 보세요!`}</S.BOJGuideText>
           <S.BOJButtonWrapper>
             <Button
               width="16rem"
@@ -143,6 +98,31 @@ export default function ProblemSubmitModal({
             >
               백준 제출하러 가기
             </Button>
+          </S.BOJButtonWrapper>
+          <S.Title>결과 공유하기</S.Title>
+          <S.BOJGuideText>{`팀원들에게 채점 결과를 공유해 주세요 🤗`}</S.BOJGuideText>
+          <S.BOJButtonWrapper>
+            <DropDown
+              width="16rem"
+              dataId="submitStatus"
+              labelId="status-label"
+              defaultValue={'SUCCESS'}
+              dataSet={STATUS_DATA_SET}
+              onSelected={value => {
+                if (value === 'SUCCESS') {
+                  setSolveStatus(value);
+                  setFailureReason('');
+                  return;
+                }
+
+                setSolveStatus('FAIL');
+                setFailureReason(value);
+              }}
+              borderColor={theme.color.gray_50}
+              fontSize={theme.size.M}
+              backgroundColor={theme.color.background_editor}
+              hasDefaultLabel={false}
+            />
           </S.BOJButtonWrapper>
           <S.EndButtonWrapper>
             <Button

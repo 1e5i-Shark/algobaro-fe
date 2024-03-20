@@ -3,6 +3,7 @@ import { v4 } from 'uuid';
 
 import { Message } from '@/components';
 import useMessageStore from '@/store/MessageStore';
+import useRoomStore from '@/store/RoomStore';
 
 import * as S from './Chat.style';
 import ChatInput from './ChatInput';
@@ -14,11 +15,19 @@ interface ChatProps {
 export default function Chat({ height = '100%' }: ChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { messageLogs } = useMessageStore();
+  const {
+    roomData: { roomMembers },
+  } = useRoomStore();
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
+  };
+
+  const memberIdToNickname = (memberId: number) => {
+    const data = roomMembers.find(member => member.memberId === memberId);
+    return data?.nickname;
   };
 
   useEffect(() => {
@@ -35,8 +44,8 @@ export default function Chat({ height = '100%' }: ChatProps) {
           return (
             <S.MessageWrapper key={v4()}>
               <Message
-                userName={message.memberId.toString()}
-                comment={message.value as string}
+                userName={memberIdToNickname(message.memberId) || ''}
+                comment={message.value || ''}
                 createdAt={message.timestamp}
               />
             </S.MessageWrapper>
