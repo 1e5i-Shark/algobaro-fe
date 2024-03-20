@@ -131,10 +131,25 @@ export default function CodeEditor({
       return;
     }
 
-    if (changeData.origin === '+input' && mode !== 'readonly') {
+    // 초기 렌더링 시 다시 설정하는 것 방지
+    if (changeData.origin !== 'setValue' && mode !== 'readonly') {
       setCode(`${value}${data.text[0]}`);
     }
   };
+
+  useEffect(() => {
+    editorRef?.current?.setValue(
+      mode !== 'normal'
+        ? defaultValue
+        : defaultValue || codeEditorDefaultValue[language]
+    );
+  }, [language]);
+
+  useEffect(() => {
+    if (mode === 'readonly') {
+      editorRef?.current?.setValue(defaultValue);
+    }
+  }, [defaultValue]);
 
   return (
     <S.Wrapper>
@@ -149,6 +164,7 @@ export default function CodeEditor({
             dataSet={PROBLEM_LANGUAGES_DATA_SET}
             onSelected={value => {
               setLanguage(value);
+              setCode(codeEditorDefaultValue[`${value}`]);
             }}
             borderColor={theme.color.gray_50}
             fontSize={theme.size.S}
