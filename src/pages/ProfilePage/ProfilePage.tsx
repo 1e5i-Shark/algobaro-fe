@@ -203,8 +203,8 @@ export default function ProfilePage() {
                     </S.ProblemLink>
                     <Tag
                       mode="normal"
-                      width="8rem"
-                      height={theme.size.L}
+                      width="max-content"
+                      height={theme.size.XL}
                       fontSize={theme.size.S}
                       tagId={
                         problem.solveStatus === 'SUCCESS'
@@ -223,13 +223,13 @@ export default function ProfilePage() {
                     >
                       {problem.solveStatus === 'SUCCESS'
                         ? problem.solveStatus
-                        : problem.failureReason || 'FAIL'}
+                        : problem.failureReason?.replace('_', ' ') || 'FAIL'}
                     </Tag>
                     {problem.language && (
                       <Tag
                         mode="normal"
                         width="7rem"
-                        height={theme.size.L}
+                        height={theme.size.XL}
                         fontSize={theme.size.S}
                         tagId={problem.language || 'null'}
                         backgroundColor={theme.color.gray_20}

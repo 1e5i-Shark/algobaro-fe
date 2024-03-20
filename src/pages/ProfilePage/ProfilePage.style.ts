@@ -142,6 +142,8 @@ export const ProblemHistoryItem = styled.li`
     display: flex;
     gap: ${theme.size.M};
     align-items: center;
+    height: 20%;
+    max-height: 7rem;
     padding: ${theme.size.S} ${theme.size.L};
     cursor: pointer;
     background-color: ${theme.color.background_menu};
