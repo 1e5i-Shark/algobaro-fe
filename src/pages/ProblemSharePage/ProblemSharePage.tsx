@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Chat, CodeEditor } from '@/components';
 import { MOCK_ROOM_DATA } from '@/constants/room';
@@ -8,7 +8,6 @@ import { useMyInfo } from '@/hooks/Api/useMembers';
 import { useGetRoomMembers } from '@/hooks/Api/useRooms';
 import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { useSolvedResult } from '@/hooks/Api/useSolves';
-import { PATH } from '@/routes/path';
 import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
 
@@ -22,7 +21,13 @@ export default function ProblemSharePage() {
   const { setRoomData } = useRoomStore(state => state);
   const { receiveLogs } = useMessageStore(state => state);
 
-  const navigate = useNavigate();
+  const {
+    client,
+    subscription,
+    connect,
+    reset: resetMessage,
+  } = useMessageStore();
+
   const params = useParams();
   const { roomShortUuid } = params;
 
@@ -47,14 +52,17 @@ export default function ProblemSharePage() {
     result => result.memberId === selectedMemberId
   );
 
-  const beforeUnloadListener = () => {
-    navigate(`${PATH.HOME}`, { replace: true });
-  };
-
+  // 새로고침 해도 소켓 재접속
   useEffect(() => {
-    window.addEventListener('beforeunload', beforeUnloadListener);
+    connect(roomShortUuid);
+
     return () => {
-      window.removeEventListener('beforeunload', beforeUnloadListener);
+      if (!client || !subscription) return;
+
+      subscription.unsubscribe();
+      client.deactivate();
+
+      resetMessage();
     };
   }, []);
 

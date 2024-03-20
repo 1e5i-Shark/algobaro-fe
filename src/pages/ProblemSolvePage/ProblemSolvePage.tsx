@@ -8,6 +8,7 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
 import { useCompile } from '@/hooks/useProblemSolve';
 import useCodeEditorStore from '@/store/CodeEditorStore';
+import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
 import useTimerStore from '@/store/TimerStore';
 
@@ -20,6 +21,13 @@ import ProblemSubmitModal from './ProblemSubmitModal/ProblemSubmitModal';
 export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
   const { modalRef, isOpen, openModal, closeModal } = useModal();
+
+  const {
+    client,
+    subscription,
+    connect,
+    reset: resetMessage,
+  } = useMessageStore();
 
   const params = useParams();
   const { roomShortUuid } = params;
@@ -72,6 +80,20 @@ export default function ProblemSolvePage() {
   useEffect(() => {
     reset();
     refetch();
+  }, []);
+
+  // 새로고침 해도 소켓 재접속
+  useEffect(() => {
+    connect(roomShortUuid);
+
+    return () => {
+      if (!client || !subscription) return;
+
+      subscription.unsubscribe();
+      client.deactivate();
+
+      resetMessage();
+    };
   }, []);
 
   return (
