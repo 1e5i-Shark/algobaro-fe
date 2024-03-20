@@ -10,7 +10,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     padding: 0 0 0 2rem;
-    background-color: ${theme.color.gray_20};
+    background-color: ${theme.color.background_editor};
   `}
 `;
 
