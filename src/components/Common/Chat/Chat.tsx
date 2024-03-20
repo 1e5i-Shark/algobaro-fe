@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { v4 } from 'uuid';
 
 import { Message } from '@/components';
+import { SOCKET_TYPE } from '@/constants/socket';
 import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
 
@@ -14,7 +15,9 @@ interface ChatProps {
 
 export default function Chat({ height = '100%' }: ChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+
   const { messageLogs } = useMessageStore();
+
   const {
     roomData: { roomMembers },
   } = useRoomStore();
@@ -25,14 +28,15 @@ export default function Chat({ height = '100%' }: ChatProps) {
     }
   };
 
-  const memberIdToNickname = (memberId: number) => {
+  const memberIdToData = (memberId: number) => {
     const data = roomMembers.find(member => member.memberId === memberId);
-    return data?.nickname;
-  };
 
-  const memberIdToAvatar = (memberId: number) => {
-    const data = roomMembers.find(member => member.memberId === memberId);
-    return data?.profileImage;
+    const result = {
+      profileImage: data?.profileImage || '',
+      nickname: data?.nickname || '',
+    };
+
+    return result;
   };
 
   useEffect(() => {
@@ -46,11 +50,16 @@ export default function Chat({ height = '100%' }: ChatProps) {
         className="message-container"
       >
         {messageLogs.map(message => {
+          const memberData = memberIdToData(message.memberId);
+          // 입장, 퇴장 시 system 메세지를 출력한다.
+          const isSystem =
+            message.type === SOCKET_TYPE.CHAT.ENTER ||
+            message.type === SOCKET_TYPE.CHAT.QUIT;
           return (
             <S.MessageWrapper key={v4()}>
               <Message
-                avatarSrc={memberIdToAvatar(message.memberId) || ''}
-                userName={memberIdToNickname(message.memberId) || ''}
+                avatarSrc={!isSystem ? memberData.profileImage : ''}
+                userName={!isSystem ? memberData.nickname : 'Algobaro'}
                 comment={message.value || ''}
                 createdAt={message.timestamp}
               />
