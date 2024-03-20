@@ -30,6 +30,11 @@ export default function Chat({ height = '100%' }: ChatProps) {
     return data?.nickname;
   };
 
+  const memberIdToAvatar = (memberId: number) => {
+    const data = roomMembers.find(member => member.memberId === memberId);
+    return data?.profileImage;
+  };
+
   useEffect(() => {
     scrollToBottom();
   }, [messageLogs]);
@@ -44,6 +49,7 @@ export default function Chat({ height = '100%' }: ChatProps) {
           return (
             <S.MessageWrapper key={v4()}>
               <Message
+                avatarSrc={memberIdToAvatar(message.memberId) || ''}
                 userName={memberIdToNickname(message.memberId) || ''}
                 comment={message.value || ''}
                 createdAt={message.timestamp}
