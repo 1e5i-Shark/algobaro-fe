@@ -62,7 +62,7 @@ export default function HomeNav({ refetch }: HomeNavProps) {
     // 타이머 실행
     startStopWatch();
 
-    // 애니메이션이 끝난 후 상태를 리셋하기 위해 타이머 설정
+    // 새로고침 아이콘의 애니메이션이 끝난 후 상태를 리셋하기 위해 타이머 설정
     setAnimate(true);
     setTimeout(() => setAnimate(false), 350);
 
