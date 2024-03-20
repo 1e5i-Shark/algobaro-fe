@@ -47,8 +47,7 @@ export default function ProblemSolvePage() {
   };
 
   const handleCompileExecution = async () => {
-    console.log({ code, input, language });
-    // compileMutate({ code, input, language });
+    compileMutate({ code, input, language });
   };
 
   const handleSubmit = async () => {

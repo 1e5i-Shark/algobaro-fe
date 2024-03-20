@@ -47,9 +47,7 @@ export default function CodeEditor({
 }: CodeEditorProps) {
   const { theme } = useCustomTheme();
 
-  const { language, code, setCode, setLanguage } = useCodeEditorStore(
-    state => state
-  );
+  const { language, setCode, setLanguage } = useCodeEditorStore(state => state);
 
   const editorRef = useRef<Editor | null>(null);
   const providerRef = useRef<WebrtcProvider | null>(null);
