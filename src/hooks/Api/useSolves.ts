@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { QUERY_KEY } from '@/constants/queryKey';
-import { getSolvedHistoryList } from '@/services/Solve';
+import { getSolvedHistoryList, getSolvedResult } from '@/services/Solve';
 import getSolvedDetail from '@/services/Solve/getSolvedDetail';
 import { GetSolvedHistoryListParams } from '@/services/Solve/type';
 

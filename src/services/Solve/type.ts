@@ -10,6 +10,7 @@ export interface SolvedHistory {
   solveStatus: 'SUCCESS' | 'FAIL';
   solvedAt: string;
   problemLink: string;
+  failureReason: string;
 }
 
 export interface SolvedHistoryListResponse {

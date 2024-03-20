@@ -8,7 +8,6 @@ import { useSolvedHistoryList } from '@/hooks/Api/useSolves';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
-import { SolvedHistory } from '@/services/Solve/type';
 
 import * as S from './ProfilePage.style';
 
@@ -42,7 +41,7 @@ export default function ProfilePage() {
   // 풀이 히스토리를 가져오는 useQuery 훅
   // 한 페이지에 4개의 히스토리를 가져온다.
   const {
-    // data: solvedHistoryData,
+    data: solvedHistoryData,
     isLoading,
     refetch: fetchSolvedHistory,
   } = useSolvedHistoryList({
@@ -50,65 +49,14 @@ export default function ProfilePage() {
     size: 4,
   });
 
-  // const solvedHistoryRes = solvedHistoryData?.response;
+  const solvedHistoryRes = solvedHistoryData?.response;
   // 풀이 히스토리 리스트 데이터
-  // const solvedHistoryList = solvedHistoryRes?.content;
-  const solvedHistoryList: SolvedHistory[][] = [
-    [
-      {
-        id: 1,
-        roomUuid: '1cb777ef',
-        language: 'javascript',
-        solveStatus: 'SUCCESS',
-        solvedAt: '2024-01-01T00:00:00',
-        problemLink: 'https://www.acmicpc.net/problem/1000',
-      },
-      {
-        id: 2,
-        roomUuid: '1cb777ef',
-        language: 'javascript',
-        solveStatus: 'SUCCESS',
-        solvedAt: '2024-01-01T00:00:00',
-        problemLink: 'https://www.acmicpc.net/problem/1001',
-      },
-      {
-        id: 3,
-        roomUuid: '1cb777ef',
-        language: 'javascript',
-        solveStatus: 'SUCCESS',
-        solvedAt: '2024-01-01T00:00:00',
-        problemLink: 'https://www.acmicpc.net/problem/1002',
-      },
-      {
-        id: 4,
-        roomUuid: '1cb777ef',
-        language: 'javascript',
-        solveStatus: 'SUCCESS',
-        solvedAt: '2024-01-01T00:00:00',
-        problemLink: 'https://www.acmicpc.net/problem/1003',
-      },
-    ],
-    [
-      {
-        id: 5,
-        roomUuid: '1cb777ef',
-        language: 'javascript',
-        solveStatus: 'SUCCESS',
-        solvedAt: '2024-01-01T00:00:00',
-        problemLink: 'https://www.acmicpc.net/problem/1004',
-      },
-    ],
-  ];
+  const solvedHistoryList = solvedHistoryRes?.content;
 
   // 전체 페이지 수 상태 관리
-  // Todo: api 연결되면 주석 원복
-  // const totalPageNum = solvedHistoryRes?.totalPages;
-  const totalPageNum = solvedHistoryList.length;
+  const totalPageNum = solvedHistoryRes?.totalPages;
   // 전체 히스토리 데이터 수
-  // const totalHistoryNum = solvedHistoryRes?.totalElements;
-  const totalHistoryNum =
-    (solvedHistoryList.length - 1) * 4 +
-    solvedHistoryList[totalPageNum - 1].length;
+  const totalHistoryNum = solvedHistoryRes?.totalElements;
 
   // 프로필 이미지 변경하는 API useMutation 훅
   const { mutate: editMyImageMutate } = useEditMyImage();
@@ -239,13 +187,9 @@ export default function ProfilePage() {
         <S.ProblemHistoryListContainer>
           {isLoading ? (
             <Spinner />
-          ) : // Todo: api 연결되면 주석 원복
-          // ) : solvedHistoryList?.length !== 0 ? (
-          solvedHistoryList[pageNum]?.length !== 0 ? (
+          ) : solvedHistoryList?.length !== 0 ? (
             <>
-              {/* Todo: api 연결되면 주석 원복 */}
-              {/* {solvedHistoryList?.map(problem => { */}
-              {solvedHistoryList[pageNum]?.map(problem => {
+              {solvedHistoryList?.map(problem => {
                 return (
                   <S.ProblemHistoryItem
                     key={problem.id}
@@ -259,10 +203,14 @@ export default function ProfilePage() {
                     </S.ProblemLink>
                     <Tag
                       mode="normal"
-                      width="7rem"
+                      width="8rem"
                       height={theme.size.L}
                       fontSize={theme.size.S}
-                      tagId={problem.solveStatus || 'null'}
+                      tagId={
+                        problem.solveStatus === 'SUCCESS'
+                          ? problem.solveStatus
+                          : problem.failureReason || 'null'
+                      }
                       backgroundColor={
                         problem.solveStatus === 'SUCCESS'
                           ? theme.color.green
@@ -273,7 +221,9 @@ export default function ProfilePage() {
                         fontWeight: theme.fontWeight.semiBold,
                       }}
                     >
-                      {problem.solveStatus}
+                      {problem.solveStatus === 'SUCCESS'
+                        ? problem.solveStatus
+                        : problem.failureReason || 'FAIL'}
                     </Tag>
                     <Tag
                       mode="normal"
