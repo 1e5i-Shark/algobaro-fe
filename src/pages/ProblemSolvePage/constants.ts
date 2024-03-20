@@ -22,6 +22,8 @@ export const SIZE_PERCENTAGE = {
   SOLVE: 60,
   EDITOR: 70,
   EXECUTION: 30,
+  EXECUTION_INPUT: 40,
+  EXECUTION_RESULT: 60,
 } as const;
 
 export const STATUS_DATA_SET: Record<string, string> = {
