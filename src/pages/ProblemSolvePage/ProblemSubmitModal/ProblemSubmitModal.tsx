@@ -31,6 +31,7 @@ export default function ProblemSubmitModal({
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [solveStatus, setSolveStatus] = useState('SUCCESS');
+  const [failureReason, setFailureReason] = useState('');
 
   const { mutateAsync: submitMutateAsync } = useSubmission();
 
@@ -64,6 +65,7 @@ export default function ProblemSubmitModal({
       code,
       problemLink,
       solveStatus,
+      failureReason,
     });
     navigate(`${PATH.PROBLEMSHARE}/${roomShortUuid}`, { replace: true });
   };
@@ -76,7 +78,7 @@ export default function ProblemSubmitModal({
 
   return (
     <Modal
-      mode={isEnd ? 'confirm' : 'normal'}
+      // mode={isEnd ? 'confirm' : 'normal'}
       width="65rem"
       height="fit-content"
       ref={modalRef}
@@ -107,7 +109,14 @@ export default function ProblemSubmitModal({
               defaultValue={'SUCCESS'}
               dataSet={STATUS_DATA_SET}
               onSelected={value => {
-                setSolveStatus(value);
+                if (value === 'SUCCESS') {
+                  setSolveStatus(value);
+                  setFailureReason('');
+                  return;
+                }
+
+                setSolveStatus('FAIL');
+                setFailureReason(value);
               }}
               borderColor={theme.color.gray_50}
               fontSize={theme.size.M}
