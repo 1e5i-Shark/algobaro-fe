@@ -33,7 +33,7 @@ export default function ProblemSolvePage() {
   } = useCompile();
   const { data: roomDetail, refetch } = useGetUuidRoom(roomShortUuid);
 
-  const { input, code, language } = useCodeEditorStore(state => state);
+  const { input, code, language, reset } = useCodeEditorStore(state => state);
   const {
     roomData: { problemLink },
     setRoomData,
@@ -47,7 +47,8 @@ export default function ProblemSolvePage() {
   };
 
   const handleCompileExecution = async () => {
-    compileMutate({ code, input, language });
+    if (confirm('하루 실행 제한이 있습니다. 정말 실행하시겠습니까?'))
+      compileMutate({ code, input, language });
   };
 
   const handleSubmit = async () => {
@@ -69,6 +70,7 @@ export default function ProblemSolvePage() {
   }, [isEnd]);
 
   useEffect(() => {
+    reset();
     refetch();
   }, []);
 
