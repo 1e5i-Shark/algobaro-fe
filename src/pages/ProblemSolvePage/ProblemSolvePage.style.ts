@@ -42,6 +42,11 @@ const EditorWrapper = styled(Col)`
   height: 100%;
 `;
 
+const ExecutionWrapper = styled(Row)`
+  width: 100%;
+  height: 100%;
+`;
+
 const ButtonWrapper = styled(Row)`
   ${({ theme }) => css`
     gap: 1.2rem;
@@ -57,6 +62,7 @@ export {
   ButtonWrapper,
   ContentsWrapper,
   EditorWrapper,
+  ExecutionWrapper,
   ProblemLink,
   ProblemLinkContainer,
   ProblemLinkText,

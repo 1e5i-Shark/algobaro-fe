@@ -16,6 +16,7 @@ import ProblemExecution from './ProblemExecution/ProblemExecution';
 import ProblemSection from './ProblemSection/ProblemSection';
 import * as S from './ProblemSolvePage.style';
 import ProblemSubmitModal from './ProblemSubmitModal/ProblemSubmitModal';
+import TestCaseInput from './TestCaseInput/TestCaseInput';
 
 export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
@@ -33,7 +34,9 @@ export default function ProblemSolvePage() {
   } = useCompile();
   const { data: roomDetail, refetch } = useGetUuidRoom(roomShortUuid);
 
-  const { input, code, language, reset } = useCodeEditorStore(state => state);
+  const { input, code, language, reset, setInput } = useCodeEditorStore(
+    state => state
+  );
   const {
     roomData: { problemLink },
     setRoomData,
@@ -47,12 +50,18 @@ export default function ProblemSolvePage() {
   };
 
   const handleCompileExecution = async () => {
-    if (confirm('하루 실행 제한이 있습니다. 정말 실행하시겠습니까?'))
+    if (confirm('하루 실행 제한이 있습니다. 정말 실행하시겠습니까?')) {
+      console.log({ code, input, language });
       compileMutate({ code, input, language });
+    }
   };
 
   const handleSubmit = async () => {
     openModal();
+  };
+
+  const handleChangeTestCase = (newText: string) => {
+    setInput(newText);
   };
 
   useEffect(() => {
@@ -102,10 +111,13 @@ export default function ProblemSolvePage() {
               <ResizeHandle direction={DIRECTION.VERTICAL} />
               <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION}>
                 {/* 실행 영역 */}
-                <ProblemExecution
-                  isLoading={isCompileLoading}
-                  isError={isCompileError}
-                />
+                <S.ExecutionWrapper>
+                  <TestCaseInput onChange={handleChangeTestCase} />
+                  <ProblemExecution
+                    isLoading={isCompileLoading}
+                    isError={isCompileError}
+                  />
+                </S.ExecutionWrapper>
               </Panel>
             </PanelGroup>
           </Panel>
