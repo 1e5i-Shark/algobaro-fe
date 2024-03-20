@@ -5,16 +5,25 @@ const useStopWatch = () => {
   const [startTime, setStartTime] = useState<number | null>(null);
   // 경과 시간(초)
   const [elapsedTime, setElapsedTime] = useState<number>(0);
+  // 딜레이 여부 체크
+  const [nowDelay, setNowDelay] = useState<boolean>(false);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
+    let timeout: NodeJS.Timeout | null = null;
 
     if (startTime) {
+      setNowDelay(true);
+
+      // 회의 결과: 5초의 delay time
+      timeout = setTimeout(() => {
+        setNowDelay(false);
+      }, 1000 * 5);
+
       // 1초마다 elapsedTime을 업데이트
       interval = setInterval(() => {
         setElapsedTime(prevElapsedTime => prevElapsedTime + 1);
       }, 1000 * 60);
-      // 1000 * 60으로 수정하기
     } else {
       // 타이머를 초기화
       setElapsedTime(0);
@@ -24,6 +33,9 @@ const useStopWatch = () => {
     return () => {
       if (interval) {
         clearInterval(interval);
+      }
+      if (timeout) {
+        clearTimeout(timeout);
       }
     };
   }, [startTime]);
@@ -37,6 +49,7 @@ const useStopWatch = () => {
 
   return {
     elapsedTime,
+    nowDelay,
     startStopWatch,
   };
 };
