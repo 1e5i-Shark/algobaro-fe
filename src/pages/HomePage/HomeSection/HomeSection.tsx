@@ -1,13 +1,12 @@
 import LockOpenRoundedIcon from '@mui/icons-material/LockOpenRounded';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
-import { useNavigate } from 'react-router-dom';
 
 import { Button, Icon, Image, Modal, Tag } from '@/components';
 import { LOGOS } from '@/constants/logos';
 import { useRoomDetail } from '@/hooks/Api/useRooms';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
-import { PATH } from '@/routes/path';
+import { useValidateEnter } from '@/hooks/useValidateEnter';
 import { RoomsListType } from '@/types/room';
 
 import CheckRoomPassword from './CheckRoomPassword';
@@ -24,8 +23,8 @@ export default function HomeSection({
   currentMemberCount,
 }: RoomsListType) {
   const { theme } = useCustomTheme();
-  const navigate = useNavigate();
   const { data, isLoading } = useRoomDetail(roomShortUuid);
+  const { mutate } = useValidateEnter(roomShortUuid);
   const { modalRef, isOpen, openModal, closeModal } = useModal();
 
   const handleRoomEnter = () => {
@@ -33,7 +32,10 @@ export default function HomeSection({
 
     // 방에 걸려있는 비번 없으면 바로 입장되어야 함.
     if (!data?.response.password) {
-      navigate(`${PATH.ROOM}/${roomShortUuid}`);
+      mutate({
+        password: '',
+        roomShortUuid,
+      });
       return;
     }
 
@@ -121,6 +123,7 @@ export default function HomeSection({
         <CheckRoomPassword
           roomPassword={data?.response.password}
           roomShortUuid={roomShortUuid}
+          mutate={mutate}
         />
       </Modal>
     </S.SectionWrapper>
