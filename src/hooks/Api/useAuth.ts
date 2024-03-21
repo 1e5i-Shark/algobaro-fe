@@ -1,9 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { PATH } from '@/routes/path';
 import { signIn, signUp } from '@/services/Auth';
+import { ErrorDataType } from '@/types/api';
 
 import { useLocalStorage } from '../useLocalStorage';
 
@@ -22,6 +24,9 @@ export const useSignIn = () => {
       setAccessToken(response.accessToken);
       navigate(PATH.HOME);
     },
+    onError: (error: AxiosError<ErrorDataType>) => {
+      return error.response?.data.error.errorCode;
+    },
   });
 };
 
@@ -39,6 +44,9 @@ export const useSignUp = () => {
 
       signInMutate({ email, password });
       return data;
+    },
+    onError: (error: AxiosError<ErrorDataType>) => {
+      return error.response?.data.error.errorCode;
     },
   });
 };
