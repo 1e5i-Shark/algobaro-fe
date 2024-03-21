@@ -33,3 +33,12 @@ export const STATUS_DATA_SET: Record<string, string> = {
   MEMORY_LIMIT: '메모리 초과',
   ETC: '기타 에러',
 };
+
+export const SUBMIT_STATUS_DATA_SET: Record<string, string> = {
+  SUCCESS: '맞았습니다',
+  FAIL: '틀렸습니다',
+  TIME_LIMIT: '시간 초과',
+  MEMORY_LIMIT: '메모리 초과',
+  ETC: '기타 에러',
+  UNSUBMITTED: '포기',
+};

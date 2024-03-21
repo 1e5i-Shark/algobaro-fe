@@ -10,6 +10,7 @@ export interface SolvedHistory {
   solveStatus: 'SUCCESS' | 'FAIL';
   solvedAt: string;
   problemLink: string;
+  failureReason: string;
 }
 
 export interface SolvedHistoryListResponse {
@@ -18,6 +19,21 @@ export interface SolvedHistoryListResponse {
     content: SolvedHistory[];
     totalPages: number;
     totalElements: number;
+  };
+}
+
+export interface SolvedDetailResponse {
+  success: boolean;
+  response: {
+    id: number;
+    roomUuid: string;
+    language: string;
+    code: string;
+    solveStatus: string;
+    solvedAt: string;
+    platform: 'BOJ';
+    problemLink: string;
+    failureReason: string;
   };
 }
 

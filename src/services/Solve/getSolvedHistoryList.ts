@@ -1,4 +1,4 @@
-import { SOLVED_HISTORY_LIST } from '../apiEndpoint';
+import { API_ENDPOINT } from '../apiEndpoint';
 import { axiosAuthInstance } from '../axiosInstance';
 import { GetSolvedHistoryListParams, SolvedHistoryListResponse } from './type';
 
@@ -7,7 +7,7 @@ const getSolvedHistoryList = async ({
   size,
 }: GetSolvedHistoryListParams) => {
   return await axiosAuthInstance.get<SolvedHistoryListResponse>(
-    `${SOLVED_HISTORY_LIST}`,
+    `${API_ENDPOINT.SOLVE.SOLVED_HISTORY_LIST}`,
     {
       params: {
         page,

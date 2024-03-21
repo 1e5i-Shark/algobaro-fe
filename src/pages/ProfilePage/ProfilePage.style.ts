@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 import { ButtonHoverTransition, Col, Row } from '@/styles/GlobalStyle';
 
+import HistoryDetailModal from './HistoryDetailModal/HistoryDetailModal';
 import PasswordEditModal from './PasswordEditModal/PasswordEditModal';
 import ProfileEditModal from './ProfileEditModal/ProfileEditModal';
 
@@ -136,11 +137,24 @@ export const ProblemHistoryListContainer = styled.ul`
   `}
 `;
 
+export const ImageContainer = styled.div`
+  ${({ theme }) => css`
+    width: 2rem;
+    height: 2rem;
+    margin-right: ${theme.size.XS};
+    div {
+      background-color: ${theme.color.gray_20};
+    }
+  `}
+`;
+
 export const ProblemHistoryItem = styled.li`
   ${({ theme }) => css`
     display: flex;
     gap: ${theme.size.M};
     align-items: center;
+    height: 20%;
+    max-height: 7rem;
     padding: ${theme.size.S} ${theme.size.L};
     cursor: pointer;
     background-color: ${theme.color.background_menu};
@@ -169,3 +183,4 @@ export const EditPWModal = styled(PasswordEditModal)`
   max-width: 60rem;
   min-height: 50rem;
 `;
+export const HistoryModal = styled(HistoryDetailModal)``;

@@ -4,7 +4,7 @@ import { SolvedResultResponse } from './type';
 
 const getSolvedResult = async (roomShortUuid: string) => {
   return await axiosAuthInstance.get<SolvedResultResponse>(
-    `${API_ENDPOINT.SOVLE.RESULT}/${roomShortUuid}`
+    `${API_ENDPOINT.SOLVE.RESULT}/${roomShortUuid}`
   );
 };
 
