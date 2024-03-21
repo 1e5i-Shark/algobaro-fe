@@ -16,6 +16,7 @@ const ProblemLinkContainer = styled.div`
   ${({ theme }) => css`
     display: flex;
     justify-content: end;
+    min-width: 40rem;
     height: ${theme.size.XXL};
     padding: 0.5rem;
     background-color: ${theme.color.background_editor};
