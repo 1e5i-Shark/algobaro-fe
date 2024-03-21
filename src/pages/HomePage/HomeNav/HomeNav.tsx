@@ -6,6 +6,7 @@ import { Button, CheckBox, Icon, MultiDropDown } from '@/components';
 import { LANGUAGES_DATA_SET } from '@/constants/room';
 import { PATH } from '@/routes/path';
 import useFilterStore from '@/store/RoomsListStore/useFilterStore';
+import { toastify } from '@/utils/toastify';
 
 import AnimatedIcon from './animatedIcon';
 import * as S from './HomeNav.style';
@@ -55,7 +56,7 @@ export default function HomeNav({ refetch }: HomeNavProps) {
 
   const handleRefetchData = () => {
     if (elapsedTime === 1) {
-      alert('잠시 후 다시 시도해주세요.');
+      toastify.error('잠시 후 다시 시도해주세요.');
       return;
     }
 

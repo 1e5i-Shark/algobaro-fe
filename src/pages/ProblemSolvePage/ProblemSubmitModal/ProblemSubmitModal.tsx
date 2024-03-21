@@ -8,6 +8,7 @@ import { PATH } from '@/routes/path';
 import useCodeEditorStore from '@/store/CodeEditorStore';
 import useRoomStore from '@/store/RoomStore';
 import useTimerStore from '@/store/TimerStore';
+import { toastify } from '@/utils/toastify';
 
 import { STATUS_DATA_SET } from '../constants';
 import * as S from './ProblemSubmitModal.style';
@@ -40,9 +41,9 @@ export default function ProblemSubmitModal({
   const handleCopyCode = () => {
     if (window.navigator.clipboard) {
       window.navigator.clipboard.writeText(code);
-      alert('작성하신 코드가 복사되었어요!');
+      toastify.success('작성하신 코드가 복사되었어요!');
     } else {
-      alert('복사하기가 지원되지 않는 브라우저입니다.');
+      toastify.error('복사하기가 지원되지 않는 브라우저입니다.');
     }
   };
 

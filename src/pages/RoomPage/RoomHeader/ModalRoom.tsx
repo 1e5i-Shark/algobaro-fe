@@ -8,6 +8,7 @@ import { ROOM_ACCESS } from '@/pages/RoomPage/RoomPage.consts';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import { updateRoom } from '@/services/Room/Room';
 import useRoomStore from '@/store/RoomStore';
+import { toastify } from '@/utils/toastify';
 
 interface ModalRoomProps {
   onClose: () => void;
@@ -75,13 +76,15 @@ export default function ModalRoom({ onClose }: ModalRoomProps) {
     if (isSuccess) {
       setRoomData({ ...roomData, ...newData });
 
-      alert('방 정보가 수정되었습니다');
+      toastify.success('방 정보가 수정되었습니다');
       onClose();
     }
   }, [data]);
 
   if (isError) {
-    alert('서버와의 통신에 오류가 있습니다. 잠시 후 다시 시도해주세요.');
+    toastify.error(
+      '서버와의 통신에 오류가 있습니다. 잠시 후 다시 시도해주세요.'
+    );
     onClose();
   }
 

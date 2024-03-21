@@ -8,6 +8,7 @@ import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { PATH } from '@/routes/path';
 import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
+import { toastify } from '@/utils/toastify';
 
 import { findMyRoomData } from './findMyRoomData';
 import MemberList from './MemberList/MemberList';
@@ -86,7 +87,7 @@ export default function RoomPage() {
   }, [roomData]);
 
   if (isError) {
-    alert('방 정보를 불러오지 못했습니다. 잠시 후 다시 입장해주세요.');
+    toastify.error('방 정보를 불러오지 못했습니다. 잠시 후 다시 입장해주세요.');
     return <Navigate to={PATH.HOME} />;
   }
 
