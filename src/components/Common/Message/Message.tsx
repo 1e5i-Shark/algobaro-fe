@@ -63,7 +63,7 @@ export default function Message({
         {...props}
       >
         <MessageSender $fontSize={fontSize}>
-          {avatarSrc && (
+          {avatarSrc !== 'system' && (
             <Avatar
               size={avatarSize}
               src={avatarSrc}
