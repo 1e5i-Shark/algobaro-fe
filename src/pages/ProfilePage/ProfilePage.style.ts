@@ -137,6 +137,14 @@ export const ProblemHistoryListContainer = styled.ul`
   `}
 `;
 
+export const ImageContainer = styled.div`
+  ${({ theme }) => css`
+    width: 2rem;
+    height: 2rem;
+    margin-right: ${theme.size.XS};
+  `}
+`;
+
 export const ProblemHistoryItem = styled.li`
   ${({ theme }) => css`
     display: flex;

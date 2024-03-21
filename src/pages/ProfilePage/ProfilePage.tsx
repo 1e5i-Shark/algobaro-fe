@@ -1,14 +1,17 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Avatar, Button, Pagination, Spinner, Tag } from '@/components';
+import { Avatar, Button, Image, Pagination, Spinner, Tag } from '@/components';
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
+import { LOGOS } from '@/constants/logos';
 import { useEditMyImage, useMyInfo } from '@/hooks/Api/useMembers';
 import { useSolvedHistoryList } from '@/hooks/Api/useSolves';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
 
+import { SUBMIT_STATUS_DATA_SET } from '../ProblemSolvePage/constants';
+import { languageConvert } from './HistoryDetailModal/languageConstant';
 import * as S from './ProfilePage.style';
 
 export default function ProfilePage() {
@@ -222,13 +225,15 @@ export default function ProfilePage() {
                       }}
                     >
                       {problem.solveStatus === 'SUCCESS'
-                        ? problem.solveStatus
-                        : problem.failureReason?.replace('_', ' ') || 'FAIL'}
+                        ? SUBMIT_STATUS_DATA_SET[problem.solveStatus]
+                        : problem.failureReason
+                          ? SUBMIT_STATUS_DATA_SET[problem.failureReason]
+                          : SUBMIT_STATUS_DATA_SET['FAIL']}
                     </Tag>
                     {problem.language && (
                       <Tag
                         mode="normal"
-                        width="7rem"
+                        width="max-content"
                         height={theme.size.XL}
                         fontSize={theme.size.S}
                         tagId={problem.language || 'null'}
@@ -238,7 +243,18 @@ export default function ProfilePage() {
                           fontWeight: theme.fontWeight.semiBold,
                         }}
                       >
-                        {problem.language}
+                        <S.ImageContainer>
+                          <Image
+                            src={
+                              (languageConvert[problem.language] &&
+                                LOGOS[languageConvert[problem.language]]) ||
+                              ''
+                            }
+                            fill={true}
+                            shape="circle"
+                          />
+                        </S.ImageContainer>
+                        {languageConvert[problem.language]}
                       </Tag>
                     )}
                   </S.ProblemHistoryItem>

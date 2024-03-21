@@ -2,6 +2,7 @@ import { CodeEditor, Image, Modal, Spinner } from '@/components';
 import { ModalProps } from '@/components/Common/Modal/Modal';
 import { LOGOS } from '@/constants/logos';
 import { useGetSolvedDetail } from '@/hooks/Api/useSolves';
+import { SUBMIT_STATUS_DATA_SET } from '@/pages/ProblemSolvePage/constants';
 import { convertKoreaTimestamp } from '@/utils/convertDate';
 
 import * as S from './HistoryDetailModal.style';
@@ -71,9 +72,15 @@ export default function HistoryDetailModal({
                 <S.ModalTitle>채점 상태 :</S.ModalTitle>
                 {solveStatus &&
                   (solveStatus === 'SUCCESS' ? (
-                    <S.SolveSuccessText>{solveStatus}</S.SolveSuccessText>
+                    <S.SolveSuccessText>
+                      {SUBMIT_STATUS_DATA_SET[solveStatus]}
+                    </S.SolveSuccessText>
                   ) : (
-                    <S.SolveFailText>{failureReason || 'FAIL'}</S.SolveFailText>
+                    <S.SolveFailText>
+                      {failureReason
+                        ? SUBMIT_STATUS_DATA_SET[failureReason]
+                        : SUBMIT_STATUS_DATA_SET['FAIL']}
+                    </S.SolveFailText>
                   ))}
               </S.ModalTextContainer>
               <S.ModalTextContainer>
