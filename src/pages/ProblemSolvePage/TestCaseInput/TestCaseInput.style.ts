@@ -46,6 +46,7 @@ const TestInput = styled.textarea`
     &::placeholder {
       font-size: 1.6rem;
       color: ${theme.color.gray_50};
+      text-align: center;
     }
   `}
 `;

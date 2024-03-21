@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 
 import * as S from './TestCaseInput.style';
 
@@ -8,6 +8,8 @@ interface TestCaseInputProps {
 
 export default function TestCaseInput({ onChange }: TestCaseInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const [isFocus, setIsFocus] = useState(false);
 
   const handleResizeTextarea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.currentTarget.value;
@@ -20,6 +22,14 @@ export default function TestCaseInput({ onChange }: TestCaseInputProps) {
     }
   };
 
+  const handleFocusInput = () => {
+    setIsFocus(true);
+  };
+
+  const handleBlurInput = () => {
+    setIsFocus(false);
+  };
+
   return (
     <S.Wrapper>
       <S.TestCaseTitle>테스트 입력</S.TestCaseTitle>
@@ -27,7 +37,9 @@ export default function TestCaseInput({ onChange }: TestCaseInputProps) {
         <S.TestInput
           ref={textareaRef}
           onChange={handleResizeTextarea}
-          placeholder="테스트 케이스를 입력하세요."
+          onFocus={handleFocusInput}
+          onBlur={handleBlurInput}
+          placeholder={!isFocus ? '테스트 케이스를 입력하세요.' : ''}
         />
       </S.TestInputWrapper>
     </S.Wrapper>
