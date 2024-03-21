@@ -30,4 +30,5 @@ export const STATUS_DATA_SET: Record<string, string> = {
   TIME_LIMIT: '시간 초과',
   MEMORY_LIMIT: '메모리 초과',
   ETC: '기타 에러',
+  UNSUBMITTED: '포기',
 };
