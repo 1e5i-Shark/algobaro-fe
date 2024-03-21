@@ -54,7 +54,7 @@ export default function HistoryDetailModal({
                   {problemLink}
                 </S.ProblemLink>
               </S.ModalTextContainer>
-              {failureReason !== 'UNSUBMITTED' && (
+              {failureReason !== 'UNSUBMITTED' && convertedLang && (
                 <S.ModalTextContainer>
                   <S.ModalTitle>언어 :</S.ModalTitle>
                   <S.ImageContainer>
