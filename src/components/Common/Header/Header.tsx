@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Avatar, ThemeModeToggleButton } from '@/components';
+import { Avatar, Image, ThemeModeToggleButton } from '@/components';
 import { useMyInfo } from '@/hooks/Api/useMembers';
 import { PATH } from '@/routes/path';
 
@@ -31,7 +31,12 @@ export default function Header() {
   return (
     <S.HeaderWrapper>
       <S.LogoWrapper onClick={handleLogoClick}>
-        <S.LogoText>AlgoBaro</S.LogoText>
+        <Image
+          src="/assets/logo-text.png"
+          alt="logo-text"
+          height="2.5rem"
+          priority={true}
+        />
       </S.LogoWrapper>
       <S.IconWrapper>
         <ThemeModeToggleButton />

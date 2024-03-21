@@ -15,6 +15,7 @@ interface ImageProps {
   fill?: boolean;
   sizes?: string;
   priority?: boolean;
+  className?: string;
   onClick?: (event: React.MouseEvent<HTMLImageElement>) => void;
 }
 
@@ -27,6 +28,7 @@ interface ImageProps {
  * @param [fill=false] - 부모 요소를 채웁니다. width, height 속성이 없을 때 fill을 사용합니다.
  * @param sizes - 미디어 조건을 달 수 있습니다. 예 "(max-width: 500px) 444px"
  * @param priority - 우선순위 true인 경우 lazy loading과 비동기 디코딩이 적용됩니다.
+ * @param className - <img>에 들어갈 className입니다.
  * @param onClick - 마우스 클릭 이벤트
  */
 export default function Image({
@@ -38,6 +40,7 @@ export default function Image({
   fill = false,
   sizes,
   priority = false,
+  className,
   onClick,
   ...props
 }: ImageProps) {
@@ -62,12 +65,15 @@ export default function Image({
       {!isError ? (
         <img
           src={src}
+          width="100%"
+          height="100%"
           alt={alt}
           sizes={sizes}
           loading={!priority ? 'lazy' : 'eager'}
           decoding={!priority ? 'async' : 'auto'}
           onError={() => setIsError(true)}
           onClick={onClick}
+          className={className}
           {...props}
         />
       ) : (
