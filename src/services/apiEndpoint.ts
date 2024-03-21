@@ -18,6 +18,7 @@ export const API_ENDPOINT = {
   },
   SOVLE: {
     RESULT: '/v1/solves/result',
+    TEST_CASE_SUBMISSION: '/v1/solves/submission-and-compile',
   },
 };
 export const EDIT_MY_INFO_URL = '/v1/members/my/general';
