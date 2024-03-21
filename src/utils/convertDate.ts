@@ -22,12 +22,12 @@ export const convertKoreaTime = (timestamp: string) => {
  */
 export const convertKoreaTimestamp = (timestamp: string) => {
   const convertLowerTen = (number: number) => {
-    return number + 1 > 9 ? number + 1 : `0${number + 1}`;
+    return number + 1 > 9 ? number : `0${number}`;
   };
 
   const koreaTime: Date = ukToKoreaTime(timestamp);
   const year = koreaTime.getFullYear();
-  const month = convertLowerTen(koreaTime.getMonth());
+  const month = convertLowerTen(koreaTime.getMonth() + 1);
   const date = convertLowerTen(koreaTime.getDate());
   const hours = convertLowerTen(koreaTime.getHours());
   const minutes = convertLowerTen(koreaTime.getMinutes());
