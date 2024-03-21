@@ -27,7 +27,7 @@ export const testCaseSubmission = async (
   request: TestCaseSubmissionRequest
 ) => {
   return await axiosAuthInstance.post<TestCaseSubmissionResponse>(
-    `${API_ENDPOINT.SOVLE.TEST_CASE_SUBMISSION}`,
+    `${API_ENDPOINT.SOLVE.TEST_CASE_SUBMISSION}`,
     request
   );
 };
