@@ -19,14 +19,16 @@ export const MainContainer = styled(Row)`
 
 export const MainLeftContainer = styled(Col)`
   ${({ theme }) => css`
-    gap: ${theme.size.M};
+    gap: ${theme.size.L};
   `}
 `;
 
 export const MainTitleContainer = styled(Row)`
   ${({ theme }) => css`
-    gap: ${theme.size.M};
+    gap: ${theme.size.L};
     align-items: center;
+    height: fit-content;
+    padding-bottom: ${theme.size.M};
   `}
 `;
 
