@@ -20,7 +20,6 @@ export const MessagesContainer = styled(Col)`
 
 export const MessageWrapper = styled.div`
   ${({ theme }) => css`
-    min-height: 9rem;
     border-top: ${`1px solid ${theme.color.transparent_50}`};
   `}
 `;
