@@ -22,7 +22,7 @@ interface MessageState extends Required<T.Message> {
 export default function Chat({ height = '100%' }: ChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const { messageLogs, receiveLogs } = useMessageStore();
+  const { messageLogs } = useMessageStore();
 
   const {
     roomData: { roomMembers },
@@ -62,7 +62,7 @@ export default function Chat({ height = '100%' }: ChatProps) {
     const newMessage = messageLogs.at(-1);
     const newLogs = newMessage && memberIdToData(newMessage.memberId);
     newLogs && setMessageList(newLogs);
-  }, [messageLogs, receiveLogs]);
+  }, [messageLogs]);
 
   return (
     <S.ChatContainer $height={height}>
