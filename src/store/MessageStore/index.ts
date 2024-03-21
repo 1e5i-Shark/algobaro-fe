@@ -37,6 +37,7 @@ const useMessageStore = create<MessageStoreState>()(
           connectHeaders: {
             Authorization: `Bearer ${localStorage.getItem(LOCAL_ACCESSTOKEN)}`,
           },
+          reconnectDelay: 3000,
         });
 
         stompClient.onConnect = () => {

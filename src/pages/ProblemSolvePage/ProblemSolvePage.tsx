@@ -8,6 +8,7 @@ import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
 import { useCompile } from '@/hooks/useProblemSolve';
 import useCodeEditorStore from '@/store/CodeEditorStore';
+import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
 import useTimerStore from '@/store/TimerStore';
 
@@ -16,10 +17,18 @@ import ProblemExecution from './ProblemExecution/ProblemExecution';
 import ProblemSection from './ProblemSection/ProblemSection';
 import * as S from './ProblemSolvePage.style';
 import ProblemSubmitModal from './ProblemSubmitModal/ProblemSubmitModal';
+import TestCaseInput from './TestCaseInput/TestCaseInput';
 
 export default function ProblemSolvePage() {
   const { theme } = useCustomTheme();
   const { modalRef, isOpen, openModal, closeModal } = useModal();
+
+  const {
+    client,
+    subscription,
+    connect,
+    reset: resetMessage,
+  } = useMessageStore();
 
   const params = useParams();
   const { roomShortUuid } = params;
@@ -33,7 +42,9 @@ export default function ProblemSolvePage() {
   } = useCompile();
   const { data: roomDetail, refetch } = useGetUuidRoom(roomShortUuid);
 
-  const { input, code, language, reset } = useCodeEditorStore(state => state);
+  const { input, code, language, reset, setInput } = useCodeEditorStore(
+    state => state
+  );
   const {
     roomData: { problemLink },
     setRoomData,
@@ -47,12 +58,17 @@ export default function ProblemSolvePage() {
   };
 
   const handleCompileExecution = async () => {
-    if (confirm('하루 실행 제한이 있습니다. 정말 실행하시겠습니까?'))
+    if (confirm('하루 실행 제한이 있습니다. 정말 실행하시겠습니까?')) {
       compileMutate({ code, input, language });
+    }
   };
 
   const handleSubmit = async () => {
     openModal();
+  };
+
+  const handleChangeTestCase = (newText: string) => {
+    setInput(newText);
   };
 
   useEffect(() => {
@@ -72,6 +88,20 @@ export default function ProblemSolvePage() {
   useEffect(() => {
     reset();
     refetch();
+  }, []);
+
+  // 새로고침 해도 소켓 재접속
+  useEffect(() => {
+    connect(roomShortUuid);
+
+    return () => {
+      if (!client || !subscription) return;
+
+      subscription.unsubscribe();
+      client.deactivate();
+
+      resetMessage();
+    };
   }, []);
 
   return (
@@ -101,11 +131,23 @@ export default function ProblemSolvePage() {
               </Panel>
               <ResizeHandle direction={DIRECTION.VERTICAL} />
               <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION}>
+                <PanelGroup direction={DIRECTION.HORIZONTAL}>
+                  <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION_INPUT}>
+                    <S.ExecutionWrapper>
+                      <TestCaseInput onChange={handleChangeTestCase} />
+                    </S.ExecutionWrapper>
+                  </Panel>
+                  <ResizeHandle direction={DIRECTION.HORIZONTAL} />
+                  <Panel defaultSize={SIZE_PERCENTAGE.EXECUTION_RESULT}>
+                    <S.ExecutionWrapper>
+                      <ProblemExecution
+                        isLoading={isCompileLoading}
+                        isError={isCompileError}
+                      />
+                    </S.ExecutionWrapper>
+                  </Panel>
+                </PanelGroup>
                 {/* 실행 영역 */}
-                <ProblemExecution
-                  isLoading={isCompileLoading}
-                  isError={isCompileError}
-                />
               </Panel>
             </PanelGroup>
           </Panel>

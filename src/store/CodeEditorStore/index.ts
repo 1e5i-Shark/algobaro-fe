@@ -15,14 +15,11 @@ interface Props {
   reset: () => void;
 }
 
-// TODO: 서버로부터 데이터 받아와서 교체 필요
-const MOCK_INPUT = '1 2';
-
 const useCodeEditorStore = create<Props>()(
   devtools(set => ({
     code: codeEditorDefaultValue['nodejs'],
     language: 'nodejs',
-    input: MOCK_INPUT,
+    input: '',
     result: '',
     setCode: (code: string) => set({ code }),
     setInput: (input: string) => set({ input }),
@@ -32,7 +29,7 @@ const useCodeEditorStore = create<Props>()(
       set({
         code: codeEditorDefaultValue['nodejs'],
         language: 'nodejs',
-        input: MOCK_INPUT,
+        input: '',
         result: '',
       });
     },

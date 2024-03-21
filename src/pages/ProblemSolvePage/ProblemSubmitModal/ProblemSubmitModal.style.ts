@@ -17,8 +17,57 @@ const Title = styled.p`
   `};
 `;
 
-const BOJWrapper = styled.div`
+const SubmissionWrapper = styled(Col)``;
+
+const SubmissionLayoutContainer = styled(Row)`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+`;
+
+const TestCaseResultWrapper = styled.div``;
+
+const BojSubmissionWrapper = styled(Col)``;
+
+const ResultShareWrapper = styled.div`
   white-space: pre-line;
+`;
+
+const TestResultWrapper = styled.div`
+  height: 4rem;
+  text-align: center;
+  white-space: pre-line;
+`;
+
+const TestErrorText = styled.span`
+  ${({ theme }) => css`
+    line-height: ${theme.size.XXL};
+    color: ${theme.color.red};
+  `};
+`;
+
+const TestCaseList = styled.ul`
+  display: flex;
+  flex-direction: column;
+`;
+
+const TestCaseItem = styled.li`
+  display: flex;
+  align-items: center;
+  height: 3rem;
+`;
+
+const LottieWrapper = styled(Row)`
+  justify-content: center;
+  width: 5rem;
+`;
+
+const TestCaseTitle = styled.p`
+  ${({ theme }) => css`
+    width: 8rem;
+    font-size: 1.6rem;
+    font-weight: ${theme.fontWeight.medium};
+  `};
 `;
 
 const BOJGuideText = styled.p`
@@ -27,6 +76,7 @@ const BOJGuideText = styled.p`
     line-height: ${theme.size.XXL};
     color: ${theme.color.text_primary_color};
     text-align: center;
+    white-space: pre-wrap;
   `};
 `;
 
@@ -47,8 +97,18 @@ const EndButtonWrapper = styled(Row)`
 export {
   BOJButtonWrapper,
   BOJGuideText,
-  BOJWrapper,
+  BojSubmissionWrapper,
   EndButtonWrapper,
+  LottieWrapper,
+  ResultShareWrapper,
+  SubmissionLayoutContainer,
+  SubmissionWrapper,
+  TestCaseItem,
+  TestCaseList,
+  TestCaseResultWrapper,
+  TestCaseTitle,
+  TestErrorText,
+  TestResultWrapper,
   Title,
   Wrapper,
 };

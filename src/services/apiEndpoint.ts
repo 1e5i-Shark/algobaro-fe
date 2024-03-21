@@ -16,11 +16,15 @@ export const API_ENDPOINT = {
   PROBLEM: {
     PROBLEM_INFO: '/v1/problems/html',
   },
-  SOVLE: {
+  SOLVE: {
+    SOLVED_HISTORY_LIST: '/v1/solves/history',
+    SOVLED_HISTORY_DETAIL: '/v1/solves/history/',
     RESULT: '/v1/solves/result',
+    TEST_CASE_SUBMISSION: '/v1/solves/submission-and-compile',
+  },
+  MEMBER: {
+    EDIT_MY_INFO_URL: '/v1/members/my/general',
+    EDIT_MY_PASSWORD: '/v1/members/my/password',
+    EDIT_MY_IMAGE: '/v1/members/my/profile-image',
   },
 };
-export const EDIT_MY_INFO_URL = '/v1/members/my/general';
-export const EDIT_MY_PASSWORD = '/v1/members/my/password';
-export const EDIT_MY_IMAGE = '/v1/members/my/profile-image';
-export const SOLVED_HISTORY_LIST = '/v1/solves/history';

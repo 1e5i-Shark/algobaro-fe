@@ -2,7 +2,7 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
-import { Avatar, Button, Image, ThemeModeToggleButton } from '@/components';
+import { Button, Image, ThemeModeToggleButton } from '@/components';
 import LoginForm from '@/components/LoginForm/LoginForm';
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { useMyInfo } from '@/hooks/Api/useMembers';
@@ -59,11 +59,19 @@ export default function WelcomePage() {
     <S.WelcomePageWrapper>
       <S.MainContainer>
         <S.MainLeftContainer>
-          {/* 메인 컨테이너 로고 + 알고바로 */}
           <S.MainTitleContainer>
-            {/* Todo: 로고 아이콘 넣기 */}
-            <Avatar size="L" />
-            <S.MainTitleText>AlgoBaro</S.MainTitleText>
+            <Image
+              src="/assets/logo.png"
+              alt="logo"
+              height="6rem"
+              priority={true}
+            />
+            <Image
+              src="/assets/logo-text.png"
+              alt="logo-text"
+              height="3.5rem"
+              priority={true}
+            />
           </S.MainTitleContainer>
           <S.MainSubTitleText>바로바로 함께 푸는 알고리즘</S.MainSubTitleText>
           <S.MainSubList>

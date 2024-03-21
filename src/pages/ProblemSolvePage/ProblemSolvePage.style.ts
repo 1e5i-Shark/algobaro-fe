@@ -16,6 +16,7 @@ const ProblemLinkContainer = styled.div`
   ${({ theme }) => css`
     display: flex;
     justify-content: end;
+    min-width: 40rem;
     height: ${theme.size.XXL};
     padding: 0.5rem;
     background-color: ${theme.color.background_editor};
@@ -42,6 +43,11 @@ const EditorWrapper = styled(Col)`
   height: 100%;
 `;
 
+const ExecutionWrapper = styled(Row)`
+  width: 100%;
+  height: 100%;
+`;
+
 const ButtonWrapper = styled(Row)`
   ${({ theme }) => css`
     gap: 1.2rem;
@@ -57,6 +63,7 @@ export {
   ButtonWrapper,
   ContentsWrapper,
   EditorWrapper,
+  ExecutionWrapper,
   ProblemLink,
   ProblemLinkContainer,
   ProblemLinkText,

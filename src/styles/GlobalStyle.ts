@@ -21,6 +21,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   body {
+    font-family: "Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
     font-size: 1.6rem;
     color: ${({ theme }) => theme.color.text_primary_color};
     background-color: ${({ theme }) => theme.color.background_primary};
@@ -54,6 +55,7 @@ export const GlobalStyle = createGlobalStyle`
 
   ::-webkit-scrollbar {
     width: 1rem;
+    height: 1rem;
   }
 
   ::-webkit-scrollbar-track {
@@ -82,6 +84,16 @@ export const GlobalStyle = createGlobalStyle`
   &::-webkit-scrollbar-button:vertical:end {
     display: block;
     height: 0.3rem;
+  }
+
+  &::-webkit-scrollbar-button:horizontal:start {
+    display: block;
+    width: 0.2rem;
+  }
+
+  &::-webkit-scrollbar-button:horizontal:end {
+    display: block;
+    width: 0.2rem;
   }
 
   textarea::-webkit-scrollbar {

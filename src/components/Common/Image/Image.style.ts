@@ -34,8 +34,6 @@ export const ImageWrapper = styled.div<ImageWrapperProps>`
     border-radius: ${$shape && theme.shape[$shape]};
 
     img {
-      width: ${$fill && '100%'};
-      height: ${$fill && '100%'};
       object-fit: ${$fill ? 'cover' : 'contain'};
     }
   `}

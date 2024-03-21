@@ -6,7 +6,8 @@ import { Col, Row } from '@/styles/GlobalStyle';
 export const RoomContainer = styled(Row)`
   height: 100vh;
   padding: 3rem 0rem 3rem 5rem;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 `;
 
 export const WaitingRoomContainer = styled(Col)`
@@ -20,7 +21,8 @@ export const WaitingRoomContainer = styled(Col)`
 export const ChatContainer = styled(Col)<{ className: string }>`
   ${({ theme }) => css`
     flex-grow: 1;
-    min-width: 30rem;
+    min-width: 40rem;
+    max-width: 50rem;
     padding: 0 1rem;
     overflow: auto;
     border-left: 1px solid ${theme.color.transparent_30};

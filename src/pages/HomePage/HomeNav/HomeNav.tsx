@@ -20,7 +20,7 @@ export default function HomeNav({ refetch }: HomeNavProps) {
   const navigate = useNavigate();
   const [animate, setAnimate] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const { elapsedTime, startStopWatch } = useStopWatch();
+  const { elapsedTime, nowDelay, startStopWatch } = useStopWatch();
   const {
     selectedAccess,
     selectedStatus,
@@ -55,15 +55,15 @@ export default function HomeNav({ refetch }: HomeNavProps) {
   };
 
   const handleRefetchData = () => {
-    if (elapsedTime === 1) {
+    if (nowDelay) {
       toastify.error('잠시 후 다시 시도해주세요.');
       return;
     }
 
-    // 타이머 실행
+    // 타이머 실행, 딜레이 리셋
     startStopWatch();
 
-    // 애니메이션이 끝난 후 상태를 리셋하기 위해 타이머 설정
+    // 새로고침 아이콘의 애니메이션이 끝난 후 상태를 리셋하기 위해 타이머 설정
     setAnimate(true);
     setTimeout(() => setAnimate(false), 350);
 
@@ -117,13 +117,13 @@ export default function HomeNav({ refetch }: HomeNavProps) {
         </S.SearchInputWrapper>
       </S.SearchOptionsContainer>
 
-      <S.UpdateData onClick={handleRefetchData}>
+      <S.UpdateData>
         <span>
           {!elapsedTime
             ? '방 정보 업데이트'
             : `마지막 업데이트: ${elapsedTime}분 전`}
         </span>
-        <Icon onClick={() => {}}>
+        <Icon onClick={handleRefetchData}>
           <AnimatedIcon $animate={animate} />
         </Icon>
       </S.UpdateData>

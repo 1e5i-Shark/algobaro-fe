@@ -1,8 +1,9 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Avatar, Button, Pagination, Spinner, Tag } from '@/components';
+import { Avatar, Button, Image, Pagination, Spinner, Tag } from '@/components';
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
+import { LOGOS } from '@/constants/logos';
 import { useEditMyImage, useMyInfo } from '@/hooks/Api/useMembers';
 import { useSolvedHistoryList } from '@/hooks/Api/useSolves';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
@@ -10,6 +11,8 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
 import { toastify } from '@/utils/toastify';
 
+import { SUBMIT_STATUS_DATA_SET } from '../ProblemSolvePage/constants';
+import { languageConvert } from './HistoryDetailModal/languageConstant';
 import * as S from './ProfilePage.style';
 
 export default function ProfilePage() {
@@ -27,6 +30,10 @@ export default function ProfilePage() {
   // 정보 및 암호 변경 모달 open state이다.
   const [isOpenEditInfoModal, setIsOpenEditInfoModal] = useState(false);
   const [isOpenEditPWModal, setIsOpenEditPWModal] = useState(false);
+
+  // 히스토리 상세 모달 state
+  const [isOpenHistoryModal, setIsOpenHistoryModal] = useState(false);
+  const [selectedSolveId, setSelectedSolveId] = useState(0);
 
   // 페이지네이션 상태 관리 함수
   const [pageNum, setPageNum] = useState(0);
@@ -49,6 +56,7 @@ export default function ProfilePage() {
   const solvedHistoryRes = solvedHistoryData?.response;
   // 풀이 히스토리 리스트 데이터
   const solvedHistoryList = solvedHistoryRes?.content;
+
   // 전체 페이지 수 상태 관리
   const totalPageNum = solvedHistoryRes?.totalPages;
   // 전체 히스토리 데이터 수
@@ -107,6 +115,14 @@ export default function ProfilePage() {
   };
   const handleCloseEditPWModal = () => {
     setIsOpenEditPWModal(false);
+  };
+  // 히스토리 리스트 아이템 클릭 이벤트 핸들러 함수
+  const handleClickHistoryItem = (solveId: number) => {
+    setSelectedSolveId(solveId);
+    setIsOpenHistoryModal(true);
+  };
+  const handleCloseHistoryModal = () => {
+    setIsOpenHistoryModal(false);
   };
 
   // 페이지 번호가 바뀌면 문제 히스토리를 refetch 한다.
@@ -180,7 +196,10 @@ export default function ProfilePage() {
             <>
               {solvedHistoryList?.map(problem => {
                 return (
-                  <S.ProblemHistoryItem key={problem.id}>
+                  <S.ProblemHistoryItem
+                    key={problem.id}
+                    onClick={() => handleClickHistoryItem(problem.id)}
+                  >
                     <S.ProblemLink>
                       {problem.problemLink.replace(
                         'https://www.acmicpc.net/problem/',
@@ -189,10 +208,14 @@ export default function ProfilePage() {
                     </S.ProblemLink>
                     <Tag
                       mode="normal"
-                      width="7rem"
-                      height={theme.size.L}
+                      width="max-content"
+                      height={theme.size.XL}
                       fontSize={theme.size.S}
-                      tagId={problem.solveStatus || 'null'}
+                      tagId={
+                        problem.solveStatus === 'SUCCESS'
+                          ? problem.solveStatus
+                          : problem.failureReason || 'null'
+                      }
                       backgroundColor={
                         problem.solveStatus === 'SUCCESS'
                           ? theme.color.green
@@ -203,22 +226,39 @@ export default function ProfilePage() {
                         fontWeight: theme.fontWeight.semiBold,
                       }}
                     >
-                      {problem.solveStatus}
+                      {problem.solveStatus === 'SUCCESS'
+                        ? SUBMIT_STATUS_DATA_SET[problem.solveStatus]
+                        : problem.failureReason
+                          ? SUBMIT_STATUS_DATA_SET[problem.failureReason]
+                          : SUBMIT_STATUS_DATA_SET['FAIL']}
                     </Tag>
-                    <Tag
-                      mode="normal"
-                      width="7rem"
-                      height={theme.size.L}
-                      fontSize={theme.size.S}
-                      tagId={problem.language || 'null'}
-                      backgroundColor={theme.color.gray_20}
-                      textColor={theme.color.black_primary}
-                      style={{
-                        fontWeight: theme.fontWeight.semiBold,
-                      }}
-                    >
-                      {problem.language}
-                    </Tag>
+                    {problem.language && (
+                      <Tag
+                        mode="normal"
+                        width="max-content"
+                        height={theme.size.XL}
+                        fontSize={theme.size.S}
+                        tagId={problem.language || 'null'}
+                        backgroundColor={theme.color.gray_20}
+                        textColor={theme.color.black_primary}
+                        style={{
+                          fontWeight: theme.fontWeight.semiBold,
+                        }}
+                      >
+                        <S.ImageContainer>
+                          <Image
+                            src={
+                              (languageConvert[problem.language] &&
+                                LOGOS[languageConvert[problem.language]]) ||
+                              ''
+                            }
+                            fill={true}
+                            shape="circle"
+                          />
+                        </S.ImageContainer>
+                        {languageConvert[problem.language]}
+                      </Tag>
+                    )}
                   </S.ProblemHistoryItem>
                 );
               })}
@@ -255,19 +295,32 @@ export default function ProfilePage() {
         />
       </S.ProblemHistoryContainer>
       {/* 정보 수정 모달 */}
-      <S.EditInfoModal
-        isOpen={isOpenEditInfoModal}
-        onClose={handleCloseEditInfoModal}
-        width="60%"
-        height="60%"
-      />
+      {isOpenEditInfoModal && (
+        <S.EditInfoModal
+          isOpen={isOpenEditInfoModal}
+          onClose={handleCloseEditInfoModal}
+          width="60%"
+          height="60%"
+        />
+      )}
       {/* 암호 변경 모달 */}
-      <S.EditPWModal
-        isOpen={isOpenEditPWModal}
-        onClose={handleCloseEditPWModal}
-        width="60%"
-        height="60%"
-      />
+      {isOpenEditPWModal && (
+        <S.EditPWModal
+          isOpen={isOpenEditPWModal}
+          onClose={handleCloseEditPWModal}
+          width="60%"
+          height="60%"
+        />
+      )}
+      {selectedSolveId !== 0 && (
+        <S.HistoryModal
+          isOpen={isOpenHistoryModal}
+          onClose={handleCloseHistoryModal}
+          width="60%"
+          height="80%"
+          solveId={selectedSolveId}
+        />
+      )}
     </S.ProfilePageWrapper>
   );
 }
