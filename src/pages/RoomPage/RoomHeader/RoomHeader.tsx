@@ -3,7 +3,7 @@ import useModal from '@/hooks/useModal';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import useRoomStore from '@/store/RoomStore';
 
-import { ModalRoom, RoomHeaderButtons, RoomHeaderInfo } from '.';
+import { RoomHeaderButtons, RoomHeaderInfo, RoomUpdateModal } from '.';
 
 interface HeaderProps {
   className: string;
@@ -33,7 +33,7 @@ export default function RoomHeader({ className }: HeaderProps) {
         onClose={closeModal}
         ref={modalRef}
       >
-        <ModalRoom onClose={closeModal} />
+        <RoomUpdateModal onClose={closeModal} />
       </Modal>
     </>
   );

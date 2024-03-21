@@ -1,12 +1,23 @@
+import { UseMutateFunction } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button, Input } from '@/components';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
+import { ValidateEnterErrorProps } from '@/hooks/useValidateEnter';
+import {
+  ValidateEnterRequest,
+  ValidateEnterResponse,
+} from '@/services/Room/validateEnter';
 
 interface CheckRoomPasswordProps {
-  roomPassword: string | undefined;
   roomShortUuid: string;
+  mutate: UseMutateFunction<
+    ValidateEnterResponse,
+    ValidateEnterErrorProps,
+    ValidateEnterRequest,
+    unknown
+  >;
 }
 
 interface PasswordValues {
@@ -14,19 +25,17 @@ interface PasswordValues {
 }
 
 export default function CheckRoomPassword({
-  roomPassword,
   roomShortUuid,
+  mutate,
 }: CheckRoomPasswordProps) {
-  const navigate = useNavigate();
-  const { register, handleSubmit, formState } = useForm<PasswordValues>({
+  const { theme } = useCustomTheme();
+  const { register, handleSubmit } = useForm<PasswordValues>({
     reValidateMode: 'onSubmit',
   });
 
   const onSubmit = (data: PasswordValues) => {
     const { passwordValue } = data;
-    if (roomPassword === passwordValue) {
-      navigate(`/room/${roomShortUuid}`);
-    }
+    mutate({ roomShortUuid, password: passwordValue });
   };
 
   return (
@@ -38,11 +47,11 @@ export default function CheckRoomPassword({
           register={register}
           type="password"
           placeholder="이곳에 비밀번호를 입력해 주세요."
-          formState={formState}
-          validation={{
-            validate: passwordValue =>
-              roomPassword === passwordValue || '비밀번호가 일치하지 않습니다.',
-          }}
+          backgroundColor={
+            theme.mode === 'light'
+              ? theme.color.transparent_50
+              : theme.color.gray_30
+          }
         />
         <Button
           type="submit"

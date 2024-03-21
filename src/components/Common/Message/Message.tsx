@@ -45,7 +45,7 @@ export default function Message({
   avatarSize = 'XS',
   avatarSrc = '',
   avatarShadow = true,
-  userName = 'User1',
+  userName = 'Algobaro',
   fontSize = '1.6rem',
   iconSize = 'XS',
   comment,
@@ -63,11 +63,13 @@ export default function Message({
         {...props}
       >
         <MessageSender $fontSize={fontSize}>
-          <Avatar
-            size={avatarSize}
-            src={avatarSrc}
-            isShadow={avatarShadow}
-          />
+          {avatarSrc !== 'system' && (
+            <Avatar
+              size={avatarSize}
+              src={avatarSrc}
+              isShadow={avatarShadow}
+            />
+          )}
           <UserName>{userName}</UserName>
           <span
             style={{

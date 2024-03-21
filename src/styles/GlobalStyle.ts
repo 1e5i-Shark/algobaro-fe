@@ -54,6 +54,7 @@ export const GlobalStyle = createGlobalStyle`
 
   ::-webkit-scrollbar {
     width: 1rem;
+    height: 1rem;
   }
 
   ::-webkit-scrollbar-track {
@@ -82,6 +83,16 @@ export const GlobalStyle = createGlobalStyle`
   &::-webkit-scrollbar-button:vertical:end {
     display: block;
     height: 0.3rem;
+  }
+
+  &::-webkit-scrollbar-button:horizontal:start {
+    display: block;
+    width: 0.2rem;
+  }
+
+  &::-webkit-scrollbar-button:horizontal:end {
+    display: block;
+    width: 0.2rem;
   }
 
   textarea::-webkit-scrollbar {

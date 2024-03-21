@@ -7,9 +7,10 @@ export const QUERY_KEY = {
     PROBLEM_INFO: 'problemInfo',
   },
   SOLVE: {
+    SOLVED_HISTORIES: 'solvedHistoryList',
+    SOLVED_DETAIL: 'sovledDetail',
     RESULT: '/solveResult',
   },
 };
-export const SOLVED_HISTORIES = 'solvedHistoryList';
 export const ROOMS_KEY = 'roomsList';
 export const ROOM_DETAIL = 'roomDetail';

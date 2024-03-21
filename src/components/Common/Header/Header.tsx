@@ -25,7 +25,7 @@ export default function Header() {
   };
 
   const handleLogoClick = () => {
-    navigate(PATH.ROOT);
+    navigate(pathname === '/home' ? PATH.ROOT : PATH.HOME);
   };
 
   return (
