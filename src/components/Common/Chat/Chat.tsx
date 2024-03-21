@@ -28,7 +28,7 @@ export default function Chat({ height = '100%' }: ChatProps) {
     roomData: { roomMembers },
   } = useRoomStore();
 
-  const [memberList, setMemberList] = useState<MessageState[]>([]);
+  const [messageList, setMessageList] = useState<MessageState[]>([]);
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
@@ -49,7 +49,7 @@ export default function Chat({ height = '100%' }: ChatProps) {
       nickname: memberData?.nickname || '',
     };
 
-    return [...memberList, result as MessageState];
+    return [...messageList, result as MessageState];
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function Chat({ height = '100%' }: ChatProps) {
 
     const newMessage = messageLogs.at(-1);
     const newLogs = newMessage && memberIdToData(newMessage.memberId);
-    newLogs && setMemberList(newLogs);
+    newLogs && setMessageList(newLogs);
   }, [messageLogs, receiveLogs]);
 
   return (
@@ -67,10 +67,11 @@ export default function Chat({ height = '100%' }: ChatProps) {
         ref={scrollRef}
         className="message-container"
       >
-        {memberList.map(message => {
+        {messageList.map(message => {
           const isSystem =
             message.type === SOCKET_TYPE.CHAT.ENTER ||
             message.type === SOCKET_TYPE.CHAT.QUIT;
+
           return (
             <S.MessageWrapper key={v4()}>
               <Message
