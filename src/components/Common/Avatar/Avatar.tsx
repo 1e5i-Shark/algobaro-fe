@@ -53,7 +53,7 @@ export default function Avatar({
 
   useEffect(() => {
     setSource(src || `/assets/avatar-${theme.mode}.png`);
-  }, [theme.mode]);
+  }, [theme.mode, src]);
 
   const handleError = () => {
     setSource(`/assets/avatar-${theme.mode}.png`);

@@ -35,7 +35,7 @@ export default function Header() {
       </S.LogoWrapper>
       <S.IconWrapper>
         <ThemeModeToggleButton />
-        {pathname !== '/signup' ? (
+        {!(pathname.includes('/signup') || pathname.includes('/profile')) ? (
           <S.AvatarWrapper>
             <Avatar
               src={myProfileImage}
