@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { Button, Input } from '@/components';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { ValidateEnterErrorProps } from '@/hooks/useValidateEnter';
 import {
   ValidateEnterRequest,
@@ -27,6 +28,7 @@ export default function CheckRoomPassword({
   roomShortUuid,
   mutate,
 }: CheckRoomPasswordProps) {
+  const { theme } = useCustomTheme();
   const { register, handleSubmit } = useForm<PasswordValues>({
     reValidateMode: 'onSubmit',
   });
@@ -45,6 +47,11 @@ export default function CheckRoomPassword({
           register={register}
           type="password"
           placeholder="이곳에 비밀번호를 입력해 주세요."
+          backgroundColor={
+            theme.mode === 'light'
+              ? theme.color.transparent_50
+              : theme.color.gray_30
+          }
         />
         <Button
           type="submit"
