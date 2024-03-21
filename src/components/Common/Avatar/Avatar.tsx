@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useCustomTheme } from '@/hooks/useCustomTheme';
-import { Shape } from '@/types';
+import { Shape, Size } from '@/types';
 
 import {
   AvatarContainer,
@@ -11,7 +11,7 @@ import {
 import EditButton from './EditButton';
 
 export interface AvatarProps {
-  size?: 'XS' | 'S' | 'M' | 'L' | 'XL';
+  size?: Partial<Size>;
   shape?: Shape;
   src?: string;
   alt?: string;
