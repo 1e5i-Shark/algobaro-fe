@@ -58,7 +58,7 @@ export default function Chat({ height = '100%' }: ChatProps) {
           return (
             <S.MessageWrapper key={v4()}>
               <Message
-                avatarSrc={!isSystem ? memberData.profileImage : ''}
+                avatarSrc={!isSystem ? memberData.profileImage : 'system'}
                 userName={!isSystem ? memberData.nickname : 'Algobaro'}
                 comment={message.value || ''}
                 createdAt={message.timestamp}
