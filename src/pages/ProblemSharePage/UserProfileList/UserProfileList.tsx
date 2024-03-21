@@ -29,6 +29,7 @@ export default function UserProfileList({
             <Avatar
               size="L"
               src={user.profileImage ?? ''}
+              isSelect={user.memberId === selectedUserId}
             />
             <S.UserName $isSelected={selectedUser?.memberId === user.memberId}>
               <EllipsisText
