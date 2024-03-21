@@ -121,7 +121,6 @@ export default function HomeSection({
         }}
       >
         <CheckRoomPassword
-          roomPassword={data?.response.password}
           roomShortUuid={roomShortUuid}
           mutate={mutate}
         />
