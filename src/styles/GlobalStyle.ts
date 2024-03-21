@@ -21,6 +21,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   body {
+    font-family: "Pretendard Variable", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
     font-size: 1.6rem;
     color: ${({ theme }) => theme.color.text_primary_color};
     background-color: ${({ theme }) => theme.color.background_primary};
