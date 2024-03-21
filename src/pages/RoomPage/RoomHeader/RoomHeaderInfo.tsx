@@ -14,13 +14,13 @@ interface RoomInfoProps {
 export default function RoomInfoContainer({ className }: RoomInfoProps) {
   const { theme } = useCustomTheme();
   const { roomData } = useRoomStore();
-  const { roomShortUuid, title, tags, languages, roomAccessType } = roomData;
+  const { title, tags, languages, roomAccessType } = roomData;
 
   const handleCopyRoomId = () => {
     if (window.navigator.clipboard) {
-      window.navigator.clipboard.writeText(roomShortUuid);
+      window.navigator.clipboard.writeText(window.location.href);
 
-      alert('방 번호가 복사되었습니다!');
+      alert('방 초대 링크가 복사되었습니다!');
     } else {
       alert('복사하기가 지원되지 않는 브라우저입니다.');
     }
@@ -30,7 +30,7 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
     <div className={className}>
       <S.RoomIdWrapper className="roomId">
         <S.CopyRoomIdTag onClick={handleCopyRoomId}>
-          <S.TextId className="text">방 번호 복사</S.TextId>
+          <S.TextId className="text">초대 링크 복사</S.TextId>
           <Icon
             size="XXS"
             onClick={() => {}}

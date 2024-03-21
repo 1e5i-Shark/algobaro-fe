@@ -18,7 +18,7 @@ interface InputProps {
   password: string;
 }
 
-export default function ModalRoom({ onClose }: ModalRoomProps) {
+export default function RoomUpdateModal({ onClose }: ModalRoomProps) {
   const { theme } = useCustomTheme();
   const { roomData, setRoomData } = useRoomStore();
   const {

@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { SOCKET_TYPE } from '@/constants/socket';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useModal from '@/hooks/useModal';
 import ProblemTimer from '@/pages/ProblemSolvePage/ProblemTimer/ProblemTimer';
@@ -20,7 +19,7 @@ export default function PSHeader() {
   const location = useLocation();
   const { reset: resetRoom } = useRoomStore();
 
-  const { connected, sendMessage, disconnect } = useMessageStore();
+  const { connected, disconnect } = useMessageStore();
 
   const isProblemSolvePage =
     location.pathname.split('/')[1] === PATH.PROBLEMSOLVE.replace('/', '');
@@ -34,7 +33,6 @@ export default function PSHeader() {
   const handleNavigateToHome = () => {
     // 홈으로 나가면 CheckRoute에 의해 소켓 연결 disconnect
     if (connected) {
-      sendMessage(SOCKET_TYPE.CHAT.QUIT);
       disconnect();
     }
 
