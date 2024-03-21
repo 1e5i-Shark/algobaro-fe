@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { ukToKoreaTime } from '@/utils/convertDate';
 import { convertedTime } from '@/utils/timer';
 
 import * as S from './DateBaseTimer.style';
@@ -28,7 +29,8 @@ export default function DateBaseTimer({
 
   const getConvertedTime = function () {
     const now = new Date();
-    const targetTime = new Date(endDateISOString);
+    const targetTime = ukToKoreaTime(endDateISOString);
+
     const difference = targetTime.getTime() - now.getTime();
 
     return convertedTime(difference);

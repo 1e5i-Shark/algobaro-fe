@@ -11,7 +11,7 @@ const TimeLeftWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 1rem 0 1rem;
-    color: ${theme.color.gray_50};
+    color: ${theme.color.gray_30};
     white-space: nowrap;
   `}
 `;

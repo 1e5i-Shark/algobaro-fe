@@ -64,6 +64,7 @@ const DropDownWrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
     justify-content: space-between;
+    padding-right: 2rem;
     background-color: ${theme.color.background_editor};
   `}
 `;
