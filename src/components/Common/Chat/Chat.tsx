@@ -54,6 +54,9 @@ export default function Chat({ height = '100%' }: ChatProps) {
 
   useEffect(() => {
     scrollToBottom();
+  }, [messageList]);
+
+  useEffect(() => {
     if (messageLogs.length < 1) return;
 
     const newMessage = messageLogs.at(-1);
