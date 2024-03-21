@@ -12,7 +12,7 @@ export const useCreateRoom = () => {
     onSuccess: result => {
       if (result.response) {
         const { roomShortUuid } = result.response;
-        navigate(`${PATH.ROOM}/${roomShortUuid}`);
+        navigate(`${PATH.ROOM}/${roomShortUuid}`, { replace: true });
       }
     },
   });
