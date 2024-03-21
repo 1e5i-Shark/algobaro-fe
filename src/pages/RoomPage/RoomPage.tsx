@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { Chat, Spinner } from '@/components';
@@ -50,6 +50,8 @@ export default function RoomPage() {
     refetch: refetchRoom,
   } = useGetUuidRoom(roomShortUuid);
 
+  const roomDataMemoized = useMemo(() => data, [data?.response]);
+
   useEffect(() => {
     connect(roomShortUuid);
     refetchMyInfo();
@@ -76,7 +78,7 @@ export default function RoomPage() {
     if (myInfo && data?.response) {
       setRoomData(data.response);
     }
-  }, [myInfo, data, listeners, receiveLogs]);
+  }, [myInfo, roomDataMemoized, listeners, receiveLogs]);
 
   useEffect(() => {
     if (!myInfo) return;
