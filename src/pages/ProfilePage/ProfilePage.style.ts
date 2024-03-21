@@ -142,6 +142,9 @@ export const ImageContainer = styled.div`
     width: 2rem;
     height: 2rem;
     margin-right: ${theme.size.XS};
+    div {
+      background-color: ${theme.color.gray_20};
+    }
   `}
 `;
 
