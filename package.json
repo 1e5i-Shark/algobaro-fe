@@ -23,6 +23,8 @@
     "@mui/material": "^5.15.10",
     "@stomp/stompjs": "^7.0.0",
     "@tanstack/react-query": "^4.36.1",
+    "@types/aos": "^3.0.7",
+    "aos": "^2.3.4",
     "axios": "^1.6.7",
     "codemirror": "^5.57.0",
     "react": "^18.2.0",
