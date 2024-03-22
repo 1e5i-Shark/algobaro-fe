@@ -14,7 +14,6 @@ export default function ProblemTimer({ isProblemSolvePage }: TimerProps) {
     roomData: { endTime },
   } = useRoomStore(state => state);
 
-  console.log('endTime', endTime);
   return (
     <S.Wrapper>
       <S.TimeLeftWrapper>

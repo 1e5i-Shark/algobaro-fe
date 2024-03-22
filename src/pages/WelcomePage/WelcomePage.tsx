@@ -1,9 +1,12 @@
+import 'aos/dist/aos.css';
+
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
-import { useEffect, useRef } from 'react';
+import AOS from 'aos';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
-import { Button, Image, ThemeModeToggleButton } from '@/components';
+import { Button, Image, Spinner, ThemeModeToggleButton } from '@/components';
 import LoginForm from '@/components/LoginForm/LoginForm';
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { useMyInfo } from '@/hooks/Api/useMembers';
@@ -20,7 +23,6 @@ export default function WelcomePage() {
   const [accessToken] = useLocalStorage(LOCAL_ACCESSTOKEN);
   // 유저 닉네임 쿼리 호출 업데이트
   const myNickName = myInfo?.response.nickname;
-  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
   // Todo: 아이콘 정하기
   const mainSubItems = [
@@ -30,19 +32,36 @@ export default function WelcomePage() {
   ];
   const moreDetailItems = [
     {
-      imageUrl: '',
-      title: '설명 1',
-      description: '설명 1 부가 설명',
+      imageUrl: '/assets/moreDetail/HomePage.webp',
+      title: '선호하는 언어로 \n 함께 문제를 풀어보세요',
+      description: [
+        '맞춤형 방을 찾아 사람들과 함께 문제를 풀어보세요.',
+        '검색 또는 필터링 기능을 통해 찾고 싶은 방을 \n쉽게 찾을 수 있어요.',
+      ],
     },
     {
-      imageUrl: '',
-      title: '설명 2',
-      description: '설명 2 부가 설명',
+      imageUrl: '/assets/moreDetail/RoomPage.webp',
+      title: '채팅을 통해 소통하고 \n함께 문제를 풀어보세요',
+      description: [
+        '동료들과 문제 풀이를 시작해 보세요.',
+        '풀이할 문제와 제한 시간을 팀원들과 상의하고 \n방장이 정보를 수정해요.',
+      ],
     },
     {
-      imageUrl: '',
-      title: '설명 3',
-      description: '설명 3 부가 설명',
+      imageUrl: '/assets/moreDetail/SolvePage.webp',
+      title: '실제 시험 환경에서 \n 문제를 해결해 보세요.',
+      description: [
+        '실전 코딩 테스트와 유사한 환경에서 연습할 수 있어요!',
+        '백준 문제 링크를 입력하면 문제가 표시되고 \n 테스트 케이스를 직접 입력하여 실행을 할 수 있어요.',
+      ],
+    },
+    {
+      imageUrl: '/assets/moreDetail/SharePage.webp',
+      title: '코드를 공유하고 \n 새로운 해결 방법들을 \n 배워보세요',
+      description: [
+        '지식 공유는 발전의 원동력입니다. \n다른 참가자들의 풀이에서 영감을 얻어보세요.',
+        '문제 해결 방법을 다른 참가자들과 공유하고 \n다양한 해결 방법을 배울 수 있습니다.',
+      ],
     },
   ];
   // 홈으로 가기 버튼 동작에 대한 함수
@@ -59,33 +78,8 @@ export default function WelcomePage() {
     refetch();
   }
 
-  const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        entry.target.classList.remove('invisible');
-      } else {
-        entry.target.classList.add('invisible');
-        entry.target.classList.remove('visible');
-      }
-    });
-  };
-
   useEffect(() => {
-    const observer = new IntersectionObserver(handleIntersect, {
-      threshold: 0.2,
-    });
-
-    // 모든 ref에 대해 observer를 연결
-    itemRefs.current.forEach(ref => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => {
-      itemRefs.current.forEach(ref => {
-        if (ref) observer.unobserve(ref);
-      });
-    };
+    AOS.init();
   }, []);
 
   return (
@@ -113,38 +107,60 @@ export default function WelcomePage() {
             })}
           </S.MainSubList>
         </S.MainLeftContainer>
-        {accessToken && myNickName && (
-          <S.MainRightContainer style={{ width: `${myNickName ? '25%' : ''}` }}>
+        <S.MainRightContainer>
+          {accessToken && (
             <>
               <S.UserNameContainer>
-                <S.UserNickName>{myNickName}</S.UserNickName> 님
+                {myNickName ? (
+                  <>
+                    <S.UserNickName>{myNickName}</S.UserNickName> 님
+                  </>
+                ) : (
+                  <Spinner size="XXS" />
+                )}
               </S.UserNameContainer>
               <Button onClick={goHome}>
                 홈으로
                 <ArrowForwardIosRoundedIcon />
               </Button>
             </>
-          </S.MainRightContainer>
-        )}
+          )}
+        </S.MainRightContainer>
         <LoginForm width="25%" />
       </S.MainContainer>
       <S.MoreDetailContainer>
-        <S.MoreDetailTitle>AlgoBaro가 궁금하신가요?</S.MoreDetailTitle>
         <S.MoreDetailList>
+          {/* ⭣ ⇩ ⬇ ⇣ ⇊ ⇂ ↡ ⤵ */}
+          <S.MoreDetailTitle>
+            AlgoBaro가 궁금하신가요?{'   '}
+            <span
+              style={{
+                position: 'absolute',
+                top: '2px',
+                transform: 'translateX(10px)',
+              }}
+            >
+              ⬇
+            </span>
+          </S.MoreDetailTitle>
           {moreDetailItems.map((item, index) => {
             return (
               <S.DetailItem
+                data-aos={index % 2 === 0 ? 'fade-right' : 'fade-left'}
                 key={v4()}
-                ref={el => (itemRefs.current[index] = el)}
               >
-                <Image
-                  width="54rem"
-                  height="36rem"
-                  src={item.imageUrl}
-                />
+                <img src={item.imageUrl} />
                 <S.DetailContents>
                   <S.DetailTitle>{item.title}</S.DetailTitle>
-                  <S.DetailDescription>{item.description}</S.DetailDescription>
+                  <S.DetailDescriptionList>
+                    {item.description.map(description => {
+                      return (
+                        <S.DetailDescriptionItem key={v4()}>
+                          {description}
+                        </S.DetailDescriptionItem>
+                      );
+                    })}
+                  </S.DetailDescriptionList>
                 </S.DetailContents>
               </S.DetailItem>
             );
