@@ -100,7 +100,7 @@ export default function WelcomePage() {
               priority={true}
             />
             <Image
-              src={`/assets/logo-text-light.png`}
+              src={`/assets/logo-text-${theme.mode}.png`}
               alt="logo-text"
               height="3.5rem"
               priority={true}
