@@ -23,10 +23,10 @@ const handleAxiosError = (errorAxios: AxiosError<ErrorDataType>) => {
         localStorage.removeItem(LOCAL_ACCESSTOKEN);
         break;
       case 'E00101': // 회원가입에서 이미 존재하는 이메일 입력 시
-        alert('이미 존재하는 이메일입니다.');
+        toastify.error('이미 존재하는 이메일입니다.');
         break;
       case 'E00102': // 회원가입에서 이미 존재하는 닉네임 입력 시
-        alert('이미 존재하는 닉네임입니다.');
+        toastify.error('이미 존재하는 닉네임입니다.');
         break;
       default:
         console.error(error);

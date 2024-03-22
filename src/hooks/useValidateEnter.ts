@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { PATH } from '@/routes/path';
 import { validateEnter } from '@/services/Room/validateEnter';
+import { toastify } from '@/utils/toastify';
 
 interface responseData {
   success: boolean;
@@ -44,10 +45,10 @@ export const useValidateEnter = (roomShortUuid: string) => {
         case 'E05102':
         case 'E05103':
         case 'E05104':
-          alert(message);
+          toastify.error(message);
           break;
         default:
-          alert('알수없는 오류가 발생했습니다.');
+          toastify.error('알수없는 오류가 발생했습니다.');
           break;
       }
     },
