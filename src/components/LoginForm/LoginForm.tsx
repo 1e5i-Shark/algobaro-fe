@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
@@ -33,18 +33,20 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
   // 아이디 저장 옵션 여부
   const [isSaveEmail, setIsSaveEmail] = useState(saveEmail ? true : false);
   // login react form
-  const { register, handleSubmit, formState, reset } = useForm<LoginInfo>({
-    mode: 'onChange',
-    defaultValues: {
-      // 아이디 저장한 것을 기본값으로 불러온다.
-      email: saveEmail ? saveEmail : '',
-      password: '',
-    },
-  });
+  const { register, handleSubmit, formState, watch, setValue, setFocus } =
+    useForm<LoginInfo>({
+      mode: 'onChange',
+      defaultValues: {
+        // 아이디 저장한 것을 기본값으로 불러온다.
+        email: saveEmail || '',
+        password: '',
+      },
+    });
   // signIn api mutate 훅
-  const { mutate: signInMutate } = useSignIn();
+  const { mutate: signInMutate, error } = useSignIn();
   // 입력값 유효성 체크
   const isValid = formState.isValid;
+  const email = watch('email');
 
   const inputPropsList: InputListProps<LoginInfo> = [
     {
@@ -66,23 +68,32 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
 
   // 로그인 데이터 api 통신 후 데이터 저장 및 메인페이지(홈) 이동하는 함수
   const onSubmitData: SubmitHandler<LoginInfo> = async data => {
-    // 아이디 저장 체크 시 로컬 스토리지에 저장
-    // 해제 시 초기화
-    const { email } = data;
-    setSaveEmail(isSaveEmail ? email : '');
-
     // api를 호출하고 인증 성공 시 토큰을 로컬 스토리지에 저장한다.
     // 이후 메인 페이지(홈)으로 다이렉팅한다.
     signInMutate(data);
-
-    // 성공적으로 로그인이 되면 form 리셋
-    reset();
   };
+
   // 아이디 저장 체크 박스 변경 사항을 상태로 저장한다.
   const handleChangeCheck = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     setIsSaveEmail(checked);
+    setSaveEmail(checked ? email : '');
   };
+
+  useEffect(() => {
+    const errorCode = error?.response?.data.error.errorCode;
+    switch (errorCode) {
+      case 'E00202':
+        setValue('email', saveEmail || '');
+        setValue('password', '');
+        setFocus(saveEmail ? 'password' : 'email');
+        break;
+      case 'E01302':
+        setValue('password', '');
+        setFocus('email');
+        break;
+    }
+  }, [error]);
 
   return (
     <>
@@ -107,6 +118,9 @@ export default function LoginForm({ width = '100%' }: { width?: string }) {
             <LoginButton
               type="submit"
               disabled={isValid ? false : true}
+              style={{
+                cursor: isValid ? '' : 'not-allowed',
+              }}
             >
               로그인
             </LoginButton>

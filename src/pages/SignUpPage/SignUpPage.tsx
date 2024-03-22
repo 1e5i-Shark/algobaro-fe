@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,8 +19,16 @@ interface SignUpInfo {
 }
 
 export default function SignUpPage() {
-  const { mutate: signUpMutate } = useSignUp();
-  const { register, handleSubmit, formState, watch } = useForm<SignUpInfo>({
+  const { mutate: signUpMutate, isError, error } = useSignUp();
+  const {
+    register,
+    handleSubmit,
+    formState,
+    watch,
+    setValue,
+    setFocus,
+    setError,
+  } = useForm<SignUpInfo>({
     mode: 'onChange',
   });
   const [isAgree, setIsAgree] = useState(false);
@@ -93,6 +101,31 @@ export default function SignUpPage() {
     navigate(PATH.HOME);
   };
 
+  useEffect(() => {
+    if (isError) {
+      const errorCode = error.response?.data.error.errorCode;
+
+      switch (errorCode) {
+        case 'E00101':
+          setValue('email', '');
+          setFocus('email');
+          setError('email', {
+            type: 'E00101',
+            message: '새로운 이메일을 입력해주세요',
+          });
+          break;
+        case 'E00102':
+          setValue('nickname', '');
+          setFocus('nickname');
+          setError('nickname', {
+            type: 'E00102',
+            message: '새로운 닉네임을 입력해주세요',
+          });
+          break;
+      }
+    }
+  }, [isError]);
+
   return (
     <S.SignUpPageWrapper>
       <S.SignUpFormContainer onSubmit={handleSubmit(onSubmitData)}>
@@ -110,13 +143,16 @@ export default function SignUpPage() {
           })}
         </S.SignUpInputContainer>
         <CheckBox
-          label="개인 정보 제공에 동의합니다"
+          label="개인 정보 제공함에 동의합니다"
           onChange={handleChangeCheck}
           checked={isAgree}
         />
         <S.SignUpButton
           type="submit"
           disabled={isValid && isAgree ? false : true}
+          style={{
+            cursor: isValid && isAgree ? '' : 'not-allowed',
+          }}
         >
           가입하기
         </S.SignUpButton>
