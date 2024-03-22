@@ -1,5 +1,4 @@
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
-import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
@@ -20,7 +19,6 @@ export default function WelcomePage() {
   const [accessToken] = useLocalStorage(LOCAL_ACCESSTOKEN);
   // 유저 닉네임 쿼리 호출 업데이트
   const myNickName = myInfo?.response.nickname;
-  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
   // Todo: 아이콘 정하기
   const mainSubItems = [
@@ -30,19 +28,24 @@ export default function WelcomePage() {
   ];
   const moreDetailItems = [
     {
-      imageUrl: '',
+      imageUrl: '/assets/moreDetail/HomePage.webp',
       title: '설명 1',
       description: '설명 1 부가 설명',
     },
     {
-      imageUrl: '',
+      imageUrl: '/assets/moreDetail/RoomPage.webp',
       title: '설명 2',
-      description: '설명 2 부가 설명',
+      description: '설명 1 부가 설명',
     },
     {
-      imageUrl: '',
+      imageUrl: '/assets/moreDetail/SolvePage.webp',
       title: '설명 3',
-      description: '설명 3 부가 설명',
+      description: '설명 1 부가 설명',
+    },
+    {
+      imageUrl: '/assets/moreDetail/SharePage.webp',
+      title: '설명 4',
+      description: '설명 1 부가 설명',
     },
   ];
   // 홈으로 가기 버튼 동작에 대한 함수
@@ -58,35 +61,6 @@ export default function WelcomePage() {
   if (accessToken && !myInfo) {
     refetch();
   }
-
-  const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        entry.target.classList.remove('invisible');
-      } else {
-        entry.target.classList.add('invisible');
-        entry.target.classList.remove('visible');
-      }
-    });
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleIntersect, {
-      threshold: 0.2,
-    });
-
-    // 모든 ref에 대해 observer를 연결
-    itemRefs.current.forEach(ref => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => {
-      itemRefs.current.forEach(ref => {
-        if (ref) observer.unobserve(ref);
-      });
-    };
-  }, []);
 
   return (
     <S.WelcomePageWrapper>
@@ -131,17 +105,10 @@ export default function WelcomePage() {
       <S.MoreDetailContainer>
         <S.MoreDetailTitle>AlgoBaro가 궁금하신가요?</S.MoreDetailTitle>
         <S.MoreDetailList>
-          {moreDetailItems.map((item, index) => {
+          {moreDetailItems.map(item => {
             return (
-              <S.DetailItem
-                key={v4()}
-                ref={el => (itemRefs.current[index] = el)}
-              >
-                <Image
-                  width="54rem"
-                  height="36rem"
-                  src={item.imageUrl}
-                />
+              <S.DetailItem key={v4()}>
+                <img src={item.imageUrl} />
                 <S.DetailContents>
                   <S.DetailTitle>{item.title}</S.DetailTitle>
                   <S.DetailDescription>{item.description}</S.DetailDescription>
