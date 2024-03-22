@@ -6,6 +6,7 @@ import { LOGOS } from '@/constants/logos';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import * as S from '@/pages/RoomPage/RoomPage.style';
 import useRoomStore from '@/store/RoomStore';
+import { toastify } from '@/utils/toastify';
 
 interface RoomInfoProps {
   className: string;
@@ -20,9 +21,9 @@ export default function RoomInfoContainer({ className }: RoomInfoProps) {
     if (window.navigator.clipboard) {
       window.navigator.clipboard.writeText(window.location.href);
 
-      alert('방 초대 링크가 복사되었습니다!');
+      toastify.success('방 초대 링크가 복사되었습니다!');
     } else {
-      alert('복사하기가 지원되지 않는 브라우저입니다.');
+      toastify.error('복사하기가 지원되지 않는 브라우저입니다.');
     }
   };
 

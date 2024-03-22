@@ -24,8 +24,8 @@ export const UserInfoContainer = styled(Row)`
     min-width: 65rem;
     height: 12rem;
     padding: ${theme.size.M};
-    background-color: ${theme.color.background_menu};
-    border: 1px solid ${theme.color.gray_20};
+    background-color: ${theme.color.transparent_10};
+    border: 1px solid ${theme.color.transparent_30};
     border-radius: ${theme.size.S};
   `}
 `;
@@ -157,8 +157,8 @@ export const ProblemHistoryItem = styled.li`
     max-height: 7rem;
     padding: ${theme.size.S} ${theme.size.L};
     cursor: pointer;
-    background-color: ${theme.color.background_menu};
-    border: 1px solid ${theme.color.gray_20};
+    background-color: ${theme.color.transparent_10};
+    border: 1px solid ${theme.color.transparent_30};
     border-radius: ${theme.size.S};
   `}
 `;

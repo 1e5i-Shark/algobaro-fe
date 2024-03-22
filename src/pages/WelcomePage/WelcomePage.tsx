@@ -1,4 +1,5 @@
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 
@@ -6,17 +7,20 @@ import { Button, Image, ThemeModeToggleButton } from '@/components';
 import LoginForm from '@/components/LoginForm/LoginForm';
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { useMyInfo } from '@/hooks/Api/useMembers';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
 
 import * as S from './WelcomePage.style';
 
 export default function WelcomePage() {
+  const { theme } = useCustomTheme();
   const navigate = useNavigate();
   const { data: myInfo, refetch } = useMyInfo();
   const [accessToken] = useLocalStorage(LOCAL_ACCESSTOKEN);
   // 유저 닉네임 쿼리 호출 업데이트
   const myNickName = myInfo?.response.nickname;
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
   // Todo: 아이콘 정하기
   const mainSubItems = [
@@ -55,6 +59,35 @@ export default function WelcomePage() {
     refetch();
   }
 
+  const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        entry.target.classList.remove('invisible');
+      } else {
+        entry.target.classList.add('invisible');
+        entry.target.classList.remove('visible');
+      }
+    });
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersect, {
+      threshold: 0.2,
+    });
+
+    // 모든 ref에 대해 observer를 연결
+    itemRefs.current.forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      itemRefs.current.forEach(ref => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, []);
+
   return (
     <S.WelcomePageWrapper>
       <S.MainContainer>
@@ -67,7 +100,7 @@ export default function WelcomePage() {
               priority={true}
             />
             <Image
-              src="/assets/logo-text.png"
+              src={`/assets/logo-text-${theme.mode}.png`}
               alt="logo-text"
               height="3.5rem"
               priority={true}
@@ -98,12 +131,15 @@ export default function WelcomePage() {
       <S.MoreDetailContainer>
         <S.MoreDetailTitle>AlgoBaro가 궁금하신가요?</S.MoreDetailTitle>
         <S.MoreDetailList>
-          {moreDetailItems.map(item => {
+          {moreDetailItems.map((item, index) => {
             return (
-              <S.DetailItem key={v4()}>
+              <S.DetailItem
+                key={v4()}
+                ref={el => (itemRefs.current[index] = el)}
+              >
                 <Image
-                  width="30rem"
-                  height="100%"
+                  width="54rem"
+                  height="36rem"
                   src={item.imageUrl}
                 />
                 <S.DetailContents>

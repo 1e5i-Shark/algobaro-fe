@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import { Col, Row } from '@/styles/GlobalStyle';
 
@@ -83,15 +83,47 @@ export const MoreDetailList = styled.ul`
   padding: 10rem 15%;
 `;
 
+const slideUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const slideDown = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10%);
+  }
+`;
+
 export const DetailItem = styled.li`
   ${({ theme }) => css`
     display: flex;
     flex-direction: row;
     gap: ${theme.size.XL};
-    height: 20rem;
+    height: 52rem;
     background: transparent;
+    opacity: 0;
+
     &:nth-child(2n) {
       flex-direction: row-reverse;
+    }
+
+    &.visible {
+      animation: ${slideUp} 1s ease-in-out forwards;
+    }
+
+    &.invisible {
+      animation: ${slideDown} 1s ease-in-out forwards;
     }
   `}
 `;

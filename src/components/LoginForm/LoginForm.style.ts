@@ -37,6 +37,7 @@ export const LoginInputContainer = styled.ul`
 
 export const LoginInputItem = styled.li`
   ${({ theme }) => css`
+    height: 8.5rem;
     label {
       font-size: ${theme.size.M};
       font-weight: ${theme.fontWeight.semiBold};

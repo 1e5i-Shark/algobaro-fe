@@ -2,11 +2,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Avatar, Image, ThemeModeToggleButton } from '@/components';
 import { useMyInfo } from '@/hooks/Api/useMembers';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { PATH } from '@/routes/path';
 
 import * as S from './Header.style';
 
 export default function Header() {
+  const { theme } = useCustomTheme();
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -32,7 +35,7 @@ export default function Header() {
     <S.HeaderWrapper>
       <S.LogoWrapper onClick={handleLogoClick}>
         <Image
-          src="/assets/logo-text.png"
+          src={`/assets/logo-text-${theme.mode}.png`}
           alt="logo-text"
           height="2.5rem"
           priority={true}
@@ -40,7 +43,7 @@ export default function Header() {
       </S.LogoWrapper>
       <S.IconWrapper>
         <ThemeModeToggleButton />
-        {pathname !== '/signup' ? (
+        {!(pathname.includes('/signup') || pathname.includes('/profile')) ? (
           <S.AvatarWrapper>
             <Avatar
               src={myProfileImage}

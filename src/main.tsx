@@ -8,6 +8,7 @@ import { ThemeCustomProvider } from '@/components';
 import { GlobalStyle } from '@/styles/GlobalStyle';
 
 import App from './App.tsx';
+import ToastProvider from './components/ToastProvider.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <StyledEngineProvider>
         <ThemeCustomProvider>
+          <ToastProvider />
           <GlobalStyle />
           <App />
         </ThemeCustomProvider>

@@ -13,9 +13,10 @@ const HeaderWrapper = styled.header`
     width: 100%;
     height: ${theme.FIXED_HEIGHT.HEADER};
     padding: 0 2.5rem;
-    background-color: ${theme.color.background_menu};
-    border-bottom: 1px solid
-      ${theme.mode === 'light' ? theme.color.gray_20 : 'none'};
+    background-color: ${theme.mode === 'dark'
+      ? theme.color.background_second
+      : theme.color.background_menu};
+    border-bottom: 1px solid ${theme.color.transparent_30};
   `}
 `;
 

@@ -64,7 +64,7 @@ const LottieWrapper = styled(Row)`
 
 const TestCaseTitle = styled.p`
   ${({ theme }) => css`
-    width: 8rem;
+    width: 10rem;
     font-size: 1.6rem;
     font-weight: ${theme.fontWeight.medium};
   `};

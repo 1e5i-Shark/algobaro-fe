@@ -11,6 +11,7 @@ import useCodeEditorStore from '@/store/CodeEditorStore';
 import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
 import useTimerStore from '@/store/TimerStore';
+import { toastify } from '@/utils/toastify';
 
 import { DIRECTION, SIZE_PERCENTAGE } from './constants';
 import ProblemExecution from './ProblemExecution/ProblemExecution';
@@ -59,6 +60,10 @@ export default function ProblemSolvePage() {
 
   const handleCompileExecution = async () => {
     if (confirm('하루 실행 제한이 있습니다. 정말 실행하시겠습니까?')) {
+      if (!input.trim()) {
+        toastify.error('테스트 케이스를 입력해주세요!');
+        return;
+      }
       compileMutate({ code, input, language });
     }
   };
