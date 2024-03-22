@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Col, Row } from '@/styles/GlobalStyle';
 
@@ -73,36 +73,19 @@ export const MoreDetailContainer = styled.div`
 `;
 
 export const MoreDetailTitle = styled.p`
-  padding-left: 5rem;
+  max-width: 108rem;
+  margin: 0 auto;
+  font-size: 2rem;
+  font-weight: 700;
 `;
 
 export const MoreDetailList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 10rem;
-  padding: 10rem 15%;
-`;
-
-const slideUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(10%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const slideDown = keyframes`
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(10%);
-  }
+  max-width: 108rem;
+  padding: 10rem 0;
+  margin: 0 auto;
 `;
 
 export const DetailItem = styled.li`
@@ -110,20 +93,24 @@ export const DetailItem = styled.li`
     display: flex;
     flex-direction: row;
     gap: ${theme.size.XL};
-    height: 52rem;
+    height: 42rem;
     background: transparent;
-    opacity: 0;
 
     &:nth-child(2n) {
       flex-direction: row-reverse;
     }
 
-    &.visible {
-      animation: ${slideUp} 1s ease-in-out forwards;
+    & img {
+      width: 56rem;
+      height: 36rem;
+      object-fit: contain;
+      background-color: ${theme.color.background_primary};
+      border-radius: 1rem;
     }
-
-    &.invisible {
-      animation: ${slideDown} 1s ease-in-out forwards;
+    &:nth-child(1n + 3) {
+      & img {
+        background-color: ${theme.color.background_problem_solve};
+      }
     }
   `}
 `;
