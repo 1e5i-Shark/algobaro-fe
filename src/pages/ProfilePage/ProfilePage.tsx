@@ -9,6 +9,7 @@ import { useSolvedHistoryList } from '@/hooks/Api/useSolves';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
+import { toastify } from '@/utils/toastify';
 
 import { SUBMIT_STATUS_DATA_SET } from '../ProblemSolvePage/constants';
 import { languageConvert } from './HistoryDetailModal/languageConstant';
@@ -83,7 +84,8 @@ export default function ProfilePage() {
     const limitSize = 1024 ** 2 * 5; // 5MB 용량 제한
 
     // 용량 제한 경고를 표시한다.
-    if (fileSize > limitSize) alert('5MB 이하 이미지만 업로드 가능합니다!');
+    if (fileSize > limitSize)
+      toastify.error('5MB 이하 이미지만 업로드 가능합니다!');
 
     // 5MB 이하 파일 데이터일 때만 요청하도록 가드를 설정한다.
     if (fileData && fileSize <= limitSize) {

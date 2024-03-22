@@ -11,6 +11,7 @@ import { DropDown } from '@/components/Common/DropDown';
 import { PROBLEM_LANGUAGES_DATA_SET } from '@/constants/room';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
 import useCodeEditorStore from '@/store/CodeEditorStore';
+import { toastify } from '@/utils/toastify';
 
 import * as S from './CodeEditor.style';
 import {
@@ -127,7 +128,7 @@ export default function CodeEditor({
     const changeData = beforeChangeEventProps.data;
     if (changeData.origin === 'paste' && mode === 'normal') {
       changeData.cancel?.();
-      alert('풀이 중 코드 붙여넣기는 금지합니다.');
+      toastify.error('풀이 중 코드 붙여넣기는 금지합니다.');
       return;
     }
 
