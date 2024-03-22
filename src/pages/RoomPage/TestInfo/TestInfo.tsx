@@ -83,7 +83,11 @@ export default function TestInfo({ className }: TestInfoProps) {
                 >
                   <AttachmentRounded />
                 </Icon>
-                {!problemLink && <span>문제를 설정해주세요</span>}
+                {!problemLink ? (
+                  <span>문제를 설정해주세요</span>
+                ) : (
+                  <span>{problemLink.split('/').pop()}</span>
+                )}
               </span>
             </td>
           </tr>

@@ -7,12 +7,14 @@ import { Button, Image, ThemeModeToggleButton } from '@/components';
 import LoginForm from '@/components/LoginForm/LoginForm';
 import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { useMyInfo } from '@/hooks/Api/useMembers';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { PATH } from '@/routes/path';
 
 import * as S from './WelcomePage.style';
 
 export default function WelcomePage() {
+  const { theme } = useCustomTheme();
   const navigate = useNavigate();
   const { data: myInfo, refetch } = useMyInfo();
   const [accessToken] = useLocalStorage(LOCAL_ACCESSTOKEN);
@@ -98,7 +100,7 @@ export default function WelcomePage() {
               priority={true}
             />
             <Image
-              src="/assets/logo-text.png"
+              src={`/assets/logo-text-${theme.mode}.png`}
               alt="logo-text"
               height="3.5rem"
               priority={true}
