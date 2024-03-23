@@ -4,7 +4,11 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import { ThemeCustomProvider } from '@/components';
+import { GlobalStyle } from '@/styles/GlobalStyle';
+
 import App from './App.tsx';
+import ToastProvider from './components/ToastProvider.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,9 +22,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <StyledEngineProvider>
-        <App />
+        <ThemeCustomProvider>
+          <ToastProvider />
+          <GlobalStyle />
+          <App />
+        </ThemeCustomProvider>
       </StyledEngineProvider>
-
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>

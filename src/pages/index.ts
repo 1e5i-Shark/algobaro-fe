@@ -1,0 +1,11 @@
+export { default as CreateRoomPage } from './CreateRoomPage/CreateRoomPage';
+export { default as HomePage } from './HomePage/HomePage';
+export { default as Layout } from './Layout/Layout';
+export { default as MainPage } from './MainPage/MainPage';
+export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
+export { default as ProblemSharePage } from './ProblemSharePage/ProblemSharePage';
+export { default as ProblemSolvePage } from './ProblemSolvePage/ProblemSolvePage';
+export { default as ProfilePage } from './ProfilePage/ProfilePage';
+export { default as RoomPage } from './RoomPage/RoomPage';
+export { default as SignUpPage } from './SignUpPage/SignUpPage';
+export { default as WelcomePage } from './WelcomePage/WelcomePage';
