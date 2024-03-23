@@ -129,15 +129,18 @@ export const MoreDetailList = styled.ul`
   flex-direction: column;
   gap: 10rem;
   max-width: 108rem;
+  height: fit-content;
   padding: 0rem 4rem;
   margin: 0 auto;
 `;
 
 export const DetailItem = styled.li`
   display: flex;
+
   flex-direction: row;
   gap: 5rem;
-  height: 42rem;
+  height: fit-content;
+  padding: 0.5rem 0;
   background: transparent;
 
   &:nth-child(2n-1) {
@@ -206,7 +209,6 @@ export const DetailDescriptionItem = styled.li`
 export const DarkModeButtonContainer = styled.div`
   ${({ theme }) => css`
     width: fit-content;
-    padding: ${theme.size.S};
     div {
       width: ${theme.size.full};
     }
