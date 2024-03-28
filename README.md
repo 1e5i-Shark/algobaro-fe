@@ -35,7 +35,7 @@
 | [박수현](https://github.com/pySoo) | [배건호](https://github.com/meowTarae) | [신수영](https://github.com/joyswim) | [조익준](https://github.com/harry7435) |
 
 ### BE 팀원
-| <img src="https://github.com/1e5i-Shark/algobaro-fe/assets/85001878/b26873b2-8dd0-4a33-bedc-d5d828505922" width=224px alt="권효승"/>  | <img src="https://avatars.githubusercontent.com/u/87390396?v=4" width=224px alt="김남규"/> |
+| <img src="https://github.com/1e5i-Shark/algobaro-fe/assets/85001878/b26873b2-8dd0-4a33-bedc-d5d828505922" width=180px alt="권효승"/>  | <img src="https://avatars.githubusercontent.com/u/87390396?v=4" width=180px alt="김남규"/> |
 |:-:|:-:|
 | [권효승](https://github.com/hyoguoo) | [김남규](https://github.com/GiHoo) |
 
@@ -61,6 +61,8 @@ npm i
 ```
 npm run dev
 ```
+
+<br>
 
 ## ⚙️ 환경 변수 목록
 
