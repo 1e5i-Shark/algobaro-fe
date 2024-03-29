@@ -65,6 +65,8 @@ npm run dev
 <br>
 
 ## ⚙️ 환경 변수 목록
-
-
+```
+VITE_BASE_API_URL=
+VITE_BASE_SOCKET_URL=
+```
 
