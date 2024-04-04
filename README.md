@@ -20,6 +20,40 @@
 
 <br>
 
+## ✨ 핵심 기능
+
+### 언어, 비밀방, 입장 가능, 제목 필터링을 통해 나에게 맞는 방을 탐색해요
+
+<img src="https://github.com/1e5i-Shark/algobaro-fe/assets/55135881/174b7a91-8647-42c8-b250-8f2957b0e5c3" width="600px" />
+
+### 실시간 채팅을 통해 팀원들과 의논하고 문제 풀이를 시작해 보세요
+
+<img src="https://github.com/1e5i-Shark/algobaro-fe/assets/55135881/50674fc8-f680-421c-9320-c17c13214c6b" width="600px" />
+
+### 실제 시험 환경에서 문제를 풀이하고 테스트 케이스를 디버깅할 수 있어요
+
+<img src="https://github.com/1e5i-Shark/algobaro-fe/assets/55135881/bdc3b737-6eb4-4f7c-8b5a-d3902a9b9ab7" width="600px" />
+
+### 테스트 케이스 채점 결과를 확인하고 채점 결과를 공유해요
+
+<img src="https://github.com/1e5i-Shark/algobaro-fe/assets/55135881/d5009ac8-6420-408a-a570-1c61f78105c9" width="600px" />
+
+### 팀원들의 제출 코드를 확인하고 채팅을 통해 풀이 방법을 공유하며 학습할 수 있어요
+
+<img src="https://github.com/1e5i-Shark/algobaro-fe/assets/55135881/e5c94cc5-b15b-422b-a0eb-4c31ac5254b4" width="600px" />
+
+### 프로필 페이지에서 제출했던 코드를 다시 확인할 수 있어요
+
+<img src="https://github.com/1e5i-Shark/algobaro-fe/assets/55135881/c8a97ceb-d17a-492a-852d-afaba64887ad" width="600px" />
+
+### 다크모드, 라이트모드를 모두 지원해요
+
+<img src="https://github.com/1e5i-Shark/algobaro-fe/assets/55135881/0cf60978-f165-4f42-ac3b-c6689074bf5b" width="350px" />
+
+<img src="https://github.com/1e5i-Shark/algobaro-fe/assets/55135881/2edc2628-a5f0-4199-8a3b-eb7213ba4467" width="325px" />
+
+<br>
+
 ## 🛠️ 기술 스택
 
 <img src="https://github.com/1e5i-Shark/algobaro-fe/assets/55135881/6be4c329-b202-4dfc-a4e7-5ce3c6ee3480" width="450px" />
