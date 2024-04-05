@@ -83,6 +83,7 @@
 ├── 📂 styles
 ├── 📂 types
 ├── 📂 utils
+├── App.tsx
 └── main.tsx
 ```
 
@@ -119,10 +120,10 @@
 ## 🚀 Getting Started
 
 ```bash
-npm i
+npm install --force
 ```
 
-```
+```bash
 npm run dev
 ```
 
