@@ -40,6 +40,35 @@ export default function Audio() {
   };
 
   useEffect(() => {
+    if (audioStream.current === null) return;
+
+    let intervalId: ReturnType<typeof setInterval>;
+    const microphone = audioContext.createMediaStreamSource(
+      audioStream.current
+    );
+    const analyser = audioContext.createAnalyser();
+    analyser.fftSize = 512;
+    microphone.connect(analyser);
+
+    const data = new Uint8Array(analyser.frequencyBinCount);
+
+    if (isActive) {
+      intervalId = setInterval(() => {
+        analyser.getByteFrequencyData(data);
+
+        let sum = 0;
+        for (let i = 0; i < data.length; i++) {
+          sum += data[i];
+        }
+        const average = sum / data.length;
+
+        setIsSpeaking(average > 10);
+      }, 30);
+    }
+    return () => clearInterval(intervalId);
+  }, [isActive]);
+
+  useEffect(() => {
     startAudio();
   }, []);
 
