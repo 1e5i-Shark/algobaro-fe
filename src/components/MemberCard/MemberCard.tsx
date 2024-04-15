@@ -1,6 +1,6 @@
-import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
+import { MoreVertRounded } from '@mui/icons-material';
 
-import { Icon, Menu } from '@/components';
+import { Audio, Icon, Menu } from '@/components';
 import { Avatar } from '@/components/Common/Avatar';
 import { MENU_TEXT, MenuListProps } from '@/components/Common/Menu/MenuText';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
@@ -43,18 +43,19 @@ export default function MemberCard({
 
   return (
     <S.CardWrapper>
-      {myRole === ROOM_ROLE.HOST && memberRole === ROOM_ROLE.PARTICIPANT && (
-        <S.MenuWrapper>
+      <S.MenuWrapper>
+        {myRole === ROOM_ROLE.HOST && memberRole === ROOM_ROLE.PARTICIPANT && (
           <Menu
             menuList={menuList}
-            className="menu"
+            className="menu_host"
           >
             <Icon onClick={() => {}}>
-              <MoreVertRoundedIcon />
+              <MoreVertRounded />
             </Icon>
           </Menu>
-        </S.MenuWrapper>
-      )}
+        )}
+        <Audio />
+      </S.MenuWrapper>
       <Avatar
         src={profileImage ?? ''}
         size="M"

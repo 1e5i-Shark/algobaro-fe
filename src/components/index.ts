@@ -1,3 +1,4 @@
+export { default as Audio } from './Common/Audio/Audio';
 export { Avatar, EditButton } from './Common/Avatar';
 export { default as Button } from './Common/Button/Button';
 export { default as Chat } from './Common/Chat/Chat';
