@@ -1,14 +1,28 @@
-import { VolumeOffRounded, VolumeUpRounded } from '@mui/icons-material';
+import {
+  KeyboardArrowDownRounded,
+  VolumeOffRounded,
+  VolumeUpRounded,
+} from '@mui/icons-material';
 import { useEffect, useRef, useState } from 'react';
 
-import { Icon } from '@/components';
+import { Icon, Menu, Tooltip } from '@/components';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
+
+import { MenuListProps } from '../Menu/MenuText';
 
 export default function Audio() {
+  const { theme } = useCustomTheme();
+
   const audioStream = useRef<MediaStream | null>(null);
   const audioContext = new AudioContext();
 
   const [isActive, setIsActive] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const [selectedMicrophone, setSelectedMicrophone] =
+    useState<MediaDeviceInfo>();
+  const [microphoneMenuList, setMicrophoneMenuList] =
+    useState<MenuListProps[]>();
 
   const openMediaDevices = async () => {
     return await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -68,28 +82,68 @@ export default function Audio() {
     return () => clearInterval(intervalId);
   }, [isActive]);
 
+  // 마이크 선택 기능
+  // const handleSelectMicrophone = async (selectedDevice: MediaDeviceInfo) => {
+  //   const stream = await navigator.mediaDevices.getUserMedia({
+  //     audio: { deviceId: { exact: selectedDevice.deviceId } },
+  //   });
+
+  //   setSelectedMicrophone(selectedDevice);
+  // };
+
+  const getDevices = async () => {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const microphones = devices.filter(device => device.kind === 'audioinput');
+
+    const filteredMicrophones = microphones.find(
+      microphone => microphone.deviceId === 'default'
+    );
+
+    setSelectedMicrophone(filteredMicrophones);
+  };
+
   useEffect(() => {
     startAudio();
+    getDevices();
+
+    return () => {
+      if (audioStream.current != null) {
+        audioStream.current.getTracks().forEach(track => track.stop());
+      }
+    };
   }, []);
 
   return (
-    <div>
-      {isActive ? (
-        <>
-          <Icon
-            onClick={handleIconClick}
-            color={isSpeaking ? '#ff0000' : '#fff'}
-          >
-            <VolumeUpRounded />
-          </Icon>
-        </>
-      ) : (
-        <>
-          <Icon onClick={handleIconClick}>
-            <VolumeOffRounded />
-          </Icon>
-        </>
+    <>
+      {selectedMicrophone && (
+        // Todo : 나한테만 툴팁 보여주기
+        <Tooltip text={selectedMicrophone.label}>
+          <div>
+            {isActive ? (
+              <Icon
+                onClick={handleIconClick}
+                color={isSpeaking ? '#08c324' : theme.color.white_primary}
+              >
+                <VolumeUpRounded />
+              </Icon>
+            ) : (
+              <Icon onClick={handleIconClick}>
+                <VolumeOffRounded />
+              </Icon>
+            )}
+          </div>
+        </Tooltip>
       )}
-    </div>
+      {microphoneMenuList && (
+        <Menu
+          menuList={microphoneMenuList}
+          className="menu_audio"
+        >
+          <Icon>
+            <KeyboardArrowDownRounded />
+          </Icon>
+        </Menu>
+      )}
+    </>
   );
 }
