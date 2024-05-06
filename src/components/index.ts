@@ -1,3 +1,4 @@
+export { default as Audio } from './Common/Audio/Audio';
 export { Avatar, EditButton } from './Common/Avatar';
 export { default as Button } from './Common/Button/Button';
 export { default as Chat } from './Common/Chat/Chat';
@@ -19,6 +20,7 @@ export { default as Spinner } from './Common/Spinner/Spinner';
 export { default as Tag } from './Common/Tag/Tag';
 export { default as ThemeModeToggleButton } from './Common/ThemeModeToggleButton/ThemeModeToggleButton';
 export { default as Timer } from './Common/Timer/Timer';
+export { default as Tooltip } from './Common/Tooltip/Tooltip';
 export { default as CreateTagInput } from './CreateRoom/CreateTagInput/CreateTagInput';
 export { default as TitleWithAsterisk } from './CreateRoom/TitleWithAsterisk/TitleWithAsterisk';
 export { default as CodeEditor } from './IDE/CodeEditor/CodeEditor';
