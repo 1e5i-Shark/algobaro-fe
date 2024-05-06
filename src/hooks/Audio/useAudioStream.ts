@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 export const useAudioStream = () => {
   const [audioStream, setAudioStream] = useState<MediaStream | null>(null);
-  const [audioContext, setAudioContext] = useState(new AudioContext());
+  const [audioContext] = useState(new AudioContext());
   const [dataArray, setDataArray] = useState<Uint8Array>();
 
   const analyser = audioContext.createAnalyser();
