@@ -7,11 +7,18 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Icon, Menu, Tooltip } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import useAudioStore from '@/store/AudioStore';
+import useRoomStore from '@/store/RoomStore';
 
 import { MenuListProps } from '../Menu/MenuText';
 
 export default function Audio() {
   const { theme } = useCustomTheme();
+  const {
+    roomData: { roomShortUuid },
+  } = useRoomStore();
+
+  const { connect } = useAudioStore();
 
   const audioStream = useRef<MediaStream | null>(null);
   const audioContext = new AudioContext();
@@ -21,8 +28,7 @@ export default function Audio() {
 
   const [selectedMicrophone, setSelectedMicrophone] =
     useState<MediaDeviceInfo>();
-  const [microphoneMenuList, setMicrophoneMenuList] =
-    useState<MenuListProps[]>();
+  const [microphoneMenuList] = useState<MenuListProps[]>();
 
   const openMediaDevices = async () => {
     return await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -34,7 +40,16 @@ export default function Audio() {
       stream.getAudioTracks()[0].enabled = false;
       audioStream.current = stream;
 
-      console.log('Got MediaStream:', stream);
+      console.log('1. audio stream', stream);
+
+      const userCamKey = audioStream.current?.getAudioTracks()[0].id;
+
+      if (userCamKey) {
+        console.log('2. userCamKey 있어서 소켓 연결', userCamKey);
+
+        // 웹소켓 연결
+        connect(userCamKey, audioStream.current, roomShortUuid);
+      }
     } catch (error) {
       console.error('Error accessing media devices.', error);
     }
