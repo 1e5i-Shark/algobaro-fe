@@ -98,7 +98,6 @@ export default function RoomPage() {
 
   const beforeUnloadListener = (e: BeforeUnloadEvent) => {
     e.preventDefault();
-
     disconnect();
     resetRoom();
   };
@@ -119,6 +118,7 @@ export default function RoomPage() {
       <S.WaitingRoomContainer className="waitingroom-container">
         <RoomHeader className="roomheader-container" />
         <MemberList className="memberlist-container" />
+        <div id="remoteStreamDiv">remoteStreamDiv</div>
         <TestInfo className="testinfo-container" />
       </S.WaitingRoomContainer>
       <S.ChatContainer className="chat-container">
