@@ -12,13 +12,17 @@ import useRoomStore from '@/store/RoomStore';
 
 import { MenuListProps } from '../Menu/MenuText';
 
-export default function Audio() {
+interface AudioProps {
+  isMyId: boolean;
+}
+
+export default function Audio({ isMyId }: AudioProps) {
   const { theme } = useCustomTheme();
   const {
     roomData: { roomShortUuid },
   } = useRoomStore();
 
-  const { connect } = useAudioStore();
+  const { connect, disconnect } = useAudioStore();
 
   const audioStream = useRef<MediaStream | null>(null);
   const audioContext = new AudioContext();
@@ -118,15 +122,20 @@ export default function Audio() {
   };
 
   useEffect(() => {
-    startAudio();
-    getDevices();
+    if (isMyId) {
+      startAudio();
+      getDevices();
+    }
 
     return () => {
-      if (audioStream.current != null) {
-        audioStream.current.getTracks().forEach(track => track.stop());
+      if (isMyId) {
+        if (audioStream.current != null) {
+          audioStream.current.getTracks().forEach(track => track.stop());
+        }
+        disconnect();
       }
     };
-  }, []);
+  }, [isMyId]);
 
   return (
     <>
