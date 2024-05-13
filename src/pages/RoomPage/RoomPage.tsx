@@ -6,6 +6,7 @@ import { SOCKET_TYPE } from '@/constants/socket';
 import { useMyInfo } from '@/hooks/Api/useMembers';
 import { useGetUuidRoom } from '@/hooks/Api/useRooms';
 import { PATH } from '@/routes/path';
+import useAudioStore from '@/store/AudioStore';
 import useMessageStore from '@/store/MessageStore';
 import useRoomStore from '@/store/RoomStore';
 import { toastify } from '@/utils/toastify';
@@ -34,6 +35,8 @@ export default function RoomPage() {
     setMessageValue,
     reset: resetMessage,
   } = useMessageStore();
+
+  const { audioStream, createOtherConnection } = useAudioStore();
 
   const { data: myInfo, refetch: refetchMyInfo } = useMyInfo();
 
@@ -80,6 +83,14 @@ export default function RoomPage() {
       setRoomData(data.response);
     }
   }, [myInfo, roomDataMemoized, listeners, receiveLogs]);
+
+  useEffect(() => {
+    if (listeners?.size === 0) return;
+    console.log('새 유저 입장', listeners);
+    if (audioStream !== null) {
+      createOtherConnection();
+    }
+  }, [listeners, audioStream]);
 
   useEffect(() => {
     if (!myInfo) return;
