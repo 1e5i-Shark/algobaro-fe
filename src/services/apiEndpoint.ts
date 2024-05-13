@@ -13,6 +13,10 @@ export const API_ENDPOINT = {
     PUBLICATION: '/publication',
     SUBSCRIPTION: '/subscription',
   },
+  AUDIO: {
+    PUBLICATION: '/publication',
+    SUBSCRIPTION: '/subscription',
+  },
   PROBLEM: {
     PROBLEM_INFO: '/v1/problems/html',
   },
