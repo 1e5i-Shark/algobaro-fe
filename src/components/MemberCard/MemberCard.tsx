@@ -1,5 +1,4 @@
 import { MoreVertRounded } from '@mui/icons-material';
-import { useEffect } from 'react';
 
 import { Audio, Icon, Menu } from '@/components';
 import { Avatar } from '@/components/Common/Avatar';
@@ -45,10 +44,6 @@ export default function MemberCard({
     //   onClick: () => onMenuClick(MENU_TEXT.KICKOUT, memberId),
     // },
   ];
-
-  useEffect(() => {
-    console.log(isMyId);
-  }, [isMyId]);
 
   return (
     <S.CardWrapper>

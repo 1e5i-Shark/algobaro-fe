@@ -23,7 +23,7 @@ export interface AudioStoreState extends AudioStoreValue {
     audioStream: MediaStream,
     roomShortUuid: string
   ) => void;
-  subscribeAudioBroker: (roomShortUuid: string) => void;
+  createOtherConnection: () => void;
   createPeerConnection: (otherKey: string) => RTCPeerConnection;
   sendOffer: (pc: RTCPeerConnection | undefined, otherKey: string) => void;
   sendAnswer: (pc: RTCPeerConnection | undefined, otherKey: string) => void;

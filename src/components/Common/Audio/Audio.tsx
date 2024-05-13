@@ -44,13 +44,9 @@ export default function Audio({ isMyId }: AudioProps) {
       stream.getAudioTracks()[0].enabled = false;
       audioStream.current = stream;
 
-      console.log('1. audio stream', stream);
-
       const userCamKey = audioStream.current?.getAudioTracks()[0].id;
 
       if (userCamKey) {
-        console.log('2. userCamKey 있어서 소켓 연결', userCamKey);
-
         // 웹소켓 연결
         connect(userCamKey, audioStream.current, roomShortUuid);
       }
