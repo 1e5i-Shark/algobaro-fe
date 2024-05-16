@@ -290,13 +290,6 @@ const useAudioStore = create<AudioStoreState>()(
           });
         });
       },
-
-      sendMessage: type => {
-        const { client } = get();
-
-        if (!client) return;
-      },
-
       disconnect: () => {
         const { client, reset } = get();
 

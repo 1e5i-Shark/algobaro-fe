@@ -27,7 +27,6 @@ export interface AudioStoreState extends AudioStoreValue {
   createPeerConnection: (otherKey: string) => RTCPeerConnection;
   sendOffer: (pc: RTCPeerConnection | undefined, otherKey: string) => void;
   sendAnswer: (pc: RTCPeerConnection | undefined, otherKey: string) => void;
-  sendMessage: (type: string) => void;
   disconnect: () => void;
   reset: () => void;
 }
