@@ -13,6 +13,7 @@ const initialValue: AudioStoreValue = {
   client: new Stomp.Client(),
   listeners: new Set<Function>(),
   audioStream: null,
+  audioStreamList: new Map(),
   pcListMap: new Map(),
   otherKeyList: [],
   camKey: '',
@@ -172,7 +173,7 @@ const useAudioStore = create<AudioStoreState>()(
       },
 
       createOtherConnection: () => {
-        const { client, createPeerConnection, sendOffer } = get();
+        const { client, camKey } = get();
 
         if (client === null) return;
 
@@ -183,19 +184,6 @@ const useAudioStore = create<AudioStoreState>()(
           destination: '/call/key',
           body: {},
         });
-
-        setTimeout(() => {
-          const { pcListMap, otherKeyList } = get();
-          console.log('Socket 연결된 유저: ', pcListMap);
-
-          otherKeyList.map(key => {
-            if (!pcListMap.has(key)) {
-              pcListMap.set(key, createPeerConnection(key));
-              console.log('otherKeyList', key, pcListMap.get(key));
-              sendOffer(pcListMap.get(key), key);
-            }
-          });
-        }, 1000);
       },
 
       createPeerConnection: otherKey => {
@@ -252,11 +240,22 @@ const useAudioStore = create<AudioStoreState>()(
         }
       },
 
-      sendOffer: (pc, otherKey) => {
-        const { client, roomShortUuid } = get();
+      sendOffer: key => {
+        const {
+          client,
+          roomShortUuid,
+          pcListMap,
+          otherKeyList,
+          createPeerConnection,
+        } = get();
 
         if (!client) return;
 
+        if (!pcListMap.has(key)) {
+          pcListMap.set(key, createPeerConnection(key));
+        }
+
+        const pc = pcListMap.get(key);
         pc?.createOffer().then(offer => {
           console.log(
             'socket flow: 3. createOffer 후 setLocalDescription:',
@@ -266,13 +265,17 @@ const useAudioStore = create<AudioStoreState>()(
 
           pc.setLocalDescription(offer);
 
-          sendMessageService({
-            client,
-            destination: `/peer/offer/${otherKey}/${roomShortUuid}`,
-            body: {
-              key: otherKey,
-              body: offer,
-            },
+          otherKeyList.map(otherKey => {
+            console.log('socket flow: 4. sendOffer to', otherKey, '번 유저');
+
+            sendMessageService({
+              client,
+              destination: `/peer/offer/${otherKey}/${roomShortUuid}`,
+              body: {
+                key: key,
+                body: offer,
+              },
+            });
           });
         });
       },
