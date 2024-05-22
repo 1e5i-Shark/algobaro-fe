@@ -25,9 +25,7 @@ const useAudioStore = create<AudioStoreState>()(
     (set, get) => ({
       ...initialValue,
       connect: (camKey, audioStream, roomShortUuid) => {
-        console.log('local key', localStorage.getItem(LOCAL_ACCESSTOKEN));
         const BASE_SOCKET_URL = import.meta.env.VITE_BASE_SOCKET_URL;
-        console.log('1. 소켓 연결 camKey', camKey);
 
         const socket = new SockJS(BASE_SOCKET_URL);
         const stompClient = new Stomp.Client({
@@ -39,7 +37,7 @@ const useAudioStore = create<AudioStoreState>()(
         });
 
         stompClient.onConnect = () => {
-          console.log('2. 음성채팅 connect!');
+          console.log('음성채팅 connect!');
           const {
             connected,
             createPeerConnection,
@@ -64,11 +62,17 @@ const useAudioStore = create<AudioStoreState>()(
             client: stompClient,
             destination: `/peer/offer/${camKey}/${roomShortUuid}`,
             callback: offer => {
-              console.log('SUBSCRIBE: offer', offer);
               const key = JSON.parse(offer.body).key;
               const message = JSON.parse(offer.body).body;
 
               pcListMap.set(key, createPeerConnection(key));
+
+              console.log(
+                'socket flow: 5. setRemoteDescription',
+                key,
+                '번 유저'
+              );
+
               pcListMap.get(key)?.setRemoteDescription(
                 new RTCSessionDescription({
                   type: message.type,
@@ -85,9 +89,10 @@ const useAudioStore = create<AudioStoreState>()(
             client: stompClient,
             destination: `/peer/iceCandidate/${camKey}/${roomShortUuid}`,
             callback: candidate => {
-              console.log('SUBSCRIBE: candidate', candidate);
               const key = JSON.parse(candidate.body).key;
               const message = JSON.parse(candidate.body).body;
+
+              console.log('socket flow: receive candidate', key, '번 유저');
 
               pcListMap.get(key)?.addIceCandidate(
                 new RTCIceCandidate({
@@ -105,17 +110,15 @@ const useAudioStore = create<AudioStoreState>()(
             client: stompClient,
             destination: `/peer/answer/${camKey}/${roomShortUuid}`,
             callback: answer => {
-              console.log('SUBSCRIBE: answer', answer);
               const key = JSON.parse(answer.body).key;
               const message = JSON.parse(answer.body).body;
 
-              console.log('MY CAMKEY:', camKey);
               console.log(
-                'SUBSCRIBE: answer pcListMap',
+                'socket flow: 8. getAnswer setRemoteDescription',
                 key,
-                pcListMap,
-                message
+                '번 유저'
               );
+
               pcListMap.get(key)?.setRemoteDescription(
                 new RTCSessionDescription({
                   type: message.type,
@@ -129,8 +132,8 @@ const useAudioStore = create<AudioStoreState>()(
           subscribeMessage({
             client: stompClient,
             destination: '/call/key',
-            callback: message => {
-              console.log('SUBSCRIBE: call key', message);
+            callback: () => {
+              console.log('SUBSCRIBE: call key');
 
               sendMessageService({
                 client: stompClient,
@@ -149,7 +152,7 @@ const useAudioStore = create<AudioStoreState>()(
             client: stompClient,
             destination: '/send/key',
             callback: message => {
-              console.log('SUBSCRIBE: send key', message);
+              console.log('SUBSCRIBE: send key');
 
               const { key } = JSON.parse(message.body);
               if (key == null) return;
@@ -159,8 +162,7 @@ const useAudioStore = create<AudioStoreState>()(
                 camKey !== key &&
                 otherKeyList.find(mapKey => mapKey === camKey) == null
               ) {
-                console.log('-----다른 유저 camKey 등록-----', key);
-                otherKeyList.push(key);
+                set({ otherKeyList: [...otherKeyList, key] });
               }
             },
           });
@@ -174,7 +176,7 @@ const useAudioStore = create<AudioStoreState>()(
 
         if (client === null) return;
 
-        console.log('PUBLISH: call key');
+        console.log('PUBLISH: call key', camKey, '번 유저');
 
         sendMessageService({
           client,
@@ -204,9 +206,9 @@ const useAudioStore = create<AudioStoreState>()(
           // onIceCandidate
           pc.addEventListener('icecandidate', event => {
             if (event.candidate) {
-              console.log('PUBLISH: icecandidate event', event);
-
               if (client !== null) {
+                console.log('socket flow: send candidate', otherKey, '번 유저');
+
                 sendMessageService({
                   client,
                   destination: `/peer/iceCandidate/${otherKey}/${roomShortUuid}`,
@@ -236,12 +238,13 @@ const useAudioStore = create<AudioStoreState>()(
 
           if (audioStream !== null) {
             audioStream.getTracks().forEach(track => {
-              console.log('track', track);
+              console.log(
+                `socket flow: 2. addTrack ${otherKey}번 유저: `,
+                track
+              );
               pc.addTrack(track, audioStream);
             });
           }
-
-          console.log('PeerConnection created otherKey', otherKey, pc);
         } catch (error) {
           console.error('PeerConnection failed: ', error);
         } finally {
@@ -255,7 +258,11 @@ const useAudioStore = create<AudioStoreState>()(
         if (!client) return;
 
         pc?.createOffer().then(offer => {
-          console.log('PUBLISH: sendOffer event', offer, pc);
+          console.log(
+            'socket flow: 3. createOffer 후 setLocalDescription:',
+            key,
+            '번 유저'
+          );
 
           pc.setLocalDescription(offer);
 
@@ -276,7 +283,11 @@ const useAudioStore = create<AudioStoreState>()(
         if (!client) return;
 
         pc?.createAnswer().then(answer => {
-          console.log('PUBLISH: sendAnswer event', answer, pc);
+          console.log(
+            'socket flow: 6. createAnswer 후 setLocalDescription',
+            otherKey,
+            '번 유저'
+          );
 
           pc.setLocalDescription(answer);
 
@@ -288,6 +299,8 @@ const useAudioStore = create<AudioStoreState>()(
               body: answer,
             },
           });
+
+          console.log('socket flow: 7. sendAnswer', otherKey, '번 유저');
         });
       },
       disconnect: () => {
