@@ -211,17 +211,20 @@ const useAudioStore = create<AudioStoreState>()(
 
           // onTrack
           pc.addEventListener('track', event => {
-            console.log('track event', event);
-            if (document.getElementById(`${otherKey}`) === null) {
-              const video = document.createElement('video');
+            const { audioStreamList } = get();
 
-              video.autoplay = true;
-              video.controls = true;
-              video.id = otherKey;
-              video.srcObject = event.streams[0];
+            const updatedStreamList = new Map(audioStreamList);
+            updatedStreamList.set(otherKey, event.streams[0]);
+            console.log(
+              'socket flow: onTrack',
+              otherKey,
+              '번 유저',
+              updatedStreamList
+            );
 
-              document.getElementById('remoteStreamDiv')?.appendChild(video);
-            }
+            set({
+              audioStreamList: updatedStreamList,
+            });
           });
 
           if (audioStream !== null) {
