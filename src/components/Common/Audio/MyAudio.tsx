@@ -28,6 +28,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     return await navigator.mediaDevices.getUserMedia({ audio: true });
   };
 
+  // 마이크 권한 설정 및 socket 연결
   const startAudio = async () => {
     try {
       const stream = await openMediaDevices();
@@ -41,6 +42,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     }
   };
 
+  // 마이크 버튼 클릭 시 음소거 설정 및 해제
   const handleIconClick = () => {
     if (audioStream === null) {
       startAudio();
@@ -62,6 +64,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     };
   }, []);
 
+  // 다른 유저가 접속했을 때 offer 보내기
   useEffect(() => {
     if (connected && otherKeyList.length > 0) {
       sendOffer(key);

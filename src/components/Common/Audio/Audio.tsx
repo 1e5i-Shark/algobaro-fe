@@ -35,6 +35,7 @@ export default function Audio({
       audioRef.current.srcObject = audioStream;
     }
 
+    // 현재 볼륨 정보를 계산하여 말하고 있는지 판단
     const microphone = audioContext.createMediaStreamSource(audioStream);
     const analyser = audioContext.createAnalyser();
     analyser.fftSize = 512;
