@@ -11,6 +11,7 @@ export interface AudioStoreValue {
   client: Stomp.Client | null;
   listeners: Set<Function> | null;
   audioStream: MediaStream | null;
+  audioStreamList: Map<string, MediaStream>;
   pcListMap: Map<string, RTCPeerConnection>;
   otherKeyList: string[];
   camKey: string;
@@ -25,7 +26,7 @@ export interface AudioStoreState extends AudioStoreValue {
   ) => void;
   createOtherConnection: () => void;
   createPeerConnection: (otherKey: string) => RTCPeerConnection;
-  sendOffer: (pc: RTCPeerConnection | undefined, otherKey: string) => void;
+  sendOffer: (camKey: string) => void;
   sendAnswer: (pc: RTCPeerConnection | undefined, otherKey: string) => void;
   disconnect: () => void;
   reset: () => void;
