@@ -1,12 +1,14 @@
 import { MoreVertRounded } from '@mui/icons-material';
 
-import { Audio, Icon, Menu } from '@/components';
+import { Icon, Menu } from '@/components';
 import { Avatar } from '@/components/Common/Avatar';
 import { MENU_TEXT, MenuListProps } from '@/components/Common/Menu/MenuText';
 import { useMyInfo } from '@/hooks/Api/useMembers';
 import { ROOM_ROLE } from '@/pages/RoomPage/RoomPage.consts';
 import { RoleType, RoomMemberType } from '@/types/room';
 
+import MemberAudio from '../Common/Audio/MemberAudio';
+import MyAudio from '../Common/Audio/MyAudio';
 import * as S from './MemberCard.style';
 import StatusTag from './StatusTag';
 
@@ -59,7 +61,11 @@ export default function MemberCard({
           </Menu>
         )}
         {/* Todo: 테스트 후 안되면 RoomPage 관리 */}
-        <Audio isMyId={isMyId} />
+        {isMyId ? (
+          <MyAudio memberId={memberId} />
+        ) : (
+          <MemberAudio memberId={memberId} />
+        )}
       </S.MenuWrapper>
       <Avatar
         src={profileImage ?? ''}
