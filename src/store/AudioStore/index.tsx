@@ -310,9 +310,13 @@ const useAudioStore = create<AudioStoreState>()(
         });
       },
       disconnect: () => {
-        const { client, reset } = get();
+        const { client, reset, audioStream } = get();
 
         if (!client) return;
+
+        audioStream?.getTracks().forEach(track => {
+          track.stop();
+        });
 
         client?.deactivate();
         reset();
