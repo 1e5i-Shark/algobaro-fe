@@ -85,8 +85,6 @@ export default function RoomPage() {
   }, [myInfo, roomDataMemoized, listeners, receiveLogs]);
 
   useEffect(() => {
-    if (listeners?.size === 0) return;
-    console.log('새 유저 입장', listeners);
     if (audioStream !== null) {
       createOtherConnection();
     }
