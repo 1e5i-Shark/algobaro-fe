@@ -11,10 +11,9 @@ import { AudioStoreState, AudioStoreValue } from './type';
 
 const initialValue: AudioStoreValue = {
   client: new Stomp.Client(),
-  listeners: new Set<Function>(),
   audioStream: null,
-  audioStreamList: new Map(),
-  pcListMap: new Map(),
+  audioStreamList: [],
+  pcListMap: [],
   otherKeyList: [],
   camKey: '',
   connected: false,
@@ -39,13 +38,7 @@ const useAudioStore = create<AudioStoreState>()(
 
         stompClient.onConnect = () => {
           console.log('음성채팅 connect!');
-          const {
-            connected,
-            createPeerConnection,
-            pcListMap,
-            sendAnswer,
-            otherKeyList,
-          } = get();
+          const { connected, createPeerConnection, otherKeyList } = get();
 
           if (connected) return;
 
@@ -62,25 +55,55 @@ const useAudioStore = create<AudioStoreState>()(
           subscribeMessage({
             client: stompClient,
             destination: `/peer/offer/${camKey}/${roomShortUuid}`,
-            callback: offer => {
+            callback: async offer => {
+              const { pcListMap } = get();
               const key = JSON.parse(offer.body).key;
               const message = JSON.parse(offer.body).body;
 
-              pcListMap.set(key, createPeerConnection(key));
+              if (key === camKey) return;
+
+              let currentPc = pcListMap.find(item => item.key === key)?.pc;
+              if (!currentPc) {
+                currentPc = createPeerConnection(key);
+              }
 
               console.log(
-                'socket flow: 5. setRemoteDescription',
+                'socket flow: 5. setRemoteDescription from',
                 key,
-                '번 유저'
+                '번 유저',
+                pcListMap,
+                currentPc,
+                message
               );
 
-              pcListMap.get(key)?.setRemoteDescription(
-                new RTCSessionDescription({
-                  type: message.type,
-                  sdp: message.sdp,
-                })
+              currentPc.setRemoteDescription(message);
+
+              // sendAnswer 코드
+
+              const answer = await currentPc.createAnswer();
+              currentPc.setLocalDescription(answer);
+
+              console.log(
+                'socket flow: 6. createAnswer 후 setLocalDescription',
+                key,
+                '번 유저',
+                currentPc
               );
-              sendAnswer(pcListMap.get(key), key);
+
+              sendMessageService({
+                client: stompClient,
+                destination: `/peer/answer/${key}/${roomShortUuid}`,
+                body: {
+                  key: camKey,
+                  body: answer,
+                },
+              });
+
+              const filteredPcList = pcListMap.filter(item => item.key !== key);
+
+              set({
+                pcListMap: [...filteredPcList, { key, pc: currentPc }],
+              });
             },
           });
 
@@ -90,18 +113,26 @@ const useAudioStore = create<AudioStoreState>()(
             client: stompClient,
             destination: `/peer/iceCandidate/${camKey}/${roomShortUuid}`,
             callback: candidate => {
+              console.log(
+                JSON.parse(candidate.body),
+                'subscribe icecandidate에서 candiate'
+              );
+              const { pcListMap } = get();
               const key = JSON.parse(candidate.body).key;
               const message = JSON.parse(candidate.body).body;
 
-              console.log('socket flow: receive candidate', key, '번 유저');
+              if (key === camKey) return;
 
-              pcListMap.get(key)?.addIceCandidate(
-                new RTCIceCandidate({
-                  candidate: message.candidate,
-                  sdpMLineIndex: message.sdpMLineIndex,
-                  sdpMid: message.sdpMid,
-                })
+              const currentPc = pcListMap.find(item => item.key === camKey)?.pc;
+
+              console.log(
+                'socket flow: receive candidate from',
+                key,
+                '번 유저',
+                pcListMap,
+                currentPc
               );
+              currentPc?.addIceCandidate(message);
             },
           });
 
@@ -111,20 +142,22 @@ const useAudioStore = create<AudioStoreState>()(
             client: stompClient,
             destination: `/peer/answer/${camKey}/${roomShortUuid}`,
             callback: answer => {
+              const { pcListMap } = get();
               const key = JSON.parse(answer.body).key;
               const message = JSON.parse(answer.body).body;
 
-              console.log(
-                'socket flow: 8. getAnswer setRemoteDescription',
-                key,
-                '번 유저'
-              );
+              if (key === camKey) return;
 
-              pcListMap.get(key)?.setRemoteDescription(
-                new RTCSessionDescription({
-                  type: message.type,
-                  sdp: message.sdp,
-                })
+              const currentPc = pcListMap.find(item => item.key === camKey)?.pc;
+
+              currentPc?.setRemoteDescription(message);
+
+              console.log(
+                'socket flow: 8. getAnswer setRemoteDescription from',
+                key,
+                '번 유저',
+                pcListMap,
+                currentPc
               );
             },
           });
@@ -187,24 +220,64 @@ const useAudioStore = create<AudioStoreState>()(
       },
 
       createPeerConnection: otherKey => {
-        const { client, audioStream, roomShortUuid } = get();
-        const pc = new RTCPeerConnection();
+        const { client, audioStream, roomShortUuid, camKey } = get();
+
+        const configuration = {
+          iceServers: [
+            {
+              urls: [
+                'stun:stun1.l.google.com:19302',
+                'stun:stun2.l.google.com:19302',
+                'stun:stun.l.google.com:19302',
+                'stun:stun3.l.google.com:19302',
+                'stun:stun4.l.google.com:19302',
+              ],
+            },
+          ],
+          // iceCandidatePoolSize: 10,
+        };
+
+        const pc = new RTCPeerConnection(configuration);
+        console.log('createPeerConnection', otherKey, pc);
 
         try {
           // onIceCandidate
+          pc.addEventListener('iceconnectionstatechange', event => {
+            const currentTarget = event.currentTarget as RTCPeerConnection;
+            console.log(
+              'iceconnectionstatechange 이벤트! ',
+              otherKey + '번 유저 ',
+              currentTarget.iceConnectionState
+            );
+          });
+
           pc.addEventListener('icecandidate', event => {
+            console.log(
+              'icecandidate',
+              otherKey,
+              '번 유저',
+              pc,
+              event.candidate
+            );
+
             if (event.candidate) {
               if (client !== null) {
-                console.log('socket flow: send candidate', otherKey, '번 유저');
+                setTimeout(() => {
+                  console.log(
+                    'socket flow: send candidate',
+                    otherKey,
+                    '번 유저'
+                  );
 
-                sendMessageService({
-                  client,
-                  destination: `/peer/iceCandidate/${otherKey}/${roomShortUuid}`,
-                  body: {
-                    key: otherKey,
-                    body: event.candidate,
-                  },
-                });
+                  sendMessageService({
+                    client,
+                    destination: `/peer/iceCandidate/${otherKey}/${roomShortUuid}`,
+                    body: {
+                      key: camKey,
+                      body: event.candidate,
+                    },
+                  });
+                }, 3000);
               }
             }
           });
@@ -213,17 +286,22 @@ const useAudioStore = create<AudioStoreState>()(
           pc.addEventListener('track', event => {
             const { audioStreamList } = get();
 
-            const updatedStreamList = new Map(audioStreamList);
-            updatedStreamList.set(otherKey, event.streams[0]);
+            const filteredStreamList = audioStreamList.filter(
+              stream => stream.key !== otherKey
+            );
+
             console.log(
               'socket flow: onTrack',
               otherKey,
               '번 유저',
-              updatedStreamList
+              event.streams[0]
             );
 
             set({
-              audioStreamList: updatedStreamList,
+              audioStreamList: [
+                ...filteredStreamList,
+                { key: otherKey, stream: event.streams[0] },
+              ],
             });
           });
 
@@ -236,6 +314,8 @@ const useAudioStore = create<AudioStoreState>()(
               pc.addTrack(track, audioStream);
             });
           }
+
+          // 순서 맞추는게 필요하다면 여기에 otherKeyList 추가하는게 필요
         } catch (error) {
           console.error('PeerConnection failed: ', error);
         } finally {
@@ -254,61 +334,55 @@ const useAudioStore = create<AudioStoreState>()(
 
         if (!client) return;
 
-        if (!pcListMap.has(key)) {
-          pcListMap.set(key, createPeerConnection(key));
-        }
+        // 내 offer 상대한테 보내기
+        console.log(`---3. ${key}번 offer 상대방에게 보내기---`);
+        otherKeyList.forEach(async otherKey => {
+          let pc = pcListMap.find(item => item.key === key)?.pc;
+          if (!pc) {
+            pc = createPeerConnection(key);
+          }
 
-        const pc = pcListMap.get(key);
-        pc?.createOffer().then(offer => {
+          const offer = await pc.createOffer();
+          // pc.setLocalDescription(new RTCSessionDescription(offer));
+          pc.setLocalDescription(offer);
+
+          const filteredPcList = pcListMap.filter(item => item.key !== key);
+          set({ pcListMap: [...filteredPcList, { key, pc }] });
+
           console.log(
             'socket flow: 3. createOffer 후 setLocalDescription:',
             key,
-            '번 유저'
+            '번 유저',
+            pc,
+            offer
           );
 
-          pc.setLocalDescription(offer);
-
-          otherKeyList.map(otherKey => {
-            console.log('socket flow: 4. sendOffer to', otherKey, '번 유저');
-
-            sendMessageService({
-              client,
-              destination: `/peer/offer/${otherKey}/${roomShortUuid}`,
-              body: {
-                key: key,
-                body: offer,
-              },
-            });
-          });
-        });
-      },
-
-      sendAnswer: (pc, otherKey) => {
-        const { client, roomShortUuid } = get();
-
-        if (!client) return;
-
-        pc?.createAnswer().then(answer => {
-          console.log(
-            'socket flow: 6. createAnswer 후 setLocalDescription',
-            otherKey,
-            '번 유저'
-          );
-
-          pc.setLocalDescription(answer);
+          console.log('socket flow: 4. sendOffer to', otherKey, '번 유저');
 
           sendMessageService({
             client,
-            destination: `/peer/answer/${otherKey}/${roomShortUuid}`,
+            destination: `/peer/offer/${otherKey}/${roomShortUuid}`,
             body: {
-              key: otherKey,
-              body: answer,
+              key: key,
+              body: offer,
             },
           });
-
-          console.log('socket flow: 7. sendAnswer', otherKey, '번 유저');
         });
       },
+      memberLeave: (camKey: string) => {
+        const { client, pcListMap, audioStreamList, otherKeyList } = get();
+
+        if (!client) return;
+
+        set({
+          otherKeyList: otherKeyList.filter(key => key !== camKey),
+          audioStreamList: audioStreamList.filter(
+            stream => stream.key !== camKey
+          ),
+          pcListMap: pcListMap.filter(item => item.key !== camKey),
+        });
+      },
+
       disconnect: () => {
         const { client, reset, audioStream } = get();
 
