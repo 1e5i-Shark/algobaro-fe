@@ -5,13 +5,13 @@ import { LOCAL_ACCESSTOKEN } from '@/constants/localStorageKey';
 import { API_ENDPOINT } from '../apiEndpoint';
 
 interface Props {
-  client: Stomp.Client;
+  client: Stomp.Client | null;
   destination: string;
   callback: (message: Stomp.Message) => void;
 }
 
 export const subscribeMessage = ({ client, destination, callback }: Props) => {
-  client.subscribe(
+  client?.subscribe(
     `${API_ENDPOINT.AUDIO.SUBSCRIPTION}${destination}`,
     callback,
     {
