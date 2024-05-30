@@ -7,12 +7,21 @@ export interface Message {
   timestamp: string;
 }
 
+interface AudioStream {
+  key: string;
+  stream: MediaStream;
+}
+
+interface pcList {
+  key: string;
+  pc: RTCPeerConnection;
+}
+
 export interface AudioStoreValue {
   client: Stomp.Client | null;
-  listeners: Set<Function> | null;
   audioStream: MediaStream | null;
-  audioStreamList: Map<string, MediaStream>;
-  pcListMap: Map<string, RTCPeerConnection>;
+  audioStreamList: AudioStream[];
+  pcListMap: pcList[];
   otherKeyList: string[];
   camKey: string;
   connected: boolean;
@@ -27,7 +36,7 @@ export interface AudioStoreState extends AudioStoreValue {
   createOtherConnection: () => void;
   createPeerConnection: (otherKey: string) => RTCPeerConnection;
   sendOffer: (camKey: string) => void;
-  sendAnswer: (pc: RTCPeerConnection | undefined, otherKey: string) => void;
+  memberLeave: (camKey: string) => void;
   disconnect: () => void;
   reset: () => void;
 }
