@@ -3,8 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
+import useAudioStore from '@/store/AudioStore';
+import useRoomStore from '@/store/RoomStore';
 
 interface AudioProps {
+  memberId?: string;
   isMyAudio?: boolean;
   audioStream?: MediaStream | null;
   isActive?: boolean;
@@ -12,6 +15,7 @@ interface AudioProps {
 }
 
 export default function Audio({
+  memberId,
   isMyAudio = false,
   audioStream,
   isActive,
@@ -22,6 +26,11 @@ export default function Audio({
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioContext = new AudioContext();
 
+  const { connected, connect, createOtherConnection } = useAudioStore();
+  const {
+    roomData: { roomShortUuid },
+  } = useRoomStore();
+
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   const stopAudio = () => {
@@ -29,10 +38,26 @@ export default function Audio({
   };
 
   useEffect(() => {
+    if (!isMyAudio) {
+      console.log('---2. createOtherConnection ---');
+      if (connected) {
+        createOtherConnection();
+      }
+    }
+  }, [isMyAudio, connected]);
+
+  useEffect(() => {
     if (audioStream == null) return;
 
     if (audioRef.current != null) {
-      audioRef.current.srcObject = audioStream;
+      if (!isMyAudio) {
+        audioRef.current.srcObject = audioStream;
+      } else {
+        console.log('---1. connect ---');
+        if (memberId) {
+          connect(memberId, audioStream, roomShortUuid);
+        }
+      }
     }
 
     // 현재 볼륨 정보를 계산하여 말하고 있는지 판단
@@ -65,12 +90,10 @@ export default function Audio({
 
   return (
     <>
-      {!isMyAudio && (
-        <audio
-          ref={audioRef}
-          autoPlay
-        />
-      )}
+      <audio
+        ref={audioRef}
+        autoPlay
+      />
       {isActive ? (
         <Icon
           onClick={onIconClick}

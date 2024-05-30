@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import useAudioStore from '@/store/AudioStore';
-import useRoomStore from '@/store/RoomStore';
 
 import Tooltip from '../Tooltip/Tooltip';
 import Audio from './Audio';
@@ -14,14 +13,9 @@ export default function MyAudio({ memberId }: MyAudioProps) {
   const key = memberId.toString();
 
   const [audioStream, setAudioStream] = useState<MediaStream | null>(null);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
 
-  const { connect, disconnect, connected, otherKeyList, sendOffer } =
-    useAudioStore();
-
-  const {
-    roomData: { roomShortUuid },
-  } = useRoomStore();
+  const { disconnect, otherKeyList, sendOffer } = useAudioStore();
 
   const openMediaDevices = async () => {
     console.log('socket flow: 1. getUserMedia 나는', memberId, '번 유저');
@@ -33,10 +27,8 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     try {
       const stream = await openMediaDevices();
       // 진입 시 음소거 설정
-      stream.getAudioTracks()[0].enabled = false;
+      stream.getAudioTracks()[0].enabled = true;
       setAudioStream(stream);
-
-      connect(key, stream, roomShortUuid);
     } catch (error) {
       console.error('Error accessing media devices.', error);
     }
@@ -66,10 +58,12 @@ export default function MyAudio({ memberId }: MyAudioProps) {
 
   // 다른 유저가 접속했을 때 offer 보내기
   useEffect(() => {
-    if (connected && otherKeyList.length > 0) {
+    if (otherKeyList.length > 0) {
+      console.log('otherListKey', otherKeyList);
+      console.log('send offer 나는', key, '번 유저');
       sendOffer(key);
     }
-  }, [connected, otherKeyList]);
+  }, [otherKeyList]);
 
   return (
     <Tooltip
@@ -77,6 +71,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     >
       <div>
         <Audio
+          memberId={key}
           isMyAudio
           audioStream={audioStream}
           isActive={isActive}
