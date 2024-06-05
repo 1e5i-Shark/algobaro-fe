@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import useAudioStore from '@/store/AudioStore';
+import { useAudioSocket } from '@/hooks/Audio/useAudioSocket';
+import useRoomStore from '@/store/RoomStore';
 
 import Tooltip from '../Tooltip/Tooltip';
 import Audio from './Audio';
@@ -15,11 +16,20 @@ export default function MyAudio({ memberId }: MyAudioProps) {
   const [audioStream, setAudioStream] = useState<MediaStream | null>(null);
   const [isActive, setIsActive] = useState(true);
 
-  const { disconnect, otherKeyList, sendOffer } = useAudioStore();
+  const {
+    roomData: { roomShortUuid },
+  } = useRoomStore();
+
+  const { client, connectSocket, disconnectSocket } = useAudioSocket({
+    myKey: key,
+    roomShortUuid,
+  });
 
   const openMediaDevices = async () => {
     console.log('socket flow: 1. getUserMedia 나는', memberId, '번 유저');
-    return await navigator.mediaDevices.getUserMedia({ audio: true });
+    return await navigator.mediaDevices.getUserMedia({
+      audio: true,
+    });
   };
 
   // 마이크 권한 설정 및 socket 연결
@@ -29,6 +39,9 @@ export default function MyAudio({ memberId }: MyAudioProps) {
       // 진입 시 음소거 설정
       stream.getAudioTracks()[0].enabled = true;
       setAudioStream(stream);
+      // socket 연결
+      console.log('---1. connect ---', stream);
+      connectSocket(stream);
     } catch (error) {
       console.error('Error accessing media devices.', error);
     }
@@ -52,18 +65,11 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     startAudio();
 
     return () => {
-      disconnect();
+      if (client !== null) return;
+      console.log('unmount client', client);
+      disconnectSocket();
     };
   }, []);
-
-  // 다른 유저가 접속했을 때 offer 보내기
-  useEffect(() => {
-    if (otherKeyList.length > 0) {
-      console.log('otherListKey', otherKeyList);
-      console.log('send offer 나는', key, '번 유저');
-      sendOffer(key);
-    }
-  }, [otherKeyList]);
 
   return (
     <Tooltip
@@ -76,6 +82,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
           audioStream={audioStream}
           isActive={isActive}
           onIconClick={handleIconClick}
+          connectSocket={connectSocket}
         />
       </div>
     </Tooltip>

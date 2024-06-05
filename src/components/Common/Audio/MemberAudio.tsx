@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import useAudioStore from '@/store/AudioStore';
+import useRTCStore from '@/store/RTCStore';
 
 import Audio from './Audio';
 
@@ -11,11 +11,12 @@ interface MemberAudioProps {
 export default function MemberAudio({ memberId }: MemberAudioProps) {
   const key = memberId.toString();
 
-  const { audioStreamList, memberLeave } = useAudioStore();
+  const { audioStreamList, memberLeave } = useRTCStore();
   const [audioStream, setAudioStream] = useState<MediaStream | null>(null);
 
   // audioStreamList에서 key에 해당하는 audioStream이 있다면 연결 완료된 것
   useEffect(() => {
+    console.log('audioStreamList', audioStreamList);
     const currentAudioStream =
       audioStreamList.find(stream => stream.key === key)?.stream ?? null;
     setAudioStream(currentAudioStream);

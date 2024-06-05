@@ -3,8 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Icon } from '@/components';
 import { useCustomTheme } from '@/hooks/useCustomTheme';
-import useAudioStore from '@/store/AudioStore';
-import useRoomStore from '@/store/RoomStore';
 
 interface AudioProps {
   memberId?: string;
@@ -12,10 +10,11 @@ interface AudioProps {
   audioStream?: MediaStream | null;
   isActive?: boolean;
   onIconClick?: () => void;
+  connectSocket?: (stream: MediaStream) => void;
+  createOtherPeerConnection?: () => void;
 }
 
 export default function Audio({
-  memberId,
   isMyAudio = false,
   audioStream,
   isActive,
@@ -26,25 +25,11 @@ export default function Audio({
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioContext = new AudioContext();
 
-  const { connected, connect, createOtherConnection } = useAudioStore();
-  const {
-    roomData: { roomShortUuid },
-  } = useRoomStore();
-
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   const stopAudio = () => {
-    audioStream?.getTracks().forEach(track => track.stop());
+    // audioStream?.getTracks().forEach(track => track.stop());
   };
-
-  useEffect(() => {
-    if (!isMyAudio) {
-      console.log('---2. createOtherConnection ---');
-      if (connected) {
-        createOtherConnection();
-      }
-    }
-  }, [isMyAudio, connected]);
 
   useEffect(() => {
     if (audioStream == null) return;
@@ -52,11 +37,6 @@ export default function Audio({
     if (audioRef.current != null) {
       if (!isMyAudio) {
         audioRef.current.srcObject = audioStream;
-      } else {
-        console.log('---1. connect ---');
-        if (memberId) {
-          connect(memberId, audioStream, roomShortUuid);
-        }
       }
     }
 
