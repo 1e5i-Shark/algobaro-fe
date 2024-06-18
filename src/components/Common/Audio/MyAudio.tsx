@@ -31,7 +31,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
       roomShortUuid,
     });
 
-  const getAudioDevices = async () => {
+  const getAvailableDevices = async () => {
     return await navigator.mediaDevices.enumerateDevices();
   };
 
@@ -56,7 +56,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
       stream.getAudioTracks()[0].enabled = true;
       setAudioStream(stream);
 
-      const devices = await getAudioDevices();
+      const devices = await getAvailableDevices();
       const audioList = devices.filter(
         device =>
           device.kind === 'audioinput' && device.deviceId !== 'communications'
