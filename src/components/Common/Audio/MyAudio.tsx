@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
+import { Tooltip } from '@/components';
 import { useAudioSocket } from '@/hooks/Audio/useAudioSocket';
 import useRoomStore from '@/store/RoomStore';
 
 import Audio from './Audio';
 import AudioMenu from './AudioMenu';
 import { MyAudioWrapper } from './MyAudio.style';
-import { Tooltip } from '@/components';
 
 interface MyAudioProps {
   memberId: number;

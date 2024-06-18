@@ -1,5 +1,3 @@
-import { Icon } from '@/components';
-import { useCustomTheme } from '@/hooks/useCustomTheme';
 import { KeyboardArrowDownRounded } from '@mui/icons-material';
 import {
   FormControl,
@@ -9,6 +7,9 @@ import {
   RadioGroup,
 } from '@mui/material';
 import { useState } from 'react';
+
+import { Icon } from '@/components';
+import { useCustomTheme } from '@/hooks/useCustomTheme';
 
 interface AudioMenuProps {
   audioStream: MediaStream;
