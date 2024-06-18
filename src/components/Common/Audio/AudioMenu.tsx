@@ -12,7 +12,7 @@ import { useState } from 'react';
 
 interface AudioMenuProps {
   audioStream: MediaStream;
-  audioDevices: any[];
+  audioDevices: MediaDeviceInfo[];
   onChange: (deviceId: string) => Promise<void>;
 }
 
