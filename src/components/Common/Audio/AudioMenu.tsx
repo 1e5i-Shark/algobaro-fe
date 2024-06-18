@@ -70,7 +70,7 @@ const AudioMenu = ({ audioStream, audioDevices, onChange }: AudioMenuProps) => {
         <FormControl>
           <RadioGroup
             aria-labelledby="devices-radio-group"
-            value={selectedAudio.deviceId}
+            value={selectedAudio?.deviceId}
             name="devices"
             onChange={handleChangeDevice}
             sx={{
@@ -87,7 +87,7 @@ const AudioMenu = ({ audioStream, audioDevices, onChange }: AudioMenuProps) => {
                   value={device.deviceId}
                   control={<Radio />}
                   label={device.label}
-                  checked={device.label === selectedAudio.label}
+                  checked={device.label === selectedAudio?.label}
                   sx={{
                     '& .MuiTypography-root': {
                       fontSize: 14,
