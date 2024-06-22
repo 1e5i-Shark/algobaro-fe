@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useAudioSocket } from '@/hooks/Audio/useAudioSocket';
 import useRoomStore from '@/store/RoomStore';
+import { toastify } from '@/utils/toastify';
 
 import Tooltip from '../Tooltip/Tooltip';
 import Audio from './Audio';
@@ -45,7 +46,13 @@ export default function MyAudio({ memberId }: MyAudioProps) {
       connectSocket(stream);
     } catch (error) {
       console.error('Error accessing media devices.', error);
+      toastify.error('마이크 권한을 허용해 주세요');
     }
+  };
+
+  const endAudio = () => {
+    disconnectSocket();
+    setAudioStream(null);
   };
 
   // 마이크 권한 확인
@@ -66,6 +73,10 @@ export default function MyAudio({ memberId }: MyAudioProps) {
             startAudio();
           }
           break;
+        }
+        case 'denied': {
+          endAudio();
+          toastify.error('마이크 권한을 허용해 주세요');
         }
       }
     };
@@ -91,7 +102,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     return () => {
       if (client !== null) return;
       console.log('unmount client', client);
-      disconnectSocket();
+      endAudio();
     };
   }, []);
 
