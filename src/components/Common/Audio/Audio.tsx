@@ -66,7 +66,8 @@ export default function Audio({
     };
   }, [audioStream]);
 
-  if (!audioStream) return null;
+  // 상대 오디오가 연결되지 않은 경우 null 반환
+  if (!isMyAudio && !audioStream) return null;
 
   return (
     <>
