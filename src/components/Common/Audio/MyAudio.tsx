@@ -25,6 +25,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     roomShortUuid,
   });
 
+  // 마이크 권한 설정
   const openMediaDevices = async () => {
     console.log('socket flow: 1. getUserMedia 나는', memberId, '번 유저');
     return await navigator.mediaDevices.getUserMedia({
@@ -47,10 +48,33 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     }
   };
 
+  // 마이크 권한 확인
+  const checkPermission = async () => {
+    const permission = await navigator.permissions.query({
+      name: 'microphone' as PermissionName,
+    });
+
+    // 진입 시 무조건 startAudio 호출
+    // 마이크 권한이 없는 경우 getUserMedia을 호출해야 권한 설정 아이콘이 활성화됨
+    startAudio();
+
+    // 웹 상에서 권한 변경시 이벤트 발생
+    permission.onchange = () => {
+      switch (permission.state) {
+        case 'granted': {
+          if (audioStream === null) {
+            startAudio();
+          }
+          break;
+        }
+      }
+    };
+  };
+
   // 마이크 버튼 클릭 시 음소거 설정 및 해제
   const handleIconClick = () => {
     if (audioStream === null) {
-      startAudio();
+      checkPermission();
     }
 
     if (audioStream === null) return;
@@ -62,7 +86,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
   };
 
   useEffect(() => {
-    startAudio();
+    checkPermission();
 
     return () => {
       if (client !== null) return;
