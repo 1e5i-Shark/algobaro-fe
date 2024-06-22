@@ -79,7 +79,13 @@ export default function Audio({
       {isActive ? (
         <Icon
           onClick={onIconClick}
-          color={isSpeaking ? theme.color.green : ''}
+          color={
+            isSpeaking
+              ? theme.color.green
+              : audioStream
+                ? theme.color.gray_30
+                : theme.color.red
+          }
         >
           {isMyAudio ? <MicRounded /> : <VolumeUpRounded />}
         </Icon>
