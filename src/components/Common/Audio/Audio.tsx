@@ -1,4 +1,5 @@
 import { VolumeOffRounded, VolumeUpRounded } from '@mui/icons-material';
+import { MicOffRounded, MicRounded } from '@mui/icons-material';
 import { useEffect, useRef, useState } from 'react';
 
 import { Icon } from '@/components';
@@ -80,11 +81,11 @@ export default function Audio({
           onClick={onIconClick}
           color={isSpeaking ? theme.color.green : ''}
         >
-          <VolumeUpRounded />
+          {isMyAudio ? <MicRounded /> : <VolumeUpRounded />}
         </Icon>
       ) : (
         <Icon onClick={onIconClick}>
-          <VolumeOffRounded />
+          {isMyAudio ? <MicOffRounded /> : <VolumeOffRounded />}
         </Icon>
       )}
     </>
