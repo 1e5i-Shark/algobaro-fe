@@ -14,16 +14,17 @@ export default function MyAudio({ memberId }: MyAudioProps) {
   const key = memberId.toString();
 
   const [audioStream, setAudioStream] = useState<MediaStream | null>(null);
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
 
   const {
     roomData: { roomShortUuid },
   } = useRoomStore();
 
-  const { client, connectSocket, disconnectSocket } = useAudioSocket({
-    myKey: key,
-    roomShortUuid,
-  });
+  const { client, connectSocket, disconnectSocket, replaceTrack } =
+    useAudioSocket({
+      myKey: key,
+      roomShortUuid,
+    });
 
   const openMediaDevices = async () => {
     console.log('socket flow: 1. getUserMedia 나는', memberId, '번 유저');
@@ -37,7 +38,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     try {
       const stream = await openMediaDevices();
       // 진입 시 음소거 설정
-      stream.getAudioTracks()[0].enabled = true;
+      stream.getAudioTracks()[0].enabled = false;
       setAudioStream(stream);
       // socket 연결
       console.log('---1. connect ---', stream);
@@ -55,10 +56,16 @@ export default function MyAudio({ memberId }: MyAudioProps) {
 
     if (audioStream === null) return;
 
-    const track = audioStream.getAudioTracks()[0];
-    track.enabled = !track.enabled;
+    // 음소거 해제 여부를 audioStream에 적용
+    audioStream.getAudioTracks().forEach(track => {
+      track.enabled = !track.enabled;
 
-    setIsActive(track.enabled);
+      setIsActive(track.enabled);
+    });
+
+    // webRTC track에 변경된 audioStream 적용
+    replaceTrack(audioStream);
+    setAudioStream(audioStream);
   };
 
   useEffect(() => {
@@ -75,16 +82,14 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     <Tooltip
       text={audioStream?.getTracks()[0].label ?? '선택된 마이크가 없습니다'}
     >
-      <div>
-        <Audio
-          memberId={key}
-          isMyAudio
-          audioStream={audioStream}
-          isActive={isActive}
-          onIconClick={handleIconClick}
-          connectSocket={connectSocket}
-        />
-      </div>
+      <Audio
+        memberId={key}
+        isMyAudio
+        audioStream={audioStream}
+        isActive={isActive}
+        onIconClick={handleIconClick}
+        connectSocket={connectSocket}
+      />
     </Tooltip>
   );
 }
