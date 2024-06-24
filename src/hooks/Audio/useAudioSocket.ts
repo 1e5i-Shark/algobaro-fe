@@ -243,6 +243,18 @@ export const useAudioSocket = ({ myKey, roomShortUuid }: AudioSocketProps) => {
     client.current?.deactivate();
     resetState();
   };
+  // 새로운 audioStream을 pc list에 적용하는 함수
+  const replaceTrack = (newStream: MediaStream) => {
+    const [audioTrack] = newStream.getAudioTracks();
+
+    pcListMap.current.forEach(pc => {
+      const senders = pc?.getSenders();
+      const audioSender = senders?.find(
+        sender => sender.track?.kind === audioTrack.kind
+      );
+      audioSender?.replaceTrack(audioTrack);
+    });
+  };
 
   return {
     isConnected,
@@ -253,5 +265,6 @@ export const useAudioSocket = ({ myKey, roomShortUuid }: AudioSocketProps) => {
     disconnectSocket,
     createOtherPeerConnection,
     sendOffer,
+    replaceTrack,
   };
 };
