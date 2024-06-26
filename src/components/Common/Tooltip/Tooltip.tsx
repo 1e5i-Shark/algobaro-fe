@@ -7,6 +7,10 @@ interface TooltipProps {
 }
 
 export default function Tooltip({ children, text, ...props }: TooltipProps) {
+  if (!text) {
+    return children;
+  }
+
   return (
     <TooltipMui
       title={<span style={{ fontSize: 12 }}>{text}</span>}
