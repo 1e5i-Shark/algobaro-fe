@@ -1,4 +1,5 @@
 import { VolumeOffRounded, VolumeUpRounded } from '@mui/icons-material';
+import { MicOffRounded, MicRounded } from '@mui/icons-material';
 import { useEffect, useRef, useState } from 'react';
 
 import { Icon } from '@/components';
@@ -66,7 +67,8 @@ export default function Audio({
     };
   }, [audioStream]);
 
-  if (!audioStream) return null;
+  // 상대 오디오가 연결되지 않은 경우 null 반환
+  if (!isMyAudio && !audioStream) return null;
 
   return (
     <>
@@ -77,19 +79,25 @@ export default function Audio({
       {isActive ? (
         <Icon
           onClick={onIconClick}
-          color={isSpeaking ? theme.color.green : ''}
+          color={
+            isSpeaking
+              ? theme.color.green
+              : audioStream
+                ? theme.color.gray_30
+                : theme.color.red
+          }
           style={{
             cursor: isMyAudio ? 'pointer' : '',
           }}
         >
-          <VolumeUpRounded />
+          {isMyAudio ? <MicRounded /> : <VolumeUpRounded />}
         </Icon>
       ) : (
         <Icon
           onClick={onIconClick}
           style={{ cursor: isMyAudio ? 'pointer' : '' }}
         >
-          <VolumeOffRounded />
+          {isMyAudio ? <MicOffRounded /> : <VolumeOffRounded />}
         </Icon>
       )}
     </>
