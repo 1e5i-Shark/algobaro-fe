@@ -20,7 +20,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
   const [audioDevices, setAudioDevices] = useState<MediaDeviceInfo[] | null>(
     null
   );
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
 
   const {
     roomData: { roomShortUuid },
@@ -54,7 +54,7 @@ export default function MyAudio({ memberId }: MyAudioProps) {
     try {
       const stream = await openMediaDevices();
       // 진입 시 음소거 설정
-      stream.getAudioTracks()[0].enabled = true;
+      stream.getAudioTracks()[0].enabled = false;
       setAudioStream(stream);
 
       const devices = await getAvailableDevices();
@@ -114,10 +114,16 @@ export default function MyAudio({ memberId }: MyAudioProps) {
 
     if (audioStream === null) return;
 
-    const track = audioStream.getAudioTracks()[0];
-    track.enabled = !track.enabled;
+    // 음소거 해제 여부를 audioStream에 적용
+    audioStream.getAudioTracks().forEach(track => {
+      track.enabled = !track.enabled;
 
-    setIsActive(track.enabled);
+      setIsActive(track.enabled);
+    });
+
+    // webRTC track에 변경된 audioStream 적용
+    replaceTrack(audioStream);
+    setAudioStream(audioStream);
   };
 
   useEffect(() => {

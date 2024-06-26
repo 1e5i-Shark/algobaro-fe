@@ -86,11 +86,17 @@ export default function Audio({
                 ? theme.color.gray_30
                 : theme.color.red
           }
+          style={{
+            cursor: isMyAudio ? 'pointer' : '',
+          }}
         >
           {isMyAudio ? <MicRounded /> : <VolumeUpRounded />}
         </Icon>
       ) : (
-        <Icon onClick={onIconClick}>
+        <Icon
+          onClick={onIconClick}
+          style={{ cursor: isMyAudio ? 'pointer' : '' }}
+        >
           {isMyAudio ? <MicOffRounded /> : <VolumeOffRounded />}
         </Icon>
       )}
